@@ -1,0 +1,10 @@
+/shared/workspace/yingj4/audio_pipeline/libspatialaudio/build/CMakeFiles/edit_cache.dir
+/shared/workspace/yingj4/audio_pipeline/libspatialaudio/build/CMakeFiles/package_source.dir
+/shared/workspace/yingj4/audio_pipeline/libspatialaudio/build/CMakeFiles/rebuild_cache.dir
+/shared/workspace/yingj4/audio_pipeline/libspatialaudio/build/CMakeFiles/list_install_components.dir
+/shared/workspace/yingj4/audio_pipeline/libspatialaudio/build/CMakeFiles/install.dir
+/shared/workspace/yingj4/audio_pipeline/libspatialaudio/build/CMakeFiles/package.dir
+/shared/workspace/yingj4/audio_pipeline/libspatialaudio/build/CMakeFiles/spatialaudio-static.dir
+/shared/workspace/yingj4/audio_pipeline/libspatialaudio/build/CMakeFiles/spatialaudio-shared.dir
+/shared/workspace/yingj4/audio_pipeline/libspatialaudio/build/CMakeFiles/install/strip.dir
+/shared/workspace/yingj4/audio_pipeline/libspatialaudio/build/CMakeFiles/install/local.dir
