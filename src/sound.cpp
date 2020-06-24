@@ -61,11 +61,11 @@ void ILLIXR_AUDIO::Sound::justReadInForBFormat() {
 }
 
 CBFormat* ILLIXR_AUDIO::Sound::processToBFormat() {
-    BEncoder->Process(sample, BLOCK_SIZE, BFormat);
+    BEncoder->Process(sample, BLOCK_SIZE, BFormat); // (float* pfSrc, unsigned nSamples, CBFormat* pfDst)
     return BFormat;
 }
 
-void* ILLIXR_AUDIO::Sound::Process_fxp_wrapper(float* pfSrc, size_t bytes_pfSrc, CBFormat* pBFDst, size_t bytes_pBFDst, unsigned nSamples) {
+void* ILLIXR_AUDIO::Sound::Process_fxp_wrapper(float* pfSrc, size_t bytes_pfSrc, CBFormat* pBFDst, size_t bytes_pBFDst, unsigned nSamples) {    // (sample, ..., BFormat, ..., BLOCK_SIZE)
     __hpvm__hint(CPU_TARGET);
     __hpvm__attributes(2, pfSrc, pBFDst, 1, pBFDst);
     void* ProcessNode = __hpvm__createNodeND(1, BEncoder->Process_fxp, BLOCK_SIZE);

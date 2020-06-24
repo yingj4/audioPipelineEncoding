@@ -115,7 +115,7 @@ void CAmbisonicEncoderDist::Process(float* pfSrc, unsigned nSamples, CBFormat* p
     }
 }
 
-void Process_fxp(float* pfSrc, size_t bytes_pfSrc, CBFormat* pBFDst, size_t bytes_pBFDst, unsigned nSamples) {
+void Process_fxp(float* pfSrc, size_t bytes_pfSrc, CBFormat* pBFDst, size_t bytes_pBFDst, unsigned nSamples) {  // (sample, ..., BFormat, ..., BLOCK_SIZE)
     __hpvm__hint(CPU_TARGET);
     __hpvm__attributes(2, pfSrc, pBFDst, 1, pBFDst);
 
@@ -124,7 +124,7 @@ void Process_fxp(float* pfSrc, size_t bytes_pfSrc, CBFormat* pBFDst, size_t byte
     // float fSrcSample = 0;   <- This was the original code
 
     void* thisNode = __hpvm__getNode();
-    int niSample = __hpvm__getNodeInstanceID_x(thisNode)
+    int niSample = __hpvm__getNodeInstanceID_x(thisNode);
     // int niChannel = __hpvm__getNodeInstanceID_y(thisNode);
     // for(niSample = 0; niSample < nSamples; niSample++)  <- This was the original code
     if (niSample < nSamples)
@@ -137,8 +137,7 @@ void Process_fxp(float* pfSrc, size_t bytes_pfSrc, CBFormat* pBFDst, size_t byte
         pfDst->m_ppfChannels[kW][niSample] = fSrcSample * m_fInteriorGain * m_pfCoeff[kW];
 
         fSrcSample *= m_fExteriorGain;
-        for(niChannel = 1; niChannel < m_nChannelCount; niChannel++)
-        {
+        for (niChannel = 1; niChannel < m_nChannelCount; niChannel++)  {
             pfDst->m_ppfChannels[niChannel][niSample] = fSrcSample * m_pfCoeff[niChannel];
         }
 

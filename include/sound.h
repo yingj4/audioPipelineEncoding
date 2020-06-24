@@ -27,6 +27,7 @@ namespace ILLIXR_AUDIO{
 		// The following two functions are for HPVM-C compilation and hardware acceleration. The combination of both is the readInBFormat() function.
 		void justReadInForBFormat();
 		CBFormat* processToBFormat();
+		void* Process_fxp_wrapper(float* pfSrc, size_t bytes_pfSrc, CBFormat* pBFDst, size_t bytes_pBFDst, unsigned nSamples);
 
 		// Helper functions for HPVM-C
 		float* getSample();
