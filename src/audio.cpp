@@ -1,7 +1,388 @@
 #include <audio.h>
-
 #include <algorithm>
 
+#define fSqrt32 sqrt(3.f)/2.f
+#define fSqrt58 sqrt(5.f/8.f)
+#define fSqrt152 sqrt(15.f)/2.f
+#define fSqrt38 sqrt(3.f/8.f)
+
+
+// The structure needed for HPVM launching
+typedef struct __attribute__((__packed__)) {
+    std::vector<Sound*>* soundSrcs;
+    size_t bytes_soundSrcs;
+    unsigned nSamples;
+    CBFormat& sumBF;
+    size_t bytes_sumBF;
+    unsigned int soundSrcsSize;
+} RootIn;
+
+// For CAmbisonicBase
+CAmbisonicBase::CAmbisonicBase()
+    : m_nOrder(0)
+    , m_b3D(0)
+    , m_nChannelCount(0)
+    , m_bOpt(0)
+{
+}
+
+unsigned CAmbisonicBase::GetOrder() {
+    return m_nOrder;
+}
+
+bool CAmbisonicBase::GetHeight() {
+    return m_b3D;
+}
+
+unsigned CAmbisonicBase::GetChannelCount() {
+    return m_nChannelCount;
+}
+
+bool CAmbisonicBase::Configure(unsigned nOrder, bool b3D, unsigned nMisc) {
+    m_nOrder = nOrder;
+    m_b3D = b3D;
+    m_nChannelCount = OrderToComponents(m_nOrder, m_b3D);
+
+    return true;
+}
+
+// For CBFormat
+CBFormat::CBFormat() {
+    m_nSamples = 0;
+    m_nDataLength = 0;
+}
+
+unsigned CBFormat::GetSampleCount() {
+    return m_nSamples;
+}
+
+bool CBFormat::Configure(unsigned nOrder, bool b3D, unsigned nSampleCount) {
+    bool success = CAmbisonicBase::Configure(nOrder, b3D, nSampleCount);
+    if(!success)
+        return false;
+
+    m_nSamples = nSampleCount;
+    m_nDataLength = m_nSamples * m_nChannelCount;
+
+    m_pfData.resize(m_nDataLength);
+    memset(m_pfData.data(), 0, m_nDataLength * sizeof(float));
+    m_ppfChannels.reset(new float*[m_nChannelCount]);
+
+    for(unsigned niChannel = 0; niChannel < m_nChannelCount; niChannel++)
+    {
+        m_ppfChannels[niChannel] = &m_pfData[niChannel * m_nSamples];
+    }
+
+    return true;
+}
+
+void CBFormat::Reset() {
+    memset(m_pfData.data(), 0, m_nDataLength * sizeof(float));
+}
+
+void CBFormat::Refresh() { }
+
+void CBFormat::InsertStream(float* pfData, unsigned nChannel, unsigned nSamples) {
+    memcpy(m_ppfChannels[nChannel], pfData, nSamples * sizeof(float));
+}
+
+void CBFormat::ExtractStream(float* pfData, unsigned nChannel, unsigned nSamples) {
+    memcpy(pfData, m_ppfChannels[nChannel], nSamples * sizeof(float));
+}
+
+void CBFormat::operator = (const CBFormat &bf) {
+    memcpy(m_pfData.data(), bf.m_pfData.data(), m_nDataLength * sizeof(float));
+}
+
+bool CBFormat::operator == (const CBFormat &bf) {
+    if(m_b3D == bf.m_b3D && m_nOrder == bf.m_nOrder && m_nDataLength == bf.m_nDataLength)
+        return true;
+    else
+        return false;
+}
+
+bool CBFormat::operator != (const CBFormat &bf) {
+    if(m_b3D != bf.m_b3D || m_nOrder != bf.m_nOrder || m_nDataLength != bf.m_nDataLength)
+        return true;
+    else
+        return false;
+}
+
+CBFormat& CBFormat::operator += (const CBFormat &bf) {
+    unsigned niChannel = 0;
+    unsigned niSample = 0;
+    for(niChannel = 0; niChannel < m_nChannelCount; niChannel++)
+    {
+        for(niSample = 0; niSample < m_nSamples; niSample++)
+        {
+            m_ppfChannels[niChannel][niSample] += bf.m_ppfChannels[niChannel][niSample];
+        }
+    }
+
+    return *this;
+}
+
+CBFormat& CBFormat::operator -= (const CBFormat &bf) {
+    unsigned niChannel = 0;
+    unsigned niSample = 0;
+    for(niChannel = 0; niChannel < m_nChannelCount; niChannel++)
+    {
+        for(niSample = 0; niSample < m_nSamples; niSample++)
+        {
+            m_ppfChannels[niChannel][niSample] -= bf.m_ppfChannels[niChannel][niSample];
+        }
+    }
+
+    return *this;
+}
+
+CBFormat& CBFormat::operator *= (const CBFormat &bf) {
+    unsigned niChannel = 0;
+    unsigned niSample = 0;
+    for(niChannel = 0; niChannel < m_nChannelCount; niChannel++)
+    {
+        for(niSample = 0; niSample < m_nSamples; niSample++)
+        {
+            m_ppfChannels[niChannel][niSample] *= bf.m_ppfChannels[niChannel][niSample];
+        }
+    }
+
+    return *this;
+}
+
+CBFormat& CBFormat::operator /= (const CBFormat &bf) {
+    unsigned niChannel = 0;
+    unsigned niSample = 0;
+    for(niChannel = 0; niChannel < m_nChannelCount; niChannel++)
+    {
+        for(niSample = 0; niSample < m_nSamples; niSample++)
+        {
+            m_ppfChannels[niChannel][niSample] /= bf.m_ppfChannels[niChannel][niSample];
+        }
+    }
+
+    return *this;
+}
+
+CBFormat& CBFormat::operator += (const float &fValue) {
+    unsigned niChannel = 0;
+    unsigned niSample = 0;
+    for(niChannel = 0; niChannel < m_nChannelCount; niChannel++)
+    {
+        for(niSample = 0; niSample < m_nSamples; niSample++)
+        {
+            m_ppfChannels[niChannel][niSample] += fValue;
+        }
+    }
+
+    return *this;
+}
+
+CBFormat& CBFormat::operator -= (const float &fValue) {
+    unsigned niChannel = 0;
+    unsigned niSample = 0;
+    for(niChannel = 0; niChannel < m_nChannelCount; niChannel++)
+    {
+        for(niSample = 0; niSample < m_nSamples; niSample++)
+        {
+            m_ppfChannels[niChannel][niSample] -= fValue;
+        }
+    }
+
+    return *this;
+}
+
+CBFormat& CBFormat::operator *= (const float &fValue) {
+    unsigned niChannel = 0;
+    unsigned niSample = 0;
+    for(niChannel = 0; niChannel < m_nChannelCount; niChannel++)
+    {
+        for(niSample = 0; niSample < m_nSamples; niSample++)
+        {
+            m_ppfChannels[niChannel][niSample] *= fValue;
+        }
+    }
+
+    return *this;
+}
+
+CBFormat& CBFormat::operator /= (const float &fValue) {
+    unsigned niChannel = 0;
+    unsigned niSample = 0;
+    for(niChannel = 0; niChannel < m_nChannelCount; niChannel++)
+    {
+        for(niSample = 0; niSample < m_nSamples; niSample++)
+        {
+            m_ppfChannels[niChannel][niSample] /= fValue;
+        }
+    }
+
+    return *this;
+}
+
+// For CAmbisonicSource
+CAmbisonicSource::CAmbisonicSource() {
+    m_polPosition.fAzimuth = 0.f;
+    m_polPosition.fElevation = 0.f;
+    m_polPosition.fDistance = 1.f;
+    m_fGain = 1.f;
+}
+
+bool CAmbisonicSource::Configure(unsigned nOrder, bool b3D, unsigned nMisc) {
+    bool success = CAmbisonicBase::Configure(nOrder, b3D, nMisc);
+    if(!success)
+        return false;
+
+    m_pfCoeff.resize( m_nChannelCount, 0 );
+    // for a Basic Ambisonics decoder all of the gains are set to 1.f
+    m_pfOrderWeights.resize( m_nOrder + 1, 1.f );
+
+    return true;
+}
+
+void CAmbisonicSource::Reset() {
+    //memset(m_pfCoeff, 0, m_nChannelCount * sizeof(float));
+}
+
+void CAmbisonicSource::Refresh() {
+    float fCosAzim = cosf(m_polPosition.fAzimuth);
+    float fSinAzim = sinf(m_polPosition.fAzimuth);
+    float fCosElev = cosf(m_polPosition.fElevation);
+    float fSinElev = sinf(m_polPosition.fElevation);
+
+    float fCos2Azim = cosf(2.f * m_polPosition.fAzimuth);
+    float fSin2Azim = sinf(2.f * m_polPosition.fAzimuth);
+    float fSin2Elev = sinf(2.f * m_polPosition.fElevation);
+
+    if(m_b3D)
+    {
+        // Uses ACN channel ordering and SN3D normalization scheme (AmbiX format)
+        if(m_nOrder >= 0)
+        {
+            m_pfCoeff[0] = 1.f * m_pfOrderWeights[0]; // W
+        }
+        if(m_nOrder >= 1)
+        {
+            m_pfCoeff[1] = (fSinAzim * fCosElev) * m_pfOrderWeights[1]; // Y
+            m_pfCoeff[2] = (fSinElev) * m_pfOrderWeights[1]; // Z
+            m_pfCoeff[3] = (fCosAzim * fCosElev) * m_pfOrderWeights[1]; // X
+        }
+        if(m_nOrder >= 2)
+        {
+            m_pfCoeff[4] = fSqrt32*(fSin2Azim * powf(fCosElev, 2)) * m_pfOrderWeights[2]; // V
+            m_pfCoeff[5] = fSqrt32*(fSinAzim * fSin2Elev) * m_pfOrderWeights[2]; // T
+            m_pfCoeff[6] = (1.5f * powf(fSinElev, 2.f) - 0.5f) * m_pfOrderWeights[2]; // R
+            m_pfCoeff[7] = fSqrt32*(fCosAzim * fSin2Elev) * m_pfOrderWeights[2]; // S
+            m_pfCoeff[8] = fSqrt32*(fCos2Azim * powf(fCosElev, 2)) * m_pfOrderWeights[2]; // U
+        }
+        if(m_nOrder >= 3)
+        {
+            m_pfCoeff[9] = fSqrt58*(sinf(3.f * m_polPosition.fAzimuth) * powf(fCosElev, 3.f)) * m_pfOrderWeights[3]; // Q
+            m_pfCoeff[10] = fSqrt152*(fSin2Azim * fSinElev * powf(fCosElev, 2.f)) * m_pfOrderWeights[3]; // O
+            m_pfCoeff[11] = fSqrt38*(fSinAzim * fCosElev * (5.f * powf(fSinElev, 2.f) - 1.f)) * m_pfOrderWeights[3]; // M
+            m_pfCoeff[12] = (fSinElev * (5.f * powf(fSinElev, 2.f) - 3.f) * 0.5f) * m_pfOrderWeights[3]; // K
+            m_pfCoeff[13] = fSqrt38*(fCosAzim * fCosElev * (5.f * powf(fSinElev, 2.f) - 1.f)) * m_pfOrderWeights[3]; // L
+            m_pfCoeff[14] = fSqrt152*(fCos2Azim * fSinElev * powf(fCosElev, 2.f)) * m_pfOrderWeights[3]; // N
+            m_pfCoeff[15] = fSqrt58*(cosf(3.f * m_polPosition.fAzimuth) * powf(fCosElev, 3.f)) * m_pfOrderWeights[3]; // P
+
+        }
+    }
+    else
+    {
+        if(m_nOrder >= 0)
+        {
+            m_pfCoeff[0] = m_pfOrderWeights[0];
+        }
+        if(m_nOrder >= 1)
+        {
+            m_pfCoeff[1] = (fCosAzim * fCosElev) * m_pfOrderWeights[1];
+            m_pfCoeff[2] = (fSinAzim * fCosElev) * m_pfOrderWeights[1];
+        }
+        if(m_nOrder >= 2)
+        {
+            m_pfCoeff[3] = (fCos2Azim * powf(fCosElev, 2)) * m_pfOrderWeights[2];
+            m_pfCoeff[4] = (fSin2Azim * powf(fCosElev, 2)) * m_pfOrderWeights[2];
+        }
+        if(m_nOrder >= 3)
+        {
+            m_pfCoeff[5] = (cosf(3.f * m_polPosition.fAzimuth) * powf(fCosElev, 3.f)) * m_pfOrderWeights[3];
+            m_pfCoeff[6] = (sinf(3.f * m_polPosition.fAzimuth) * powf(fCosElev, 3.f)) * m_pfOrderWeights[3];
+        }
+    }
+
+    for(unsigned ni = 0; ni < m_nChannelCount; ni++)
+        m_pfCoeff[ni] *= m_fGain;
+}
+
+void CAmbisonicSource::SetPosition(PolarPoint polPosition) {
+    m_polPosition = polPosition;
+}
+
+PolarPoint CAmbisonicSource::GetPosition() {
+    return m_polPosition;
+}
+
+void CAmbisonicSource::SetOrderWeight(unsigned nOrder, float fWeight) {
+    m_pfOrderWeights[nOrder] = fWeight;
+}
+
+void CAmbisonicSource::SetOrderWeightAll(float fWeight) {
+    for(unsigned niOrder = 0; niOrder < m_nOrder + 1; niOrder++) {
+        m_pfOrderWeights[niOrder] = fWeight;
+    }
+}
+
+void CAmbisonicSource::SetCoefficient(unsigned nChannel, float fCoeff) {
+    m_pfCoeff[nChannel] = fCoeff;
+}
+
+float CAmbisonicSource::GetOrderWeight(unsigned nOrder) {
+    return m_pfOrderWeights[nOrder];
+}
+
+float CAmbisonicSource::GetCoefficient(unsigned nChannel) {
+    return m_pfCoeff[nChannel];
+}
+
+void CAmbisonicSource::SetGain(float fGain) {
+    m_fGain = fGain;
+}
+
+float CAmbisonicSource::GetGain() {
+    return m_fGain;
+}
+
+// For CAmbisonicEncoder
+CAmbisonicEncoder::CAmbisonicEncoder() { }
+
+CAmbisonicEncoder::~CAmbisonicEncoder() { }
+
+bool CAmbisonicEncoder::Configure(unsigned nOrder, bool b3D, unsigned nMisc) {
+    bool success = CAmbisonicSource::Configure(nOrder, b3D, nMisc);
+    if(!success)
+        return false;
+    //SetOrderWeight(0, 1.f / sqrtf(2.f)); // Removed as seems to break SN3D normalisation
+    
+    return true;
+}
+
+void CAmbisonicEncoder::Refresh() {
+    CAmbisonicSource::Refresh();
+}
+
+void CAmbisonicEncoder::Process(float* pfSrc, unsigned nSamples, CBFormat* pfDst) {
+    unsigned niChannel = 0;
+    unsigned niSample = 0;
+    for(niChannel = 0; niChannel < m_nChannelCount; niChannel++)
+    {
+        for(niSample = 0; niSample < nSamples; niSample++)
+        {
+            pfDst->m_ppfChannels[niChannel][niSample] = pfSrc[niSample] * m_pfCoeff[niChannel];
+        }
+    }
+}
+
+// For CAmbisonicEncoderDist
 CAmbisonicEncoderDist::CAmbisonicEncoderDist() {
     m_nSampleRate = 0;
     m_fDelay = 0.f;
@@ -353,9 +734,9 @@ void ILLIXR_AUDIO::ABAudio::readNEncode(CBFormat& sumBF) {
 }
 
 // A leaf node function for encoder processing
-void ILLIXR_AUDIO::ABAudio::audio_process_fxp(std::vector<Sound*>* soundSrcs, size_t bytes_soundSrcs, std::vector<CBFormat>* soundTempBF, size_t bytes_soundTempBF, unsigned nSamples, unsigned int soundSrcsSize) {
+void ILLIXR_AUDIO::ABAudio::audio_process_fxp(/*0*/ std::vector<Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize) {
     __hpvm__hint(CPU_TARGET);
-    __hpvm__attributes (2, soundSrcs, soundTempBF, 1, soundTempBF);
+    __hpvm__attributes (1, soundSrcs, 1, soundSrcs);
 
     unsigned niChannel = 0;
 
@@ -365,16 +746,16 @@ void ILLIXR_AUDIO::ABAudio::audio_process_fxp(std::vector<Sound*>* soundSrcs, si
 
     if (soundIdx < soundSrcsSize && niSample < nSamples) {
         //Store
-        (*soundSrcs)[soundIdx]->BEncoder->m_pfDelayBuffer[((*soundSrcs)[soundIdx]->BEncoder->m_nIn + 1) % (*soundSrcs)[soundIdx]->BEncoder->m_nDelayBufferLength] = pfSrc[niSample];
+        (*soundSrcs)[soundIdx]->BEncoder->m_pfDelayBuffer[((*soundSrcs)[soundIdx]->BEncoder->m_nIn + 1) % (*soundSrcs)[soundIdx]->BEncoder->m_nDelayBufferLength] = (*soundSrcs)[soundIdx]->sample[niSample];
         //Read
         float fSrcSample = (*soundSrcs)[soundIdx]->BEncoder->m_pfDelayBuffer[((*soundSrcs)[soundIdx]->BEncoder->m_nOutA + 1) % (*soundSrcs)[soundIdx]->BEncoder->m_nDelayBufferLength] * (1.f - (*soundSrcs)[soundIdx]->BEncoder->m_fDelay) \
         + (*soundSrcs)[soundIdx]->BEncoder->m_pfDelayBuffer[((*soundSrcs)[soundIdx]->BEncoder->m_nOutB + 1) % (*soundSrcs)[soundIdx]->BEncoder->m_nDelayBufferLength] * (*soundSrcs)[soundIdx]->BEncoder->m_fDelay;
 
-        pfDst->m_ppfChannels[kW][niSample] = fSrcSample * (*soundSrcs)[soundIdx]->BEncoder->m_fInteriorGain * (*soundSrcs)[soundIdx]->BEncoder->m_pfCoeff[kW];
+        (*soundSrcs)[soundIdx]->BFormat->m_ppfChannels[kW][niSample] = fSrcSample * (*soundSrcs)[soundIdx]->BEncoder->m_fInteriorGain * (*soundSrcs)[soundIdx]->BEncoder->m_pfCoeff[kW];
 
         fSrcSample *= (*soundSrcs)[soundIdx]->BEncoder->m_fExteriorGain;
-        for (niChannel = 1; niChannel < m_nChannelCount; niChannel++)  {
-            pfDst->m_ppfChannels[niChannel][niSample] = fSrcSample * (*soundSrcs)[soundIdx]->BEncoder->m_pfCoeff[niChannel];
+        for (niChannel = 1; niChannel < (*soundSrcs)[soundIdx]->BEncoder->m_nChannelCount; niChannel++)  {
+            (*soundSrcs)[soundIdx]->BFormat->m_ppfChannels[niChannel][niSample] = fSrcSample * (*soundSrcs)[soundIdx]->BEncoder->m_pfCoeff[niChannel];
         }
     }
 
@@ -382,37 +763,91 @@ void ILLIXR_AUDIO::ABAudio::audio_process_fxp(std::vector<Sound*>* soundSrcs, si
     (*soundSrcs)[soundIdx]->BEncoder->m_nOutA = ((*soundSrcs)[soundIdx]->BEncoder->m_nOutA + nSamples - 1) % (*soundSrcs)[soundIdx]->BEncoder->m_nDelayBufferLength;
     (*soundSrcs)[soundIdx]->BEncoder->m_nOutB = ((*soundSrcs)[soundIdx]->BEncoder->m_nOutB + nSamples - 1) % (*soundSrcs)[soundIdx]->BEncoder->m_nDelayBufferLength;
 
-    __hpvm__return(1, bytes_soundTempBF);
+    __hpvm__return(1, bytes_soundSrcs);
 }
 
 // A leaf node function to do the addition of sumBF
-void ILLIXR_AUDIO::ABAudio::sumBF_fxp(std::vector<CBFormat>* soundTempBF, size_t bytes_soundTempBF, CBFormat& sumBF, size_t bytes_sumBF, unsigned int soundSrcsSize) {
+void ILLIXR_AUDIO::ABAudio::sumBF_fxp(/*0*/ std::vector<Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ CBFormat& sumBF, /*3*/ size_t bytes_sumBF, /*4*/ unsigned int soundSrcsSize) {
     __hpvm__hint(CPU_TARGET);
-    __hpvm__attributes(2, soundTempBF, sumBF, 1, sumBF);
-    void* thisNode = __hpvm__getNode();
-    int sumNode = __hpvm__getNodeInstanceID_x(thisNode);
+    __hpvm__attributes(2, soundSrcs, sumBF, 1, sumBF);
+    // void* thisNode = __hpvm__getNode();
+    // int sumNode = __hpvm__getNodeInstanceID_x(thisNode);
 
-    sumBF = soundTempBF[0];
+    sumBF = (*soundSrcs)[soundIdx]->BFormat[0];
 
-    for (unsinged int j = 0; j < soundSrcsSize; ++j) {
-        sumBF += soundTempBF[j];
+    for (unsigned int soundIdx = 0; soundIdx < soundSrcsSize; ++soundIdx) {
+        sumBF += (*soundSrcs)[soundIdx]->BFormat[soundIdx];
     }
+}
+
+// The root node for audio encoding
+void ILLIXR_AUDIO::ABAudio::encodingPipeline(/*0*/ std::vector<Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ CBFormat& sumBF, /*3*/ size_t bytes_sumBF, /*4*/ unsigned nSamples, /*5*/ unsigned int soundSrcsSize) {
+    __hpvm__hint(CPU_TARGET);
+    __hpvm__attributes(2, soundSrcs, sumBF, 2, soundSrcs, sumBF);
+
+    void* audioProcessNode = __hpvm__createNodeND(2, audio_process_fxp, soundSrcsSize, nSamples);
+    void* sumBFNode = __hpvm__createNodeND(0, sumBF_fxp);
+
+    // binding for the audioProcessNode
+    __hpvm__bindIn(audioProcessNode, 0, 0, 0);
+    __hpvm__bindIn(audioProcessNode, 1, 1, 0);
+    __hpvm__bindIn(audioProcessNode, 4, 2, 0);
+    __hpvm__bindIn(audioProcessNode, 5, 3, 0);
+
+    // binding for the sumBFNode
+    __hpvm__bindIn(sumBFNode, 0, 0, 0);
+    __hpvm__edge(audioProcessNode, sumBFNode, 1, 0, 1, 0);
+    __hpvm__bindIn(sumBFNode, 2, 2, 0);
+    __hpvm__bindIn(sumBFNode, 3, 3, 0);
+    __hpvm__bindIn(sumBFNode, 5, 4, 0);
 }
 
 // Same functionality as the readNEncode function but for HPVM-C purpose
 void ILLIXR_AUDIO::ABAudio::readNEncodeNew(CBFormat& sumBF) {
-    // CBFormat* tempBF;   <- This was the original code
-    // sumBF = 0;
-    __hpvm__init();
 
     unsigned int soundSrcsSize = soundSrcs->size();
     for (unsigned int soundIdx = 0; soundIdx < soundSrcsSize; ++soundIdx) {
         (*soundSrcs)[soundIdx]->justReadInForBFormat();
     }
-    for (unsigned int soundIdx = 0; soundIdx < soundSrcsSize; ++soundIdx) {
-        soundTempBF[soundIdx] = *((*soundSrcs)[soundIdx]->processToBFormat());  // soundIdx = __hpvm__getNodeInstanceID_x(thisNode); niSample = __hpvm__getNodeInstanceID_y(thisNode);
-    }
     
+    // variable initialization
+    size_t bytes_soundSrcs = sizeof(Sound) * soundSrcsSize;
+    size_t bytes_sumBF = sizeof(CBFormat);
+
+    __hpvm__init();
+
+    // Allocate struct for the DFG
+    RootIn* rootArgs = (RootIn*)malloc(sizeof(RootIn));
+
+    rootArgs->soundSrcs = soundSrcs;
+    rootArgs->bytes_soundSrcs = bytes_soundSrcs;
+    rootArgs->nSamples = BLOCK_SIZE;
+    rootArgs->sumBF = sumBF;    // We do have an "operator=" overloading for CBFormat
+    rootArgs->bytes_sumBF = bytes_sumBF;
+    rootArgs->soundSrcsSize = soundSrcsSize;
+    
+    // Memory tracking is required for pointer arguments, as specified by the HPVM-C instruction
+    llvm_hpvm_track_mem(soundSrcs, bytes_soundSrcs);
+    llvm_hpvm_track_mem(sumBF, bytes_sumBF);
+
+    printf("\n\nLaunching audio encoding pipeline!\n");
+
+    void* audioEncodingDFG = __hpvm__launch(0, encodingPipeline, (void*)rootArgs);
+    __hpvm__wait(audioEncodingDFG);
+
+    printf("\n\nPipeline execution completed!\n");
+    printf("\n\nRequesting memory!\n");
+
+    // Request data from graph
+    llvm_hpvm_request_mem(soundSrcs, bytes_soundSrcs);
+    llvm_hpvm_request_mem(sumBF, bytes_sumBF);
+
+    printf("\n\nDone requesting memory!\n");
+
+    llvm_hpvm_untrack_mem(soundSrcs, bytes_soundSrcs);
+    llvm_hpvm_untrack_mem(sumBF, bytes_sumBF);
+
+    __hpvm__cleanup();
 }
 
 // Simple rotation
