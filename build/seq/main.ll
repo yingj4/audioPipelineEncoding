@@ -3669,7 +3669,7 @@ declare i64 @__hpvm__getNodeInstanceID_y(i8*) local_unnamed_addr #2
 declare void @__hpvm__return(i32, ...) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define void @_ZN12ILLIXR_AUDIO7ABAudio9sumBF_fxpEPPNS_5SoundEmP8CBFormatmj(%"class.ILLIXR_AUDIO::ABAudio"* nocapture readnone %this, %"class.ILLIXR_AUDIO::Sound"** nocapture readonly %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* %addrSumBF, i64 %bytes_sumBF, i32 %soundSrcsSize) #7 align 2 !dbg !4950 {
+define void @_ZN12ILLIXR_AUDIO7ABAudio9sumBF_fxpEPPNS_5SoundEmP8CBFormatmj(%"class.ILLIXR_AUDIO::ABAudio"* nocapture readnone %this, %"class.ILLIXR_AUDIO::Sound"** %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* %addrSumBF, i64 %bytes_sumBF, i32 %soundSrcsSize) #7 align 2 !dbg !4950 {
 entry:
   call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::ABAudio"* undef, metadata !4952, metadata !DIExpression()), !dbg !4959
   call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %soundSrcs, metadata !4953, metadata !DIExpression()), !dbg !4959
@@ -3678,66 +3678,68 @@ entry:
   call void @llvm.dbg.value(metadata i64 undef, metadata !4956, metadata !DIExpression()), !dbg !4959
   call void @llvm.dbg.value(metadata i32 %soundSrcsSize, metadata !4957, metadata !DIExpression()), !dbg !4959
   tail call void @__hpvm__hint(i32 1) #24, !dbg !4960
+  tail call void (i32, ...) @__hpvm__attributes(i32 2, %"class.ILLIXR_AUDIO::Sound"** %soundSrcs, %class.CBFormat* %addrSumBF, i32 1, %class.CBFormat* %addrSumBF) #24, !dbg !4961
   call void @llvm.dbg.value(metadata i32 0, metadata !4958, metadata !DIExpression()), !dbg !4959
-  %0 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %soundSrcs, align 8, !dbg !4961, !tbaa !3171
-  %BFormat = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %0, i64 0, i32 2, !dbg !4962
-  %1 = load %class.CBFormat*, %class.CBFormat** %BFormat, align 8, !dbg !4962, !tbaa !4320
-  tail call void @_ZN8CBFormataSERKS_(%class.CBFormat* %addrSumBF, %class.CBFormat* dereferenceable(64) %1), !dbg !4963
+  %0 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %soundSrcs, align 8, !dbg !4962, !tbaa !3171
+  %BFormat = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %0, i64 0, i32 2, !dbg !4963
+  %1 = load %class.CBFormat*, %class.CBFormat** %BFormat, align 8, !dbg !4963, !tbaa !4320
+  tail call void @_ZN8CBFormataSERKS_(%class.CBFormat* %addrSumBF, %class.CBFormat* dereferenceable(64) %1), !dbg !4964
   call void @llvm.dbg.value(metadata i32 1, metadata !4958, metadata !DIExpression()), !dbg !4959
-  %cmp15 = icmp ugt i32 %soundSrcsSize, 1, !dbg !4964
-  br i1 %cmp15, label %for.body.preheader, label %for.end, !dbg !4967
+  %cmp18 = icmp ugt i32 %soundSrcsSize, 1, !dbg !4965
+  br i1 %cmp18, label %for.body.preheader, label %for.end, !dbg !4968
 
 for.body.preheader:                               ; preds = %entry
-  %wide.trip.count = zext i32 %soundSrcsSize to i64, !dbg !4964
-  br label %for.body, !dbg !4967
+  %wide.trip.count = zext i32 %soundSrcsSize to i64, !dbg !4965
+  br label %for.body, !dbg !4968
 
 for.body:                                         ; preds = %for.body, %for.body.preheader
   %indvars.iv = phi i64 [ 1, %for.body.preheader ], [ %indvars.iv.next, %for.body ]
   call void @llvm.dbg.value(metadata i64 %indvars.iv, metadata !4958, metadata !DIExpression()), !dbg !4959
-  %arrayidx4 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %soundSrcs, i64 %indvars.iv, !dbg !4968
-  %2 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %arrayidx4, align 8, !dbg !4968, !tbaa !3171
-  %BFormat5 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 2, !dbg !4970
-  %3 = load %class.CBFormat*, %class.CBFormat** %BFormat5, align 8, !dbg !4970, !tbaa !4320
-  %arrayidx7 = getelementptr inbounds %class.CBFormat, %class.CBFormat* %3, i64 %indvars.iv, !dbg !4968
-  %call = tail call dereferenceable(64) %class.CBFormat* @_ZN8CBFormatpLERKS_(%class.CBFormat* %addrSumBF, %class.CBFormat* nonnull dereferenceable(64) %arrayidx7), !dbg !4971
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !4972
+  %arrayidx4 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %soundSrcs, i64 %indvars.iv, !dbg !4969
+  %2 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %arrayidx4, align 8, !dbg !4969, !tbaa !3171
+  %BFormat5 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 2, !dbg !4971
+  %3 = load %class.CBFormat*, %class.CBFormat** %BFormat5, align 8, !dbg !4971, !tbaa !4320
+  %arrayidx7 = getelementptr inbounds %class.CBFormat, %class.CBFormat* %3, i64 %indvars.iv, !dbg !4969
+  %call = tail call dereferenceable(64) %class.CBFormat* @_ZN8CBFormatpLERKS_(%class.CBFormat* %addrSumBF, %class.CBFormat* nonnull dereferenceable(64) %arrayidx7), !dbg !4972
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !4973
   call void @llvm.dbg.value(metadata i32 undef, metadata !4958, metadata !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value)), !dbg !4959
-  %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count, !dbg !4964
-  br i1 %exitcond, label %for.end, label %for.body, !dbg !4967, !llvm.loop !4973
+  %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count, !dbg !4965
+  br i1 %exitcond, label %for.end, label %for.body, !dbg !4968, !llvm.loop !4974
 
 for.end:                                          ; preds = %for.body, %entry
-  ret void, !dbg !4975
+  ret void, !dbg !4976
 }
 
 ; Function Attrs: nounwind uwtable
-define void @_ZN12ILLIXR_AUDIO7ABAudio16encodingPipelineEPPNS_5SoundEmP8CBFormatmjj(%"class.ILLIXR_AUDIO::ABAudio"* nocapture readnone %this, %"class.ILLIXR_AUDIO::Sound"** nocapture readnone %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* nocapture readnone %addrSumBF, i64 %bytes_sumBF, i32 %nSamples, i32 %soundSrcsSize) #7 align 2 !dbg !4976 {
+define void @_ZN12ILLIXR_AUDIO7ABAudio16encodingPipelineEPPNS_5SoundEmP8CBFormatmjj(%"class.ILLIXR_AUDIO::ABAudio"* nocapture readnone %this, %"class.ILLIXR_AUDIO::Sound"** %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* %addrSumBF, i64 %bytes_sumBF, i32 %nSamples, i32 %soundSrcsSize) #7 align 2 !dbg !4977 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::ABAudio"* undef, metadata !4978, metadata !DIExpression()), !dbg !4991
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** undef, metadata !4979, metadata !DIExpression()), !dbg !4991
-  call void @llvm.dbg.value(metadata i64 undef, metadata !4980, metadata !DIExpression()), !dbg !4991
-  call void @llvm.dbg.value(metadata %class.CBFormat* undef, metadata !4981, metadata !DIExpression()), !dbg !4991
-  call void @llvm.dbg.value(metadata i64 undef, metadata !4982, metadata !DIExpression()), !dbg !4991
-  call void @llvm.dbg.value(metadata i32 %nSamples, metadata !4983, metadata !DIExpression()), !dbg !4991
-  call void @llvm.dbg.value(metadata i32 %soundSrcsSize, metadata !4984, metadata !DIExpression()), !dbg !4991
-  tail call void @__hpvm__hint(i32 1) #24, !dbg !4992
-  call void @llvm.dbg.value(metadata i64 ptrtoint (void (%"class.ILLIXR_AUDIO::ABAudio"*, %"class.ILLIXR_AUDIO::Sound"**, i64, i32, i32)* @_ZN12ILLIXR_AUDIO7ABAudio17audio_process_fxpEPPNS_5SoundEmjj to i64), metadata !4985, metadata !DIExpression(DW_OP_LLVM_fragment, 0, 64)), !dbg !4991
-  call void @llvm.dbg.value(metadata i64 0, metadata !4985, metadata !DIExpression(DW_OP_LLVM_fragment, 64, 64)), !dbg !4991
-  call void @llvm.dbg.value(metadata i64 ptrtoint (void (%"class.ILLIXR_AUDIO::ABAudio"*, %"class.ILLIXR_AUDIO::Sound"**, i64, %class.CBFormat*, i64, i32)* @_ZN12ILLIXR_AUDIO7ABAudio9sumBF_fxpEPPNS_5SoundEmP8CBFormatmj to i64), metadata !4987, metadata !DIExpression(DW_OP_LLVM_fragment, 0, 64)), !dbg !4991
-  call void @llvm.dbg.value(metadata i64 0, metadata !4987, metadata !DIExpression(DW_OP_LLVM_fragment, 64, 64)), !dbg !4991
-  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 2, i64 ptrtoint (void (%"class.ILLIXR_AUDIO::ABAudio"*, %"class.ILLIXR_AUDIO::Sound"**, i64, i32, i32)* @_ZN12ILLIXR_AUDIO7ABAudio17audio_process_fxpEPPNS_5SoundEmjj to i64), i64 0, i32 %soundSrcsSize, i32 %nSamples) #24, !dbg !4993
-  call void @llvm.dbg.value(metadata i8* %call, metadata !4989, metadata !DIExpression()), !dbg !4991
-  %call3 = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, i64 ptrtoint (void (%"class.ILLIXR_AUDIO::ABAudio"*, %"class.ILLIXR_AUDIO::Sound"**, i64, %class.CBFormat*, i64, i32)* @_ZN12ILLIXR_AUDIO7ABAudio9sumBF_fxpEPPNS_5SoundEmP8CBFormatmj to i64), i64 0) #24, !dbg !4994
-  call void @llvm.dbg.value(metadata i8* %call3, metadata !4990, metadata !DIExpression()), !dbg !4991
-  tail call void @__hpvm__bindIn(i8* %call, i32 0, i32 0, i32 0) #24, !dbg !4995
-  tail call void @__hpvm__bindIn(i8* %call, i32 1, i32 1, i32 0) #24, !dbg !4996
-  tail call void @__hpvm__bindIn(i8* %call, i32 4, i32 2, i32 0) #24, !dbg !4997
-  tail call void @__hpvm__bindIn(i8* %call, i32 5, i32 3, i32 0) #24, !dbg !4998
-  tail call void @__hpvm__bindIn(i8* %call3, i32 0, i32 0, i32 0) #24, !dbg !4999
-  %call4 = tail call i8* @__hpvm__edge(i8* %call, i8* %call3, i32 1, i32 0, i32 1, i32 0) #24, !dbg !5000
-  tail call void @__hpvm__bindIn(i8* %call3, i32 2, i32 2, i32 0) #24, !dbg !5001
-  tail call void @__hpvm__bindIn(i8* %call3, i32 3, i32 3, i32 0) #24, !dbg !5002
-  tail call void @__hpvm__bindIn(i8* %call3, i32 5, i32 4, i32 0) #24, !dbg !5003
-  ret void, !dbg !5004
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::ABAudio"* undef, metadata !4979, metadata !DIExpression()), !dbg !4992
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %soundSrcs, metadata !4980, metadata !DIExpression()), !dbg !4992
+  call void @llvm.dbg.value(metadata i64 undef, metadata !4981, metadata !DIExpression()), !dbg !4992
+  call void @llvm.dbg.value(metadata %class.CBFormat* %addrSumBF, metadata !4982, metadata !DIExpression()), !dbg !4992
+  call void @llvm.dbg.value(metadata i64 undef, metadata !4983, metadata !DIExpression()), !dbg !4992
+  call void @llvm.dbg.value(metadata i32 %nSamples, metadata !4984, metadata !DIExpression()), !dbg !4992
+  call void @llvm.dbg.value(metadata i32 %soundSrcsSize, metadata !4985, metadata !DIExpression()), !dbg !4992
+  tail call void @__hpvm__hint(i32 1) #24, !dbg !4993
+  tail call void (i32, ...) @__hpvm__attributes(i32 2, %"class.ILLIXR_AUDIO::Sound"** %soundSrcs, %class.CBFormat* %addrSumBF, i32 2, %"class.ILLIXR_AUDIO::Sound"** %soundSrcs, %class.CBFormat* %addrSumBF) #24, !dbg !4994
+  call void @llvm.dbg.value(metadata i64 ptrtoint (void (%"class.ILLIXR_AUDIO::ABAudio"*, %"class.ILLIXR_AUDIO::Sound"**, i64, i32, i32)* @_ZN12ILLIXR_AUDIO7ABAudio17audio_process_fxpEPPNS_5SoundEmjj to i64), metadata !4986, metadata !DIExpression(DW_OP_LLVM_fragment, 0, 64)), !dbg !4992
+  call void @llvm.dbg.value(metadata i64 0, metadata !4986, metadata !DIExpression(DW_OP_LLVM_fragment, 64, 64)), !dbg !4992
+  call void @llvm.dbg.value(metadata i64 ptrtoint (void (%"class.ILLIXR_AUDIO::ABAudio"*, %"class.ILLIXR_AUDIO::Sound"**, i64, %class.CBFormat*, i64, i32)* @_ZN12ILLIXR_AUDIO7ABAudio9sumBF_fxpEPPNS_5SoundEmP8CBFormatmj to i64), metadata !4988, metadata !DIExpression(DW_OP_LLVM_fragment, 0, 64)), !dbg !4992
+  call void @llvm.dbg.value(metadata i64 0, metadata !4988, metadata !DIExpression(DW_OP_LLVM_fragment, 64, 64)), !dbg !4992
+  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 2, i64 ptrtoint (void (%"class.ILLIXR_AUDIO::ABAudio"*, %"class.ILLIXR_AUDIO::Sound"**, i64, i32, i32)* @_ZN12ILLIXR_AUDIO7ABAudio17audio_process_fxpEPPNS_5SoundEmjj to i64), i64 0, i32 %soundSrcsSize, i32 %nSamples) #24, !dbg !4995
+  call void @llvm.dbg.value(metadata i8* %call, metadata !4990, metadata !DIExpression()), !dbg !4992
+  %call3 = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, i64 ptrtoint (void (%"class.ILLIXR_AUDIO::ABAudio"*, %"class.ILLIXR_AUDIO::Sound"**, i64, %class.CBFormat*, i64, i32)* @_ZN12ILLIXR_AUDIO7ABAudio9sumBF_fxpEPPNS_5SoundEmP8CBFormatmj to i64), i64 0) #24, !dbg !4996
+  call void @llvm.dbg.value(metadata i8* %call3, metadata !4991, metadata !DIExpression()), !dbg !4992
+  tail call void @__hpvm__bindIn(i8* %call, i32 0, i32 0, i32 0) #24, !dbg !4997
+  tail call void @__hpvm__bindIn(i8* %call, i32 1, i32 1, i32 0) #24, !dbg !4998
+  tail call void @__hpvm__bindIn(i8* %call, i32 4, i32 2, i32 0) #24, !dbg !4999
+  tail call void @__hpvm__bindIn(i8* %call, i32 5, i32 3, i32 0) #24, !dbg !5000
+  tail call void @__hpvm__bindIn(i8* %call3, i32 0, i32 0, i32 0) #24, !dbg !5001
+  %call4 = tail call i8* @__hpvm__edge(i8* %call, i8* %call3, i32 1, i32 0, i32 1, i32 0) #24, !dbg !5002
+  tail call void @__hpvm__bindIn(i8* %call3, i32 2, i32 2, i32 0) #24, !dbg !5003
+  tail call void @__hpvm__bindIn(i8* %call3, i32 3, i32 3, i32 0) #24, !dbg !5004
+  tail call void @__hpvm__bindIn(i8* %call3, i32 5, i32 4, i32 0) #24, !dbg !5005
+  ret void, !dbg !5006
 }
 
 ; Function Attrs: nounwind
@@ -3750,85 +3752,85 @@ declare void @__hpvm__bindIn(i8*, i32, i32, i32) local_unnamed_addr #2
 declare i8* @__hpvm__edge(i8*, i8*, i32, i32, i32, i32) local_unnamed_addr #2
 
 ; Function Attrs: uwtable
-define void @_ZN12ILLIXR_AUDIO7ABAudio14readNEncodeNewER8CBFormat(%"class.ILLIXR_AUDIO::ABAudio"* nocapture readonly %this, %class.CBFormat* dereferenceable(64) %sumBF) local_unnamed_addr #0 align 2 !dbg !5005 {
+define void @_ZN12ILLIXR_AUDIO7ABAudio14readNEncodeNewER8CBFormat(%"class.ILLIXR_AUDIO::ABAudio"* nocapture readonly %this, %class.CBFormat* dereferenceable(64) %sumBF) local_unnamed_addr #0 align 2 !dbg !5007 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::ABAudio"* %this, metadata !5007, metadata !DIExpression()), !dbg !5019
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !5008, metadata !DIExpression()), !dbg !5019
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !5009, metadata !DIExpression()), !dbg !5019
-  %soundSrcs = getelementptr inbounds %"class.ILLIXR_AUDIO::ABAudio", %"class.ILLIXR_AUDIO::ABAudio"* %this, i64 0, i32 1, !dbg !5020
-  %0 = load %"class.std::vector.6"*, %"class.std::vector.6"** %soundSrcs, align 8, !dbg !5020, !tbaa !4549
-  %call = tail call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE4sizeEv(%"class.std::vector.6"* %0) #24, !dbg !5021
-  %conv = trunc i64 %call to i32, !dbg !5020
-  call void @llvm.dbg.value(metadata i32 %conv, metadata !5010, metadata !DIExpression()), !dbg !5019
-  call void @llvm.dbg.value(metadata i32 0, metadata !5011, metadata !DIExpression()), !dbg !5022
-  %cmp52 = icmp eq i32 %conv, 0, !dbg !5023
-  br i1 %cmp52, label %for.cond.cleanup, label %for.body.preheader, !dbg !5025
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::ABAudio"* %this, metadata !5009, metadata !DIExpression()), !dbg !5021
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !5010, metadata !DIExpression()), !dbg !5021
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !5011, metadata !DIExpression()), !dbg !5021
+  %soundSrcs = getelementptr inbounds %"class.ILLIXR_AUDIO::ABAudio", %"class.ILLIXR_AUDIO::ABAudio"* %this, i64 0, i32 1, !dbg !5022
+  %0 = load %"class.std::vector.6"*, %"class.std::vector.6"** %soundSrcs, align 8, !dbg !5022, !tbaa !4549
+  %call = tail call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE4sizeEv(%"class.std::vector.6"* %0) #24, !dbg !5023
+  %conv = trunc i64 %call to i32, !dbg !5022
+  call void @llvm.dbg.value(metadata i32 %conv, metadata !5012, metadata !DIExpression()), !dbg !5021
+  call void @llvm.dbg.value(metadata i32 0, metadata !5013, metadata !DIExpression()), !dbg !5024
+  %cmp52 = icmp eq i32 %conv, 0, !dbg !5025
+  br i1 %cmp52, label %for.cond.cleanup, label %for.body.preheader, !dbg !5027
 
 for.body.preheader:                               ; preds = %entry
-  %wide.trip.count = and i64 %call, 4294967295, !dbg !5023
-  br label %for.body, !dbg !5025
+  %wide.trip.count = and i64 %call, 4294967295, !dbg !5025
+  br label %for.body, !dbg !5027
 
 for.cond.cleanup:                                 ; preds = %for.body, %entry
-  %conv5 = and i64 %call, 4294967295, !dbg !5026
-  %mul = mul nuw nsw i64 %conv5, 4136, !dbg !5027
-  call void @llvm.dbg.value(metadata i64 %mul, metadata !5013, metadata !DIExpression()), !dbg !5019
-  call void @llvm.dbg.value(metadata i64 64, metadata !5014, metadata !DIExpression()), !dbg !5019
-  tail call void @__hpvm__init() #24, !dbg !5028
-  %call6 = tail call noalias i8* @malloc(i64 40) #24, !dbg !5029
-  call void @llvm.dbg.value(metadata i8* %call6, metadata !5015, metadata !DIExpression()), !dbg !5019
-  %1 = bitcast %"class.std::vector.6"** %soundSrcs to i64*, !dbg !5030
-  %2 = load i64, i64* %1, align 8, !dbg !5030, !tbaa !4549
-  %3 = bitcast i8* %call6 to i64*, !dbg !5031
-  store i64 %2, i64* %3, align 1, !dbg !5031, !tbaa !5032
-  %bytes_soundSrcs9 = getelementptr inbounds i8, i8* %call6, i64 8, !dbg !5035
-  %4 = bitcast i8* %bytes_soundSrcs9 to i64*, !dbg !5035
-  store i64 %mul, i64* %4, align 1, !dbg !5036, !tbaa !5037
-  %nSamples = getelementptr inbounds i8, i8* %call6, i64 16, !dbg !5038
-  %5 = bitcast i8* %nSamples to i32*, !dbg !5038
-  store i32 1024, i32* %5, align 1, !dbg !5039, !tbaa !5040
-  %addrSumBF10 = getelementptr inbounds i8, i8* %call6, i64 20, !dbg !5041
-  %6 = bitcast i8* %addrSumBF10 to %class.CBFormat**, !dbg !5041
-  store %class.CBFormat* %sumBF, %class.CBFormat** %6, align 1, !dbg !5042, !tbaa !5043
-  %bytes_sumBF11 = getelementptr inbounds i8, i8* %call6, i64 28, !dbg !5044
-  %7 = bitcast i8* %bytes_sumBF11 to i64*, !dbg !5044
-  store i64 64, i64* %7, align 1, !dbg !5045, !tbaa !5046
-  %soundSrcsSize12 = getelementptr inbounds i8, i8* %call6, i64 36, !dbg !5047
-  %8 = bitcast i8* %soundSrcsSize12 to i32*, !dbg !5047
-  store i32 %conv, i32* %8, align 1, !dbg !5048, !tbaa !5049
-  %9 = bitcast %"class.std::vector.6"** %soundSrcs to i8**, !dbg !5050
-  %10 = load i8*, i8** %9, align 8, !dbg !5050, !tbaa !4549
-  tail call void @llvm_hpvm_track_mem(i8* %10, i64 %mul) #24, !dbg !5051
-  %11 = bitcast %class.CBFormat* %sumBF to i8*, !dbg !5052
-  tail call void @llvm_hpvm_track_mem(i8* nonnull %11, i64 64) #24, !dbg !5053
-  %puts = tail call i32 @puts(i8* getelementptr inbounds ([37 x i8], [37 x i8]* @str, i64 0, i64 0)), !dbg !5054
-  call void @llvm.dbg.value(metadata i64 ptrtoint (void (%"class.ILLIXR_AUDIO::ABAudio"*, %"class.ILLIXR_AUDIO::Sound"**, i64, %class.CBFormat*, i64, i32, i32)* @_ZN12ILLIXR_AUDIO7ABAudio16encodingPipelineEPPNS_5SoundEmP8CBFormatmjj to i64), metadata !5016, metadata !DIExpression(DW_OP_LLVM_fragment, 0, 64)), !dbg !5019
-  call void @llvm.dbg.value(metadata i64 0, metadata !5016, metadata !DIExpression(DW_OP_LLVM_fragment, 64, 64)), !dbg !5019
-  %call15 = tail call i8* (i32, ...) @__hpvm__launch(i32 0, i64 ptrtoint (void (%"class.ILLIXR_AUDIO::ABAudio"*, %"class.ILLIXR_AUDIO::Sound"**, i64, %class.CBFormat*, i64, i32, i32)* @_ZN12ILLIXR_AUDIO7ABAudio16encodingPipelineEPPNS_5SoundEmP8CBFormatmjj to i64), i64 0, i8* %call6) #24, !dbg !5055
-  call void @llvm.dbg.value(metadata i8* %call15, metadata !5018, metadata !DIExpression()), !dbg !5019
-  tail call void @__hpvm__wait(i8* %call15) #24, !dbg !5056
-  %puts49 = tail call i32 @puts(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @str.16, i64 0, i64 0)), !dbg !5057
-  %puts50 = tail call i32 @puts(i8* getelementptr inbounds ([21 x i8], [21 x i8]* @str.17, i64 0, i64 0)), !dbg !5058
-  %12 = load i8*, i8** %9, align 8, !dbg !5059, !tbaa !4549
-  tail call void @llvm_hpvm_request_mem(i8* %12, i64 %mul) #24, !dbg !5060
-  tail call void @llvm_hpvm_request_mem(i8* nonnull %11, i64 64) #24, !dbg !5061
-  %puts51 = tail call i32 @puts(i8* getelementptr inbounds ([26 x i8], [26 x i8]* @str.18, i64 0, i64 0)), !dbg !5062
-  %13 = load i8*, i8** %9, align 8, !dbg !5063, !tbaa !4549
-  tail call void @llvm_hpvm_untrack_mem(i8* %13) #24, !dbg !5064
-  tail call void @llvm_hpvm_untrack_mem(i8* nonnull %11) #24, !dbg !5065
-  tail call void @__hpvm__cleanup() #24, !dbg !5066
-  ret void, !dbg !5067
+  %conv5 = and i64 %call, 4294967295, !dbg !5028
+  %mul = mul nuw nsw i64 %conv5, 4136, !dbg !5029
+  call void @llvm.dbg.value(metadata i64 %mul, metadata !5015, metadata !DIExpression()), !dbg !5021
+  call void @llvm.dbg.value(metadata i64 64, metadata !5016, metadata !DIExpression()), !dbg !5021
+  tail call void @__hpvm__init() #24, !dbg !5030
+  %call6 = tail call noalias i8* @malloc(i64 40) #24, !dbg !5031
+  call void @llvm.dbg.value(metadata i8* %call6, metadata !5017, metadata !DIExpression()), !dbg !5021
+  %1 = bitcast %"class.std::vector.6"** %soundSrcs to i64*, !dbg !5032
+  %2 = load i64, i64* %1, align 8, !dbg !5032, !tbaa !4549
+  %3 = bitcast i8* %call6 to i64*, !dbg !5033
+  store i64 %2, i64* %3, align 1, !dbg !5033, !tbaa !5034
+  %bytes_soundSrcs9 = getelementptr inbounds i8, i8* %call6, i64 8, !dbg !5037
+  %4 = bitcast i8* %bytes_soundSrcs9 to i64*, !dbg !5037
+  store i64 %mul, i64* %4, align 1, !dbg !5038, !tbaa !5039
+  %nSamples = getelementptr inbounds i8, i8* %call6, i64 16, !dbg !5040
+  %5 = bitcast i8* %nSamples to i32*, !dbg !5040
+  store i32 1024, i32* %5, align 1, !dbg !5041, !tbaa !5042
+  %addrSumBF10 = getelementptr inbounds i8, i8* %call6, i64 20, !dbg !5043
+  %6 = bitcast i8* %addrSumBF10 to %class.CBFormat**, !dbg !5043
+  store %class.CBFormat* %sumBF, %class.CBFormat** %6, align 1, !dbg !5044, !tbaa !5045
+  %bytes_sumBF11 = getelementptr inbounds i8, i8* %call6, i64 28, !dbg !5046
+  %7 = bitcast i8* %bytes_sumBF11 to i64*, !dbg !5046
+  store i64 64, i64* %7, align 1, !dbg !5047, !tbaa !5048
+  %soundSrcsSize12 = getelementptr inbounds i8, i8* %call6, i64 36, !dbg !5049
+  %8 = bitcast i8* %soundSrcsSize12 to i32*, !dbg !5049
+  store i32 %conv, i32* %8, align 1, !dbg !5050, !tbaa !5051
+  %9 = bitcast %"class.std::vector.6"** %soundSrcs to i8**, !dbg !5052
+  %10 = load i8*, i8** %9, align 8, !dbg !5052, !tbaa !4549
+  tail call void @llvm_hpvm_track_mem(i8* %10, i64 %mul) #24, !dbg !5053
+  %11 = bitcast %class.CBFormat* %sumBF to i8*, !dbg !5054
+  tail call void @llvm_hpvm_track_mem(i8* nonnull %11, i64 64) #24, !dbg !5055
+  %puts = tail call i32 @puts(i8* getelementptr inbounds ([37 x i8], [37 x i8]* @str, i64 0, i64 0)), !dbg !5056
+  call void @llvm.dbg.value(metadata i64 ptrtoint (void (%"class.ILLIXR_AUDIO::ABAudio"*, %"class.ILLIXR_AUDIO::Sound"**, i64, %class.CBFormat*, i64, i32, i32)* @_ZN12ILLIXR_AUDIO7ABAudio16encodingPipelineEPPNS_5SoundEmP8CBFormatmjj to i64), metadata !5018, metadata !DIExpression(DW_OP_LLVM_fragment, 0, 64)), !dbg !5021
+  call void @llvm.dbg.value(metadata i64 0, metadata !5018, metadata !DIExpression(DW_OP_LLVM_fragment, 64, 64)), !dbg !5021
+  %call15 = tail call i8* (i32, ...) @__hpvm__launch(i32 0, i64 ptrtoint (void (%"class.ILLIXR_AUDIO::ABAudio"*, %"class.ILLIXR_AUDIO::Sound"**, i64, %class.CBFormat*, i64, i32, i32)* @_ZN12ILLIXR_AUDIO7ABAudio16encodingPipelineEPPNS_5SoundEmP8CBFormatmjj to i64), i64 0, i8* %call6) #24, !dbg !5057
+  call void @llvm.dbg.value(metadata i8* %call15, metadata !5020, metadata !DIExpression()), !dbg !5021
+  tail call void @__hpvm__wait(i8* %call15) #24, !dbg !5058
+  %puts49 = tail call i32 @puts(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @str.16, i64 0, i64 0)), !dbg !5059
+  %puts50 = tail call i32 @puts(i8* getelementptr inbounds ([21 x i8], [21 x i8]* @str.17, i64 0, i64 0)), !dbg !5060
+  %12 = load i8*, i8** %9, align 8, !dbg !5061, !tbaa !4549
+  tail call void @llvm_hpvm_request_mem(i8* %12, i64 %mul) #24, !dbg !5062
+  tail call void @llvm_hpvm_request_mem(i8* nonnull %11, i64 64) #24, !dbg !5063
+  %puts51 = tail call i32 @puts(i8* getelementptr inbounds ([26 x i8], [26 x i8]* @str.18, i64 0, i64 0)), !dbg !5064
+  %13 = load i8*, i8** %9, align 8, !dbg !5065, !tbaa !4549
+  tail call void @llvm_hpvm_untrack_mem(i8* %13) #24, !dbg !5066
+  tail call void @llvm_hpvm_untrack_mem(i8* nonnull %11) #24, !dbg !5067
+  tail call void @__hpvm__cleanup() #24, !dbg !5068
+  ret void, !dbg !5069
 
 for.body:                                         ; preds = %for.body, %for.body.preheader
   %indvars.iv = phi i64 [ 0, %for.body.preheader ], [ %indvars.iv.next, %for.body ]
-  call void @llvm.dbg.value(metadata i64 %indvars.iv, metadata !5011, metadata !DIExpression()), !dbg !5022
-  %14 = load %"class.std::vector.6"*, %"class.std::vector.6"** %soundSrcs, align 8, !dbg !5068, !tbaa !4549
-  %call4 = tail call dereferenceable(8) %"class.ILLIXR_AUDIO::Sound"** @_ZNSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEixEm(%"class.std::vector.6"* %14, i64 %indvars.iv) #24, !dbg !5070
-  %15 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %call4, align 8, !dbg !5070, !tbaa !3171
-  tail call void @_ZN12ILLIXR_AUDIO5Sound20justReadInForBFormatEv(%"class.ILLIXR_AUDIO::Sound"* %15), !dbg !5071
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !5072
-  call void @llvm.dbg.value(metadata i32 undef, metadata !5011, metadata !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value)), !dbg !5022
-  %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count, !dbg !5023
-  br i1 %exitcond, label %for.cond.cleanup, label %for.body, !dbg !5025, !llvm.loop !5073
+  call void @llvm.dbg.value(metadata i64 %indvars.iv, metadata !5013, metadata !DIExpression()), !dbg !5024
+  %14 = load %"class.std::vector.6"*, %"class.std::vector.6"** %soundSrcs, align 8, !dbg !5070, !tbaa !4549
+  %call4 = tail call dereferenceable(8) %"class.ILLIXR_AUDIO::Sound"** @_ZNSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEixEm(%"class.std::vector.6"* %14, i64 %indvars.iv) #24, !dbg !5072
+  %15 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %call4, align 8, !dbg !5072, !tbaa !3171
+  tail call void @_ZN12ILLIXR_AUDIO5Sound20justReadInForBFormatEv(%"class.ILLIXR_AUDIO::Sound"* %15), !dbg !5073
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !5074
+  call void @llvm.dbg.value(metadata i32 undef, metadata !5013, metadata !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value)), !dbg !5024
+  %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count, !dbg !5025
+  br i1 %exitcond, label %for.cond.cleanup, label %for.body, !dbg !5027, !llvm.loop !5075
 }
 
 ; Function Attrs: nounwind
@@ -3856,120 +3858,120 @@ declare void @llvm_hpvm_untrack_mem(i8*) local_unnamed_addr #2
 declare void @__hpvm__cleanup() local_unnamed_addr #2
 
 ; Function Attrs: uwtable
-define void @_ZN12ILLIXR_AUDIO7ABAudio12processBlockEv(%"class.ILLIXR_AUDIO::ABAudio"* nocapture readonly %this) local_unnamed_addr #0 align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !5075 {
+define void @_ZN12ILLIXR_AUDIO7ABAudio12processBlockEv(%"class.ILLIXR_AUDIO::ABAudio"* nocapture readonly %this) local_unnamed_addr #0 align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !5077 {
 entry:
   %sumBF = alloca %class.CBFormat, align 8
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::ABAudio"* %this, metadata !5077, metadata !DIExpression()), !dbg !5080
-  %call = tail call i8* @_Znam(i64 16) #26, !dbg !5081
-  %0 = bitcast i8* %call to float**, !dbg !5081
-  call void @llvm.dbg.value(metadata float** %0, metadata !5078, metadata !DIExpression()), !dbg !5080
-  %call2 = tail call i8* @_Znam(i64 4096) #26, !dbg !5082
-  %1 = bitcast i8* %call to i8**, !dbg !5083
-  store i8* %call2, i8** %1, align 8, !dbg !5083, !tbaa !3171
-  %call3 = tail call i8* @_Znam(i64 4096) #26, !dbg !5084
-  %arrayidx4 = getelementptr inbounds i8, i8* %call, i64 8, !dbg !5085
-  %2 = bitcast i8* %arrayidx4 to float**, !dbg !5085
-  %3 = bitcast i8* %arrayidx4 to i8**, !dbg !5086
-  store i8* %call3, i8** %3, align 8, !dbg !5086, !tbaa !3171
-  %4 = bitcast %class.CBFormat* %sumBF to i8*, !dbg !5087
-  call void @llvm.lifetime.start.p0i8(i64 64, i8* nonnull %4) #24, !dbg !5087
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !5079, metadata !DIExpression(DW_OP_deref)), !dbg !5080
-  call void @_ZN8CBFormatC2Ev(%class.CBFormat* nonnull %sumBF), !dbg !5088
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::ABAudio"* %this, metadata !5079, metadata !DIExpression()), !dbg !5082
+  %call = tail call i8* @_Znam(i64 16) #26, !dbg !5083
+  %0 = bitcast i8* %call to float**, !dbg !5083
+  call void @llvm.dbg.value(metadata float** %0, metadata !5080, metadata !DIExpression()), !dbg !5082
+  %call2 = tail call i8* @_Znam(i64 4096) #26, !dbg !5084
+  %1 = bitcast i8* %call to i8**, !dbg !5085
+  store i8* %call2, i8** %1, align 8, !dbg !5085, !tbaa !3171
+  %call3 = tail call i8* @_Znam(i64 4096) #26, !dbg !5086
+  %arrayidx4 = getelementptr inbounds i8, i8* %call, i64 8, !dbg !5087
+  %2 = bitcast i8* %arrayidx4 to float**, !dbg !5087
+  %3 = bitcast i8* %arrayidx4 to i8**, !dbg !5088
+  store i8* %call3, i8** %3, align 8, !dbg !5088, !tbaa !3171
+  %4 = bitcast %class.CBFormat* %sumBF to i8*, !dbg !5089
+  call void @llvm.lifetime.start.p0i8(i64 64, i8* nonnull %4) #24, !dbg !5089
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !5081, metadata !DIExpression(DW_OP_deref)), !dbg !5082
+  call void @_ZN8CBFormatC2Ev(%class.CBFormat* nonnull %sumBF), !dbg !5090
   %call5 = invoke zeroext i1 @_ZN8CBFormat9ConfigureEjbj(%class.CBFormat* nonnull %sumBF, i32 3, i1 zeroext true, i32 1024)
-          to label %invoke.cont unwind label %lpad, !dbg !5089
+          to label %invoke.cont unwind label %lpad, !dbg !5091
 
 invoke.cont:                                      ; preds = %entry
-  %processType = getelementptr inbounds %"class.ILLIXR_AUDIO::ABAudio", %"class.ILLIXR_AUDIO::ABAudio"* %this, i64 0, i32 0, !dbg !5090
-  %5 = load i32, i32* %processType, align 8, !dbg !5090, !tbaa !4529
-  %cmp = icmp eq i32 %5, 2, !dbg !5092
-  br i1 %cmp, label %if.end, label %if.then, !dbg !5093
+  %processType = getelementptr inbounds %"class.ILLIXR_AUDIO::ABAudio", %"class.ILLIXR_AUDIO::ABAudio"* %this, i64 0, i32 0, !dbg !5092
+  %5 = load i32, i32* %processType, align 8, !dbg !5092, !tbaa !4529
+  %cmp = icmp eq i32 %5, 2, !dbg !5094
+  br i1 %cmp, label %if.end, label %if.then, !dbg !5095
 
 if.then:                                          ; preds = %invoke.cont
   invoke void @_ZN12ILLIXR_AUDIO7ABAudio14readNEncodeNewER8CBFormat(%"class.ILLIXR_AUDIO::ABAudio"* nonnull %this, %class.CBFormat* nonnull dereferenceable(64) %sumBF)
-          to label %if.end unwind label %lpad, !dbg !5094
+          to label %if.end unwind label %lpad, !dbg !5096
 
 lpad:                                             ; preds = %if.then, %entry
   %6 = landingpad { i8*, i32 }
-          cleanup, !dbg !5096
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !5079, metadata !DIExpression(DW_OP_deref)), !dbg !5080
-  call void @_ZN8CBFormatD2Ev(%class.CBFormat* nonnull %sumBF) #24, !dbg !5096
-  call void @llvm.lifetime.end.p0i8(i64 64, i8* nonnull %4) #24, !dbg !5096
-  resume { i8*, i32 } %6, !dbg !5096
+          cleanup, !dbg !5098
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !5081, metadata !DIExpression(DW_OP_deref)), !dbg !5082
+  call void @_ZN8CBFormatD2Ev(%class.CBFormat* nonnull %sumBF) #24, !dbg !5098
+  call void @llvm.lifetime.end.p0i8(i64 64, i8* nonnull %4) #24, !dbg !5098
+  resume { i8*, i32 } %6, !dbg !5098
 
 if.end:                                           ; preds = %invoke.cont, %if.then
-  %7 = load float*, float** %0, align 8, !dbg !5097, !tbaa !3171
-  %isnull = icmp eq float* %7, null, !dbg !5098
-  br i1 %isnull, label %delete.end, label %delete.notnull, !dbg !5098
+  %7 = load float*, float** %0, align 8, !dbg !5099, !tbaa !3171
+  %isnull = icmp eq float* %7, null, !dbg !5100
+  br i1 %isnull, label %delete.end, label %delete.notnull, !dbg !5100
 
 delete.notnull:                                   ; preds = %if.end
-  %8 = bitcast float* %7 to i8*, !dbg !5098
-  call void @_ZdaPv(i8* %8) #27, !dbg !5098
-  br label %delete.end, !dbg !5098
+  %8 = bitcast float* %7 to i8*, !dbg !5100
+  call void @_ZdaPv(i8* %8) #27, !dbg !5100
+  br label %delete.end, !dbg !5100
 
 delete.end:                                       ; preds = %delete.notnull, %if.end
-  %9 = load float*, float** %2, align 8, !dbg !5099, !tbaa !3171
-  %isnull9 = icmp eq float* %9, null, !dbg !5100
-  br i1 %isnull9, label %delete.notnull13, label %delete.notnull10, !dbg !5100
+  %9 = load float*, float** %2, align 8, !dbg !5101, !tbaa !3171
+  %isnull9 = icmp eq float* %9, null, !dbg !5102
+  br i1 %isnull9, label %delete.notnull13, label %delete.notnull10, !dbg !5102
 
 delete.notnull10:                                 ; preds = %delete.end
-  %10 = bitcast float* %9 to i8*, !dbg !5100
-  call void @_ZdaPv(i8* %10) #27, !dbg !5100
-  br label %delete.notnull13, !dbg !5100
+  %10 = bitcast float* %9 to i8*, !dbg !5102
+  call void @_ZdaPv(i8* %10) #27, !dbg !5102
+  br label %delete.notnull13, !dbg !5102
 
 delete.notnull13:                                 ; preds = %delete.end, %delete.notnull10
-  call void @_ZdaPv(i8* nonnull %call) #27, !dbg !5101
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !5079, metadata !DIExpression(DW_OP_deref)), !dbg !5080
-  call void @_ZN8CBFormatD2Ev(%class.CBFormat* nonnull %sumBF) #24, !dbg !5096
-  call void @llvm.lifetime.end.p0i8(i64 64, i8* nonnull %4) #24, !dbg !5096
-  ret void, !dbg !5096
+  call void @_ZdaPv(i8* nonnull %call) #27, !dbg !5103
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !5081, metadata !DIExpression(DW_OP_deref)), !dbg !5082
+  call void @_ZN8CBFormatD2Ev(%class.CBFormat* nonnull %sumBF) #24, !dbg !5098
+  call void @llvm.lifetime.end.p0i8(i64 64, i8* nonnull %4) #24, !dbg !5098
+  ret void, !dbg !5098
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr void @_ZN8CBFormatD2Ev(%class.CBFormat* %this) unnamed_addr #16 comdat align 2 !dbg !5102 {
+define linkonce_odr void @_ZN8CBFormatD2Ev(%class.CBFormat* %this) unnamed_addr #16 comdat align 2 !dbg !5104 {
 entry:
-  call void @llvm.dbg.value(metadata %class.CBFormat* %this, metadata !5105, metadata !DIExpression()), !dbg !5106
-  %0 = getelementptr inbounds %class.CBFormat, %class.CBFormat* %this, i64 0, i32 0, i32 0, !dbg !5107
-  store i32 (...)** bitcast (i8** getelementptr inbounds ({ [7 x i8*] }, { [7 x i8*] }* @_ZTV8CBFormat, i64 0, inrange i32 0, i64 2) to i32 (...)**), i32 (...)*** %0, align 8, !dbg !5107, !tbaa !3042
-  %m_ppfChannels = getelementptr inbounds %class.CBFormat, %class.CBFormat* %this, i64 0, i32 4, !dbg !5108
-  tail call void @_ZNSt10unique_ptrIA_PfSt14default_deleteIS1_EED2Ev(%"class.std::unique_ptr"* nonnull %m_ppfChannels) #24, !dbg !5108
-  %m_pfData = getelementptr inbounds %class.CBFormat, %class.CBFormat* %this, i64 0, i32 3, !dbg !5108
-  tail call void @_ZNSt6vectorIfSaIfEED2Ev(%"class.std::vector"* nonnull %m_pfData) #24, !dbg !5108
-  %1 = bitcast %class.CBFormat* %this to %class.CAmbisonicBase*, !dbg !5108
-  tail call void @_ZN14CAmbisonicBaseD2Ev(%class.CAmbisonicBase* %1) #24, !dbg !5108
-  ret void, !dbg !5107
+  call void @llvm.dbg.value(metadata %class.CBFormat* %this, metadata !5107, metadata !DIExpression()), !dbg !5108
+  %0 = getelementptr inbounds %class.CBFormat, %class.CBFormat* %this, i64 0, i32 0, i32 0, !dbg !5109
+  store i32 (...)** bitcast (i8** getelementptr inbounds ({ [7 x i8*] }, { [7 x i8*] }* @_ZTV8CBFormat, i64 0, inrange i32 0, i64 2) to i32 (...)**), i32 (...)*** %0, align 8, !dbg !5109, !tbaa !3042
+  %m_ppfChannels = getelementptr inbounds %class.CBFormat, %class.CBFormat* %this, i64 0, i32 4, !dbg !5110
+  tail call void @_ZNSt10unique_ptrIA_PfSt14default_deleteIS1_EED2Ev(%"class.std::unique_ptr"* nonnull %m_ppfChannels) #24, !dbg !5110
+  %m_pfData = getelementptr inbounds %class.CBFormat, %class.CBFormat* %this, i64 0, i32 3, !dbg !5110
+  tail call void @_ZNSt6vectorIfSaIfEED2Ev(%"class.std::vector"* nonnull %m_pfData) #24, !dbg !5110
+  %1 = bitcast %class.CBFormat* %this to %class.CAmbisonicBase*, !dbg !5110
+  tail call void @_ZN14CAmbisonicBaseD2Ev(%class.CAmbisonicBase* %1) #24, !dbg !5110
+  ret void, !dbg !5109
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr void @_ZN12ILLIXR_AUDIO11WAVHeader_tC2Ev(%"struct.ILLIXR_AUDIO::WAVHeader_t"* %this) unnamed_addr #16 comdat align 2 !dbg !5110 {
+define linkonce_odr void @_ZN12ILLIXR_AUDIO11WAVHeader_tC2Ev(%"struct.ILLIXR_AUDIO::WAVHeader_t"* %this) unnamed_addr #16 comdat align 2 !dbg !5112 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, metadata !5116, metadata !DIExpression()), !dbg !5118
-  %sGroupID = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 0, !dbg !5119
-  store i32 1179011410, i32* %sGroupID, align 1, !dbg !5119, !tbaa !5120
-  %dwFileLength = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 1, !dbg !5122
-  store i32 48000000, i32* %dwFileLength, align 1, !dbg !5122, !tbaa !5123
-  %sRiffType = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 2, !dbg !5124
-  store i32 1163280727, i32* %sRiffType, align 1, !dbg !5124, !tbaa !5125
-  %subchunkID = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 3, !dbg !5126
-  store i32 544501094, i32* %subchunkID, align 1, !dbg !5126, !tbaa !5127
-  %subchunksize = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 4, !dbg !5128
-  store i32 16, i32* %subchunksize, align 1, !dbg !5128, !tbaa !5129
-  %audioFormat = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 5, !dbg !5130
-  store i16 1, i16* %audioFormat, align 1, !dbg !5130, !tbaa !5131
-  %NumChannels = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 6, !dbg !5132
-  store i16 2, i16* %NumChannels, align 1, !dbg !5132, !tbaa !5133
-  %SampleRate = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 7, !dbg !5134
-  store i32 48000, i32* %SampleRate, align 1, !dbg !5134, !tbaa !5135
-  %byteRate = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 8, !dbg !5136
-  store i32 192000, i32* %byteRate, align 1, !dbg !5136, !tbaa !5137
-  %BlockAlign = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 9, !dbg !5138
-  store i16 4, i16* %BlockAlign, align 1, !dbg !5138, !tbaa !5139
-  %BitsPerSample = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 10, !dbg !5140
-  store i16 16, i16* %BitsPerSample, align 1, !dbg !5140, !tbaa !5141
-  %dataChunkID = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 11, !dbg !5142
-  store i32 1635017060, i32* %dataChunkID, align 1, !dbg !5142, !tbaa !5143
-  %dataChunkSize = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 12, !dbg !5144
-  store i32 48000000, i32* %dataChunkSize, align 1, !dbg !5144, !tbaa !5145
-  ret void, !dbg !5146
+  call void @llvm.dbg.value(metadata %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, metadata !5118, metadata !DIExpression()), !dbg !5120
+  %sGroupID = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 0, !dbg !5121
+  store i32 1179011410, i32* %sGroupID, align 1, !dbg !5121, !tbaa !5122
+  %dwFileLength = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 1, !dbg !5124
+  store i32 48000000, i32* %dwFileLength, align 1, !dbg !5124, !tbaa !5125
+  %sRiffType = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 2, !dbg !5126
+  store i32 1163280727, i32* %sRiffType, align 1, !dbg !5126, !tbaa !5127
+  %subchunkID = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 3, !dbg !5128
+  store i32 544501094, i32* %subchunkID, align 1, !dbg !5128, !tbaa !5129
+  %subchunksize = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 4, !dbg !5130
+  store i32 16, i32* %subchunksize, align 1, !dbg !5130, !tbaa !5131
+  %audioFormat = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 5, !dbg !5132
+  store i16 1, i16* %audioFormat, align 1, !dbg !5132, !tbaa !5133
+  %NumChannels = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 6, !dbg !5134
+  store i16 2, i16* %NumChannels, align 1, !dbg !5134, !tbaa !5135
+  %SampleRate = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 7, !dbg !5136
+  store i32 48000, i32* %SampleRate, align 1, !dbg !5136, !tbaa !5137
+  %byteRate = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 8, !dbg !5138
+  store i32 192000, i32* %byteRate, align 1, !dbg !5138, !tbaa !5139
+  %BlockAlign = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 9, !dbg !5140
+  store i16 4, i16* %BlockAlign, align 1, !dbg !5140, !tbaa !5141
+  %BitsPerSample = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 10, !dbg !5142
+  store i16 16, i16* %BitsPerSample, align 1, !dbg !5142, !tbaa !5143
+  %dataChunkID = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 11, !dbg !5144
+  store i32 1635017060, i32* %dataChunkID, align 1, !dbg !5144, !tbaa !5145
+  %dataChunkSize = getelementptr inbounds %"struct.ILLIXR_AUDIO::WAVHeader_t", %"struct.ILLIXR_AUDIO::WAVHeader_t"* %this, i64 0, i32 12, !dbg !5146
+  store i32 48000000, i32* %dataChunkSize, align 1, !dbg !5146, !tbaa !5147
+  ret void, !dbg !5148
 }
 
 declare dereferenceable(272) %"class.std::basic_ostream"* @_ZNSo5writeEPKcl(%"class.std::basic_ostream"*, i8*, i64) local_unnamed_addr #1
@@ -3980,525 +3982,525 @@ entry:
   %audio = alloca %"class.ILLIXR_AUDIO::ABAudio", align 8
   %agg.tmp = alloca %"class.std::__cxx11::basic_string", align 8
   %ref.tmp = alloca %"class.std::allocator.2", align 1
-  call void @llvm.dbg.value(metadata i32 %argc, metadata !3021, metadata !DIExpression()), !dbg !5147
-  call void @llvm.dbg.value(metadata i8** %argv, metadata !3022, metadata !DIExpression()), !dbg !5147
-  %cmp = icmp slt i32 %argc, 2, !dbg !5148
-  br i1 %cmp, label %if.then, label %if.end, !dbg !5150
+  call void @llvm.dbg.value(metadata i32 %argc, metadata !3021, metadata !DIExpression()), !dbg !5149
+  call void @llvm.dbg.value(metadata i8** %argv, metadata !3022, metadata !DIExpression()), !dbg !5149
+  %cmp = icmp slt i32 %argc, 2, !dbg !5150
+  br i1 %cmp, label %if.then, label %if.end, !dbg !5152
 
 if.then:                                          ; preds = %entry
-  %call = tail call dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* nonnull dereferenceable(272) @_ZSt4cout, i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.6, i64 0, i64 0)), !dbg !5151
-  %0 = load i8*, i8** %argv, align 8, !dbg !5153, !tbaa !3171
-  %call1 = tail call dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* nonnull dereferenceable(272) %call, i8* %0), !dbg !5154
-  %call2 = tail call dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* nonnull dereferenceable(272) %call1, i8* getelementptr inbounds ([42 x i8], [42 x i8]* @.str.7, i64 0, i64 0)), !dbg !5155
-  %call3 = tail call dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* nonnull dereferenceable(272) @_ZSt4cout, i8* getelementptr inbounds ([27 x i8], [27 x i8]* @.str.8, i64 0, i64 0)), !dbg !5156
-  %call4 = tail call dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* nonnull dereferenceable(272) @_ZSt4cout, i8* getelementptr inbounds ([122 x i8], [122 x i8]* @.str.9, i64 0, i64 0)), !dbg !5157
-  br label %return, !dbg !5158
+  %call = tail call dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* nonnull dereferenceable(272) @_ZSt4cout, i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.6, i64 0, i64 0)), !dbg !5153
+  %0 = load i8*, i8** %argv, align 8, !dbg !5155, !tbaa !3171
+  %call1 = tail call dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* nonnull dereferenceable(272) %call, i8* %0), !dbg !5156
+  %call2 = tail call dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* nonnull dereferenceable(272) %call1, i8* getelementptr inbounds ([42 x i8], [42 x i8]* @.str.7, i64 0, i64 0)), !dbg !5157
+  %call3 = tail call dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* nonnull dereferenceable(272) @_ZSt4cout, i8* getelementptr inbounds ([27 x i8], [27 x i8]* @.str.8, i64 0, i64 0)), !dbg !5158
+  %call4 = tail call dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* nonnull dereferenceable(272) @_ZSt4cout, i8* getelementptr inbounds ([122 x i8], [122 x i8]* @.str.9, i64 0, i64 0)), !dbg !5159
+  br label %return, !dbg !5160
 
 if.end:                                           ; preds = %entry
-  %arrayidx5 = getelementptr inbounds i8*, i8** %argv, i64 1, !dbg !5159
-  %1 = load i8*, i8** %arrayidx5, align 8, !dbg !5159, !tbaa !3171
-  %call6 = tail call i32 @atoi(i8* %1) #28, !dbg !5160
-  call void @llvm.dbg.value(metadata i32 %call6, metadata !3023, metadata !DIExpression()), !dbg !5147
-  call void @llvm.dbg.value(metadata i32 0, metadata !3025, metadata !DIExpression()), !dbg !5147
-  %cmp7 = icmp eq i32 %argc, 2, !dbg !5161
-  br i1 %cmp7, label %if.end13, label %if.then8, !dbg !5163
+  %arrayidx5 = getelementptr inbounds i8*, i8** %argv, i64 1, !dbg !5161
+  %1 = load i8*, i8** %arrayidx5, align 8, !dbg !5161, !tbaa !3171
+  %call6 = tail call i32 @atoi(i8* %1) #28, !dbg !5162
+  call void @llvm.dbg.value(metadata i32 %call6, metadata !3023, metadata !DIExpression()), !dbg !5149
+  call void @llvm.dbg.value(metadata i32 0, metadata !3025, metadata !DIExpression()), !dbg !5149
+  %cmp7 = icmp eq i32 %argc, 2, !dbg !5163
+  br i1 %cmp7, label %if.end13, label %if.then8, !dbg !5165
 
 if.then8:                                         ; preds = %if.end
-  %arrayidx9 = getelementptr inbounds i8*, i8** %argv, i64 2, !dbg !5164
-  %2 = load i8*, i8** %arrayidx9, align 8, !dbg !5164, !tbaa !3171
-  %call10 = tail call i32 @strcmp(i8* %2, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.10, i64 0, i64 0)) #28, !dbg !5167
-  %tobool = icmp eq i32 %call10, 0, !dbg !5167
+  %arrayidx9 = getelementptr inbounds i8*, i8** %argv, i64 2, !dbg !5166
+  %2 = load i8*, i8** %arrayidx9, align 8, !dbg !5166, !tbaa !3171
+  %call10 = tail call i32 @strcmp(i8* %2, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.10, i64 0, i64 0)) #28, !dbg !5169
+  %tobool = icmp eq i32 %call10, 0, !dbg !5169
   %. = select i1 %tobool, i32 1, i32 2
   br label %if.end13
 
 if.end13:                                         ; preds = %if.then8, %if.end
-  %procType.0 = phi i32 [ 0, %if.end ], [ %., %if.then8 ], !dbg !5147
-  call void @llvm.dbg.value(metadata i32 %procType.0, metadata !3025, metadata !DIExpression()), !dbg !5147
-  %3 = bitcast %"class.ILLIXR_AUDIO::ABAudio"* %audio to i8*, !dbg !5168
-  call void @llvm.lifetime.start.p0i8(i64 24, i8* nonnull %3) #24, !dbg !5168
-  %4 = getelementptr inbounds %"class.std::allocator.2", %"class.std::allocator.2"* %ref.tmp, i64 0, i32 0, !dbg !5169
-  call void @llvm.lifetime.start.p0i8(i64 1, i8* nonnull %4) #24, !dbg !5169
-  call void @_ZNSaIcEC2Ev(%"class.std::allocator.2"* nonnull %ref.tmp) #24, !dbg !5169
+  %procType.0 = phi i32 [ 0, %if.end ], [ %., %if.then8 ], !dbg !5149
+  call void @llvm.dbg.value(metadata i32 %procType.0, metadata !3025, metadata !DIExpression()), !dbg !5149
+  %3 = bitcast %"class.ILLIXR_AUDIO::ABAudio"* %audio to i8*, !dbg !5170
+  call void @llvm.lifetime.start.p0i8(i64 24, i8* nonnull %3) #24, !dbg !5170
+  %4 = getelementptr inbounds %"class.std::allocator.2", %"class.std::allocator.2"* %ref.tmp, i64 0, i32 0, !dbg !5171
+  call void @llvm.lifetime.start.p0i8(i64 1, i8* nonnull %4) #24, !dbg !5171
+  call void @_ZNSaIcEC2Ev(%"class.std::allocator.2"* nonnull %ref.tmp) #24, !dbg !5171
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EPKcRKS3_(%"class.std::__cxx11::basic_string"* nonnull %agg.tmp, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @.str.11, i64 0, i64 0), %"class.std::allocator.2"* nonnull dereferenceable(1) %ref.tmp)
-          to label %invoke.cont unwind label %lpad, !dbg !5169
+          to label %invoke.cont unwind label %lpad, !dbg !5171
 
 invoke.cont:                                      ; preds = %if.end13
   invoke void @_ZN12ILLIXR_AUDIO7ABAudioC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_11ProcessTypeE(%"class.ILLIXR_AUDIO::ABAudio"* nonnull %audio, %"class.std::__cxx11::basic_string"* nonnull %agg.tmp, i32 %procType.0)
-          to label %invoke.cont15 unwind label %lpad14, !dbg !5170
+          to label %invoke.cont15 unwind label %lpad14, !dbg !5172
 
 invoke.cont15:                                    ; preds = %invoke.cont
-  call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev(%"class.std::__cxx11::basic_string"* nonnull %agg.tmp) #24, !dbg !5170
-  call void @_ZNSaIcED2Ev(%"class.std::allocator.2"* nonnull %ref.tmp) #24, !dbg !5170
-  call void @llvm.lifetime.end.p0i8(i64 1, i8* nonnull %4) #24, !dbg !5170
+  call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev(%"class.std::__cxx11::basic_string"* nonnull %agg.tmp) #24, !dbg !5172
+  call void @_ZNSaIcED2Ev(%"class.std::allocator.2"* nonnull %ref.tmp) #24, !dbg !5172
+  call void @llvm.lifetime.end.p0i8(i64 1, i8* nonnull %4) #24, !dbg !5172
   invoke void @_ZN12ILLIXR_AUDIO7ABAudio10loadSourceEv(%"class.ILLIXR_AUDIO::ABAudio"* nonnull %audio)
-          to label %for.cond.preheader unwind label %lpad17, !dbg !5171
+          to label %for.cond.preheader unwind label %lpad17, !dbg !5173
 
 for.cond.preheader:                               ; preds = %invoke.cont15
-  call void @llvm.dbg.value(metadata i32 0, metadata !3027, metadata !DIExpression()), !dbg !5172
-  %cmp1938 = icmp sgt i32 %call6, 0, !dbg !5173
-  br i1 %cmp1938, label %for.body, label %for.cond.cleanup, !dbg !5175
+  call void @llvm.dbg.value(metadata i32 0, metadata !3027, metadata !DIExpression()), !dbg !5174
+  %cmp1938 = icmp sgt i32 %call6, 0, !dbg !5175
+  br i1 %cmp1938, label %for.body, label %for.cond.cleanup, !dbg !5177
 
 for.cond.cleanup:                                 ; preds = %for.inc, %for.cond.preheader
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::ABAudio"* %audio, metadata !3026, metadata !DIExpression(DW_OP_deref)), !dbg !5147
-  call void @_ZN12ILLIXR_AUDIO7ABAudioD2Ev(%"class.ILLIXR_AUDIO::ABAudio"* nonnull %audio) #24, !dbg !5176
-  call void @llvm.lifetime.end.p0i8(i64 24, i8* nonnull %3) #24, !dbg !5176
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::ABAudio"* %audio, metadata !3026, metadata !DIExpression(DW_OP_deref)), !dbg !5149
+  call void @_ZN12ILLIXR_AUDIO7ABAudioD2Ev(%"class.ILLIXR_AUDIO::ABAudio"* nonnull %audio) #24, !dbg !5178
+  call void @llvm.lifetime.end.p0i8(i64 24, i8* nonnull %3) #24, !dbg !5178
   br label %return
 
 lpad:                                             ; preds = %if.end13
   %5 = landingpad { i8*, i32 }
-          cleanup, !dbg !5176
-  %6 = extractvalue { i8*, i32 } %5, 0, !dbg !5176
-  %7 = extractvalue { i8*, i32 } %5, 1, !dbg !5176
-  br label %ehcleanup, !dbg !5176
+          cleanup, !dbg !5178
+  %6 = extractvalue { i8*, i32 } %5, 0, !dbg !5178
+  %7 = extractvalue { i8*, i32 } %5, 1, !dbg !5178
+  br label %ehcleanup, !dbg !5178
 
 lpad14:                                           ; preds = %invoke.cont
   %8 = landingpad { i8*, i32 }
-          cleanup, !dbg !5176
-  %9 = extractvalue { i8*, i32 } %8, 0, !dbg !5176
-  %10 = extractvalue { i8*, i32 } %8, 1, !dbg !5176
-  call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev(%"class.std::__cxx11::basic_string"* nonnull %agg.tmp) #24, !dbg !5170
-  br label %ehcleanup, !dbg !5170
+          cleanup, !dbg !5178
+  %9 = extractvalue { i8*, i32 } %8, 0, !dbg !5178
+  %10 = extractvalue { i8*, i32 } %8, 1, !dbg !5178
+  call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev(%"class.std::__cxx11::basic_string"* nonnull %agg.tmp) #24, !dbg !5172
+  br label %ehcleanup, !dbg !5172
 
 ehcleanup:                                        ; preds = %lpad14, %lpad
-  %exn.slot.0 = phi i8* [ %9, %lpad14 ], [ %6, %lpad ], !dbg !5176
-  %ehselector.slot.0 = phi i32 [ %10, %lpad14 ], [ %7, %lpad ], !dbg !5176
-  call void @_ZNSaIcED2Ev(%"class.std::allocator.2"* nonnull %ref.tmp) #24, !dbg !5170
-  call void @llvm.lifetime.end.p0i8(i64 1, i8* nonnull %4) #24, !dbg !5170
-  br label %ehcleanup24, !dbg !5170
+  %exn.slot.0 = phi i8* [ %9, %lpad14 ], [ %6, %lpad ], !dbg !5178
+  %ehselector.slot.0 = phi i32 [ %10, %lpad14 ], [ %7, %lpad ], !dbg !5178
+  call void @_ZNSaIcED2Ev(%"class.std::allocator.2"* nonnull %ref.tmp) #24, !dbg !5172
+  call void @llvm.lifetime.end.p0i8(i64 1, i8* nonnull %4) #24, !dbg !5172
+  br label %ehcleanup24, !dbg !5172
 
 lpad17:                                           ; preds = %invoke.cont15
   %11 = landingpad { i8*, i32 }
-          cleanup, !dbg !5176
-  br label %ehcleanup23, !dbg !5176
+          cleanup, !dbg !5178
+  br label %ehcleanup23, !dbg !5178
 
 for.body:                                         ; preds = %for.cond.preheader, %for.inc
   %i.039 = phi i32 [ %inc, %for.inc ], [ 0, %for.cond.preheader ]
-  call void @llvm.dbg.value(metadata i32 %i.039, metadata !3027, metadata !DIExpression()), !dbg !5172
+  call void @llvm.dbg.value(metadata i32 %i.039, metadata !3027, metadata !DIExpression()), !dbg !5174
   invoke void @_ZN12ILLIXR_AUDIO7ABAudio12processBlockEv(%"class.ILLIXR_AUDIO::ABAudio"* nonnull %audio)
-          to label %for.inc unwind label %lpad20, !dbg !5177
+          to label %for.inc unwind label %lpad20, !dbg !5179
 
 for.inc:                                          ; preds = %for.body
-  %inc = add nuw nsw i32 %i.039, 1, !dbg !5179
-  call void @llvm.dbg.value(metadata i32 %inc, metadata !3027, metadata !DIExpression()), !dbg !5172
-  %exitcond = icmp eq i32 %inc, %call6, !dbg !5173
-  br i1 %exitcond, label %for.cond.cleanup, label %for.body, !dbg !5175, !llvm.loop !5180
+  %inc = add nuw nsw i32 %i.039, 1, !dbg !5181
+  call void @llvm.dbg.value(metadata i32 %inc, metadata !3027, metadata !DIExpression()), !dbg !5174
+  %exitcond = icmp eq i32 %inc, %call6, !dbg !5175
+  br i1 %exitcond, label %for.cond.cleanup, label %for.body, !dbg !5177, !llvm.loop !5182
 
 lpad20:                                           ; preds = %for.body
   %12 = landingpad { i8*, i32 }
-          cleanup, !dbg !5182
-  br label %ehcleanup23, !dbg !5183
+          cleanup, !dbg !5184
+  br label %ehcleanup23, !dbg !5185
 
 ehcleanup23:                                      ; preds = %lpad20, %lpad17
   %.sink40 = phi { i8*, i32 } [ %12, %lpad20 ], [ %11, %lpad17 ]
-  %13 = extractvalue { i8*, i32 } %.sink40, 0, !dbg !5147
-  %14 = extractvalue { i8*, i32 } %.sink40, 1, !dbg !5147
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::ABAudio"* %audio, metadata !3026, metadata !DIExpression(DW_OP_deref)), !dbg !5147
-  call void @_ZN12ILLIXR_AUDIO7ABAudioD2Ev(%"class.ILLIXR_AUDIO::ABAudio"* nonnull %audio) #24, !dbg !5176
-  br label %ehcleanup24, !dbg !5176
+  %13 = extractvalue { i8*, i32 } %.sink40, 0, !dbg !5149
+  %14 = extractvalue { i8*, i32 } %.sink40, 1, !dbg !5149
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::ABAudio"* %audio, metadata !3026, metadata !DIExpression(DW_OP_deref)), !dbg !5149
+  call void @_ZN12ILLIXR_AUDIO7ABAudioD2Ev(%"class.ILLIXR_AUDIO::ABAudio"* nonnull %audio) #24, !dbg !5178
+  br label %ehcleanup24, !dbg !5178
 
 ehcleanup24:                                      ; preds = %ehcleanup23, %ehcleanup
-  %exn.slot.2 = phi i8* [ %13, %ehcleanup23 ], [ %exn.slot.0, %ehcleanup ], !dbg !5147
-  %ehselector.slot.2 = phi i32 [ %14, %ehcleanup23 ], [ %ehselector.slot.0, %ehcleanup ], !dbg !5147
-  call void @llvm.lifetime.end.p0i8(i64 24, i8* nonnull %3) #24, !dbg !5176
-  %lpad.val = insertvalue { i8*, i32 } undef, i8* %exn.slot.2, 0, !dbg !5176
-  %lpad.val27 = insertvalue { i8*, i32 } %lpad.val, i32 %ehselector.slot.2, 1, !dbg !5176
-  resume { i8*, i32 } %lpad.val27, !dbg !5176
+  %exn.slot.2 = phi i8* [ %13, %ehcleanup23 ], [ %exn.slot.0, %ehcleanup ], !dbg !5149
+  %ehselector.slot.2 = phi i32 [ %14, %ehcleanup23 ], [ %ehselector.slot.0, %ehcleanup ], !dbg !5149
+  call void @llvm.lifetime.end.p0i8(i64 24, i8* nonnull %3) #24, !dbg !5178
+  %lpad.val = insertvalue { i8*, i32 } undef, i8* %exn.slot.2, 0, !dbg !5178
+  %lpad.val27 = insertvalue { i8*, i32 } %lpad.val, i32 %ehselector.slot.2, 1, !dbg !5178
+  resume { i8*, i32 } %lpad.val27, !dbg !5178
 
 return:                                           ; preds = %for.cond.cleanup, %if.then
-  %retval.0 = phi i32 [ 1, %if.then ], [ 0, %for.cond.cleanup ], !dbg !5147
-  ret i32 %retval.0, !dbg !5176
+  %retval.0 = phi i32 [ 1, %if.then ], [ 0, %for.cond.cleanup ], !dbg !5149
+  ret i32 %retval.0, !dbg !5178
 }
 
 ; Function Attrs: inlinehint uwtable
-define available_externally dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* dereferenceable(272) %__out, i8* %__s) local_unnamed_addr #18 !dbg !5184 {
+define available_externally dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* dereferenceable(272) %__out, i8* %__s) local_unnamed_addr #18 !dbg !5186 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::basic_ostream"* %__out, metadata !5192, metadata !DIExpression()), !dbg !5196
-  call void @llvm.dbg.value(metadata i8* %__s, metadata !5193, metadata !DIExpression()), !dbg !5196
-  %tobool = icmp eq i8* %__s, null, !dbg !5197
-  br i1 %tobool, label %if.then, label %if.else, !dbg !5199
+  call void @llvm.dbg.value(metadata %"class.std::basic_ostream"* %__out, metadata !5194, metadata !DIExpression()), !dbg !5198
+  call void @llvm.dbg.value(metadata i8* %__s, metadata !5195, metadata !DIExpression()), !dbg !5198
+  %tobool = icmp eq i8* %__s, null, !dbg !5199
+  br i1 %tobool, label %if.then, label %if.else, !dbg !5201
 
 if.then:                                          ; preds = %entry
-  %0 = bitcast %"class.std::basic_ostream"* %__out to i8**, !dbg !5200
-  %vtable = load i8*, i8** %0, align 8, !dbg !5200, !tbaa !3042
-  %vbase.offset.ptr = getelementptr i8, i8* %vtable, i64 -24, !dbg !5200
-  %1 = bitcast i8* %vbase.offset.ptr to i64*, !dbg !5200
-  %vbase.offset = load i64, i64* %1, align 8, !dbg !5200
-  %2 = bitcast %"class.std::basic_ostream"* %__out to i8*, !dbg !5200
-  %add.ptr = getelementptr inbounds i8, i8* %2, i64 %vbase.offset, !dbg !5200
-  %3 = bitcast i8* %add.ptr to %"class.std::basic_ios"*, !dbg !5200
-  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate(%"class.std::basic_ios"* nonnull %3, i32 1), !dbg !5201
-  br label %if.end, !dbg !5200
+  %0 = bitcast %"class.std::basic_ostream"* %__out to i8**, !dbg !5202
+  %vtable = load i8*, i8** %0, align 8, !dbg !5202, !tbaa !3042
+  %vbase.offset.ptr = getelementptr i8, i8* %vtable, i64 -24, !dbg !5202
+  %1 = bitcast i8* %vbase.offset.ptr to i64*, !dbg !5202
+  %vbase.offset = load i64, i64* %1, align 8, !dbg !5202
+  %2 = bitcast %"class.std::basic_ostream"* %__out to i8*, !dbg !5202
+  %add.ptr = getelementptr inbounds i8, i8* %2, i64 %vbase.offset, !dbg !5202
+  %3 = bitcast i8* %add.ptr to %"class.std::basic_ios"*, !dbg !5202
+  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate(%"class.std::basic_ios"* nonnull %3, i32 1), !dbg !5203
+  br label %if.end, !dbg !5202
 
 if.else:                                          ; preds = %entry
-  %call = tail call i64 @_ZNSt11char_traitsIcE6lengthEPKc(i8* nonnull %__s), !dbg !5202
-  %call1 = tail call dereferenceable(272) %"class.std::basic_ostream"* @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(%"class.std::basic_ostream"* nonnull dereferenceable(272) %__out, i8* nonnull %__s, i64 %call), !dbg !5203
+  %call = tail call i64 @_ZNSt11char_traitsIcE6lengthEPKc(i8* nonnull %__s), !dbg !5204
+  %call1 = tail call dereferenceable(272) %"class.std::basic_ostream"* @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(%"class.std::basic_ostream"* nonnull dereferenceable(272) %__out, i8* nonnull %__s, i64 %call), !dbg !5205
   br label %if.end
 
 if.end:                                           ; preds = %if.else, %if.then
-  ret %"class.std::basic_ostream"* %__out, !dbg !5204
+  ret %"class.std::basic_ostream"* %__out, !dbg !5206
 }
 
 ; Function Attrs: inlinehint nounwind readonly uwtable
 define available_externally i32 @atoi(i8* nonnull %__nptr) local_unnamed_addr #19 !dbg !2308 {
 entry:
-  call void @llvm.dbg.value(metadata i8* %__nptr, metadata !2312, metadata !DIExpression()), !dbg !5205
-  %call = tail call i64 @strtol(i8* nocapture nonnull %__nptr, i8** null, i32 10) #24, !dbg !5206
-  %conv = trunc i64 %call to i32, !dbg !5206
-  ret i32 %conv, !dbg !5207
+  call void @llvm.dbg.value(metadata i8* %__nptr, metadata !2312, metadata !DIExpression()), !dbg !5207
+  %call = tail call i64 @strtol(i8* nocapture nonnull %__nptr, i8** null, i32 10) #24, !dbg !5208
+  %conv = trunc i64 %call to i32, !dbg !5208
+  ret i32 %conv, !dbg !5209
 }
 
 ; Function Attrs: nofree nounwind readonly
 declare i32 @strcmp(i8* nocapture, i8* nocapture) local_unnamed_addr #20
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZN14CAmbisonicBaseD2Ev(%class.CAmbisonicBase* %this) unnamed_addr #7 comdat align 2 !dbg !5208 {
+define linkonce_odr void @_ZN14CAmbisonicBaseD2Ev(%class.CAmbisonicBase* %this) unnamed_addr #7 comdat align 2 !dbg !5210 {
 entry:
-  call void @llvm.dbg.value(metadata %class.CAmbisonicBase* %this, metadata !5210, metadata !DIExpression()), !dbg !5211
-  ret void, !dbg !5212
+  call void @llvm.dbg.value(metadata %class.CAmbisonicBase* %this, metadata !5212, metadata !DIExpression()), !dbg !5213
+  ret void, !dbg !5214
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZN14CAmbisonicBaseD0Ev(%class.CAmbisonicBase* %this) unnamed_addr #7 comdat align 2 !dbg !5213 {
+define linkonce_odr void @_ZN14CAmbisonicBaseD0Ev(%class.CAmbisonicBase* %this) unnamed_addr #7 comdat align 2 !dbg !5215 {
 entry:
-  call void @llvm.dbg.value(metadata %class.CAmbisonicBase* %this, metadata !5215, metadata !DIExpression()), !dbg !5216
-  tail call void @llvm.trap() #25, !dbg !5217
-  unreachable, !dbg !5217
+  call void @llvm.dbg.value(metadata %class.CAmbisonicBase* %this, metadata !5217, metadata !DIExpression()), !dbg !5218
+  tail call void @llvm.trap() #25, !dbg !5219
+  unreachable, !dbg !5219
 }
 
 declare void @__cxa_pure_virtual() unnamed_addr
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr void @_ZN8CBFormatD0Ev(%class.CBFormat* %this) unnamed_addr #16 comdat align 2 !dbg !5218 {
+define linkonce_odr void @_ZN8CBFormatD0Ev(%class.CBFormat* %this) unnamed_addr #16 comdat align 2 !dbg !5220 {
 entry:
-  call void @llvm.dbg.value(metadata %class.CBFormat* %this, metadata !5220, metadata !DIExpression()), !dbg !5221
-  tail call void @_ZN8CBFormatD2Ev(%class.CBFormat* %this) #24, !dbg !5222
-  %0 = bitcast %class.CBFormat* %this to i8*, !dbg !5222
-  tail call void @_ZdlPv(i8* %0) #27, !dbg !5222
-  ret void, !dbg !5222
+  call void @llvm.dbg.value(metadata %class.CBFormat* %this, metadata !5222, metadata !DIExpression()), !dbg !5223
+  tail call void @_ZN8CBFormatD2Ev(%class.CBFormat* %this) #24, !dbg !5224
+  %0 = bitcast %class.CBFormat* %this to i8*, !dbg !5224
+  tail call void @_ZdlPv(i8* %0) #27, !dbg !5224
+  ret void, !dbg !5224
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr void @_ZN16CAmbisonicSourceD2Ev(%class.CAmbisonicSource* %this) unnamed_addr #16 comdat align 2 !dbg !5223 {
+define linkonce_odr void @_ZN16CAmbisonicSourceD2Ev(%class.CAmbisonicSource* %this) unnamed_addr #16 comdat align 2 !dbg !5225 {
 entry:
-  call void @llvm.dbg.value(metadata %class.CAmbisonicSource* %this, metadata !5226, metadata !DIExpression()), !dbg !5227
-  %0 = getelementptr inbounds %class.CAmbisonicSource, %class.CAmbisonicSource* %this, i64 0, i32 0, i32 0, !dbg !5228
-  store i32 (...)** bitcast (i8** getelementptr inbounds ({ [16 x i8*] }, { [16 x i8*] }* @_ZTV16CAmbisonicSource, i64 0, inrange i32 0, i64 2) to i32 (...)**), i32 (...)*** %0, align 8, !dbg !5228, !tbaa !3042
-  %m_pfOrderWeights = getelementptr inbounds %class.CAmbisonicSource, %class.CAmbisonicSource* %this, i64 0, i32 2, !dbg !5229
-  tail call void @_ZNSt6vectorIfSaIfEED2Ev(%"class.std::vector"* nonnull %m_pfOrderWeights) #24, !dbg !5229
-  %m_pfCoeff = getelementptr inbounds %class.CAmbisonicSource, %class.CAmbisonicSource* %this, i64 0, i32 1, !dbg !5229
-  tail call void @_ZNSt6vectorIfSaIfEED2Ev(%"class.std::vector"* nonnull %m_pfCoeff) #24, !dbg !5229
-  %1 = bitcast %class.CAmbisonicSource* %this to %class.CAmbisonicBase*, !dbg !5229
-  tail call void @_ZN14CAmbisonicBaseD2Ev(%class.CAmbisonicBase* %1) #24, !dbg !5229
-  ret void, !dbg !5228
+  call void @llvm.dbg.value(metadata %class.CAmbisonicSource* %this, metadata !5228, metadata !DIExpression()), !dbg !5229
+  %0 = getelementptr inbounds %class.CAmbisonicSource, %class.CAmbisonicSource* %this, i64 0, i32 0, i32 0, !dbg !5230
+  store i32 (...)** bitcast (i8** getelementptr inbounds ({ [16 x i8*] }, { [16 x i8*] }* @_ZTV16CAmbisonicSource, i64 0, inrange i32 0, i64 2) to i32 (...)**), i32 (...)*** %0, align 8, !dbg !5230, !tbaa !3042
+  %m_pfOrderWeights = getelementptr inbounds %class.CAmbisonicSource, %class.CAmbisonicSource* %this, i64 0, i32 2, !dbg !5231
+  tail call void @_ZNSt6vectorIfSaIfEED2Ev(%"class.std::vector"* nonnull %m_pfOrderWeights) #24, !dbg !5231
+  %m_pfCoeff = getelementptr inbounds %class.CAmbisonicSource, %class.CAmbisonicSource* %this, i64 0, i32 1, !dbg !5231
+  tail call void @_ZNSt6vectorIfSaIfEED2Ev(%"class.std::vector"* nonnull %m_pfCoeff) #24, !dbg !5231
+  %1 = bitcast %class.CAmbisonicSource* %this to %class.CAmbisonicBase*, !dbg !5231
+  tail call void @_ZN14CAmbisonicBaseD2Ev(%class.CAmbisonicBase* %1) #24, !dbg !5231
+  ret void, !dbg !5230
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr void @_ZN16CAmbisonicSourceD0Ev(%class.CAmbisonicSource* %this) unnamed_addr #16 comdat align 2 !dbg !5231 {
+define linkonce_odr void @_ZN16CAmbisonicSourceD0Ev(%class.CAmbisonicSource* %this) unnamed_addr #16 comdat align 2 !dbg !5233 {
 entry:
-  call void @llvm.dbg.value(metadata %class.CAmbisonicSource* %this, metadata !5233, metadata !DIExpression()), !dbg !5234
-  tail call void @_ZN16CAmbisonicSourceD2Ev(%class.CAmbisonicSource* %this) #24, !dbg !5235
-  %0 = bitcast %class.CAmbisonicSource* %this to i8*, !dbg !5235
-  tail call void @_ZdlPv(i8* %0) #27, !dbg !5235
-  ret void, !dbg !5235
+  call void @llvm.dbg.value(metadata %class.CAmbisonicSource* %this, metadata !5235, metadata !DIExpression()), !dbg !5236
+  tail call void @_ZN16CAmbisonicSourceD2Ev(%class.CAmbisonicSource* %this) #24, !dbg !5237
+  %0 = bitcast %class.CAmbisonicSource* %this to i8*, !dbg !5237
+  tail call void @_ZdlPv(i8* %0) #27, !dbg !5237
+  ret void, !dbg !5237
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr void @_ZNSt5tupleIJPPfSt14default_deleteIA_S0_EEEC2Ev(%"class.std::tuple"* %this) unnamed_addr #0 comdat align 2 !dbg !5236 {
+define linkonce_odr void @_ZNSt5tupleIJPPfSt14default_deleteIA_S0_EEEC2Ev(%"class.std::tuple"* %this) unnamed_addr #0 comdat align 2 !dbg !5238 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::tuple"* %this, metadata !5238, metadata !DIExpression()), !dbg !5240
-  %0 = getelementptr inbounds %"class.std::tuple", %"class.std::tuple"* %this, i64 0, i32 0, !dbg !5241
-  tail call void @_ZNSt11_Tuple_implILm0EJPPfSt14default_deleteIA_S0_EEEC2Ev(%"struct.std::_Tuple_impl"* %0), !dbg !5242
-  ret void, !dbg !5243
+  call void @llvm.dbg.value(metadata %"class.std::tuple"* %this, metadata !5240, metadata !DIExpression()), !dbg !5242
+  %0 = getelementptr inbounds %"class.std::tuple", %"class.std::tuple"* %this, i64 0, i32 0, !dbg !5243
+  tail call void @_ZNSt11_Tuple_implILm0EJPPfSt14default_deleteIA_S0_EEEC2Ev(%"struct.std::_Tuple_impl"* %0), !dbg !5244
+  ret void, !dbg !5245
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr void @_ZNSt11_Tuple_implILm0EJPPfSt14default_deleteIA_S0_EEEC2Ev(%"struct.std::_Tuple_impl"* %this) unnamed_addr #0 comdat align 2 !dbg !5244 {
+define linkonce_odr void @_ZNSt11_Tuple_implILm0EJPPfSt14default_deleteIA_S0_EEEC2Ev(%"struct.std::_Tuple_impl"* %this) unnamed_addr #0 comdat align 2 !dbg !5246 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Tuple_impl"* %this, metadata !5246, metadata !DIExpression()), !dbg !5248
-  %0 = bitcast %"struct.std::_Tuple_impl"* %this to %"struct.std::_Tuple_impl.0"*, !dbg !5249
-  tail call void @_ZNSt11_Tuple_implILm1EJSt14default_deleteIA_PfEEEC2Ev(%"struct.std::_Tuple_impl.0"* %0), !dbg !5250
-  %1 = getelementptr inbounds %"struct.std::_Tuple_impl", %"struct.std::_Tuple_impl"* %this, i64 0, i32 0, !dbg !5249
-  tail call void @_ZNSt10_Head_baseILm0EPPfLb0EEC2Ev(%"struct.std::_Head_base.1"* %1), !dbg !5251
-  ret void, !dbg !5252
+  call void @llvm.dbg.value(metadata %"struct.std::_Tuple_impl"* %this, metadata !5248, metadata !DIExpression()), !dbg !5250
+  %0 = bitcast %"struct.std::_Tuple_impl"* %this to %"struct.std::_Tuple_impl.0"*, !dbg !5251
+  tail call void @_ZNSt11_Tuple_implILm1EJSt14default_deleteIA_PfEEEC2Ev(%"struct.std::_Tuple_impl.0"* %0), !dbg !5252
+  %1 = getelementptr inbounds %"struct.std::_Tuple_impl", %"struct.std::_Tuple_impl"* %this, i64 0, i32 0, !dbg !5251
+  tail call void @_ZNSt10_Head_baseILm0EPPfLb0EEC2Ev(%"struct.std::_Head_base.1"* %1), !dbg !5253
+  ret void, !dbg !5254
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr void @_ZNSt11_Tuple_implILm1EJSt14default_deleteIA_PfEEEC2Ev(%"struct.std::_Tuple_impl.0"* %this) unnamed_addr #0 comdat align 2 !dbg !5253 {
+define linkonce_odr void @_ZNSt11_Tuple_implILm1EJSt14default_deleteIA_PfEEEC2Ev(%"struct.std::_Tuple_impl.0"* %this) unnamed_addr #0 comdat align 2 !dbg !5255 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Tuple_impl.0"* %this, metadata !5255, metadata !DIExpression()), !dbg !5257
-  %0 = bitcast %"struct.std::_Tuple_impl.0"* %this to %"struct.std::_Head_base"*, !dbg !5258
-  tail call void @_ZNSt10_Head_baseILm1ESt14default_deleteIA_PfELb1EEC2Ev(%"struct.std::_Head_base"* %0), !dbg !5259
-  ret void, !dbg !5260
+  call void @llvm.dbg.value(metadata %"struct.std::_Tuple_impl.0"* %this, metadata !5257, metadata !DIExpression()), !dbg !5259
+  %0 = bitcast %"struct.std::_Tuple_impl.0"* %this to %"struct.std::_Head_base"*, !dbg !5260
+  tail call void @_ZNSt10_Head_baseILm1ESt14default_deleteIA_PfELb1EEC2Ev(%"struct.std::_Head_base"* %0), !dbg !5261
+  ret void, !dbg !5262
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZNSt10_Head_baseILm0EPPfLb0EEC2Ev(%"struct.std::_Head_base.1"* %this) unnamed_addr #7 comdat align 2 !dbg !5261 {
+define linkonce_odr void @_ZNSt10_Head_baseILm0EPPfLb0EEC2Ev(%"struct.std::_Head_base.1"* %this) unnamed_addr #7 comdat align 2 !dbg !5263 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Head_base.1"* %this, metadata !5263, metadata !DIExpression()), !dbg !5265
-  %_M_head_impl = getelementptr inbounds %"struct.std::_Head_base.1", %"struct.std::_Head_base.1"* %this, i64 0, i32 0, !dbg !5266
-  store float** null, float*** %_M_head_impl, align 8, !dbg !5266, !tbaa !5267
-  ret void, !dbg !5269
+  call void @llvm.dbg.value(metadata %"struct.std::_Head_base.1"* %this, metadata !5265, metadata !DIExpression()), !dbg !5267
+  %_M_head_impl = getelementptr inbounds %"struct.std::_Head_base.1", %"struct.std::_Head_base.1"* %this, i64 0, i32 0, !dbg !5268
+  store float** null, float*** %_M_head_impl, align 8, !dbg !5268, !tbaa !5269
+  ret void, !dbg !5271
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZNSt10_Head_baseILm1ESt14default_deleteIA_PfELb1EEC2Ev(%"struct.std::_Head_base"* %this) unnamed_addr #7 comdat align 2 !dbg !5270 {
+define linkonce_odr void @_ZNSt10_Head_baseILm1ESt14default_deleteIA_PfELb1EEC2Ev(%"struct.std::_Head_base"* %this) unnamed_addr #7 comdat align 2 !dbg !5272 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Head_base"* %this, metadata !5272, metadata !DIExpression()), !dbg !5274
-  ret void, !dbg !5275
+  call void @llvm.dbg.value(metadata %"struct.std::_Head_base"* %this, metadata !5274, metadata !DIExpression()), !dbg !5276
+  ret void, !dbg !5277
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZNSt6vectorIfSaIfEED2Ev(%"class.std::vector"* %this) unnamed_addr #7 comdat align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !5276 {
+define linkonce_odr void @_ZNSt6vectorIfSaIfEED2Ev(%"class.std::vector"* %this) unnamed_addr #7 comdat align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !5278 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !5278, metadata !DIExpression()), !dbg !5279
-  %0 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, !dbg !5280
-  %_M_start = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 0, !dbg !5282
-  %1 = load float*, float** %_M_start, align 8, !dbg !5282, !tbaa !3193
-  %_M_finish = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 1, !dbg !5283
-  %2 = load float*, float** %_M_finish, align 8, !dbg !5283, !tbaa !5284
-  %call = tail call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %0) #24, !dbg !5285
+  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !5280, metadata !DIExpression()), !dbg !5281
+  %0 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, !dbg !5282
+  %_M_start = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 0, !dbg !5284
+  %1 = load float*, float** %_M_start, align 8, !dbg !5284, !tbaa !3193
+  %_M_finish = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 1, !dbg !5285
+  %2 = load float*, float** %_M_finish, align 8, !dbg !5285, !tbaa !5286
+  %call = tail call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %0) #24, !dbg !5287
   invoke void @_ZSt8_DestroyIPffEvT_S1_RSaIT0_E(float* %1, float* %2, %"class.std::allocator"* nonnull dereferenceable(1) %call)
-          to label %invoke.cont unwind label %lpad, !dbg !5286
+          to label %invoke.cont unwind label %lpad, !dbg !5288
 
 invoke.cont:                                      ; preds = %entry
-  tail call void @_ZNSt12_Vector_baseIfSaIfEED2Ev(%"struct.std::_Vector_base"* %0) #24, !dbg !5287
-  ret void, !dbg !5288
+  tail call void @_ZNSt12_Vector_baseIfSaIfEED2Ev(%"struct.std::_Vector_base"* %0) #24, !dbg !5289
+  ret void, !dbg !5290
 
 lpad:                                             ; preds = %entry
   %3 = landingpad { i8*, i32 }
-          catch i8* null, !dbg !5287
-  %4 = extractvalue { i8*, i32 } %3, 0, !dbg !5287
-  tail call void @_ZNSt12_Vector_baseIfSaIfEED2Ev(%"struct.std::_Vector_base"* %0) #24, !dbg !5287
-  tail call void @__clang_call_terminate(i8* %4) #25, !dbg !5287
-  unreachable, !dbg !5287
+          catch i8* null, !dbg !5289
+  %4 = extractvalue { i8*, i32 } %3, 0, !dbg !5289
+  tail call void @_ZNSt12_Vector_baseIfSaIfEED2Ev(%"struct.std::_Vector_base"* %0) #24, !dbg !5289
+  tail call void @__clang_call_terminate(i8* %4) #25, !dbg !5289
+  unreachable, !dbg !5289
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr void @_ZSt8_DestroyIPffEvT_S1_RSaIT0_E(float* %__first, float* %__last, %"class.std::allocator"* dereferenceable(1)) local_unnamed_addr #18 comdat !dbg !5289 {
+define linkonce_odr void @_ZSt8_DestroyIPffEvT_S1_RSaIT0_E(float* %__first, float* %__last, %"class.std::allocator"* dereferenceable(1)) local_unnamed_addr #18 comdat !dbg !5291 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !5294, metadata !DIExpression()), !dbg !5299
-  call void @llvm.dbg.value(metadata float* %__last, metadata !5295, metadata !DIExpression()), !dbg !5299
-  call void @llvm.dbg.value(metadata %"class.std::allocator"* %0, metadata !5296, metadata !DIExpression()), !dbg !5299
-  tail call void @_ZSt8_DestroyIPfEvT_S1_(float* %__first, float* %__last), !dbg !5300
-  ret void, !dbg !5301
+  call void @llvm.dbg.value(metadata float* %__first, metadata !5296, metadata !DIExpression()), !dbg !5301
+  call void @llvm.dbg.value(metadata float* %__last, metadata !5297, metadata !DIExpression()), !dbg !5301
+  call void @llvm.dbg.value(metadata %"class.std::allocator"* %0, metadata !5298, metadata !DIExpression()), !dbg !5301
+  tail call void @_ZSt8_DestroyIPfEvT_S1_(float* %__first, float* %__last), !dbg !5302
+  ret void, !dbg !5303
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %this) local_unnamed_addr #7 comdat align 2 !dbg !5302 {
+define linkonce_odr dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %this) local_unnamed_addr #7 comdat align 2 !dbg !5304 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base"* %this, metadata !5304, metadata !DIExpression()), !dbg !5306
-  %0 = bitcast %"struct.std::_Vector_base"* %this to %"class.std::allocator"*, !dbg !5307
-  ret %"class.std::allocator"* %0, !dbg !5308
+  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base"* %this, metadata !5306, metadata !DIExpression()), !dbg !5308
+  %0 = bitcast %"struct.std::_Vector_base"* %this to %"class.std::allocator"*, !dbg !5309
+  ret %"class.std::allocator"* %0, !dbg !5310
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZNSt12_Vector_baseIfSaIfEED2Ev(%"struct.std::_Vector_base"* %this) unnamed_addr #7 comdat align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !5309 {
+define linkonce_odr void @_ZNSt12_Vector_baseIfSaIfEED2Ev(%"struct.std::_Vector_base"* %this) unnamed_addr #7 comdat align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !5311 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base"* %this, metadata !5311, metadata !DIExpression()), !dbg !5312
-  %_M_start = getelementptr inbounds %"struct.std::_Vector_base", %"struct.std::_Vector_base"* %this, i64 0, i32 0, i32 0, !dbg !5313
-  %0 = load float*, float** %_M_start, align 8, !dbg !5313, !tbaa !3193
-  %_M_end_of_storage = getelementptr inbounds %"struct.std::_Vector_base", %"struct.std::_Vector_base"* %this, i64 0, i32 0, i32 2, !dbg !5315
-  %1 = bitcast float** %_M_end_of_storage to i64*, !dbg !5315
-  %2 = load i64, i64* %1, align 8, !dbg !5315, !tbaa !5316
-  %sub.ptr.rhs.cast = ptrtoint float* %0 to i64, !dbg !5317
-  %sub.ptr.sub = sub i64 %2, %sub.ptr.rhs.cast, !dbg !5317
-  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 2, !dbg !5317
+  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base"* %this, metadata !5313, metadata !DIExpression()), !dbg !5314
+  %_M_start = getelementptr inbounds %"struct.std::_Vector_base", %"struct.std::_Vector_base"* %this, i64 0, i32 0, i32 0, !dbg !5315
+  %0 = load float*, float** %_M_start, align 8, !dbg !5315, !tbaa !3193
+  %_M_end_of_storage = getelementptr inbounds %"struct.std::_Vector_base", %"struct.std::_Vector_base"* %this, i64 0, i32 0, i32 2, !dbg !5317
+  %1 = bitcast float** %_M_end_of_storage to i64*, !dbg !5317
+  %2 = load i64, i64* %1, align 8, !dbg !5317, !tbaa !5318
+  %sub.ptr.rhs.cast = ptrtoint float* %0 to i64, !dbg !5319
+  %sub.ptr.sub = sub i64 %2, %sub.ptr.rhs.cast, !dbg !5319
+  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 2, !dbg !5319
   invoke void @_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm(%"struct.std::_Vector_base"* %this, float* %0, i64 %sub.ptr.div)
-          to label %invoke.cont unwind label %lpad, !dbg !5318
+          to label %invoke.cont unwind label %lpad, !dbg !5320
 
 invoke.cont:                                      ; preds = %entry
-  %3 = bitcast %"struct.std::_Vector_base"* %this to %"class.__gnu_cxx::new_allocator"*, !dbg !5319
-  tail call void @_ZN9__gnu_cxx13new_allocatorIfED2Ev(%"class.__gnu_cxx::new_allocator"* %3) #24, !dbg !5319
-  ret void, !dbg !5320
+  %3 = bitcast %"struct.std::_Vector_base"* %this to %"class.__gnu_cxx::new_allocator"*, !dbg !5321
+  tail call void @_ZN9__gnu_cxx13new_allocatorIfED2Ev(%"class.__gnu_cxx::new_allocator"* %3) #24, !dbg !5321
+  ret void, !dbg !5322
 
 lpad:                                             ; preds = %entry
   %4 = landingpad { i8*, i32 }
-          catch i8* null, !dbg !5319
-  %5 = extractvalue { i8*, i32 } %4, 0, !dbg !5319
-  %6 = bitcast %"struct.std::_Vector_base"* %this to %"class.__gnu_cxx::new_allocator"*, !dbg !5319
-  tail call void @_ZN9__gnu_cxx13new_allocatorIfED2Ev(%"class.__gnu_cxx::new_allocator"* %6) #24, !dbg !5319
-  tail call void @__clang_call_terminate(i8* %5) #25, !dbg !5319
-  unreachable, !dbg !5319
+          catch i8* null, !dbg !5321
+  %5 = extractvalue { i8*, i32 } %4, 0, !dbg !5321
+  %6 = bitcast %"struct.std::_Vector_base"* %this to %"class.__gnu_cxx::new_allocator"*, !dbg !5321
+  tail call void @_ZN9__gnu_cxx13new_allocatorIfED2Ev(%"class.__gnu_cxx::new_allocator"* %6) #24, !dbg !5321
+  tail call void @__clang_call_terminate(i8* %5) #25, !dbg !5321
+  unreachable, !dbg !5321
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr void @_ZSt8_DestroyIPfEvT_S1_(float* %__first, float* %__last) local_unnamed_addr #18 comdat !dbg !5321 {
+define linkonce_odr void @_ZSt8_DestroyIPfEvT_S1_(float* %__first, float* %__last) local_unnamed_addr #18 comdat !dbg !5323 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !5325, metadata !DIExpression()), !dbg !5328
-  call void @llvm.dbg.value(metadata float* %__last, metadata !5326, metadata !DIExpression()), !dbg !5328
-  tail call void @_ZNSt12_Destroy_auxILb1EE9__destroyIPfEEvT_S3_(float* %__first, float* %__last), !dbg !5329
-  ret void, !dbg !5330
+  call void @llvm.dbg.value(metadata float* %__first, metadata !5327, metadata !DIExpression()), !dbg !5330
+  call void @llvm.dbg.value(metadata float* %__last, metadata !5328, metadata !DIExpression()), !dbg !5330
+  tail call void @_ZNSt12_Destroy_auxILb1EE9__destroyIPfEEvT_S3_(float* %__first, float* %__last), !dbg !5331
+  ret void, !dbg !5332
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZNSt12_Destroy_auxILb1EE9__destroyIPfEEvT_S3_(float*, float*) local_unnamed_addr #7 comdat align 2 !dbg !5331 {
+define linkonce_odr void @_ZNSt12_Destroy_auxILb1EE9__destroyIPfEEvT_S3_(float*, float*) local_unnamed_addr #7 comdat align 2 !dbg !5333 {
 entry:
-  call void @llvm.dbg.value(metadata float* %0, metadata !5336, metadata !DIExpression()), !dbg !5338
-  call void @llvm.dbg.value(metadata float* %1, metadata !5337, metadata !DIExpression()), !dbg !5338
-  ret void, !dbg !5339
+  call void @llvm.dbg.value(metadata float* %0, metadata !5338, metadata !DIExpression()), !dbg !5340
+  call void @llvm.dbg.value(metadata float* %1, metadata !5339, metadata !DIExpression()), !dbg !5340
+  ret void, !dbg !5341
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr void @_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm(%"struct.std::_Vector_base"* %this, float* %__p, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !5340 {
+define linkonce_odr void @_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm(%"struct.std::_Vector_base"* %this, float* %__p, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !5342 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base"* %this, metadata !5342, metadata !DIExpression()), !dbg !5345
-  call void @llvm.dbg.value(metadata float* %__p, metadata !5343, metadata !DIExpression()), !dbg !5345
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !5344, metadata !DIExpression()), !dbg !5345
-  %tobool = icmp eq float* %__p, null, !dbg !5346
-  br i1 %tobool, label %if.end, label %if.then, !dbg !5348
+  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base"* %this, metadata !5344, metadata !DIExpression()), !dbg !5347
+  call void @llvm.dbg.value(metadata float* %__p, metadata !5345, metadata !DIExpression()), !dbg !5347
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !5346, metadata !DIExpression()), !dbg !5347
+  %tobool = icmp eq float* %__p, null, !dbg !5348
+  br i1 %tobool, label %if.end, label %if.then, !dbg !5350
 
 if.then:                                          ; preds = %entry
-  %0 = bitcast %"struct.std::_Vector_base"* %this to %"class.std::allocator"*, !dbg !5349
-  tail call void @_ZNSt16allocator_traitsISaIfEE10deallocateERS0_Pfm(%"class.std::allocator"* dereferenceable(1) %0, float* nonnull %__p, i64 %__n), !dbg !5350
-  br label %if.end, !dbg !5350
+  %0 = bitcast %"struct.std::_Vector_base"* %this to %"class.std::allocator"*, !dbg !5351
+  tail call void @_ZNSt16allocator_traitsISaIfEE10deallocateERS0_Pfm(%"class.std::allocator"* dereferenceable(1) %0, float* nonnull %__p, i64 %__n), !dbg !5352
+  br label %if.end, !dbg !5352
 
 if.end:                                           ; preds = %entry, %if.then
-  ret void, !dbg !5351
+  ret void, !dbg !5353
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIfED2Ev(%"class.__gnu_cxx::new_allocator"* %this) unnamed_addr #7 comdat align 2 !dbg !5352 {
+define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIfED2Ev(%"class.__gnu_cxx::new_allocator"* %this) unnamed_addr #7 comdat align 2 !dbg !5354 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator"* %this, metadata !5354, metadata !DIExpression()), !dbg !5356
-  ret void, !dbg !5357
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator"* %this, metadata !5356, metadata !DIExpression()), !dbg !5358
+  ret void, !dbg !5359
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr void @_ZNSt16allocator_traitsISaIfEE10deallocateERS0_Pfm(%"class.std::allocator"* dereferenceable(1) %__a, float* %__p, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !5358 {
+define linkonce_odr void @_ZNSt16allocator_traitsISaIfEE10deallocateERS0_Pfm(%"class.std::allocator"* dereferenceable(1) %__a, float* %__p, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !5360 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::allocator"* %__a, metadata !5360, metadata !DIExpression()), !dbg !5363
-  call void @llvm.dbg.value(metadata float* %__p, metadata !5361, metadata !DIExpression()), !dbg !5363
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !5362, metadata !DIExpression()), !dbg !5363
-  %0 = bitcast %"class.std::allocator"* %__a to %"class.__gnu_cxx::new_allocator"*, !dbg !5364
-  tail call void @_ZN9__gnu_cxx13new_allocatorIfE10deallocateEPfm(%"class.__gnu_cxx::new_allocator"* nonnull %0, float* %__p, i64 %__n), !dbg !5365
-  ret void, !dbg !5366
+  call void @llvm.dbg.value(metadata %"class.std::allocator"* %__a, metadata !5362, metadata !DIExpression()), !dbg !5365
+  call void @llvm.dbg.value(metadata float* %__p, metadata !5363, metadata !DIExpression()), !dbg !5365
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !5364, metadata !DIExpression()), !dbg !5365
+  %0 = bitcast %"class.std::allocator"* %__a to %"class.__gnu_cxx::new_allocator"*, !dbg !5366
+  tail call void @_ZN9__gnu_cxx13new_allocatorIfE10deallocateEPfm(%"class.__gnu_cxx::new_allocator"* nonnull %0, float* %__p, i64 %__n), !dbg !5367
+  ret void, !dbg !5368
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIfE10deallocateEPfm(%"class.__gnu_cxx::new_allocator"* %this, float* %__p, i64) local_unnamed_addr #7 comdat align 2 !dbg !5367 {
+define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIfE10deallocateEPfm(%"class.__gnu_cxx::new_allocator"* %this, float* %__p, i64) local_unnamed_addr #7 comdat align 2 !dbg !5369 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator"* %this, metadata !5369, metadata !DIExpression()), !dbg !5372
-  call void @llvm.dbg.value(metadata float* %__p, metadata !5370, metadata !DIExpression()), !dbg !5372
-  call void @llvm.dbg.value(metadata i64 %0, metadata !5371, metadata !DIExpression()), !dbg !5372
-  %1 = bitcast float* %__p to i8*, !dbg !5373
-  tail call void @_ZdlPv(i8* %1) #24, !dbg !5374
-  ret void, !dbg !5375
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator"* %this, metadata !5371, metadata !DIExpression()), !dbg !5374
+  call void @llvm.dbg.value(metadata float* %__p, metadata !5372, metadata !DIExpression()), !dbg !5374
+  call void @llvm.dbg.value(metadata i64 %0, metadata !5373, metadata !DIExpression()), !dbg !5374
+  %1 = bitcast float* %__p to i8*, !dbg !5375
+  tail call void @_ZdlPv(i8* %1) #24, !dbg !5376
+  ret void, !dbg !5377
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZNSt10unique_ptrIA_PfSt14default_deleteIS1_EED2Ev(%"class.std::unique_ptr"* %this) unnamed_addr #7 comdat align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !5376 {
+define linkonce_odr void @_ZNSt10unique_ptrIA_PfSt14default_deleteIS1_EED2Ev(%"class.std::unique_ptr"* %this) unnamed_addr #7 comdat align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !5378 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::unique_ptr"* %this, metadata !5378, metadata !DIExpression()), !dbg !5381
-  %_M_t = getelementptr inbounds %"class.std::unique_ptr", %"class.std::unique_ptr"* %this, i64 0, i32 0, !dbg !5382
-  %call = tail call dereferenceable(8) float*** @_ZSt3getILm0EJPPfSt14default_deleteIA_S0_EEERNSt13tuple_elementIXT_ESt5tupleIJDpT0_EEE4typeERS9_(%"class.std::tuple"* dereferenceable(8) %_M_t) #24, !dbg !5383
-  call void @llvm.dbg.value(metadata float*** %call, metadata !5379, metadata !DIExpression()), !dbg !5384
-  %0 = load float**, float*** %call, align 8, !dbg !5385, !tbaa !3171
-  %cmp = icmp eq float** %0, null, !dbg !5387
-  br i1 %cmp, label %if.end, label %if.then, !dbg !5388
+  call void @llvm.dbg.value(metadata %"class.std::unique_ptr"* %this, metadata !5380, metadata !DIExpression()), !dbg !5383
+  %_M_t = getelementptr inbounds %"class.std::unique_ptr", %"class.std::unique_ptr"* %this, i64 0, i32 0, !dbg !5384
+  %call = tail call dereferenceable(8) float*** @_ZSt3getILm0EJPPfSt14default_deleteIA_S0_EEERNSt13tuple_elementIXT_ESt5tupleIJDpT0_EEE4typeERS9_(%"class.std::tuple"* dereferenceable(8) %_M_t) #24, !dbg !5385
+  call void @llvm.dbg.value(metadata float*** %call, metadata !5381, metadata !DIExpression()), !dbg !5386
+  %0 = load float**, float*** %call, align 8, !dbg !5387, !tbaa !3171
+  %cmp = icmp eq float** %0, null, !dbg !5389
+  br i1 %cmp, label %if.end, label %if.then, !dbg !5390
 
 if.then:                                          ; preds = %entry
-  %call2 = tail call dereferenceable(1) %"struct.std::default_delete"* @_ZNSt10unique_ptrIA_PfSt14default_deleteIS1_EE11get_deleterEv(%"class.std::unique_ptr"* %this) #24, !dbg !5389
-  %1 = load float**, float*** %call, align 8, !dbg !5390, !tbaa !3171
-  tail call void @_ZNKSt14default_deleteIA_PfEclEPS0_(%"struct.std::default_delete"* nonnull %call2, float** %1), !dbg !5389
-  br label %if.end, !dbg !5389
+  %call2 = tail call dereferenceable(1) %"struct.std::default_delete"* @_ZNSt10unique_ptrIA_PfSt14default_deleteIS1_EE11get_deleterEv(%"class.std::unique_ptr"* %this) #24, !dbg !5391
+  %1 = load float**, float*** %call, align 8, !dbg !5392, !tbaa !3171
+  tail call void @_ZNKSt14default_deleteIA_PfEclEPS0_(%"struct.std::default_delete"* nonnull %call2, float** %1), !dbg !5391
+  br label %if.end, !dbg !5391
 
 if.end:                                           ; preds = %entry, %if.then
-  store float** null, float*** %call, align 8, !dbg !5391, !tbaa !3171
-  ret void, !dbg !5392
+  store float** null, float*** %call, align 8, !dbg !5393, !tbaa !3171
+  ret void, !dbg !5394
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(8) float*** @_ZSt3getILm0EJPPfSt14default_deleteIA_S0_EEERNSt13tuple_elementIXT_ESt5tupleIJDpT0_EEE4typeERS9_(%"class.std::tuple"* dereferenceable(8) %__t) local_unnamed_addr #7 comdat !dbg !5393 {
+define linkonce_odr dereferenceable(8) float*** @_ZSt3getILm0EJPPfSt14default_deleteIA_S0_EEERNSt13tuple_elementIXT_ESt5tupleIJDpT0_EEE4typeERS9_(%"class.std::tuple"* dereferenceable(8) %__t) local_unnamed_addr #7 comdat !dbg !5395 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::tuple"* %__t, metadata !5404, metadata !DIExpression()), !dbg !5406
-  %0 = getelementptr inbounds %"class.std::tuple", %"class.std::tuple"* %__t, i64 0, i32 0, !dbg !5407
-  %call = tail call dereferenceable(8) float*** @_ZSt12__get_helperILm0EPPfJSt14default_deleteIA_S0_EEERT0_RSt11_Tuple_implIXT_EJS5_DpT1_EE(%"struct.std::_Tuple_impl"* nonnull dereferenceable(8) %0) #24, !dbg !5408
-  ret float*** %call, !dbg !5409
+  call void @llvm.dbg.value(metadata %"class.std::tuple"* %__t, metadata !5406, metadata !DIExpression()), !dbg !5408
+  %0 = getelementptr inbounds %"class.std::tuple", %"class.std::tuple"* %__t, i64 0, i32 0, !dbg !5409
+  %call = tail call dereferenceable(8) float*** @_ZSt12__get_helperILm0EPPfJSt14default_deleteIA_S0_EEERT0_RSt11_Tuple_implIXT_EJS5_DpT1_EE(%"struct.std::_Tuple_impl"* nonnull dereferenceable(8) %0) #24, !dbg !5410
+  ret float*** %call, !dbg !5411
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(1) %"struct.std::default_delete"* @_ZNSt10unique_ptrIA_PfSt14default_deleteIS1_EE11get_deleterEv(%"class.std::unique_ptr"* %this) local_unnamed_addr #7 comdat align 2 !dbg !5410 {
+define linkonce_odr dereferenceable(1) %"struct.std::default_delete"* @_ZNSt10unique_ptrIA_PfSt14default_deleteIS1_EE11get_deleterEv(%"class.std::unique_ptr"* %this) local_unnamed_addr #7 comdat align 2 !dbg !5412 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::unique_ptr"* %this, metadata !5412, metadata !DIExpression()), !dbg !5413
-  %_M_t = getelementptr inbounds %"class.std::unique_ptr", %"class.std::unique_ptr"* %this, i64 0, i32 0, !dbg !5414
-  %call = tail call dereferenceable(1) %"struct.std::default_delete"* @_ZSt3getILm1EJPPfSt14default_deleteIA_S0_EEERNSt13tuple_elementIXT_ESt5tupleIJDpT0_EEE4typeERS9_(%"class.std::tuple"* dereferenceable(8) %_M_t) #24, !dbg !5415
-  ret %"struct.std::default_delete"* %call, !dbg !5416
+  call void @llvm.dbg.value(metadata %"class.std::unique_ptr"* %this, metadata !5414, metadata !DIExpression()), !dbg !5415
+  %_M_t = getelementptr inbounds %"class.std::unique_ptr", %"class.std::unique_ptr"* %this, i64 0, i32 0, !dbg !5416
+  %call = tail call dereferenceable(1) %"struct.std::default_delete"* @_ZSt3getILm1EJPPfSt14default_deleteIA_S0_EEERNSt13tuple_elementIXT_ESt5tupleIJDpT0_EEE4typeERS9_(%"class.std::tuple"* dereferenceable(8) %_M_t) #24, !dbg !5417
+  ret %"struct.std::default_delete"* %call, !dbg !5418
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZNKSt14default_deleteIA_PfEclEPS0_(%"struct.std::default_delete"* %this, float** %__ptr) local_unnamed_addr #7 comdat align 2 !dbg !5417 {
+define linkonce_odr void @_ZNKSt14default_deleteIA_PfEclEPS0_(%"struct.std::default_delete"* %this, float** %__ptr) local_unnamed_addr #7 comdat align 2 !dbg !5419 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::default_delete"* %this, metadata !5419, metadata !DIExpression()), !dbg !5422
-  call void @llvm.dbg.value(metadata float** %__ptr, metadata !5421, metadata !DIExpression()), !dbg !5422
-  %isnull = icmp eq float** %__ptr, null, !dbg !5423
-  br i1 %isnull, label %delete.end, label %delete.notnull, !dbg !5423
+  call void @llvm.dbg.value(metadata %"struct.std::default_delete"* %this, metadata !5421, metadata !DIExpression()), !dbg !5424
+  call void @llvm.dbg.value(metadata float** %__ptr, metadata !5423, metadata !DIExpression()), !dbg !5424
+  %isnull = icmp eq float** %__ptr, null, !dbg !5425
+  br i1 %isnull, label %delete.end, label %delete.notnull, !dbg !5425
 
 delete.notnull:                                   ; preds = %entry
-  %0 = bitcast float** %__ptr to i8*, !dbg !5423
-  tail call void @_ZdaPv(i8* %0) #27, !dbg !5423
-  br label %delete.end, !dbg !5423
+  %0 = bitcast float** %__ptr to i8*, !dbg !5425
+  tail call void @_ZdaPv(i8* %0) #27, !dbg !5425
+  br label %delete.end, !dbg !5425
 
 delete.end:                                       ; preds = %delete.notnull, %entry
-  ret void, !dbg !5424
+  ret void, !dbg !5426
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(8) float*** @_ZSt12__get_helperILm0EPPfJSt14default_deleteIA_S0_EEERT0_RSt11_Tuple_implIXT_EJS5_DpT1_EE(%"struct.std::_Tuple_impl"* dereferenceable(8) %__t) local_unnamed_addr #7 comdat !dbg !5425 {
+define linkonce_odr dereferenceable(8) float*** @_ZSt12__get_helperILm0EPPfJSt14default_deleteIA_S0_EEERT0_RSt11_Tuple_implIXT_EJS5_DpT1_EE(%"struct.std::_Tuple_impl"* dereferenceable(8) %__t) local_unnamed_addr #7 comdat !dbg !5427 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Tuple_impl"* %__t, metadata !5427, metadata !DIExpression()), !dbg !5430
-  %call = tail call dereferenceable(8) float*** @_ZNSt11_Tuple_implILm0EJPPfSt14default_deleteIA_S0_EEE7_M_headERS5_(%"struct.std::_Tuple_impl"* nonnull dereferenceable(8) %__t) #24, !dbg !5431
-  ret float*** %call, !dbg !5432
+  call void @llvm.dbg.value(metadata %"struct.std::_Tuple_impl"* %__t, metadata !5429, metadata !DIExpression()), !dbg !5432
+  %call = tail call dereferenceable(8) float*** @_ZNSt11_Tuple_implILm0EJPPfSt14default_deleteIA_S0_EEE7_M_headERS5_(%"struct.std::_Tuple_impl"* nonnull dereferenceable(8) %__t) #24, !dbg !5433
+  ret float*** %call, !dbg !5434
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(8) float*** @_ZNSt11_Tuple_implILm0EJPPfSt14default_deleteIA_S0_EEE7_M_headERS5_(%"struct.std::_Tuple_impl"* dereferenceable(8) %__t) local_unnamed_addr #7 comdat align 2 !dbg !5433 {
+define linkonce_odr dereferenceable(8) float*** @_ZNSt11_Tuple_implILm0EJPPfSt14default_deleteIA_S0_EEE7_M_headERS5_(%"struct.std::_Tuple_impl"* dereferenceable(8) %__t) local_unnamed_addr #7 comdat align 2 !dbg !5435 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Tuple_impl"* %__t, metadata !5435, metadata !DIExpression()), !dbg !5436
-  %0 = getelementptr inbounds %"struct.std::_Tuple_impl", %"struct.std::_Tuple_impl"* %__t, i64 0, i32 0, !dbg !5437
-  %call = tail call dereferenceable(8) float*** @_ZNSt10_Head_baseILm0EPPfLb0EE7_M_headERS2_(%"struct.std::_Head_base.1"* nonnull dereferenceable(8) %0) #24, !dbg !5438
-  ret float*** %call, !dbg !5439
+  call void @llvm.dbg.value(metadata %"struct.std::_Tuple_impl"* %__t, metadata !5437, metadata !DIExpression()), !dbg !5438
+  %0 = getelementptr inbounds %"struct.std::_Tuple_impl", %"struct.std::_Tuple_impl"* %__t, i64 0, i32 0, !dbg !5439
+  %call = tail call dereferenceable(8) float*** @_ZNSt10_Head_baseILm0EPPfLb0EE7_M_headERS2_(%"struct.std::_Head_base.1"* nonnull dereferenceable(8) %0) #24, !dbg !5440
+  ret float*** %call, !dbg !5441
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(8) float*** @_ZNSt10_Head_baseILm0EPPfLb0EE7_M_headERS2_(%"struct.std::_Head_base.1"* dereferenceable(8) %__b) local_unnamed_addr #7 comdat align 2 !dbg !5440 {
+define linkonce_odr dereferenceable(8) float*** @_ZNSt10_Head_baseILm0EPPfLb0EE7_M_headERS2_(%"struct.std::_Head_base.1"* dereferenceable(8) %__b) local_unnamed_addr #7 comdat align 2 !dbg !5442 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Head_base.1"* %__b, metadata !5442, metadata !DIExpression()), !dbg !5443
-  %_M_head_impl = getelementptr inbounds %"struct.std::_Head_base.1", %"struct.std::_Head_base.1"* %__b, i64 0, i32 0, !dbg !5444
-  ret float*** %_M_head_impl, !dbg !5445
+  call void @llvm.dbg.value(metadata %"struct.std::_Head_base.1"* %__b, metadata !5444, metadata !DIExpression()), !dbg !5445
+  %_M_head_impl = getelementptr inbounds %"struct.std::_Head_base.1", %"struct.std::_Head_base.1"* %__b, i64 0, i32 0, !dbg !5446
+  ret float*** %_M_head_impl, !dbg !5447
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(1) %"struct.std::default_delete"* @_ZSt3getILm1EJPPfSt14default_deleteIA_S0_EEERNSt13tuple_elementIXT_ESt5tupleIJDpT0_EEE4typeERS9_(%"class.std::tuple"* dereferenceable(8) %__t) local_unnamed_addr #7 comdat !dbg !5446 {
+define linkonce_odr dereferenceable(1) %"struct.std::default_delete"* @_ZSt3getILm1EJPPfSt14default_deleteIA_S0_EEERNSt13tuple_elementIXT_ESt5tupleIJDpT0_EEE4typeERS9_(%"class.std::tuple"* dereferenceable(8) %__t) local_unnamed_addr #7 comdat !dbg !5448 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::tuple"* %__t, metadata !5457, metadata !DIExpression()), !dbg !5460
-  %0 = bitcast %"class.std::tuple"* %__t to %"struct.std::_Tuple_impl.0"*, !dbg !5461
-  %call = tail call dereferenceable(1) %"struct.std::default_delete"* @_ZSt12__get_helperILm1ESt14default_deleteIA_PfEJEERT0_RSt11_Tuple_implIXT_EJS4_DpT1_EE(%"struct.std::_Tuple_impl.0"* nonnull dereferenceable(1) %0) #24, !dbg !5462
-  ret %"struct.std::default_delete"* %call, !dbg !5463
+  call void @llvm.dbg.value(metadata %"class.std::tuple"* %__t, metadata !5459, metadata !DIExpression()), !dbg !5462
+  %0 = bitcast %"class.std::tuple"* %__t to %"struct.std::_Tuple_impl.0"*, !dbg !5463
+  %call = tail call dereferenceable(1) %"struct.std::default_delete"* @_ZSt12__get_helperILm1ESt14default_deleteIA_PfEJEERT0_RSt11_Tuple_implIXT_EJS4_DpT1_EE(%"struct.std::_Tuple_impl.0"* nonnull dereferenceable(1) %0) #24, !dbg !5464
+  ret %"struct.std::default_delete"* %call, !dbg !5465
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(1) %"struct.std::default_delete"* @_ZSt12__get_helperILm1ESt14default_deleteIA_PfEJEERT0_RSt11_Tuple_implIXT_EJS4_DpT1_EE(%"struct.std::_Tuple_impl.0"* dereferenceable(1) %__t) local_unnamed_addr #7 comdat !dbg !5464 {
+define linkonce_odr dereferenceable(1) %"struct.std::default_delete"* @_ZSt12__get_helperILm1ESt14default_deleteIA_PfEJEERT0_RSt11_Tuple_implIXT_EJS4_DpT1_EE(%"struct.std::_Tuple_impl.0"* dereferenceable(1) %__t) local_unnamed_addr #7 comdat !dbg !5466 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Tuple_impl.0"* %__t, metadata !5466, metadata !DIExpression()), !dbg !5469
-  %call = tail call dereferenceable(1) %"struct.std::default_delete"* @_ZNSt11_Tuple_implILm1EJSt14default_deleteIA_PfEEE7_M_headERS4_(%"struct.std::_Tuple_impl.0"* nonnull dereferenceable(1) %__t) #24, !dbg !5470
-  ret %"struct.std::default_delete"* %call, !dbg !5471
+  call void @llvm.dbg.value(metadata %"struct.std::_Tuple_impl.0"* %__t, metadata !5468, metadata !DIExpression()), !dbg !5471
+  %call = tail call dereferenceable(1) %"struct.std::default_delete"* @_ZNSt11_Tuple_implILm1EJSt14default_deleteIA_PfEEE7_M_headERS4_(%"struct.std::_Tuple_impl.0"* nonnull dereferenceable(1) %__t) #24, !dbg !5472
+  ret %"struct.std::default_delete"* %call, !dbg !5473
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(1) %"struct.std::default_delete"* @_ZNSt11_Tuple_implILm1EJSt14default_deleteIA_PfEEE7_M_headERS4_(%"struct.std::_Tuple_impl.0"* dereferenceable(1) %__t) local_unnamed_addr #7 comdat align 2 !dbg !5472 {
+define linkonce_odr dereferenceable(1) %"struct.std::default_delete"* @_ZNSt11_Tuple_implILm1EJSt14default_deleteIA_PfEEE7_M_headERS4_(%"struct.std::_Tuple_impl.0"* dereferenceable(1) %__t) local_unnamed_addr #7 comdat align 2 !dbg !5474 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Tuple_impl.0"* %__t, metadata !5474, metadata !DIExpression()), !dbg !5475
-  %0 = bitcast %"struct.std::_Tuple_impl.0"* %__t to %"struct.std::_Head_base"*, !dbg !5476
-  %call = tail call dereferenceable(1) %"struct.std::default_delete"* @_ZNSt10_Head_baseILm1ESt14default_deleteIA_PfELb1EE7_M_headERS4_(%"struct.std::_Head_base"* nonnull dereferenceable(1) %0) #24, !dbg !5477
-  ret %"struct.std::default_delete"* %call, !dbg !5478
+  call void @llvm.dbg.value(metadata %"struct.std::_Tuple_impl.0"* %__t, metadata !5476, metadata !DIExpression()), !dbg !5477
+  %0 = bitcast %"struct.std::_Tuple_impl.0"* %__t to %"struct.std::_Head_base"*, !dbg !5478
+  %call = tail call dereferenceable(1) %"struct.std::default_delete"* @_ZNSt10_Head_baseILm1ESt14default_deleteIA_PfELb1EE7_M_headERS4_(%"struct.std::_Head_base"* nonnull dereferenceable(1) %0) #24, !dbg !5479
+  ret %"struct.std::default_delete"* %call, !dbg !5480
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(1) %"struct.std::default_delete"* @_ZNSt10_Head_baseILm1ESt14default_deleteIA_PfELb1EE7_M_headERS4_(%"struct.std::_Head_base"* dereferenceable(1) %__b) local_unnamed_addr #7 comdat align 2 !dbg !5479 {
+define linkonce_odr dereferenceable(1) %"struct.std::default_delete"* @_ZNSt10_Head_baseILm1ESt14default_deleteIA_PfELb1EE7_M_headERS4_(%"struct.std::_Head_base"* dereferenceable(1) %__b) local_unnamed_addr #7 comdat align 2 !dbg !5481 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Head_base"* %__b, metadata !5481, metadata !DIExpression()), !dbg !5482
-  %0 = bitcast %"struct.std::_Head_base"* %__b to %"struct.std::default_delete"*, !dbg !5483
-  ret %"struct.std::default_delete"* %0, !dbg !5484
+  call void @llvm.dbg.value(metadata %"struct.std::_Head_base"* %__b, metadata !5483, metadata !DIExpression()), !dbg !5484
+  %0 = bitcast %"struct.std::_Head_base"* %__b to %"struct.std::default_delete"*, !dbg !5485
+  ret %"struct.std::default_delete"* %0, !dbg !5486
 }
 
 ; Function Attrs: nofree nounwind
@@ -4508,412 +4510,412 @@ declare i64 @strtol(i8* readonly, i8** nocapture, i32) local_unnamed_addr #11
 declare void @llvm.trap() #21
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIcEC2Ev(%"class.__gnu_cxx::new_allocator.3"* %this) unnamed_addr #7 comdat align 2 !dbg !5485 {
+define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIcEC2Ev(%"class.__gnu_cxx::new_allocator.3"* %this) unnamed_addr #7 comdat align 2 !dbg !5487 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.3"* %this, metadata !5523, metadata !DIExpression()), !dbg !5525
-  ret void, !dbg !5526
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.3"* %this, metadata !5525, metadata !DIExpression()), !dbg !5527
+  ret void, !dbg !5528
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIcED2Ev(%"class.__gnu_cxx::new_allocator.3"* %this) unnamed_addr #7 comdat align 2 !dbg !5527 {
+define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIcED2Ev(%"class.__gnu_cxx::new_allocator.3"* %this) unnamed_addr #7 comdat align 2 !dbg !5529 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.3"* %this, metadata !5529, metadata !DIExpression()), !dbg !5530
-  ret void, !dbg !5531
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.3"* %this, metadata !5531, metadata !DIExpression()), !dbg !5532
+  ret void, !dbg !5533
 }
 
 ; Function Attrs: uwtable
-define available_externally void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_disposeEv(%"class.std::__cxx11::basic_string"* %this) local_unnamed_addr #0 align 2 !dbg !5532 {
+define available_externally void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_disposeEv(%"class.std::__cxx11::basic_string"* %this) local_unnamed_addr #0 align 2 !dbg !5534 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !5535, metadata !DIExpression()), !dbg !5536
-  %call = tail call zeroext i1 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv(%"class.std::__cxx11::basic_string"* %this), !dbg !5537
-  br i1 %call, label %if.end, label %if.then, !dbg !5539
+  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !5537, metadata !DIExpression()), !dbg !5538
+  %call = tail call zeroext i1 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv(%"class.std::__cxx11::basic_string"* %this), !dbg !5539
+  br i1 %call, label %if.end, label %if.then, !dbg !5541
 
 if.then:                                          ; preds = %entry
-  %_M_allocated_capacity = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %this, i64 0, i32 2, i32 0, !dbg !5540
-  %0 = load i64, i64* %_M_allocated_capacity, align 8, !dbg !5540, !tbaa !5541
-  tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_destroyEm(%"class.std::__cxx11::basic_string"* %this, i64 %0) #24, !dbg !5542
-  br label %if.end, !dbg !5542
+  %_M_allocated_capacity = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %this, i64 0, i32 2, i32 0, !dbg !5542
+  %0 = load i64, i64* %_M_allocated_capacity, align 8, !dbg !5542, !tbaa !5543
+  tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_destroyEm(%"class.std::__cxx11::basic_string"* %this, i64 %0) #24, !dbg !5544
+  br label %if.end, !dbg !5544
 
 if.end:                                           ; preds = %if.then, %entry
-  ret void, !dbg !5543
+  ret void, !dbg !5545
 }
 
 declare void @__cxa_call_unexpected(i8*) local_unnamed_addr
 
 ; Function Attrs: uwtable
-define available_externally zeroext i1 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv(%"class.std::__cxx11::basic_string"* %this) local_unnamed_addr #0 align 2 !dbg !5544 {
+define available_externally zeroext i1 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv(%"class.std::__cxx11::basic_string"* %this) local_unnamed_addr #0 align 2 !dbg !5546 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !5551, metadata !DIExpression()), !dbg !5553
-  %call = tail call i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEv(%"class.std::__cxx11::basic_string"* %this), !dbg !5554
-  %call2 = tail call i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_local_dataEv(%"class.std::__cxx11::basic_string"* %this), !dbg !5555
-  %cmp = icmp eq i8* %call, %call2, !dbg !5556
-  ret i1 %cmp, !dbg !5557
+  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !5553, metadata !DIExpression()), !dbg !5555
+  %call = tail call i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEv(%"class.std::__cxx11::basic_string"* %this), !dbg !5556
+  %call2 = tail call i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_local_dataEv(%"class.std::__cxx11::basic_string"* %this), !dbg !5557
+  %cmp = icmp eq i8* %call, %call2, !dbg !5558
+  ret i1 %cmp, !dbg !5559
 }
 
 ; Function Attrs: nounwind uwtable
-define available_externally void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_destroyEm(%"class.std::__cxx11::basic_string"* %this, i64 %__size) local_unnamed_addr #7 align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !5558 {
+define available_externally void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_destroyEm(%"class.std::__cxx11::basic_string"* %this, i64 %__size) local_unnamed_addr #7 align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !5560 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !5563, metadata !DIExpression()), !dbg !5565
-  call void @llvm.dbg.value(metadata i64 %__size, metadata !5564, metadata !DIExpression()), !dbg !5565
-  %call = tail call dereferenceable(1) %"class.std::allocator.2"* @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16_M_get_allocatorEv(%"class.std::__cxx11::basic_string"* %this), !dbg !5566
-  %call3 = tail call i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEv(%"class.std::__cxx11::basic_string"* %this), !dbg !5567
-  %add = add i64 %__size, 1, !dbg !5568
+  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !5565, metadata !DIExpression()), !dbg !5567
+  call void @llvm.dbg.value(metadata i64 %__size, metadata !5566, metadata !DIExpression()), !dbg !5567
+  %call = tail call dereferenceable(1) %"class.std::allocator.2"* @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16_M_get_allocatorEv(%"class.std::__cxx11::basic_string"* %this), !dbg !5568
+  %call3 = tail call i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEv(%"class.std::__cxx11::basic_string"* %this), !dbg !5569
+  %add = add i64 %__size, 1, !dbg !5570
   invoke void @_ZNSt16allocator_traitsISaIcEE10deallocateERS0_Pcm(%"class.std::allocator.2"* nonnull dereferenceable(1) %call, i8* %call3, i64 %add)
-          to label %invoke.cont4 unwind label %lpad, !dbg !5569
+          to label %invoke.cont4 unwind label %lpad, !dbg !5571
 
 invoke.cont4:                                     ; preds = %entry
-  ret void, !dbg !5570
+  ret void, !dbg !5572
 
 lpad:                                             ; preds = %entry
   %0 = landingpad { i8*, i32 }
-          filter [0 x i8*] zeroinitializer, !dbg !5570
-  %1 = extractvalue { i8*, i32 } %0, 0, !dbg !5570
-  tail call void @__cxa_call_unexpected(i8* %1) #25, !dbg !5570
-  unreachable, !dbg !5570
+          filter [0 x i8*] zeroinitializer, !dbg !5572
+  %1 = extractvalue { i8*, i32 } %0, 0, !dbg !5572
+  tail call void @__cxa_call_unexpected(i8* %1) #25, !dbg !5572
+  unreachable, !dbg !5572
 }
 
 ; Function Attrs: nounwind uwtable
-define available_externally i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEv(%"class.std::__cxx11::basic_string"* %this) local_unnamed_addr #7 align 2 !dbg !5571 {
+define available_externally i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEv(%"class.std::__cxx11::basic_string"* %this) local_unnamed_addr #7 align 2 !dbg !5573 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !5578, metadata !DIExpression()), !dbg !5579
-  %_M_p = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %this, i64 0, i32 0, i32 0, !dbg !5580
-  %0 = load i8*, i8** %_M_p, align 8, !dbg !5580, !tbaa !5581
-  ret i8* %0, !dbg !5584
+  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !5580, metadata !DIExpression()), !dbg !5581
+  %_M_p = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %this, i64 0, i32 0, i32 0, !dbg !5582
+  %0 = load i8*, i8** %_M_p, align 8, !dbg !5582, !tbaa !5583
+  ret i8* %0, !dbg !5586
 }
 
 ; Function Attrs: nounwind uwtable
-define available_externally i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_local_dataEv(%"class.std::__cxx11::basic_string"* %this) local_unnamed_addr #7 align 2 !dbg !5585 {
+define available_externally i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_local_dataEv(%"class.std::__cxx11::basic_string"* %this) local_unnamed_addr #7 align 2 !dbg !5587 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !5593, metadata !DIExpression()), !dbg !5594
-  %0 = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %this, i64 0, i32 2, !dbg !5595
-  %arraydecay = bitcast %union.anon.5* %0 to i8*, !dbg !5596
-  %call = tail call i8* @_ZNSt14pointer_traitsIPKcE10pointer_toERS0_(i8* nonnull dereferenceable(1) %arraydecay) #24, !dbg !5597
-  ret i8* %call, !dbg !5598
+  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !5595, metadata !DIExpression()), !dbg !5596
+  %0 = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %this, i64 0, i32 2, !dbg !5597
+  %arraydecay = bitcast %union.anon.5* %0 to i8*, !dbg !5598
+  %call = tail call i8* @_ZNSt14pointer_traitsIPKcE10pointer_toERS0_(i8* nonnull dereferenceable(1) %arraydecay) #24, !dbg !5599
+  ret i8* %call, !dbg !5600
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr i8* @_ZNSt14pointer_traitsIPKcE10pointer_toERS0_(i8* dereferenceable(1) %__r) local_unnamed_addr #7 comdat align 2 !dbg !5599 {
+define linkonce_odr i8* @_ZNSt14pointer_traitsIPKcE10pointer_toERS0_(i8* dereferenceable(1) %__r) local_unnamed_addr #7 comdat align 2 !dbg !5601 {
 entry:
-  call void @llvm.dbg.value(metadata i8* %__r, metadata !5616, metadata !DIExpression()), !dbg !5617
-  %call = tail call i8* @_ZSt9addressofIKcEPT_RS1_(i8* nonnull dereferenceable(1) %__r) #24, !dbg !5618
-  ret i8* %call, !dbg !5619
+  call void @llvm.dbg.value(metadata i8* %__r, metadata !5618, metadata !DIExpression()), !dbg !5619
+  %call = tail call i8* @_ZSt9addressofIKcEPT_RS1_(i8* nonnull dereferenceable(1) %__r) #24, !dbg !5620
+  ret i8* %call, !dbg !5621
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr i8* @_ZSt9addressofIKcEPT_RS1_(i8* dereferenceable(1) %__r) local_unnamed_addr #16 comdat !dbg !5620 {
+define linkonce_odr i8* @_ZSt9addressofIKcEPT_RS1_(i8* dereferenceable(1) %__r) local_unnamed_addr #16 comdat !dbg !5622 {
 entry:
-  call void @llvm.dbg.value(metadata i8* %__r, metadata !5625, metadata !DIExpression()), !dbg !5627
-  %call = tail call i8* @_ZSt11__addressofIKcEPT_RS1_(i8* nonnull dereferenceable(1) %__r) #24, !dbg !5628
-  ret i8* %call, !dbg !5629
+  call void @llvm.dbg.value(metadata i8* %__r, metadata !5627, metadata !DIExpression()), !dbg !5629
+  %call = tail call i8* @_ZSt11__addressofIKcEPT_RS1_(i8* nonnull dereferenceable(1) %__r) #24, !dbg !5630
+  ret i8* %call, !dbg !5631
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr i8* @_ZSt11__addressofIKcEPT_RS1_(i8* dereferenceable(1) %__r) local_unnamed_addr #16 comdat !dbg !5630 {
+define linkonce_odr i8* @_ZSt11__addressofIKcEPT_RS1_(i8* dereferenceable(1) %__r) local_unnamed_addr #16 comdat !dbg !5632 {
 entry:
-  call void @llvm.dbg.value(metadata i8* %__r, metadata !5632, metadata !DIExpression()), !dbg !5633
-  ret i8* %__r, !dbg !5634
+  call void @llvm.dbg.value(metadata i8* %__r, metadata !5634, metadata !DIExpression()), !dbg !5635
+  ret i8* %__r, !dbg !5636
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr void @_ZNSt16allocator_traitsISaIcEE10deallocateERS0_Pcm(%"class.std::allocator.2"* dereferenceable(1) %__a, i8* %__p, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !5635 {
+define linkonce_odr void @_ZNSt16allocator_traitsISaIcEE10deallocateERS0_Pcm(%"class.std::allocator.2"* dereferenceable(1) %__a, i8* %__p, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !5637 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::allocator.2"* %__a, metadata !5637, metadata !DIExpression()), !dbg !5640
-  call void @llvm.dbg.value(metadata i8* %__p, metadata !5638, metadata !DIExpression()), !dbg !5640
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !5639, metadata !DIExpression()), !dbg !5640
-  %0 = bitcast %"class.std::allocator.2"* %__a to %"class.__gnu_cxx::new_allocator.3"*, !dbg !5641
-  tail call void @_ZN9__gnu_cxx13new_allocatorIcE10deallocateEPcm(%"class.__gnu_cxx::new_allocator.3"* nonnull %0, i8* %__p, i64 %__n), !dbg !5642
-  ret void, !dbg !5643
+  call void @llvm.dbg.value(metadata %"class.std::allocator.2"* %__a, metadata !5639, metadata !DIExpression()), !dbg !5642
+  call void @llvm.dbg.value(metadata i8* %__p, metadata !5640, metadata !DIExpression()), !dbg !5642
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !5641, metadata !DIExpression()), !dbg !5642
+  %0 = bitcast %"class.std::allocator.2"* %__a to %"class.__gnu_cxx::new_allocator.3"*, !dbg !5643
+  tail call void @_ZN9__gnu_cxx13new_allocatorIcE10deallocateEPcm(%"class.__gnu_cxx::new_allocator.3"* nonnull %0, i8* %__p, i64 %__n), !dbg !5644
+  ret void, !dbg !5645
 }
 
 ; Function Attrs: nounwind uwtable
-define available_externally dereferenceable(1) %"class.std::allocator.2"* @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16_M_get_allocatorEv(%"class.std::__cxx11::basic_string"* %this) local_unnamed_addr #7 align 2 !dbg !5644 {
+define available_externally dereferenceable(1) %"class.std::allocator.2"* @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16_M_get_allocatorEv(%"class.std::__cxx11::basic_string"* %this) local_unnamed_addr #7 align 2 !dbg !5646 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !5655, metadata !DIExpression()), !dbg !5656
-  %0 = bitcast %"class.std::__cxx11::basic_string"* %this to %"class.std::allocator.2"*, !dbg !5657
-  ret %"class.std::allocator.2"* %0, !dbg !5658
+  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !5657, metadata !DIExpression()), !dbg !5658
+  %0 = bitcast %"class.std::__cxx11::basic_string"* %this to %"class.std::allocator.2"*, !dbg !5659
+  ret %"class.std::allocator.2"* %0, !dbg !5660
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIcE10deallocateEPcm(%"class.__gnu_cxx::new_allocator.3"* %this, i8* %__p, i64) local_unnamed_addr #7 comdat align 2 !dbg !5659 {
+define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIcE10deallocateEPcm(%"class.__gnu_cxx::new_allocator.3"* %this, i8* %__p, i64) local_unnamed_addr #7 comdat align 2 !dbg !5661 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.3"* %this, metadata !5661, metadata !DIExpression()), !dbg !5664
-  call void @llvm.dbg.value(metadata i8* %__p, metadata !5662, metadata !DIExpression()), !dbg !5664
-  call void @llvm.dbg.value(metadata i64 %0, metadata !5663, metadata !DIExpression()), !dbg !5664
-  tail call void @_ZdlPv(i8* %__p) #24, !dbg !5665
-  ret void, !dbg !5666
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.3"* %this, metadata !5663, metadata !DIExpression()), !dbg !5666
+  call void @llvm.dbg.value(metadata i8* %__p, metadata !5664, metadata !DIExpression()), !dbg !5666
+  call void @llvm.dbg.value(metadata i64 %0, metadata !5665, metadata !DIExpression()), !dbg !5666
+  tail call void @_ZdlPv(i8* %__p) #24, !dbg !5667
+  ret void, !dbg !5668
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr void @_ZNSt12_Vector_baseIfSaIfEEC2Ev(%"struct.std::_Vector_base"* %this) unnamed_addr #0 comdat align 2 !dbg !5667 {
+define linkonce_odr void @_ZNSt12_Vector_baseIfSaIfEEC2Ev(%"struct.std::_Vector_base"* %this) unnamed_addr #0 comdat align 2 !dbg !5669 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base"* %this, metadata !5669, metadata !DIExpression()), !dbg !5670
-  %_M_impl = getelementptr inbounds %"struct.std::_Vector_base", %"struct.std::_Vector_base"* %this, i64 0, i32 0, !dbg !5671
-  tail call void @_ZNSt12_Vector_baseIfSaIfEE12_Vector_implC2Ev(%"struct.std::_Vector_base<float, std::allocator<float> >::_Vector_impl"* %_M_impl), !dbg !5671
-  ret void, !dbg !5672
+  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base"* %this, metadata !5671, metadata !DIExpression()), !dbg !5672
+  %_M_impl = getelementptr inbounds %"struct.std::_Vector_base", %"struct.std::_Vector_base"* %this, i64 0, i32 0, !dbg !5673
+  tail call void @_ZNSt12_Vector_baseIfSaIfEE12_Vector_implC2Ev(%"struct.std::_Vector_base<float, std::allocator<float> >::_Vector_impl"* %_M_impl), !dbg !5673
+  ret void, !dbg !5674
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZNSt12_Vector_baseIfSaIfEE12_Vector_implC2Ev(%"struct.std::_Vector_base<float, std::allocator<float> >::_Vector_impl"* %this) unnamed_addr #7 comdat align 2 !dbg !5673 {
+define linkonce_odr void @_ZNSt12_Vector_baseIfSaIfEE12_Vector_implC2Ev(%"struct.std::_Vector_base<float, std::allocator<float> >::_Vector_impl"* %this) unnamed_addr #7 comdat align 2 !dbg !5675 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base<float, std::allocator<float> >::_Vector_impl"* %this, metadata !5675, metadata !DIExpression()), !dbg !5677
-  %0 = bitcast %"struct.std::_Vector_base<float, std::allocator<float> >::_Vector_impl"* %this to %"class.std::allocator"*, !dbg !5678
-  tail call void @_ZNSaIfEC2Ev(%"class.std::allocator"* %0) #24, !dbg !5679
-  %1 = bitcast %"struct.std::_Vector_base<float, std::allocator<float> >::_Vector_impl"* %this to i8*, !dbg !5680
-  call void @llvm.memset.p0i8.i64(i8* align 8 %1, i8 0, i64 24, i1 false), !dbg !5681
-  ret void, !dbg !5680
+  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base<float, std::allocator<float> >::_Vector_impl"* %this, metadata !5677, metadata !DIExpression()), !dbg !5679
+  %0 = bitcast %"struct.std::_Vector_base<float, std::allocator<float> >::_Vector_impl"* %this to %"class.std::allocator"*, !dbg !5680
+  tail call void @_ZNSaIfEC2Ev(%"class.std::allocator"* %0) #24, !dbg !5681
+  %1 = bitcast %"struct.std::_Vector_base<float, std::allocator<float> >::_Vector_impl"* %this to i8*, !dbg !5682
+  call void @llvm.memset.p0i8.i64(i8* align 8 %1, i8 0, i64 24, i1 false), !dbg !5683
+  ret void, !dbg !5682
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZNSaIfEC2Ev(%"class.std::allocator"* %this) unnamed_addr #7 comdat align 2 !dbg !5682 {
+define linkonce_odr void @_ZNSaIfEC2Ev(%"class.std::allocator"* %this) unnamed_addr #7 comdat align 2 !dbg !5684 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::allocator"* %this, metadata !5684, metadata !DIExpression()), !dbg !5686
-  %0 = bitcast %"class.std::allocator"* %this to %"class.__gnu_cxx::new_allocator"*, !dbg !5687
-  tail call void @_ZN9__gnu_cxx13new_allocatorIfEC2Ev(%"class.__gnu_cxx::new_allocator"* %0) #24, !dbg !5688
-  ret void, !dbg !5689
+  call void @llvm.dbg.value(metadata %"class.std::allocator"* %this, metadata !5686, metadata !DIExpression()), !dbg !5688
+  %0 = bitcast %"class.std::allocator"* %this to %"class.__gnu_cxx::new_allocator"*, !dbg !5689
+  tail call void @_ZN9__gnu_cxx13new_allocatorIfEC2Ev(%"class.__gnu_cxx::new_allocator"* %0) #24, !dbg !5690
+  ret void, !dbg !5691
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIfEC2Ev(%"class.__gnu_cxx::new_allocator"* %this) unnamed_addr #7 comdat align 2 !dbg !5690 {
+define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIfEC2Ev(%"class.__gnu_cxx::new_allocator"* %this) unnamed_addr #7 comdat align 2 !dbg !5692 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator"* %this, metadata !5692, metadata !DIExpression()), !dbg !5693
-  ret void, !dbg !5694
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator"* %this, metadata !5694, metadata !DIExpression()), !dbg !5695
+  ret void, !dbg !5696
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr i64 @_ZNKSt6vectorIfSaIfEE4sizeEv(%"class.std::vector"* %this) local_unnamed_addr #7 comdat align 2 !dbg !5695 {
+define linkonce_odr i64 @_ZNKSt6vectorIfSaIfEE4sizeEv(%"class.std::vector"* %this) local_unnamed_addr #7 comdat align 2 !dbg !5697 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !5697, metadata !DIExpression()), !dbg !5698
-  %_M_finish = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 1, !dbg !5699
-  %0 = bitcast float** %_M_finish to i64*, !dbg !5699
-  %1 = load i64, i64* %0, align 8, !dbg !5699, !tbaa !5284
-  %2 = bitcast %"class.std::vector"* %this to i64*, !dbg !5700
-  %3 = load i64, i64* %2, align 8, !dbg !5700, !tbaa !3193
-  %sub.ptr.sub = sub i64 %1, %3, !dbg !5701
-  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 2, !dbg !5701
-  ret i64 %sub.ptr.div, !dbg !5702
+  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !5699, metadata !DIExpression()), !dbg !5700
+  %_M_finish = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 1, !dbg !5701
+  %0 = bitcast float** %_M_finish to i64*, !dbg !5701
+  %1 = load i64, i64* %0, align 8, !dbg !5701, !tbaa !5286
+  %2 = bitcast %"class.std::vector"* %this to i64*, !dbg !5702
+  %3 = load i64, i64* %2, align 8, !dbg !5702, !tbaa !3193
+  %sub.ptr.sub = sub i64 %1, %3, !dbg !5703
+  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 2, !dbg !5703
+  ret i64 %sub.ptr.div, !dbg !5704
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr void @_ZNSt6vectorIfSaIfEE17_M_default_appendEm(%"class.std::vector"* %this, i64 %__n) local_unnamed_addr #0 comdat align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !5703 {
+define linkonce_odr void @_ZNSt6vectorIfSaIfEE17_M_default_appendEm(%"class.std::vector"* %this, i64 %__n) local_unnamed_addr #0 comdat align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !5705 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !5706, metadata !DIExpression()), !dbg !5717
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !5707, metadata !DIExpression()), !dbg !5717
-  %cmp = icmp eq i64 %__n, 0, !dbg !5718
-  br i1 %cmp, label %if.end47, label %if.then, !dbg !5719
+  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !5708, metadata !DIExpression()), !dbg !5719
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !5709, metadata !DIExpression()), !dbg !5719
+  %cmp = icmp eq i64 %__n, 0, !dbg !5720
+  br i1 %cmp, label %if.end47, label %if.then, !dbg !5721
 
 if.then:                                          ; preds = %entry
-  %0 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, !dbg !5720
-  %_M_end_of_storage = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 2, !dbg !5721
-  %1 = bitcast float** %_M_end_of_storage to i64*, !dbg !5721
-  %2 = load i64, i64* %1, align 8, !dbg !5721, !tbaa !5316
-  %_M_finish = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 1, !dbg !5722
-  %3 = load float*, float** %_M_finish, align 8, !dbg !5722, !tbaa !5284
-  %sub.ptr.rhs.cast = ptrtoint float* %3 to i64, !dbg !5723
-  %sub.ptr.sub = sub i64 %2, %sub.ptr.rhs.cast, !dbg !5723
-  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 2, !dbg !5723
-  %cmp3 = icmp ult i64 %sub.ptr.div, %__n, !dbg !5724
-  br i1 %cmp3, label %if.else, label %if.then4, !dbg !5725
+  %0 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, !dbg !5722
+  %_M_end_of_storage = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 2, !dbg !5723
+  %1 = bitcast float** %_M_end_of_storage to i64*, !dbg !5723
+  %2 = load i64, i64* %1, align 8, !dbg !5723, !tbaa !5318
+  %_M_finish = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 1, !dbg !5724
+  %3 = load float*, float** %_M_finish, align 8, !dbg !5724, !tbaa !5286
+  %sub.ptr.rhs.cast = ptrtoint float* %3 to i64, !dbg !5725
+  %sub.ptr.sub = sub i64 %2, %sub.ptr.rhs.cast, !dbg !5725
+  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 2, !dbg !5725
+  %cmp3 = icmp ult i64 %sub.ptr.div, %__n, !dbg !5726
+  br i1 %cmp3, label %if.else, label %if.then4, !dbg !5727
 
 if.then4:                                         ; preds = %if.then
-  %call = tail call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %0) #24, !dbg !5726
-  %call7 = tail call float* @_ZSt27__uninitialized_default_n_aIPfmfET_S1_T0_RSaIT1_E(float* %3, i64 %__n, %"class.std::allocator"* nonnull dereferenceable(1) %call), !dbg !5728
-  store float* %call7, float** %_M_finish, align 8, !dbg !5729, !tbaa !5284
-  br label %if.end47, !dbg !5730
+  %call = tail call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %0) #24, !dbg !5728
+  %call7 = tail call float* @_ZSt27__uninitialized_default_n_aIPfmfET_S1_T0_RSaIT1_E(float* %3, i64 %__n, %"class.std::allocator"* nonnull dereferenceable(1) %call), !dbg !5730
+  store float* %call7, float** %_M_finish, align 8, !dbg !5731, !tbaa !5286
+  br label %if.end47, !dbg !5732
 
 if.else:                                          ; preds = %if.then
-  %call10 = tail call i64 @_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc(%"class.std::vector"* nonnull %this, i64 %__n, i8* getelementptr inbounds ([26 x i8], [26 x i8]* @.str.12, i64 0, i64 0)), !dbg !5731
-  call void @llvm.dbg.value(metadata i64 %call10, metadata !5708, metadata !DIExpression()), !dbg !5732
-  %call11 = tail call i64 @_ZNKSt6vectorIfSaIfEE4sizeEv(%"class.std::vector"* nonnull %this) #24, !dbg !5733
-  call void @llvm.dbg.value(metadata i64 %call11, metadata !5714, metadata !DIExpression()), !dbg !5732
-  %call12 = tail call float* @_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm(%"struct.std::_Vector_base"* %0, i64 %call10), !dbg !5734
-  call void @llvm.dbg.value(metadata float* %call12, metadata !5715, metadata !DIExpression()), !dbg !5732
-  call void @llvm.dbg.value(metadata float* %call12, metadata !5716, metadata !DIExpression()), !dbg !5732
-  %_M_start = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 0, !dbg !5735
-  %4 = load float*, float** %_M_start, align 8, !dbg !5735, !tbaa !3193
-  %5 = load float*, float** %_M_finish, align 8, !dbg !5737, !tbaa !5284
-  %call16 = tail call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %0) #24, !dbg !5738
+  %call10 = tail call i64 @_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc(%"class.std::vector"* nonnull %this, i64 %__n, i8* getelementptr inbounds ([26 x i8], [26 x i8]* @.str.12, i64 0, i64 0)), !dbg !5733
+  call void @llvm.dbg.value(metadata i64 %call10, metadata !5710, metadata !DIExpression()), !dbg !5734
+  %call11 = tail call i64 @_ZNKSt6vectorIfSaIfEE4sizeEv(%"class.std::vector"* nonnull %this) #24, !dbg !5735
+  call void @llvm.dbg.value(metadata i64 %call11, metadata !5716, metadata !DIExpression()), !dbg !5734
+  %call12 = tail call float* @_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm(%"struct.std::_Vector_base"* %0, i64 %call10), !dbg !5736
+  call void @llvm.dbg.value(metadata float* %call12, metadata !5717, metadata !DIExpression()), !dbg !5734
+  call void @llvm.dbg.value(metadata float* %call12, metadata !5718, metadata !DIExpression()), !dbg !5734
+  %_M_start = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 0, !dbg !5737
+  %4 = load float*, float** %_M_start, align 8, !dbg !5737, !tbaa !3193
+  %5 = load float*, float** %_M_finish, align 8, !dbg !5739, !tbaa !5286
+  %call16 = tail call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %0) #24, !dbg !5740
   %call17 = invoke float* @_ZSt34__uninitialized_move_if_noexcept_aIPfS0_SaIfEET0_T_S3_S2_RT1_(float* %4, float* %5, float* %call12, %"class.std::allocator"* nonnull dereferenceable(1) %call16)
-          to label %invoke.cont unwind label %lpad, !dbg !5739
+          to label %invoke.cont unwind label %lpad, !dbg !5741
 
 invoke.cont:                                      ; preds = %if.else
-  call void @llvm.dbg.value(metadata float* %call17, metadata !5716, metadata !DIExpression()), !dbg !5732
-  %call18 = tail call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* nonnull %0) #24, !dbg !5740
+  call void @llvm.dbg.value(metadata float* %call17, metadata !5718, metadata !DIExpression()), !dbg !5734
+  %call18 = tail call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* nonnull %0) #24, !dbg !5742
   %call20 = invoke float* @_ZSt27__uninitialized_default_n_aIPfmfET_S1_T0_RSaIT1_E(float* %call17, i64 %__n, %"class.std::allocator"* nonnull dereferenceable(1) %call18)
-          to label %invoke.cont19 unwind label %lpad, !dbg !5741
+          to label %invoke.cont19 unwind label %lpad, !dbg !5743
 
 invoke.cont19:                                    ; preds = %invoke.cont
-  call void @llvm.dbg.value(metadata float* %call20, metadata !5716, metadata !DIExpression()), !dbg !5732
-  %6 = load float*, float** %_M_start, align 8, !dbg !5742, !tbaa !3193
-  %7 = load float*, float** %_M_finish, align 8, !dbg !5743, !tbaa !5284
-  %call30 = tail call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* nonnull %0) #24, !dbg !5744
-  tail call void @_ZSt8_DestroyIPffEvT_S1_RSaIT0_E(float* %6, float* %7, %"class.std::allocator"* nonnull dereferenceable(1) %call30), !dbg !5745
-  %8 = load float*, float** %_M_start, align 8, !dbg !5746, !tbaa !3193
-  %9 = load i64, i64* %1, align 8, !dbg !5747, !tbaa !5316
-  %sub.ptr.rhs.cast38 = ptrtoint float* %8 to i64, !dbg !5748
-  %sub.ptr.sub39 = sub i64 %9, %sub.ptr.rhs.cast38, !dbg !5748
-  %sub.ptr.div40 = ashr exact i64 %sub.ptr.sub39, 2, !dbg !5748
-  tail call void @_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm(%"struct.std::_Vector_base"* nonnull %0, float* %8, i64 %sub.ptr.div40), !dbg !5749
-  store float* %call12, float** %_M_start, align 8, !dbg !5750, !tbaa !3193
-  store float* %call20, float** %_M_finish, align 8, !dbg !5751, !tbaa !5284
-  %add.ptr = getelementptr inbounds float, float* %call12, i64 %call10, !dbg !5752
-  store float* %add.ptr, float** %_M_end_of_storage, align 8, !dbg !5753, !tbaa !5316
+  call void @llvm.dbg.value(metadata float* %call20, metadata !5718, metadata !DIExpression()), !dbg !5734
+  %6 = load float*, float** %_M_start, align 8, !dbg !5744, !tbaa !3193
+  %7 = load float*, float** %_M_finish, align 8, !dbg !5745, !tbaa !5286
+  %call30 = tail call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* nonnull %0) #24, !dbg !5746
+  tail call void @_ZSt8_DestroyIPffEvT_S1_RSaIT0_E(float* %6, float* %7, %"class.std::allocator"* nonnull dereferenceable(1) %call30), !dbg !5747
+  %8 = load float*, float** %_M_start, align 8, !dbg !5748, !tbaa !3193
+  %9 = load i64, i64* %1, align 8, !dbg !5749, !tbaa !5318
+  %sub.ptr.rhs.cast38 = ptrtoint float* %8 to i64, !dbg !5750
+  %sub.ptr.sub39 = sub i64 %9, %sub.ptr.rhs.cast38, !dbg !5750
+  %sub.ptr.div40 = ashr exact i64 %sub.ptr.sub39, 2, !dbg !5750
+  tail call void @_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm(%"struct.std::_Vector_base"* nonnull %0, float* %8, i64 %sub.ptr.div40), !dbg !5751
+  store float* %call12, float** %_M_start, align 8, !dbg !5752, !tbaa !3193
+  store float* %call20, float** %_M_finish, align 8, !dbg !5753, !tbaa !5286
+  %add.ptr = getelementptr inbounds float, float* %call12, i64 %call10, !dbg !5754
+  store float* %add.ptr, float** %_M_end_of_storage, align 8, !dbg !5755, !tbaa !5318
   br label %if.end47
 
 lpad:                                             ; preds = %invoke.cont, %if.else
-  %__new_finish.0 = phi float* [ %call17, %invoke.cont ], [ %call12, %if.else ], !dbg !5732
+  %__new_finish.0 = phi float* [ %call17, %invoke.cont ], [ %call12, %if.else ], !dbg !5734
   %10 = landingpad { i8*, i32 }
-          catch i8* null, !dbg !5754
-  call void @llvm.dbg.value(metadata float* %__new_finish.0, metadata !5716, metadata !DIExpression()), !dbg !5732
-  %11 = extractvalue { i8*, i32 } %10, 0, !dbg !5754
-  %12 = tail call i8* @__cxa_begin_catch(i8* %11) #24, !dbg !5755
-  %call21 = tail call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* nonnull %0) #24, !dbg !5756
+          catch i8* null, !dbg !5756
+  call void @llvm.dbg.value(metadata float* %__new_finish.0, metadata !5718, metadata !DIExpression()), !dbg !5734
+  %11 = extractvalue { i8*, i32 } %10, 0, !dbg !5756
+  %12 = tail call i8* @__cxa_begin_catch(i8* %11) #24, !dbg !5757
+  %call21 = tail call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* nonnull %0) #24, !dbg !5758
   invoke void @_ZSt8_DestroyIPffEvT_S1_RSaIT0_E(float* %call12, float* %__new_finish.0, %"class.std::allocator"* nonnull dereferenceable(1) %call21)
-          to label %invoke.cont23 unwind label %lpad22, !dbg !5758
+          to label %invoke.cont23 unwind label %lpad22, !dbg !5760
 
 invoke.cont23:                                    ; preds = %lpad
   invoke void @_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm(%"struct.std::_Vector_base"* nonnull %0, float* %call12, i64 %call10)
-          to label %invoke.cont24 unwind label %lpad22, !dbg !5759
+          to label %invoke.cont24 unwind label %lpad22, !dbg !5761
 
 invoke.cont24:                                    ; preds = %invoke.cont23
   invoke void @__cxa_rethrow() #29
-          to label %unreachable unwind label %lpad22, !dbg !5760
+          to label %unreachable unwind label %lpad22, !dbg !5762
 
 lpad22:                                           ; preds = %invoke.cont24, %invoke.cont23, %lpad
   %13 = landingpad { i8*, i32 }
-          cleanup, !dbg !5761
+          cleanup, !dbg !5763
   invoke void @__cxa_end_catch()
-          to label %invoke.cont25 unwind label %terminate.lpad, !dbg !5762
+          to label %invoke.cont25 unwind label %terminate.lpad, !dbg !5764
 
 invoke.cont25:                                    ; preds = %lpad22
-  resume { i8*, i32 } %13, !dbg !5763
+  resume { i8*, i32 } %13, !dbg !5765
 
 if.end47:                                         ; preds = %entry, %if.then4, %invoke.cont19
-  ret void, !dbg !5764
+  ret void, !dbg !5766
 
 terminate.lpad:                                   ; preds = %lpad22
   %14 = landingpad { i8*, i32 }
-          catch i8* null, !dbg !5762
-  %15 = extractvalue { i8*, i32 } %14, 0, !dbg !5762
-  tail call void @__clang_call_terminate(i8* %15) #25, !dbg !5762
-  unreachable, !dbg !5762
+          catch i8* null, !dbg !5764
+  %15 = extractvalue { i8*, i32 } %14, 0, !dbg !5764
+  tail call void @__clang_call_terminate(i8* %15) #25, !dbg !5764
+  unreachable, !dbg !5764
 
 unreachable:                                      ; preds = %invoke.cont24
   unreachable
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZNSt6vectorIfSaIfEE15_M_erase_at_endEPf(%"class.std::vector"* %this, float* %__pos) local_unnamed_addr #7 comdat align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !5765 {
+define linkonce_odr void @_ZNSt6vectorIfSaIfEE15_M_erase_at_endEPf(%"class.std::vector"* %this, float* %__pos) local_unnamed_addr #7 comdat align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !5767 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !5767, metadata !DIExpression()), !dbg !5769
-  call void @llvm.dbg.value(metadata float* %__pos, metadata !5768, metadata !DIExpression()), !dbg !5769
-  %0 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, !dbg !5770
-  %_M_finish = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 1, !dbg !5771
-  %1 = load float*, float** %_M_finish, align 8, !dbg !5771, !tbaa !5284
-  %call = tail call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %0) #24, !dbg !5772
+  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !5769, metadata !DIExpression()), !dbg !5771
+  call void @llvm.dbg.value(metadata float* %__pos, metadata !5770, metadata !DIExpression()), !dbg !5771
+  %0 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, !dbg !5772
+  %_M_finish = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 1, !dbg !5773
+  %1 = load float*, float** %_M_finish, align 8, !dbg !5773, !tbaa !5286
+  %call = tail call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %0) #24, !dbg !5774
   invoke void @_ZSt8_DestroyIPffEvT_S1_RSaIT0_E(float* %__pos, float* %1, %"class.std::allocator"* nonnull dereferenceable(1) %call)
-          to label %invoke.cont unwind label %terminate.lpad, !dbg !5773
+          to label %invoke.cont unwind label %terminate.lpad, !dbg !5775
 
 invoke.cont:                                      ; preds = %entry
-  store float* %__pos, float** %_M_finish, align 8, !dbg !5774, !tbaa !5284
-  ret void, !dbg !5775
+  store float* %__pos, float** %_M_finish, align 8, !dbg !5776, !tbaa !5286
+  ret void, !dbg !5777
 
 terminate.lpad:                                   ; preds = %entry
   %2 = landingpad { i8*, i32 }
-          catch i8* null, !dbg !5773
-  %3 = extractvalue { i8*, i32 } %2, 0, !dbg !5773
-  tail call void @__clang_call_terminate(i8* %3) #25, !dbg !5773
-  unreachable, !dbg !5773
+          catch i8* null, !dbg !5775
+  %3 = extractvalue { i8*, i32 } %2, 0, !dbg !5775
+  tail call void @__clang_call_terminate(i8* %3) #25, !dbg !5775
+  unreachable, !dbg !5775
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr float* @_ZSt27__uninitialized_default_n_aIPfmfET_S1_T0_RSaIT1_E(float* %__first, i64 %__n, %"class.std::allocator"* dereferenceable(1)) local_unnamed_addr #18 comdat !dbg !5776 {
+define linkonce_odr float* @_ZSt27__uninitialized_default_n_aIPfmfET_S1_T0_RSaIT1_E(float* %__first, i64 %__n, %"class.std::allocator"* dereferenceable(1)) local_unnamed_addr #18 comdat !dbg !5778 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !5781, metadata !DIExpression()), !dbg !5786
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !5782, metadata !DIExpression()), !dbg !5786
-  call void @llvm.dbg.value(metadata %"class.std::allocator"* %0, metadata !5783, metadata !DIExpression()), !dbg !5786
-  %call = tail call float* @_ZSt25__uninitialized_default_nIPfmET_S1_T0_(float* %__first, i64 %__n), !dbg !5787
-  ret float* %call, !dbg !5788
+  call void @llvm.dbg.value(metadata float* %__first, metadata !5783, metadata !DIExpression()), !dbg !5788
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !5784, metadata !DIExpression()), !dbg !5788
+  call void @llvm.dbg.value(metadata %"class.std::allocator"* %0, metadata !5785, metadata !DIExpression()), !dbg !5788
+  %call = tail call float* @_ZSt25__uninitialized_default_nIPfmET_S1_T0_(float* %__first, i64 %__n), !dbg !5789
+  ret float* %call, !dbg !5790
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr i64 @_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc(%"class.std::vector"* %this, i64 %__n, i8* %__s) local_unnamed_addr #0 comdat align 2 !dbg !5789 {
+define linkonce_odr i64 @_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc(%"class.std::vector"* %this, i64 %__n, i8* %__s) local_unnamed_addr #0 comdat align 2 !dbg !5791 {
 entry:
   %__n.addr = alloca i64, align 8
   %ref.tmp = alloca i64, align 8
-  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !5791, metadata !DIExpression()), !dbg !5795
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !5792, metadata !DIExpression()), !dbg !5795
-  store i64 %__n, i64* %__n.addr, align 8, !tbaa !5796
-  call void @llvm.dbg.value(metadata i8* %__s, metadata !5793, metadata !DIExpression()), !dbg !5795
-  %call = tail call i64 @_ZNKSt6vectorIfSaIfEE8max_sizeEv(%"class.std::vector"* %this) #24, !dbg !5797
-  %call2 = tail call i64 @_ZNKSt6vectorIfSaIfEE4sizeEv(%"class.std::vector"* %this) #24, !dbg !5799
-  %sub = sub i64 %call, %call2, !dbg !5800
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !5792, metadata !DIExpression()), !dbg !5795
-  %cmp = icmp ult i64 %sub, %__n, !dbg !5801
-  br i1 %cmp, label %if.then, label %if.end, !dbg !5802
+  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !5793, metadata !DIExpression()), !dbg !5797
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !5794, metadata !DIExpression()), !dbg !5797
+  store i64 %__n, i64* %__n.addr, align 8, !tbaa !5798
+  call void @llvm.dbg.value(metadata i8* %__s, metadata !5795, metadata !DIExpression()), !dbg !5797
+  %call = tail call i64 @_ZNKSt6vectorIfSaIfEE8max_sizeEv(%"class.std::vector"* %this) #24, !dbg !5799
+  %call2 = tail call i64 @_ZNKSt6vectorIfSaIfEE4sizeEv(%"class.std::vector"* %this) #24, !dbg !5801
+  %sub = sub i64 %call, %call2, !dbg !5802
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !5794, metadata !DIExpression()), !dbg !5797
+  %cmp = icmp ult i64 %sub, %__n, !dbg !5803
+  br i1 %cmp, label %if.then, label %if.end, !dbg !5804
 
 if.then:                                          ; preds = %entry
-  tail call void @_ZSt20__throw_length_errorPKc(i8* %__s) #29, !dbg !5803
-  unreachable, !dbg !5803
+  tail call void @_ZSt20__throw_length_errorPKc(i8* %__s) #29, !dbg !5805
+  unreachable, !dbg !5805
 
 if.end:                                           ; preds = %entry
-  %call3 = tail call i64 @_ZNKSt6vectorIfSaIfEE4sizeEv(%"class.std::vector"* %this) #24, !dbg !5804
-  %0 = bitcast i64* %ref.tmp to i8*, !dbg !5805
-  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %0) #24, !dbg !5805
-  %call4 = tail call i64 @_ZNKSt6vectorIfSaIfEE4sizeEv(%"class.std::vector"* %this) #24, !dbg !5805
-  store i64 %call4, i64* %ref.tmp, align 8, !dbg !5805, !tbaa !5796
-  call void @llvm.dbg.value(metadata i64* %__n.addr, metadata !5792, metadata !DIExpression(DW_OP_deref)), !dbg !5795
-  %call5 = call dereferenceable(8) i64* @_ZSt3maxImERKT_S2_S2_(i64* nonnull dereferenceable(8) %ref.tmp, i64* nonnull dereferenceable(8) %__n.addr), !dbg !5806
-  %1 = load i64, i64* %call5, align 8, !dbg !5806, !tbaa !5796
-  %add = add i64 %1, %call3, !dbg !5807
-  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %0) #24, !dbg !5804
-  call void @llvm.dbg.value(metadata i64 %add, metadata !5794, metadata !DIExpression()), !dbg !5795
-  %call6 = call i64 @_ZNKSt6vectorIfSaIfEE4sizeEv(%"class.std::vector"* %this) #24, !dbg !5808
-  %cmp7 = icmp ult i64 %add, %call6, !dbg !5809
-  br i1 %cmp7, label %cond.true, label %lor.lhs.false, !dbg !5810
+  %call3 = tail call i64 @_ZNKSt6vectorIfSaIfEE4sizeEv(%"class.std::vector"* %this) #24, !dbg !5806
+  %0 = bitcast i64* %ref.tmp to i8*, !dbg !5807
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %0) #24, !dbg !5807
+  %call4 = tail call i64 @_ZNKSt6vectorIfSaIfEE4sizeEv(%"class.std::vector"* %this) #24, !dbg !5807
+  store i64 %call4, i64* %ref.tmp, align 8, !dbg !5807, !tbaa !5798
+  call void @llvm.dbg.value(metadata i64* %__n.addr, metadata !5794, metadata !DIExpression(DW_OP_deref)), !dbg !5797
+  %call5 = call dereferenceable(8) i64* @_ZSt3maxImERKT_S2_S2_(i64* nonnull dereferenceable(8) %ref.tmp, i64* nonnull dereferenceable(8) %__n.addr), !dbg !5808
+  %1 = load i64, i64* %call5, align 8, !dbg !5808, !tbaa !5798
+  %add = add i64 %1, %call3, !dbg !5809
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %0) #24, !dbg !5806
+  call void @llvm.dbg.value(metadata i64 %add, metadata !5796, metadata !DIExpression()), !dbg !5797
+  %call6 = call i64 @_ZNKSt6vectorIfSaIfEE4sizeEv(%"class.std::vector"* %this) #24, !dbg !5810
+  %cmp7 = icmp ult i64 %add, %call6, !dbg !5811
+  br i1 %cmp7, label %cond.true, label %lor.lhs.false, !dbg !5812
 
 lor.lhs.false:                                    ; preds = %if.end
-  %call8 = call i64 @_ZNKSt6vectorIfSaIfEE8max_sizeEv(%"class.std::vector"* %this) #24, !dbg !5811
-  %cmp9 = icmp ugt i64 %add, %call8, !dbg !5812
-  br i1 %cmp9, label %cond.true, label %cond.end, !dbg !5813
+  %call8 = call i64 @_ZNKSt6vectorIfSaIfEE8max_sizeEv(%"class.std::vector"* %this) #24, !dbg !5813
+  %cmp9 = icmp ugt i64 %add, %call8, !dbg !5814
+  br i1 %cmp9, label %cond.true, label %cond.end, !dbg !5815
 
 cond.true:                                        ; preds = %lor.lhs.false, %if.end
-  %call10 = call i64 @_ZNKSt6vectorIfSaIfEE8max_sizeEv(%"class.std::vector"* %this) #24, !dbg !5814
-  br label %cond.end, !dbg !5813
+  %call10 = call i64 @_ZNKSt6vectorIfSaIfEE8max_sizeEv(%"class.std::vector"* %this) #24, !dbg !5816
+  br label %cond.end, !dbg !5815
 
 cond.end:                                         ; preds = %lor.lhs.false, %cond.true
-  %cond = phi i64 [ %call10, %cond.true ], [ %add, %lor.lhs.false ], !dbg !5813
-  ret i64 %cond, !dbg !5815
+  %cond = phi i64 [ %call10, %cond.true ], [ %add, %lor.lhs.false ], !dbg !5815
+  ret i64 %cond, !dbg !5817
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr float* @_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm(%"struct.std::_Vector_base"* %this, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !5816 {
+define linkonce_odr float* @_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm(%"struct.std::_Vector_base"* %this, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !5818 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base"* %this, metadata !5818, metadata !DIExpression()), !dbg !5820
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !5819, metadata !DIExpression()), !dbg !5820
-  %cmp = icmp eq i64 %__n, 0, !dbg !5821
-  br i1 %cmp, label %cond.end, label %cond.true, !dbg !5822
+  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base"* %this, metadata !5820, metadata !DIExpression()), !dbg !5822
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !5821, metadata !DIExpression()), !dbg !5822
+  %cmp = icmp eq i64 %__n, 0, !dbg !5823
+  br i1 %cmp, label %cond.end, label %cond.true, !dbg !5824
 
 cond.true:                                        ; preds = %entry
-  %0 = bitcast %"struct.std::_Vector_base"* %this to %"class.std::allocator"*, !dbg !5823
-  %call = tail call float* @_ZNSt16allocator_traitsISaIfEE8allocateERS0_m(%"class.std::allocator"* dereferenceable(1) %0, i64 %__n), !dbg !5824
-  br label %cond.end, !dbg !5822
+  %0 = bitcast %"struct.std::_Vector_base"* %this to %"class.std::allocator"*, !dbg !5825
+  %call = tail call float* @_ZNSt16allocator_traitsISaIfEE8allocateERS0_m(%"class.std::allocator"* dereferenceable(1) %0, i64 %__n), !dbg !5826
+  br label %cond.end, !dbg !5824
 
 cond.end:                                         ; preds = %entry, %cond.true
-  %cond = phi float* [ %call, %cond.true ], [ null, %entry ], !dbg !5822
-  ret float* %cond, !dbg !5825
+  %cond = phi float* [ %call, %cond.true ], [ null, %entry ], !dbg !5824
+  ret float* %cond, !dbg !5827
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr float* @_ZSt34__uninitialized_move_if_noexcept_aIPfS0_SaIfEET0_T_S3_S2_RT1_(float* %__first, float* %__last, float* %__result, %"class.std::allocator"* dereferenceable(1) %__alloc) local_unnamed_addr #18 comdat !dbg !5826 {
+define linkonce_odr float* @_ZSt34__uninitialized_move_if_noexcept_aIPfS0_SaIfEET0_T_S3_S2_RT1_(float* %__first, float* %__last, float* %__result, %"class.std::allocator"* dereferenceable(1) %__alloc) local_unnamed_addr #18 comdat !dbg !5828 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !5830, metadata !DIExpression()), !dbg !5837
-  call void @llvm.dbg.value(metadata float* %__last, metadata !5831, metadata !DIExpression()), !dbg !5837
-  call void @llvm.dbg.value(metadata float* %__result, metadata !5832, metadata !DIExpression()), !dbg !5837
-  call void @llvm.dbg.value(metadata %"class.std::allocator"* %__alloc, metadata !5833, metadata !DIExpression()), !dbg !5837
-  %call = tail call float* @_ZSt32__make_move_if_noexcept_iteratorIPfSt13move_iteratorIS0_EET0_T_(float* %__first), !dbg !5838
-  %call2 = tail call float* @_ZSt32__make_move_if_noexcept_iteratorIPfSt13move_iteratorIS0_EET0_T_(float* %__last), !dbg !5839
-  %call6 = tail call float* @_ZSt22__uninitialized_copy_aISt13move_iteratorIPfES1_fET0_T_S4_S3_RSaIT1_E(float* %call, float* %call2, float* %__result, %"class.std::allocator"* nonnull dereferenceable(1) %__alloc), !dbg !5840
-  ret float* %call6, !dbg !5841
+  call void @llvm.dbg.value(metadata float* %__first, metadata !5832, metadata !DIExpression()), !dbg !5839
+  call void @llvm.dbg.value(metadata float* %__last, metadata !5833, metadata !DIExpression()), !dbg !5839
+  call void @llvm.dbg.value(metadata float* %__result, metadata !5834, metadata !DIExpression()), !dbg !5839
+  call void @llvm.dbg.value(metadata %"class.std::allocator"* %__alloc, metadata !5835, metadata !DIExpression()), !dbg !5839
+  %call = tail call float* @_ZSt32__make_move_if_noexcept_iteratorIPfSt13move_iteratorIS0_EET0_T_(float* %__first), !dbg !5840
+  %call2 = tail call float* @_ZSt32__make_move_if_noexcept_iteratorIPfSt13move_iteratorIS0_EET0_T_(float* %__last), !dbg !5841
+  %call6 = tail call float* @_ZSt22__uninitialized_copy_aISt13move_iteratorIPfES1_fET0_T_S4_S3_RSaIT1_E(float* %call, float* %call2, float* %__result, %"class.std::allocator"* nonnull dereferenceable(1) %__alloc), !dbg !5842
+  ret float* %call6, !dbg !5843
 }
 
 declare void @__cxa_rethrow() local_unnamed_addr
@@ -4921,405 +4923,405 @@ declare void @__cxa_rethrow() local_unnamed_addr
 declare void @__cxa_end_catch() local_unnamed_addr
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr float* @_ZSt25__uninitialized_default_nIPfmET_S1_T0_(float* %__first, i64 %__n) local_unnamed_addr #18 comdat !dbg !5842 {
+define linkonce_odr float* @_ZSt25__uninitialized_default_nIPfmET_S1_T0_(float* %__first, i64 %__n) local_unnamed_addr #18 comdat !dbg !5844 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !5846, metadata !DIExpression()), !dbg !5850
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !5847, metadata !DIExpression()), !dbg !5850
-  call void @llvm.dbg.value(metadata i8 1, metadata !5848, metadata !DIExpression()), !dbg !5850
-  %call = tail call float* @_ZNSt27__uninitialized_default_n_1ILb1EE18__uninit_default_nIPfmEET_S3_T0_(float* %__first, i64 %__n), !dbg !5851
-  ret float* %call, !dbg !5852
+  call void @llvm.dbg.value(metadata float* %__first, metadata !5848, metadata !DIExpression()), !dbg !5852
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !5849, metadata !DIExpression()), !dbg !5852
+  call void @llvm.dbg.value(metadata i8 1, metadata !5850, metadata !DIExpression()), !dbg !5852
+  %call = tail call float* @_ZNSt27__uninitialized_default_n_1ILb1EE18__uninit_default_nIPfmEET_S3_T0_(float* %__first, i64 %__n), !dbg !5853
+  ret float* %call, !dbg !5854
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr float* @_ZNSt27__uninitialized_default_n_1ILb1EE18__uninit_default_nIPfmEET_S3_T0_(float* %__first, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !5853 {
+define linkonce_odr float* @_ZNSt27__uninitialized_default_n_1ILb1EE18__uninit_default_nIPfmEET_S3_T0_(float* %__first, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !5855 {
 entry:
   %ref.tmp = alloca float, align 4
-  call void @llvm.dbg.value(metadata float* %__first, metadata !5859, metadata !DIExpression()), !dbg !5861
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !5860, metadata !DIExpression()), !dbg !5861
-  %0 = bitcast float* %ref.tmp to i8*, !dbg !5862
-  call void @llvm.lifetime.start.p0i8(i64 4, i8* nonnull %0) #24, !dbg !5862
-  store float 0.000000e+00, float* %ref.tmp, align 4, !dbg !5862, !tbaa !3361
-  %call = call float* @_ZSt6fill_nIPfmfET_S1_T0_RKT1_(float* %__first, i64 %__n, float* nonnull dereferenceable(4) %ref.tmp), !dbg !5863
-  call void @llvm.lifetime.end.p0i8(i64 4, i8* nonnull %0) #24, !dbg !5864
-  ret float* %call, !dbg !5864
+  call void @llvm.dbg.value(metadata float* %__first, metadata !5861, metadata !DIExpression()), !dbg !5863
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !5862, metadata !DIExpression()), !dbg !5863
+  %0 = bitcast float* %ref.tmp to i8*, !dbg !5864
+  call void @llvm.lifetime.start.p0i8(i64 4, i8* nonnull %0) #24, !dbg !5864
+  store float 0.000000e+00, float* %ref.tmp, align 4, !dbg !5864, !tbaa !3361
+  %call = call float* @_ZSt6fill_nIPfmfET_S1_T0_RKT1_(float* %__first, i64 %__n, float* nonnull dereferenceable(4) %ref.tmp), !dbg !5865
+  call void @llvm.lifetime.end.p0i8(i64 4, i8* nonnull %0) #24, !dbg !5866
+  ret float* %call, !dbg !5866
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr float* @_ZSt6fill_nIPfmfET_S1_T0_RKT1_(float* %__first, i64 %__n, float* dereferenceable(4) %__value) local_unnamed_addr #18 comdat !dbg !5865 {
+define linkonce_odr float* @_ZSt6fill_nIPfmfET_S1_T0_RKT1_(float* %__first, i64 %__n, float* dereferenceable(4) %__value) local_unnamed_addr #18 comdat !dbg !5867 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !5870, metadata !DIExpression()), !dbg !5875
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !5871, metadata !DIExpression()), !dbg !5875
-  call void @llvm.dbg.value(metadata float* %__value, metadata !5872, metadata !DIExpression()), !dbg !5875
-  %call = tail call float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__first), !dbg !5876
-  %call1 = tail call float* @_ZSt10__fill_n_aIPfmfEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT1_EE7__valueET_E6__typeES4_T0_RKS3_(float* %call, i64 %__n, float* nonnull dereferenceable(4) %__value), !dbg !5877
-  ret float* %call1, !dbg !5878
+  call void @llvm.dbg.value(metadata float* %__first, metadata !5872, metadata !DIExpression()), !dbg !5877
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !5873, metadata !DIExpression()), !dbg !5877
+  call void @llvm.dbg.value(metadata float* %__value, metadata !5874, metadata !DIExpression()), !dbg !5877
+  %call = tail call float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__first), !dbg !5878
+  %call1 = tail call float* @_ZSt10__fill_n_aIPfmfEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT1_EE7__valueET_E6__typeES4_T0_RKS3_(float* %call, i64 %__n, float* nonnull dereferenceable(4) %__value), !dbg !5879
+  ret float* %call1, !dbg !5880
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr float* @_ZSt10__fill_n_aIPfmfEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT1_EE7__valueET_E6__typeES4_T0_RKS3_(float* %__first, i64 %__n, float* dereferenceable(4) %__value) local_unnamed_addr #16 comdat !dbg !5879 {
+define linkonce_odr float* @_ZSt10__fill_n_aIPfmfEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT1_EE7__valueET_E6__typeES4_T0_RKS3_(float* %__first, i64 %__n, float* dereferenceable(4) %__value) local_unnamed_addr #16 comdat !dbg !5881 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !5888, metadata !DIExpression()), !dbg !5896
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !5889, metadata !DIExpression()), !dbg !5896
-  call void @llvm.dbg.value(metadata float* %__value, metadata !5890, metadata !DIExpression()), !dbg !5896
-  %0 = bitcast float* %__value to i32*, !dbg !5897
-  %1 = load i32, i32* %0, align 4, !dbg !5897, !tbaa !3361
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !5892, metadata !DIExpression()), !dbg !5898
-  call void @llvm.dbg.value(metadata float* %__first, metadata !5888, metadata !DIExpression()), !dbg !5896
-  %cmp6 = icmp eq i64 %__n, 0, !dbg !5899
-  br i1 %cmp6, label %for.cond.cleanup, label %for.body, !dbg !5901
+  call void @llvm.dbg.value(metadata float* %__first, metadata !5890, metadata !DIExpression()), !dbg !5898
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !5891, metadata !DIExpression()), !dbg !5898
+  call void @llvm.dbg.value(metadata float* %__value, metadata !5892, metadata !DIExpression()), !dbg !5898
+  %0 = bitcast float* %__value to i32*, !dbg !5899
+  %1 = load i32, i32* %0, align 4, !dbg !5899, !tbaa !3361
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !5894, metadata !DIExpression()), !dbg !5900
+  call void @llvm.dbg.value(metadata float* %__first, metadata !5890, metadata !DIExpression()), !dbg !5898
+  %cmp6 = icmp eq i64 %__n, 0, !dbg !5901
+  br i1 %cmp6, label %for.cond.cleanup, label %for.body, !dbg !5903
 
 for.cond.cleanup:                                 ; preds = %for.body, %entry
   %__first.addr.0.lcssa = phi float* [ %__first, %entry ], [ %incdec.ptr, %for.body ]
-  call void @llvm.dbg.value(metadata float* %__first.addr.0.lcssa, metadata !5888, metadata !DIExpression()), !dbg !5896
-  ret float* %__first.addr.0.lcssa, !dbg !5902
+  call void @llvm.dbg.value(metadata float* %__first.addr.0.lcssa, metadata !5890, metadata !DIExpression()), !dbg !5898
+  ret float* %__first.addr.0.lcssa, !dbg !5904
 
 for.body:                                         ; preds = %entry, %for.body
   %__niter.08 = phi i64 [ %dec, %for.body ], [ %__n, %entry ]
   %__first.addr.07 = phi float* [ %incdec.ptr, %for.body ], [ %__first, %entry ]
-  call void @llvm.dbg.value(metadata i64 %__niter.08, metadata !5892, metadata !DIExpression()), !dbg !5898
-  call void @llvm.dbg.value(metadata float* %__first.addr.07, metadata !5888, metadata !DIExpression()), !dbg !5896
-  %2 = bitcast float* %__first.addr.07 to i32*, !dbg !5903
-  store i32 %1, i32* %2, align 4, !dbg !5903, !tbaa !3361
-  %dec = add i64 %__niter.08, -1, !dbg !5904
-  %incdec.ptr = getelementptr inbounds float, float* %__first.addr.07, i64 1, !dbg !5905
-  call void @llvm.dbg.value(metadata i64 %dec, metadata !5892, metadata !DIExpression()), !dbg !5898
-  call void @llvm.dbg.value(metadata float* %incdec.ptr, metadata !5888, metadata !DIExpression()), !dbg !5896
-  %cmp = icmp eq i64 %dec, 0, !dbg !5899
-  br i1 %cmp, label %for.cond.cleanup, label %for.body, !dbg !5901, !llvm.loop !5906
+  call void @llvm.dbg.value(metadata i64 %__niter.08, metadata !5894, metadata !DIExpression()), !dbg !5900
+  call void @llvm.dbg.value(metadata float* %__first.addr.07, metadata !5890, metadata !DIExpression()), !dbg !5898
+  %2 = bitcast float* %__first.addr.07 to i32*, !dbg !5905
+  store i32 %1, i32* %2, align 4, !dbg !5905, !tbaa !3361
+  %dec = add i64 %__niter.08, -1, !dbg !5906
+  %incdec.ptr = getelementptr inbounds float, float* %__first.addr.07, i64 1, !dbg !5907
+  call void @llvm.dbg.value(metadata i64 %dec, metadata !5894, metadata !DIExpression()), !dbg !5900
+  call void @llvm.dbg.value(metadata float* %incdec.ptr, metadata !5890, metadata !DIExpression()), !dbg !5898
+  %cmp = icmp eq i64 %dec, 0, !dbg !5901
+  br i1 %cmp, label %for.cond.cleanup, label %for.body, !dbg !5903, !llvm.loop !5908
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__it) local_unnamed_addr #18 comdat !dbg !5908 {
+define linkonce_odr float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__it) local_unnamed_addr #18 comdat !dbg !5910 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__it, metadata !5918, metadata !DIExpression()), !dbg !5919
-  %call = tail call float* @_ZNSt10_Iter_baseIPfLb0EE7_S_baseES0_(float* %__it), !dbg !5920
-  ret float* %call, !dbg !5921
+  call void @llvm.dbg.value(metadata float* %__it, metadata !5920, metadata !DIExpression()), !dbg !5921
+  %call = tail call float* @_ZNSt10_Iter_baseIPfLb0EE7_S_baseES0_(float* %__it), !dbg !5922
+  ret float* %call, !dbg !5923
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr float* @_ZNSt10_Iter_baseIPfLb0EE7_S_baseES0_(float* %__it) local_unnamed_addr #7 comdat align 2 !dbg !5922 {
+define linkonce_odr float* @_ZNSt10_Iter_baseIPfLb0EE7_S_baseES0_(float* %__it) local_unnamed_addr #7 comdat align 2 !dbg !5924 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__it, metadata !5924, metadata !DIExpression()), !dbg !5925
-  ret float* %__it, !dbg !5926
+  call void @llvm.dbg.value(metadata float* %__it, metadata !5926, metadata !DIExpression()), !dbg !5927
+  ret float* %__it, !dbg !5928
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr i64 @_ZNKSt6vectorIfSaIfEE8max_sizeEv(%"class.std::vector"* %this) local_unnamed_addr #7 comdat align 2 !dbg !5927 {
+define linkonce_odr i64 @_ZNKSt6vectorIfSaIfEE8max_sizeEv(%"class.std::vector"* %this) local_unnamed_addr #7 comdat align 2 !dbg !5929 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !5929, metadata !DIExpression()), !dbg !5930
-  %0 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, !dbg !5931
-  %call = tail call dereferenceable(1) %"class.std::allocator"* @_ZNKSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %0) #24, !dbg !5931
-  %call2 = tail call i64 @_ZNSt16allocator_traitsISaIfEE8max_sizeERKS0_(%"class.std::allocator"* nonnull dereferenceable(1) %call) #24, !dbg !5932
-  ret i64 %call2, !dbg !5933
+  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !5931, metadata !DIExpression()), !dbg !5932
+  %0 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, !dbg !5933
+  %call = tail call dereferenceable(1) %"class.std::allocator"* @_ZNKSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %0) #24, !dbg !5933
+  %call2 = tail call i64 @_ZNSt16allocator_traitsISaIfEE8max_sizeERKS0_(%"class.std::allocator"* nonnull dereferenceable(1) %call) #24, !dbg !5934
+  ret i64 %call2, !dbg !5935
 }
 
 ; Function Attrs: noreturn
 declare void @_ZSt20__throw_length_errorPKc(i8*) local_unnamed_addr #22
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr dereferenceable(8) i64* @_ZSt3maxImERKT_S2_S2_(i64* dereferenceable(8) %__a, i64* dereferenceable(8) %__b) local_unnamed_addr #16 comdat !dbg !5934 {
+define linkonce_odr dereferenceable(8) i64* @_ZSt3maxImERKT_S2_S2_(i64* dereferenceable(8) %__a, i64* dereferenceable(8) %__b) local_unnamed_addr #16 comdat !dbg !5936 {
 entry:
-  call void @llvm.dbg.value(metadata i64* %__a, metadata !5940, metadata !DIExpression()), !dbg !5945
-  call void @llvm.dbg.value(metadata i64* %__b, metadata !5942, metadata !DIExpression()), !dbg !5945
-  %0 = load i64, i64* %__a, align 8, !dbg !5946, !tbaa !5796
-  %1 = load i64, i64* %__b, align 8, !dbg !5948, !tbaa !5796
-  %cmp = icmp ult i64 %0, %1, !dbg !5949
-  %__b.__a = select i1 %cmp, i64* %__b, i64* %__a, !dbg !5945
-  ret i64* %__b.__a, !dbg !5950
+  call void @llvm.dbg.value(metadata i64* %__a, metadata !5942, metadata !DIExpression()), !dbg !5947
+  call void @llvm.dbg.value(metadata i64* %__b, metadata !5944, metadata !DIExpression()), !dbg !5947
+  %0 = load i64, i64* %__a, align 8, !dbg !5948, !tbaa !5798
+  %1 = load i64, i64* %__b, align 8, !dbg !5950, !tbaa !5798
+  %cmp = icmp ult i64 %0, %1, !dbg !5951
+  %__b.__a = select i1 %cmp, i64* %__b, i64* %__a, !dbg !5947
+  ret i64* %__b.__a, !dbg !5952
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr i64 @_ZNSt16allocator_traitsISaIfEE8max_sizeERKS0_(%"class.std::allocator"* dereferenceable(1) %__a) local_unnamed_addr #7 comdat align 2 !dbg !5951 {
+define linkonce_odr i64 @_ZNSt16allocator_traitsISaIfEE8max_sizeERKS0_(%"class.std::allocator"* dereferenceable(1) %__a) local_unnamed_addr #7 comdat align 2 !dbg !5953 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::allocator"* %__a, metadata !5953, metadata !DIExpression()), !dbg !5954
-  %0 = bitcast %"class.std::allocator"* %__a to %"class.__gnu_cxx::new_allocator"*, !dbg !5955
-  %call = tail call i64 @_ZNK9__gnu_cxx13new_allocatorIfE8max_sizeEv(%"class.__gnu_cxx::new_allocator"* nonnull %0) #24, !dbg !5956
-  ret i64 %call, !dbg !5957
+  call void @llvm.dbg.value(metadata %"class.std::allocator"* %__a, metadata !5955, metadata !DIExpression()), !dbg !5956
+  %0 = bitcast %"class.std::allocator"* %__a to %"class.__gnu_cxx::new_allocator"*, !dbg !5957
+  %call = tail call i64 @_ZNK9__gnu_cxx13new_allocatorIfE8max_sizeEv(%"class.__gnu_cxx::new_allocator"* nonnull %0) #24, !dbg !5958
+  ret i64 %call, !dbg !5959
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(1) %"class.std::allocator"* @_ZNKSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %this) local_unnamed_addr #7 comdat align 2 !dbg !5958 {
+define linkonce_odr dereferenceable(1) %"class.std::allocator"* @_ZNKSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %this) local_unnamed_addr #7 comdat align 2 !dbg !5960 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base"* %this, metadata !5960, metadata !DIExpression()), !dbg !5962
-  %0 = bitcast %"struct.std::_Vector_base"* %this to %"class.std::allocator"*, !dbg !5963
-  ret %"class.std::allocator"* %0, !dbg !5964
+  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base"* %this, metadata !5962, metadata !DIExpression()), !dbg !5964
+  %0 = bitcast %"struct.std::_Vector_base"* %this to %"class.std::allocator"*, !dbg !5965
+  ret %"class.std::allocator"* %0, !dbg !5966
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr i64 @_ZNK9__gnu_cxx13new_allocatorIfE8max_sizeEv(%"class.__gnu_cxx::new_allocator"* %this) local_unnamed_addr #7 comdat align 2 !dbg !5965 {
+define linkonce_odr i64 @_ZNK9__gnu_cxx13new_allocatorIfE8max_sizeEv(%"class.__gnu_cxx::new_allocator"* %this) local_unnamed_addr #7 comdat align 2 !dbg !5967 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator"* %this, metadata !5967, metadata !DIExpression()), !dbg !5969
-  ret i64 4611686018427387903, !dbg !5970
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator"* %this, metadata !5969, metadata !DIExpression()), !dbg !5971
+  ret i64 4611686018427387903, !dbg !5972
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr float* @_ZNSt16allocator_traitsISaIfEE8allocateERS0_m(%"class.std::allocator"* dereferenceable(1) %__a, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !5971 {
+define linkonce_odr float* @_ZNSt16allocator_traitsISaIfEE8allocateERS0_m(%"class.std::allocator"* dereferenceable(1) %__a, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !5973 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::allocator"* %__a, metadata !5973, metadata !DIExpression()), !dbg !5975
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !5974, metadata !DIExpression()), !dbg !5975
-  %0 = bitcast %"class.std::allocator"* %__a to %"class.__gnu_cxx::new_allocator"*, !dbg !5976
-  %call = tail call float* @_ZN9__gnu_cxx13new_allocatorIfE8allocateEmPKv(%"class.__gnu_cxx::new_allocator"* nonnull %0, i64 %__n, i8* null), !dbg !5977
-  ret float* %call, !dbg !5978
+  call void @llvm.dbg.value(metadata %"class.std::allocator"* %__a, metadata !5975, metadata !DIExpression()), !dbg !5977
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !5976, metadata !DIExpression()), !dbg !5977
+  %0 = bitcast %"class.std::allocator"* %__a to %"class.__gnu_cxx::new_allocator"*, !dbg !5978
+  %call = tail call float* @_ZN9__gnu_cxx13new_allocatorIfE8allocateEmPKv(%"class.__gnu_cxx::new_allocator"* nonnull %0, i64 %__n, i8* null), !dbg !5979
+  ret float* %call, !dbg !5980
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr float* @_ZN9__gnu_cxx13new_allocatorIfE8allocateEmPKv(%"class.__gnu_cxx::new_allocator"* %this, i64 %__n, i8*) local_unnamed_addr #0 comdat align 2 !dbg !5979 {
+define linkonce_odr float* @_ZN9__gnu_cxx13new_allocatorIfE8allocateEmPKv(%"class.__gnu_cxx::new_allocator"* %this, i64 %__n, i8*) local_unnamed_addr #0 comdat align 2 !dbg !5981 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator"* %this, metadata !5981, metadata !DIExpression()), !dbg !5984
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !5982, metadata !DIExpression()), !dbg !5984
-  call void @llvm.dbg.value(metadata i8* %0, metadata !5983, metadata !DIExpression()), !dbg !5984
-  %call = tail call i64 @_ZNK9__gnu_cxx13new_allocatorIfE8max_sizeEv(%"class.__gnu_cxx::new_allocator"* %this) #24, !dbg !5985
-  %cmp = icmp ult i64 %call, %__n, !dbg !5987
-  br i1 %cmp, label %if.then, label %if.end, !dbg !5988
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator"* %this, metadata !5983, metadata !DIExpression()), !dbg !5986
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !5984, metadata !DIExpression()), !dbg !5986
+  call void @llvm.dbg.value(metadata i8* %0, metadata !5985, metadata !DIExpression()), !dbg !5986
+  %call = tail call i64 @_ZNK9__gnu_cxx13new_allocatorIfE8max_sizeEv(%"class.__gnu_cxx::new_allocator"* %this) #24, !dbg !5987
+  %cmp = icmp ult i64 %call, %__n, !dbg !5989
+  br i1 %cmp, label %if.then, label %if.end, !dbg !5990
 
 if.then:                                          ; preds = %entry
-  tail call void @_ZSt17__throw_bad_allocv() #29, !dbg !5989
-  unreachable, !dbg !5989
+  tail call void @_ZSt17__throw_bad_allocv() #29, !dbg !5991
+  unreachable, !dbg !5991
 
 if.end:                                           ; preds = %entry
-  %mul = shl i64 %__n, 2, !dbg !5990
-  %call2 = tail call i8* @_Znwm(i64 %mul), !dbg !5991
-  %1 = bitcast i8* %call2 to float*, !dbg !5992
-  ret float* %1, !dbg !5993
+  %mul = shl i64 %__n, 2, !dbg !5992
+  %call2 = tail call i8* @_Znwm(i64 %mul), !dbg !5993
+  %1 = bitcast i8* %call2 to float*, !dbg !5994
+  ret float* %1, !dbg !5995
 }
 
 ; Function Attrs: noreturn
 declare void @_ZSt17__throw_bad_allocv() local_unnamed_addr #22
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr float* @_ZSt22__uninitialized_copy_aISt13move_iteratorIPfES1_fET0_T_S4_S3_RSaIT1_E(float* %__first.coerce, float* %__last.coerce, float* %__result, %"class.std::allocator"* dereferenceable(1)) local_unnamed_addr #18 comdat !dbg !5994 {
+define linkonce_odr float* @_ZSt22__uninitialized_copy_aISt13move_iteratorIPfES1_fET0_T_S4_S3_RSaIT1_E(float* %__first.coerce, float* %__last.coerce, float* %__result, %"class.std::allocator"* dereferenceable(1)) local_unnamed_addr #18 comdat !dbg !5996 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first.coerce, metadata !5998, metadata !DIExpression()), !dbg !6004
-  call void @llvm.dbg.value(metadata float* %__last.coerce, metadata !5999, metadata !DIExpression()), !dbg !6004
-  call void @llvm.dbg.value(metadata float* %__result, metadata !6000, metadata !DIExpression()), !dbg !6004
-  call void @llvm.dbg.value(metadata %"class.std::allocator"* %0, metadata !6001, metadata !DIExpression()), !dbg !6004
-  %call = tail call float* @_ZSt18uninitialized_copyISt13move_iteratorIPfES1_ET0_T_S4_S3_(float* %__first.coerce, float* %__last.coerce, float* %__result), !dbg !6005
-  ret float* %call, !dbg !6006
+  call void @llvm.dbg.value(metadata float* %__first.coerce, metadata !6000, metadata !DIExpression()), !dbg !6006
+  call void @llvm.dbg.value(metadata float* %__last.coerce, metadata !6001, metadata !DIExpression()), !dbg !6006
+  call void @llvm.dbg.value(metadata float* %__result, metadata !6002, metadata !DIExpression()), !dbg !6006
+  call void @llvm.dbg.value(metadata %"class.std::allocator"* %0, metadata !6003, metadata !DIExpression()), !dbg !6006
+  %call = tail call float* @_ZSt18uninitialized_copyISt13move_iteratorIPfES1_ET0_T_S4_S3_(float* %__first.coerce, float* %__last.coerce, float* %__result), !dbg !6007
+  ret float* %call, !dbg !6008
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr float* @_ZSt32__make_move_if_noexcept_iteratorIPfSt13move_iteratorIS0_EET0_T_(float* %__i) local_unnamed_addr #18 comdat !dbg !6007 {
+define linkonce_odr float* @_ZSt32__make_move_if_noexcept_iteratorIPfSt13move_iteratorIS0_EET0_T_(float* %__i) local_unnamed_addr #18 comdat !dbg !6009 {
 entry:
   %retval = alloca %"class.std::move_iterator", align 8
-  call void @llvm.dbg.value(metadata float* %__i, metadata !6011, metadata !DIExpression()), !dbg !6014
-  call void @_ZNSt13move_iteratorIPfEC2ES0_(%"class.std::move_iterator"* nonnull %retval, float* %__i), !dbg !6015
-  %coerce.dive = getelementptr inbounds %"class.std::move_iterator", %"class.std::move_iterator"* %retval, i64 0, i32 0, !dbg !6016
-  %0 = load float*, float** %coerce.dive, align 8, !dbg !6016
-  ret float* %0, !dbg !6016
+  call void @llvm.dbg.value(metadata float* %__i, metadata !6013, metadata !DIExpression()), !dbg !6016
+  call void @_ZNSt13move_iteratorIPfEC2ES0_(%"class.std::move_iterator"* nonnull %retval, float* %__i), !dbg !6017
+  %coerce.dive = getelementptr inbounds %"class.std::move_iterator", %"class.std::move_iterator"* %retval, i64 0, i32 0, !dbg !6018
+  %0 = load float*, float** %coerce.dive, align 8, !dbg !6018
+  ret float* %0, !dbg !6018
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr float* @_ZSt18uninitialized_copyISt13move_iteratorIPfES1_ET0_T_S4_S3_(float* %__first.coerce, float* %__last.coerce, float* %__result) local_unnamed_addr #18 comdat !dbg !6017 {
+define linkonce_odr float* @_ZSt18uninitialized_copyISt13move_iteratorIPfES1_ET0_T_S4_S3_(float* %__first.coerce, float* %__last.coerce, float* %__result) local_unnamed_addr #18 comdat !dbg !6019 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first.coerce, metadata !6021, metadata !DIExpression()), !dbg !6026
-  call void @llvm.dbg.value(metadata float* %__last.coerce, metadata !6022, metadata !DIExpression()), !dbg !6026
-  call void @llvm.dbg.value(metadata float* %__result, metadata !6023, metadata !DIExpression()), !dbg !6026
-  call void @llvm.dbg.value(metadata i8 1, metadata !6024, metadata !DIExpression()), !dbg !6026
-  %call = tail call float* @_ZNSt20__uninitialized_copyILb1EE13__uninit_copyISt13move_iteratorIPfES3_EET0_T_S6_S5_(float* %__first.coerce, float* %__last.coerce, float* %__result), !dbg !6027
-  ret float* %call, !dbg !6028
+  call void @llvm.dbg.value(metadata float* %__first.coerce, metadata !6023, metadata !DIExpression()), !dbg !6028
+  call void @llvm.dbg.value(metadata float* %__last.coerce, metadata !6024, metadata !DIExpression()), !dbg !6028
+  call void @llvm.dbg.value(metadata float* %__result, metadata !6025, metadata !DIExpression()), !dbg !6028
+  call void @llvm.dbg.value(metadata i8 1, metadata !6026, metadata !DIExpression()), !dbg !6028
+  %call = tail call float* @_ZNSt20__uninitialized_copyILb1EE13__uninit_copyISt13move_iteratorIPfES3_EET0_T_S6_S5_(float* %__first.coerce, float* %__last.coerce, float* %__result), !dbg !6029
+  ret float* %call, !dbg !6030
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr float* @_ZNSt20__uninitialized_copyILb1EE13__uninit_copyISt13move_iteratorIPfES3_EET0_T_S6_S5_(float* %__first.coerce, float* %__last.coerce, float* %__result) local_unnamed_addr #0 comdat align 2 !dbg !6029 {
+define linkonce_odr float* @_ZNSt20__uninitialized_copyILb1EE13__uninit_copyISt13move_iteratorIPfES3_EET0_T_S6_S5_(float* %__first.coerce, float* %__last.coerce, float* %__result) local_unnamed_addr #0 comdat align 2 !dbg !6031 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first.coerce, metadata !6035, metadata !DIExpression()), !dbg !6038
-  call void @llvm.dbg.value(metadata float* %__last.coerce, metadata !6036, metadata !DIExpression()), !dbg !6038
-  call void @llvm.dbg.value(metadata float* %__result, metadata !6037, metadata !DIExpression()), !dbg !6038
-  %call = tail call float* @_ZSt4copyISt13move_iteratorIPfES1_ET0_T_S4_S3_(float* %__first.coerce, float* %__last.coerce, float* %__result), !dbg !6039
-  ret float* %call, !dbg !6040
+  call void @llvm.dbg.value(metadata float* %__first.coerce, metadata !6037, metadata !DIExpression()), !dbg !6040
+  call void @llvm.dbg.value(metadata float* %__last.coerce, metadata !6038, metadata !DIExpression()), !dbg !6040
+  call void @llvm.dbg.value(metadata float* %__result, metadata !6039, metadata !DIExpression()), !dbg !6040
+  %call = tail call float* @_ZSt4copyISt13move_iteratorIPfES1_ET0_T_S4_S3_(float* %__first.coerce, float* %__last.coerce, float* %__result), !dbg !6041
+  ret float* %call, !dbg !6042
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr float* @_ZSt4copyISt13move_iteratorIPfES1_ET0_T_S4_S3_(float* %__first.coerce, float* %__last.coerce, float* %__result) local_unnamed_addr #18 comdat !dbg !6041 {
+define linkonce_odr float* @_ZSt4copyISt13move_iteratorIPfES1_ET0_T_S4_S3_(float* %__first.coerce, float* %__last.coerce, float* %__result) local_unnamed_addr #18 comdat !dbg !6043 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first.coerce, metadata !6043, metadata !DIExpression()), !dbg !6048
-  call void @llvm.dbg.value(metadata float* %__last.coerce, metadata !6044, metadata !DIExpression()), !dbg !6048
-  call void @llvm.dbg.value(metadata float* %__result, metadata !6045, metadata !DIExpression()), !dbg !6048
-  %call = tail call float* @_ZSt12__miter_baseISt13move_iteratorIPfEENSt11_Miter_baseIT_E13iterator_typeES4_(float* %__first.coerce), !dbg !6049
-  %call5 = tail call float* @_ZSt12__miter_baseISt13move_iteratorIPfEENSt11_Miter_baseIT_E13iterator_typeES4_(float* %__last.coerce), !dbg !6050
-  %call6 = tail call float* @_ZSt14__copy_move_a2ILb1EPfS0_ET1_T0_S2_S1_(float* %call, float* %call5, float* %__result), !dbg !6051
-  ret float* %call6, !dbg !6052
+  call void @llvm.dbg.value(metadata float* %__first.coerce, metadata !6045, metadata !DIExpression()), !dbg !6050
+  call void @llvm.dbg.value(metadata float* %__last.coerce, metadata !6046, metadata !DIExpression()), !dbg !6050
+  call void @llvm.dbg.value(metadata float* %__result, metadata !6047, metadata !DIExpression()), !dbg !6050
+  %call = tail call float* @_ZSt12__miter_baseISt13move_iteratorIPfEENSt11_Miter_baseIT_E13iterator_typeES4_(float* %__first.coerce), !dbg !6051
+  %call5 = tail call float* @_ZSt12__miter_baseISt13move_iteratorIPfEENSt11_Miter_baseIT_E13iterator_typeES4_(float* %__last.coerce), !dbg !6052
+  %call6 = tail call float* @_ZSt14__copy_move_a2ILb1EPfS0_ET1_T0_S2_S1_(float* %call, float* %call5, float* %__result), !dbg !6053
+  ret float* %call6, !dbg !6054
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr float* @_ZSt14__copy_move_a2ILb1EPfS0_ET1_T0_S2_S1_(float* %__first, float* %__last, float* %__result) local_unnamed_addr #18 comdat !dbg !6053 {
+define linkonce_odr float* @_ZSt14__copy_move_a2ILb1EPfS0_ET1_T0_S2_S1_(float* %__first, float* %__last, float* %__result) local_unnamed_addr #18 comdat !dbg !6055 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !6057, metadata !DIExpression()), !dbg !6063
-  call void @llvm.dbg.value(metadata float* %__last, metadata !6058, metadata !DIExpression()), !dbg !6063
-  call void @llvm.dbg.value(metadata float* %__result, metadata !6059, metadata !DIExpression()), !dbg !6063
-  %call = tail call float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__first), !dbg !6064
-  %call1 = tail call float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__last), !dbg !6065
-  %call2 = tail call float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__result), !dbg !6066
-  %call3 = tail call float* @_ZSt13__copy_move_aILb1EPfS0_ET1_T0_S2_S1_(float* %call, float* %call1, float* %call2), !dbg !6067
-  ret float* %call3, !dbg !6068
+  call void @llvm.dbg.value(metadata float* %__first, metadata !6059, metadata !DIExpression()), !dbg !6065
+  call void @llvm.dbg.value(metadata float* %__last, metadata !6060, metadata !DIExpression()), !dbg !6065
+  call void @llvm.dbg.value(metadata float* %__result, metadata !6061, metadata !DIExpression()), !dbg !6065
+  %call = tail call float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__first), !dbg !6066
+  %call1 = tail call float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__last), !dbg !6067
+  %call2 = tail call float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__result), !dbg !6068
+  %call3 = tail call float* @_ZSt13__copy_move_aILb1EPfS0_ET1_T0_S2_S1_(float* %call, float* %call1, float* %call2), !dbg !6069
+  ret float* %call3, !dbg !6070
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr float* @_ZSt12__miter_baseISt13move_iteratorIPfEENSt11_Miter_baseIT_E13iterator_typeES4_(float* %__it.coerce) local_unnamed_addr #18 comdat !dbg !6069 {
+define linkonce_odr float* @_ZSt12__miter_baseISt13move_iteratorIPfEENSt11_Miter_baseIT_E13iterator_typeES4_(float* %__it.coerce) local_unnamed_addr #18 comdat !dbg !6071 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__it.coerce, metadata !6080, metadata !DIExpression()), !dbg !6082
-  %call = tail call float* @_ZNSt10_Iter_baseISt13move_iteratorIPfELb1EE7_S_baseES2_(float* %__it.coerce), !dbg !6083
-  ret float* %call, !dbg !6084
+  call void @llvm.dbg.value(metadata float* %__it.coerce, metadata !6082, metadata !DIExpression()), !dbg !6084
+  %call = tail call float* @_ZNSt10_Iter_baseISt13move_iteratorIPfELb1EE7_S_baseES2_(float* %__it.coerce), !dbg !6085
+  ret float* %call, !dbg !6086
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr float* @_ZSt13__copy_move_aILb1EPfS0_ET1_T0_S2_S1_(float* %__first, float* %__last, float* %__result) local_unnamed_addr #18 comdat !dbg !6085 {
+define linkonce_odr float* @_ZSt13__copy_move_aILb1EPfS0_ET1_T0_S2_S1_(float* %__first, float* %__last, float* %__result) local_unnamed_addr #18 comdat !dbg !6087 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !6087, metadata !DIExpression()), !dbg !6091
-  call void @llvm.dbg.value(metadata float* %__last, metadata !6088, metadata !DIExpression()), !dbg !6091
-  call void @llvm.dbg.value(metadata float* %__result, metadata !6089, metadata !DIExpression()), !dbg !6091
-  call void @llvm.dbg.value(metadata i8 1, metadata !6090, metadata !DIExpression()), !dbg !6091
-  %call = tail call float* @_ZNSt11__copy_moveILb1ELb1ESt26random_access_iterator_tagE8__copy_mIfEEPT_PKS3_S6_S4_(float* %__first, float* %__last, float* %__result), !dbg !6092
-  ret float* %call, !dbg !6093
+  call void @llvm.dbg.value(metadata float* %__first, metadata !6089, metadata !DIExpression()), !dbg !6093
+  call void @llvm.dbg.value(metadata float* %__last, metadata !6090, metadata !DIExpression()), !dbg !6093
+  call void @llvm.dbg.value(metadata float* %__result, metadata !6091, metadata !DIExpression()), !dbg !6093
+  call void @llvm.dbg.value(metadata i8 1, metadata !6092, metadata !DIExpression()), !dbg !6093
+  %call = tail call float* @_ZNSt11__copy_moveILb1ELb1ESt26random_access_iterator_tagE8__copy_mIfEEPT_PKS3_S6_S4_(float* %__first, float* %__last, float* %__result), !dbg !6094
+  ret float* %call, !dbg !6095
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr float* @_ZNSt11__copy_moveILb1ELb1ESt26random_access_iterator_tagE8__copy_mIfEEPT_PKS3_S6_S4_(float* %__first, float* %__last, float* %__result) local_unnamed_addr #7 comdat align 2 !dbg !6094 {
+define linkonce_odr float* @_ZNSt11__copy_moveILb1ELb1ESt26random_access_iterator_tagE8__copy_mIfEEPT_PKS3_S6_S4_(float* %__first, float* %__last, float* %__result) local_unnamed_addr #7 comdat align 2 !dbg !6096 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !6112, metadata !DIExpression()), !dbg !6117
-  call void @llvm.dbg.value(metadata float* %__last, metadata !6113, metadata !DIExpression()), !dbg !6117
-  call void @llvm.dbg.value(metadata float* %__result, metadata !6114, metadata !DIExpression()), !dbg !6117
-  %sub.ptr.lhs.cast = ptrtoint float* %__last to i64, !dbg !6118
-  %sub.ptr.rhs.cast = ptrtoint float* %__first to i64, !dbg !6118
-  %sub.ptr.sub = sub i64 %sub.ptr.lhs.cast, %sub.ptr.rhs.cast, !dbg !6118
-  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 2, !dbg !6118
-  call void @llvm.dbg.value(metadata i64 %sub.ptr.div, metadata !6115, metadata !DIExpression()), !dbg !6117
-  %tobool = icmp eq i64 %sub.ptr.sub, 0, !dbg !6119
-  br i1 %tobool, label %if.end, label %if.then, !dbg !6121
+  call void @llvm.dbg.value(metadata float* %__first, metadata !6114, metadata !DIExpression()), !dbg !6119
+  call void @llvm.dbg.value(metadata float* %__last, metadata !6115, metadata !DIExpression()), !dbg !6119
+  call void @llvm.dbg.value(metadata float* %__result, metadata !6116, metadata !DIExpression()), !dbg !6119
+  %sub.ptr.lhs.cast = ptrtoint float* %__last to i64, !dbg !6120
+  %sub.ptr.rhs.cast = ptrtoint float* %__first to i64, !dbg !6120
+  %sub.ptr.sub = sub i64 %sub.ptr.lhs.cast, %sub.ptr.rhs.cast, !dbg !6120
+  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 2, !dbg !6120
+  call void @llvm.dbg.value(metadata i64 %sub.ptr.div, metadata !6117, metadata !DIExpression()), !dbg !6119
+  %tobool = icmp eq i64 %sub.ptr.sub, 0, !dbg !6121
+  br i1 %tobool, label %if.end, label %if.then, !dbg !6123
 
 if.then:                                          ; preds = %entry
-  %0 = bitcast float* %__result to i8*, !dbg !6122
-  %1 = bitcast float* %__first to i8*, !dbg !6122
-  tail call void @llvm.memmove.p0i8.p0i8.i64(i8* align 4 %0, i8* align 4 %1, i64 %sub.ptr.sub, i1 false), !dbg !6122
-  br label %if.end, !dbg !6122
+  %0 = bitcast float* %__result to i8*, !dbg !6124
+  %1 = bitcast float* %__first to i8*, !dbg !6124
+  tail call void @llvm.memmove.p0i8.p0i8.i64(i8* align 4 %0, i8* align 4 %1, i64 %sub.ptr.sub, i1 false), !dbg !6124
+  br label %if.end, !dbg !6124
 
 if.end:                                           ; preds = %entry, %if.then
-  %add.ptr = getelementptr inbounds float, float* %__result, i64 %sub.ptr.div, !dbg !6123
-  ret float* %add.ptr, !dbg !6124
+  %add.ptr = getelementptr inbounds float, float* %__result, i64 %sub.ptr.div, !dbg !6125
+  ret float* %add.ptr, !dbg !6126
 }
 
 ; Function Attrs: argmemonly nounwind
 declare void @llvm.memmove.p0i8.p0i8.i64(i8* nocapture, i8* nocapture readonly, i64, i1 immarg) #8
 
 ; Function Attrs: uwtable
-define linkonce_odr float* @_ZNSt10_Iter_baseISt13move_iteratorIPfELb1EE7_S_baseES2_(float* %__it.coerce) local_unnamed_addr #0 comdat align 2 !dbg !6125 {
+define linkonce_odr float* @_ZNSt10_Iter_baseISt13move_iteratorIPfELb1EE7_S_baseES2_(float* %__it.coerce) local_unnamed_addr #0 comdat align 2 !dbg !6127 {
 entry:
   %__it = alloca %"class.std::move_iterator", align 8
   %coerce.dive = getelementptr inbounds %"class.std::move_iterator", %"class.std::move_iterator"* %__it, i64 0, i32 0
   store float* %__it.coerce, float** %coerce.dive, align 8
-  call void @llvm.dbg.value(metadata %"class.std::move_iterator"* %__it, metadata !6127, metadata !DIExpression(DW_OP_deref)), !dbg !6128
-  %call = call float* @_ZNKSt13move_iteratorIPfE4baseEv(%"class.std::move_iterator"* nonnull %__it), !dbg !6129
-  ret float* %call, !dbg !6130
+  call void @llvm.dbg.value(metadata %"class.std::move_iterator"* %__it, metadata !6129, metadata !DIExpression(DW_OP_deref)), !dbg !6130
+  %call = call float* @_ZNKSt13move_iteratorIPfE4baseEv(%"class.std::move_iterator"* nonnull %__it), !dbg !6131
+  ret float* %call, !dbg !6132
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr float* @_ZNKSt13move_iteratorIPfE4baseEv(%"class.std::move_iterator"* %this) local_unnamed_addr #7 comdat align 2 !dbg !6131 {
+define linkonce_odr float* @_ZNKSt13move_iteratorIPfE4baseEv(%"class.std::move_iterator"* %this) local_unnamed_addr #7 comdat align 2 !dbg !6133 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::move_iterator"* %this, metadata !6133, metadata !DIExpression()), !dbg !6135
-  %_M_current = getelementptr inbounds %"class.std::move_iterator", %"class.std::move_iterator"* %this, i64 0, i32 0, !dbg !6136
-  %0 = load float*, float** %_M_current, align 8, !dbg !6136, !tbaa !6137
-  ret float* %0, !dbg !6139
+  call void @llvm.dbg.value(metadata %"class.std::move_iterator"* %this, metadata !6135, metadata !DIExpression()), !dbg !6137
+  %_M_current = getelementptr inbounds %"class.std::move_iterator", %"class.std::move_iterator"* %this, i64 0, i32 0, !dbg !6138
+  %0 = load float*, float** %_M_current, align 8, !dbg !6138, !tbaa !6139
+  ret float* %0, !dbg !6141
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZNSt13move_iteratorIPfEC2ES0_(%"class.std::move_iterator"* %this, float* %__i) unnamed_addr #7 comdat align 2 !dbg !6140 {
+define linkonce_odr void @_ZNSt13move_iteratorIPfEC2ES0_(%"class.std::move_iterator"* %this, float* %__i) unnamed_addr #7 comdat align 2 !dbg !6142 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::move_iterator"* %this, metadata !6142, metadata !DIExpression()), !dbg !6145
-  call void @llvm.dbg.value(metadata float* %__i, metadata !6144, metadata !DIExpression()), !dbg !6145
-  %_M_current = getelementptr inbounds %"class.std::move_iterator", %"class.std::move_iterator"* %this, i64 0, i32 0, !dbg !6146
-  store float* %__i, float** %_M_current, align 8, !dbg !6146, !tbaa !6137
-  ret void, !dbg !6147
+  call void @llvm.dbg.value(metadata %"class.std::move_iterator"* %this, metadata !6144, metadata !DIExpression()), !dbg !6147
+  call void @llvm.dbg.value(metadata float* %__i, metadata !6146, metadata !DIExpression()), !dbg !6147
+  %_M_current = getelementptr inbounds %"class.std::move_iterator", %"class.std::move_iterator"* %this, i64 0, i32 0, !dbg !6148
+  store float* %__i, float** %_M_current, align 8, !dbg !6148, !tbaa !6139
+  ret void, !dbg !6149
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr float* @_ZNKSt6vectorIfSaIfEE11_M_data_ptrIfEEPT_S4_(%"class.std::vector"* %this, float* %__ptr) local_unnamed_addr #7 comdat align 2 !dbg !6148 {
+define linkonce_odr float* @_ZNKSt6vectorIfSaIfEE11_M_data_ptrIfEEPT_S4_(%"class.std::vector"* %this, float* %__ptr) local_unnamed_addr #7 comdat align 2 !dbg !6150 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !6155, metadata !DIExpression()), !dbg !6157
-  call void @llvm.dbg.value(metadata float* %__ptr, metadata !6156, metadata !DIExpression()), !dbg !6157
-  ret float* %__ptr, !dbg !6158
+  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !6157, metadata !DIExpression()), !dbg !6159
+  call void @llvm.dbg.value(metadata float* %__ptr, metadata !6158, metadata !DIExpression()), !dbg !6159
+  ret float* %__ptr, !dbg !6160
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr void @_ZSt4swapIPPfEvRT_S3_(float*** dereferenceable(8) %__a, float*** dereferenceable(8) %__b) local_unnamed_addr #16 comdat !dbg !6159 {
+define linkonce_odr void @_ZSt4swapIPPfEvRT_S3_(float*** dereferenceable(8) %__a, float*** dereferenceable(8) %__b) local_unnamed_addr #16 comdat !dbg !6161 {
 entry:
   %__tmp = alloca float**, align 8
-  call void @llvm.dbg.value(metadata float*** %__a, metadata !6163, metadata !DIExpression()), !dbg !6168
-  call void @llvm.dbg.value(metadata float*** %__b, metadata !6164, metadata !DIExpression()), !dbg !6168
-  %0 = bitcast float*** %__tmp to i8*, !dbg !6169
-  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %0) #24, !dbg !6169
-  %call = tail call dereferenceable(8) float*** @_ZSt4moveIRPPfEONSt16remove_referenceIT_E4typeEOS4_(float*** nonnull dereferenceable(8) %__a) #24, !dbg !6170
-  %1 = bitcast float*** %call to i64*, !dbg !6170
-  %2 = load i64, i64* %1, align 8, !dbg !6170, !tbaa !3171
-  %3 = bitcast float*** %__tmp to i64*, !dbg !6171
-  store i64 %2, i64* %3, align 8, !dbg !6171, !tbaa !3171
-  %call1 = tail call dereferenceable(8) float*** @_ZSt4moveIRPPfEONSt16remove_referenceIT_E4typeEOS4_(float*** nonnull dereferenceable(8) %__b) #24, !dbg !6172
-  %4 = bitcast float*** %call1 to i64*, !dbg !6172
-  %5 = load i64, i64* %4, align 8, !dbg !6172, !tbaa !3171
-  %6 = bitcast float*** %__a to i64*, !dbg !6173
-  store i64 %5, i64* %6, align 8, !dbg !6173, !tbaa !3171
-  call void @llvm.dbg.value(metadata float*** %__tmp, metadata !6165, metadata !DIExpression(DW_OP_deref)), !dbg !6168
-  %call2 = call dereferenceable(8) float*** @_ZSt4moveIRPPfEONSt16remove_referenceIT_E4typeEOS4_(float*** nonnull dereferenceable(8) %__tmp) #24, !dbg !6174
-  %7 = bitcast float*** %call2 to i64*, !dbg !6174
-  %8 = load i64, i64* %7, align 8, !dbg !6174, !tbaa !3171
-  %9 = bitcast float*** %__b to i64*, !dbg !6175
-  store i64 %8, i64* %9, align 8, !dbg !6175, !tbaa !3171
-  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %0) #24, !dbg !6176
-  ret void, !dbg !6176
+  call void @llvm.dbg.value(metadata float*** %__a, metadata !6165, metadata !DIExpression()), !dbg !6170
+  call void @llvm.dbg.value(metadata float*** %__b, metadata !6166, metadata !DIExpression()), !dbg !6170
+  %0 = bitcast float*** %__tmp to i8*, !dbg !6171
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %0) #24, !dbg !6171
+  %call = tail call dereferenceable(8) float*** @_ZSt4moveIRPPfEONSt16remove_referenceIT_E4typeEOS4_(float*** nonnull dereferenceable(8) %__a) #24, !dbg !6172
+  %1 = bitcast float*** %call to i64*, !dbg !6172
+  %2 = load i64, i64* %1, align 8, !dbg !6172, !tbaa !3171
+  %3 = bitcast float*** %__tmp to i64*, !dbg !6173
+  store i64 %2, i64* %3, align 8, !dbg !6173, !tbaa !3171
+  %call1 = tail call dereferenceable(8) float*** @_ZSt4moveIRPPfEONSt16remove_referenceIT_E4typeEOS4_(float*** nonnull dereferenceable(8) %__b) #24, !dbg !6174
+  %4 = bitcast float*** %call1 to i64*, !dbg !6174
+  %5 = load i64, i64* %4, align 8, !dbg !6174, !tbaa !3171
+  %6 = bitcast float*** %__a to i64*, !dbg !6175
+  store i64 %5, i64* %6, align 8, !dbg !6175, !tbaa !3171
+  call void @llvm.dbg.value(metadata float*** %__tmp, metadata !6167, metadata !DIExpression(DW_OP_deref)), !dbg !6170
+  %call2 = call dereferenceable(8) float*** @_ZSt4moveIRPPfEONSt16remove_referenceIT_E4typeEOS4_(float*** nonnull dereferenceable(8) %__tmp) #24, !dbg !6176
+  %7 = bitcast float*** %call2 to i64*, !dbg !6176
+  %8 = load i64, i64* %7, align 8, !dbg !6176, !tbaa !3171
+  %9 = bitcast float*** %__b to i64*, !dbg !6177
+  store i64 %8, i64* %9, align 8, !dbg !6177, !tbaa !3171
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %0) #24, !dbg !6178
+  ret void, !dbg !6178
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(8) float*** @_ZSt4moveIRPPfEONSt16remove_referenceIT_E4typeEOS4_(float*** dereferenceable(8) %__t) local_unnamed_addr #7 comdat !dbg !6177 {
+define linkonce_odr dereferenceable(8) float*** @_ZSt4moveIRPPfEONSt16remove_referenceIT_E4typeEOS4_(float*** dereferenceable(8) %__t) local_unnamed_addr #7 comdat !dbg !6179 {
 entry:
-  call void @llvm.dbg.value(metadata float*** %__t, metadata !6186, metadata !DIExpression()), !dbg !6187
-  ret float*** %__t, !dbg !6188
+  call void @llvm.dbg.value(metadata float*** %__t, metadata !6188, metadata !DIExpression()), !dbg !6189
+  ret float*** %__t, !dbg !6190
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr float** @_ZNKSt10unique_ptrIA_PfSt14default_deleteIS1_EE3getEv(%"class.std::unique_ptr"* %this) local_unnamed_addr #7 comdat align 2 !dbg !6189 {
+define linkonce_odr float** @_ZNKSt10unique_ptrIA_PfSt14default_deleteIS1_EE3getEv(%"class.std::unique_ptr"* %this) local_unnamed_addr #7 comdat align 2 !dbg !6191 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::unique_ptr"* %this, metadata !6191, metadata !DIExpression()), !dbg !6192
-  %_M_t = getelementptr inbounds %"class.std::unique_ptr", %"class.std::unique_ptr"* %this, i64 0, i32 0, !dbg !6193
-  %call = tail call dereferenceable(8) float*** @_ZSt3getILm0EJPPfSt14default_deleteIA_S0_EEERKNSt13tuple_elementIXT_ESt5tupleIJDpT0_EEE4typeERKS9_(%"class.std::tuple"* dereferenceable(8) %_M_t) #24, !dbg !6194
-  %0 = load float**, float*** %call, align 8, !dbg !6194, !tbaa !3171
-  ret float** %0, !dbg !6195
+  call void @llvm.dbg.value(metadata %"class.std::unique_ptr"* %this, metadata !6193, metadata !DIExpression()), !dbg !6194
+  %_M_t = getelementptr inbounds %"class.std::unique_ptr", %"class.std::unique_ptr"* %this, i64 0, i32 0, !dbg !6195
+  %call = tail call dereferenceable(8) float*** @_ZSt3getILm0EJPPfSt14default_deleteIA_S0_EEERKNSt13tuple_elementIXT_ESt5tupleIJDpT0_EEE4typeERKS9_(%"class.std::tuple"* dereferenceable(8) %_M_t) #24, !dbg !6196
+  %0 = load float**, float*** %call, align 8, !dbg !6196, !tbaa !3171
+  ret float** %0, !dbg !6197
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(8) float*** @_ZSt3getILm0EJPPfSt14default_deleteIA_S0_EEERKNSt13tuple_elementIXT_ESt5tupleIJDpT0_EEE4typeERKS9_(%"class.std::tuple"* dereferenceable(8) %__t) local_unnamed_addr #7 comdat !dbg !6196 {
+define linkonce_odr dereferenceable(8) float*** @_ZSt3getILm0EJPPfSt14default_deleteIA_S0_EEERKNSt13tuple_elementIXT_ESt5tupleIJDpT0_EEE4typeERKS9_(%"class.std::tuple"* dereferenceable(8) %__t) local_unnamed_addr #7 comdat !dbg !6198 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::tuple"* %__t, metadata !6202, metadata !DIExpression()), !dbg !6203
-  %0 = getelementptr inbounds %"class.std::tuple", %"class.std::tuple"* %__t, i64 0, i32 0, !dbg !6204
-  %call = tail call dereferenceable(8) float*** @_ZSt12__get_helperILm0EPPfJSt14default_deleteIA_S0_EEERKT0_RKSt11_Tuple_implIXT_EJS5_DpT1_EE(%"struct.std::_Tuple_impl"* nonnull dereferenceable(8) %0) #24, !dbg !6205
-  ret float*** %call, !dbg !6206
+  call void @llvm.dbg.value(metadata %"class.std::tuple"* %__t, metadata !6204, metadata !DIExpression()), !dbg !6205
+  %0 = getelementptr inbounds %"class.std::tuple", %"class.std::tuple"* %__t, i64 0, i32 0, !dbg !6206
+  %call = tail call dereferenceable(8) float*** @_ZSt12__get_helperILm0EPPfJSt14default_deleteIA_S0_EEERKT0_RKSt11_Tuple_implIXT_EJS5_DpT1_EE(%"struct.std::_Tuple_impl"* nonnull dereferenceable(8) %0) #24, !dbg !6207
+  ret float*** %call, !dbg !6208
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(8) float*** @_ZSt12__get_helperILm0EPPfJSt14default_deleteIA_S0_EEERKT0_RKSt11_Tuple_implIXT_EJS5_DpT1_EE(%"struct.std::_Tuple_impl"* dereferenceable(8) %__t) local_unnamed_addr #7 comdat !dbg !6207 {
+define linkonce_odr dereferenceable(8) float*** @_ZSt12__get_helperILm0EPPfJSt14default_deleteIA_S0_EEERKT0_RKSt11_Tuple_implIXT_EJS5_DpT1_EE(%"struct.std::_Tuple_impl"* dereferenceable(8) %__t) local_unnamed_addr #7 comdat !dbg !6209 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Tuple_impl"* %__t, metadata !6209, metadata !DIExpression()), !dbg !6210
-  %call = tail call dereferenceable(8) float*** @_ZNSt11_Tuple_implILm0EJPPfSt14default_deleteIA_S0_EEE7_M_headERKS5_(%"struct.std::_Tuple_impl"* nonnull dereferenceable(8) %__t) #24, !dbg !6211
-  ret float*** %call, !dbg !6212
+  call void @llvm.dbg.value(metadata %"struct.std::_Tuple_impl"* %__t, metadata !6211, metadata !DIExpression()), !dbg !6212
+  %call = tail call dereferenceable(8) float*** @_ZNSt11_Tuple_implILm0EJPPfSt14default_deleteIA_S0_EEE7_M_headERKS5_(%"struct.std::_Tuple_impl"* nonnull dereferenceable(8) %__t) #24, !dbg !6213
+  ret float*** %call, !dbg !6214
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(8) float*** @_ZNSt11_Tuple_implILm0EJPPfSt14default_deleteIA_S0_EEE7_M_headERKS5_(%"struct.std::_Tuple_impl"* dereferenceable(8) %__t) local_unnamed_addr #7 comdat align 2 !dbg !6213 {
+define linkonce_odr dereferenceable(8) float*** @_ZNSt11_Tuple_implILm0EJPPfSt14default_deleteIA_S0_EEE7_M_headERKS5_(%"struct.std::_Tuple_impl"* dereferenceable(8) %__t) local_unnamed_addr #7 comdat align 2 !dbg !6215 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Tuple_impl"* %__t, metadata !6215, metadata !DIExpression()), !dbg !6216
-  %0 = getelementptr inbounds %"struct.std::_Tuple_impl", %"struct.std::_Tuple_impl"* %__t, i64 0, i32 0, !dbg !6217
-  %call = tail call dereferenceable(8) float*** @_ZNSt10_Head_baseILm0EPPfLb0EE7_M_headERKS2_(%"struct.std::_Head_base.1"* nonnull dereferenceable(8) %0) #24, !dbg !6218
-  ret float*** %call, !dbg !6219
+  call void @llvm.dbg.value(metadata %"struct.std::_Tuple_impl"* %__t, metadata !6217, metadata !DIExpression()), !dbg !6218
+  %0 = getelementptr inbounds %"struct.std::_Tuple_impl", %"struct.std::_Tuple_impl"* %__t, i64 0, i32 0, !dbg !6219
+  %call = tail call dereferenceable(8) float*** @_ZNSt10_Head_baseILm0EPPfLb0EE7_M_headERKS2_(%"struct.std::_Head_base.1"* nonnull dereferenceable(8) %0) #24, !dbg !6220
+  ret float*** %call, !dbg !6221
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(8) float*** @_ZNSt10_Head_baseILm0EPPfLb0EE7_M_headERKS2_(%"struct.std::_Head_base.1"* dereferenceable(8) %__b) local_unnamed_addr #7 comdat align 2 !dbg !6220 {
+define linkonce_odr dereferenceable(8) float*** @_ZNSt10_Head_baseILm0EPPfLb0EE7_M_headERKS2_(%"struct.std::_Head_base.1"* dereferenceable(8) %__b) local_unnamed_addr #7 comdat align 2 !dbg !6222 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Head_base.1"* %__b, metadata !6222, metadata !DIExpression()), !dbg !6223
-  %_M_head_impl = getelementptr inbounds %"struct.std::_Head_base.1", %"struct.std::_Head_base.1"* %__b, i64 0, i32 0, !dbg !6224
-  ret float*** %_M_head_impl, !dbg !6225
+  call void @llvm.dbg.value(metadata %"struct.std::_Head_base.1"* %__b, metadata !6224, metadata !DIExpression()), !dbg !6225
+  %_M_head_impl = getelementptr inbounds %"struct.std::_Head_base.1", %"struct.std::_Head_base.1"* %__b, i64 0, i32 0, !dbg !6226
+  ret float*** %_M_head_impl, !dbg !6227
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr float* @_ZNSt6vectorIfSaIfEE6insertEN9__gnu_cxx17__normal_iteratorIPKfS1_EEmRS4_(%"class.std::vector"* %this, float* %__position.coerce, i64 %__n, float* dereferenceable(4) %__x) local_unnamed_addr #0 comdat align 2 !dbg !6226 {
+define linkonce_odr float* @_ZNSt6vectorIfSaIfEE6insertEN9__gnu_cxx17__normal_iteratorIPKfS1_EEmRS4_(%"class.std::vector"* %this, float* %__position.coerce, i64 %__n, float* dereferenceable(4) %__x) local_unnamed_addr #0 comdat align 2 !dbg !6228 {
 entry:
   %__position = alloca %"class.__gnu_cxx::__normal_iterator.11", align 8
   %ref.tmp = alloca %"class.__gnu_cxx::__normal_iterator.11", align 8
@@ -5327,98 +5329,98 @@ entry:
   %ref.tmp10 = alloca %"class.__gnu_cxx::__normal_iterator", align 8
   %coerce.dive = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator.11", %"class.__gnu_cxx::__normal_iterator.11"* %__position, i64 0, i32 0
   store float* %__position.coerce, float** %coerce.dive, align 8
-  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !6228, metadata !DIExpression()), !dbg !6234
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !6230, metadata !DIExpression()), !dbg !6234
-  call void @llvm.dbg.value(metadata float* %__x, metadata !6231, metadata !DIExpression()), !dbg !6234
-  %0 = bitcast %"class.__gnu_cxx::__normal_iterator.11"* %ref.tmp to i8*, !dbg !6235
-  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %0) #24, !dbg !6235
-  %call = tail call float* @_ZNKSt6vectorIfSaIfEE6cbeginEv(%"class.std::vector"* %this) #24, !dbg !6235
-  %coerce.dive2 = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator.11", %"class.__gnu_cxx::__normal_iterator.11"* %ref.tmp, i64 0, i32 0, !dbg !6235
-  store float* %call, float** %coerce.dive2, align 8, !dbg !6235
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator.11"* %__position, metadata !6229, metadata !DIExpression(DW_OP_deref)), !dbg !6234
-  %call3 = call i64 @_ZN9__gnu_cxxmiIPKfSt6vectorIfSaIfEEEENS_17__normal_iteratorIT_T0_E15difference_typeERKS9_SC_(%"class.__gnu_cxx::__normal_iterator.11"* nonnull dereferenceable(8) %__position, %"class.__gnu_cxx::__normal_iterator.11"* nonnull dereferenceable(8) %ref.tmp) #24, !dbg !6236
-  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %0) #24, !dbg !6237
-  call void @llvm.dbg.value(metadata i64 %call3, metadata !6232, metadata !DIExpression()), !dbg !6234
-  %1 = bitcast %"class.__gnu_cxx::__normal_iterator"* %ref.tmp4 to i8*, !dbg !6238
-  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %1) #24, !dbg !6238
-  %call5 = call float* @_ZNSt6vectorIfSaIfEE5beginEv(%"class.std::vector"* %this) #24, !dbg !6238
-  %coerce.dive6 = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator", %"class.__gnu_cxx::__normal_iterator"* %ref.tmp4, i64 0, i32 0, !dbg !6238
-  store float* %call5, float** %coerce.dive6, align 8, !dbg !6238
-  %call7 = call float* @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEplEl(%"class.__gnu_cxx::__normal_iterator"* nonnull %ref.tmp4, i64 %call3) #24, !dbg !6239
-  call void @_ZNSt6vectorIfSaIfEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPfS1_EEmRKf(%"class.std::vector"* %this, float* %call7, i64 %__n, float* nonnull dereferenceable(4) %__x), !dbg !6240
-  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %1) #24, !dbg !6240
-  %2 = bitcast %"class.__gnu_cxx::__normal_iterator"* %ref.tmp10 to i8*, !dbg !6241
-  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %2) #24, !dbg !6241
-  %call11 = call float* @_ZNSt6vectorIfSaIfEE5beginEv(%"class.std::vector"* %this) #24, !dbg !6241
-  %coerce.dive12 = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator", %"class.__gnu_cxx::__normal_iterator"* %ref.tmp10, i64 0, i32 0, !dbg !6241
-  store float* %call11, float** %coerce.dive12, align 8, !dbg !6241
-  %call13 = call float* @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEplEl(%"class.__gnu_cxx::__normal_iterator"* nonnull %ref.tmp10, i64 %call3) #24, !dbg !6242
-  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %2) #24, !dbg !6243
-  ret float* %call13, !dbg !6244
+  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !6230, metadata !DIExpression()), !dbg !6236
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !6232, metadata !DIExpression()), !dbg !6236
+  call void @llvm.dbg.value(metadata float* %__x, metadata !6233, metadata !DIExpression()), !dbg !6236
+  %0 = bitcast %"class.__gnu_cxx::__normal_iterator.11"* %ref.tmp to i8*, !dbg !6237
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %0) #24, !dbg !6237
+  %call = tail call float* @_ZNKSt6vectorIfSaIfEE6cbeginEv(%"class.std::vector"* %this) #24, !dbg !6237
+  %coerce.dive2 = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator.11", %"class.__gnu_cxx::__normal_iterator.11"* %ref.tmp, i64 0, i32 0, !dbg !6237
+  store float* %call, float** %coerce.dive2, align 8, !dbg !6237
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator.11"* %__position, metadata !6231, metadata !DIExpression(DW_OP_deref)), !dbg !6236
+  %call3 = call i64 @_ZN9__gnu_cxxmiIPKfSt6vectorIfSaIfEEEENS_17__normal_iteratorIT_T0_E15difference_typeERKS9_SC_(%"class.__gnu_cxx::__normal_iterator.11"* nonnull dereferenceable(8) %__position, %"class.__gnu_cxx::__normal_iterator.11"* nonnull dereferenceable(8) %ref.tmp) #24, !dbg !6238
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %0) #24, !dbg !6239
+  call void @llvm.dbg.value(metadata i64 %call3, metadata !6234, metadata !DIExpression()), !dbg !6236
+  %1 = bitcast %"class.__gnu_cxx::__normal_iterator"* %ref.tmp4 to i8*, !dbg !6240
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %1) #24, !dbg !6240
+  %call5 = call float* @_ZNSt6vectorIfSaIfEE5beginEv(%"class.std::vector"* %this) #24, !dbg !6240
+  %coerce.dive6 = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator", %"class.__gnu_cxx::__normal_iterator"* %ref.tmp4, i64 0, i32 0, !dbg !6240
+  store float* %call5, float** %coerce.dive6, align 8, !dbg !6240
+  %call7 = call float* @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEplEl(%"class.__gnu_cxx::__normal_iterator"* nonnull %ref.tmp4, i64 %call3) #24, !dbg !6241
+  call void @_ZNSt6vectorIfSaIfEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPfS1_EEmRKf(%"class.std::vector"* %this, float* %call7, i64 %__n, float* nonnull dereferenceable(4) %__x), !dbg !6242
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %1) #24, !dbg !6242
+  %2 = bitcast %"class.__gnu_cxx::__normal_iterator"* %ref.tmp10 to i8*, !dbg !6243
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %2) #24, !dbg !6243
+  %call11 = call float* @_ZNSt6vectorIfSaIfEE5beginEv(%"class.std::vector"* %this) #24, !dbg !6243
+  %coerce.dive12 = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator", %"class.__gnu_cxx::__normal_iterator"* %ref.tmp10, i64 0, i32 0, !dbg !6243
+  store float* %call11, float** %coerce.dive12, align 8, !dbg !6243
+  %call13 = call float* @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEplEl(%"class.__gnu_cxx::__normal_iterator"* nonnull %ref.tmp10, i64 %call3) #24, !dbg !6244
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %2) #24, !dbg !6245
+  ret float* %call13, !dbg !6246
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr float* @_ZNSt6vectorIfSaIfEE3endEv(%"class.std::vector"* %this) local_unnamed_addr #7 comdat align 2 !dbg !6245 {
+define linkonce_odr float* @_ZNSt6vectorIfSaIfEE3endEv(%"class.std::vector"* %this) local_unnamed_addr #7 comdat align 2 !dbg !6247 {
 entry:
   %retval = alloca %"class.__gnu_cxx::__normal_iterator", align 8
-  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !6247, metadata !DIExpression()), !dbg !6248
-  %_M_finish = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 1, !dbg !6249
-  call void @_ZN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEC2ERKS1_(%"class.__gnu_cxx::__normal_iterator"* nonnull %retval, float** nonnull dereferenceable(8) %_M_finish) #24, !dbg !6250
-  %coerce.dive = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator", %"class.__gnu_cxx::__normal_iterator"* %retval, i64 0, i32 0, !dbg !6251
-  %0 = load float*, float** %coerce.dive, align 8, !dbg !6251
-  ret float* %0, !dbg !6251
+  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !6249, metadata !DIExpression()), !dbg !6250
+  %_M_finish = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 1, !dbg !6251
+  call void @_ZN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEC2ERKS1_(%"class.__gnu_cxx::__normal_iterator"* nonnull %retval, float** nonnull dereferenceable(8) %_M_finish) #24, !dbg !6252
+  %coerce.dive = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator", %"class.__gnu_cxx::__normal_iterator"* %retval, i64 0, i32 0, !dbg !6253
+  %0 = load float*, float** %coerce.dive, align 8, !dbg !6253
+  ret float* %0, !dbg !6253
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEC2IPfEERKNS0_IT_NS_11__enable_ifIXsr3std10__are_sameIS9_S8_EE7__valueES5_E6__typeEEE(%"class.__gnu_cxx::__normal_iterator.11"* %this, %"class.__gnu_cxx::__normal_iterator"* dereferenceable(8) %__i) unnamed_addr #7 comdat align 2 !dbg !6252 {
+define linkonce_odr void @_ZN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEC2IPfEERKNS0_IT_NS_11__enable_ifIXsr3std10__are_sameIS9_S8_EE7__valueES5_E6__typeEEE(%"class.__gnu_cxx::__normal_iterator.11"* %this, %"class.__gnu_cxx::__normal_iterator"* dereferenceable(8) %__i) unnamed_addr #7 comdat align 2 !dbg !6254 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator.11"* %this, metadata !6260, metadata !DIExpression()), !dbg !6263
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__i, metadata !6262, metadata !DIExpression()), !dbg !6263
-  %call = tail call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__i) #24, !dbg !6264
-  %0 = bitcast float** %call to i64*, !dbg !6264
-  %1 = load i64, i64* %0, align 8, !dbg !6264, !tbaa !3171
-  %2 = bitcast %"class.__gnu_cxx::__normal_iterator.11"* %this to i64*, !dbg !6265
-  store i64 %1, i64* %2, align 8, !dbg !6265, !tbaa !6266
-  ret void, !dbg !6268
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator.11"* %this, metadata !6262, metadata !DIExpression()), !dbg !6265
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__i, metadata !6264, metadata !DIExpression()), !dbg !6265
+  %call = tail call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__i) #24, !dbg !6266
+  %0 = bitcast float** %call to i64*, !dbg !6266
+  %1 = load i64, i64* %0, align 8, !dbg !6266, !tbaa !3171
+  %2 = bitcast %"class.__gnu_cxx::__normal_iterator.11"* %this to i64*, !dbg !6267
+  store i64 %1, i64* %2, align 8, !dbg !6267, !tbaa !6268
+  ret void, !dbg !6270
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr i64 @_ZN9__gnu_cxxmiIPKfSt6vectorIfSaIfEEEENS_17__normal_iteratorIT_T0_E15difference_typeERKS9_SC_(%"class.__gnu_cxx::__normal_iterator.11"* dereferenceable(8) %__lhs, %"class.__gnu_cxx::__normal_iterator.11"* dereferenceable(8) %__rhs) local_unnamed_addr #16 comdat !dbg !6269 {
+define linkonce_odr i64 @_ZN9__gnu_cxxmiIPKfSt6vectorIfSaIfEEEENS_17__normal_iteratorIT_T0_E15difference_typeERKS9_SC_(%"class.__gnu_cxx::__normal_iterator.11"* dereferenceable(8) %__lhs, %"class.__gnu_cxx::__normal_iterator.11"* dereferenceable(8) %__rhs) local_unnamed_addr #16 comdat !dbg !6271 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator.11"* %__lhs, metadata !6274, metadata !DIExpression()), !dbg !6276
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator.11"* %__rhs, metadata !6275, metadata !DIExpression()), !dbg !6276
-  %call = tail call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator.11"* nonnull %__lhs) #24, !dbg !6277
-  %0 = bitcast float** %call to i64*, !dbg !6277
-  %1 = load i64, i64* %0, align 8, !dbg !6277, !tbaa !3171
-  %call1 = tail call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator.11"* nonnull %__rhs) #24, !dbg !6278
-  %2 = bitcast float** %call1 to i64*, !dbg !6278
-  %3 = load i64, i64* %2, align 8, !dbg !6278, !tbaa !3171
-  %sub.ptr.sub = sub i64 %1, %3, !dbg !6279
-  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 2, !dbg !6279
-  ret i64 %sub.ptr.div, !dbg !6280
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator.11"* %__lhs, metadata !6276, metadata !DIExpression()), !dbg !6278
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator.11"* %__rhs, metadata !6277, metadata !DIExpression()), !dbg !6278
+  %call = tail call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator.11"* nonnull %__lhs) #24, !dbg !6279
+  %0 = bitcast float** %call to i64*, !dbg !6279
+  %1 = load i64, i64* %0, align 8, !dbg !6279, !tbaa !3171
+  %call1 = tail call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator.11"* nonnull %__rhs) #24, !dbg !6280
+  %2 = bitcast float** %call1 to i64*, !dbg !6280
+  %3 = load i64, i64* %2, align 8, !dbg !6280, !tbaa !3171
+  %sub.ptr.sub = sub i64 %1, %3, !dbg !6281
+  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 2, !dbg !6281
+  ret i64 %sub.ptr.div, !dbg !6282
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr float* @_ZNKSt6vectorIfSaIfEE6cbeginEv(%"class.std::vector"* %this) local_unnamed_addr #7 comdat align 2 !dbg !6281 {
+define linkonce_odr float* @_ZNKSt6vectorIfSaIfEE6cbeginEv(%"class.std::vector"* %this) local_unnamed_addr #7 comdat align 2 !dbg !6283 {
 entry:
   %retval = alloca %"class.__gnu_cxx::__normal_iterator.11", align 8
   %ref.tmp = alloca float*, align 8
-  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !6283, metadata !DIExpression()), !dbg !6284
-  %0 = bitcast float** %ref.tmp to i8*, !dbg !6285
-  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %0) #24, !dbg !6285
-  %1 = bitcast %"class.std::vector"* %this to i64*, !dbg !6286
-  %2 = load i64, i64* %1, align 8, !dbg !6286, !tbaa !3193
-  %3 = bitcast float** %ref.tmp to i64*, !dbg !6285
-  store i64 %2, i64* %3, align 8, !dbg !6285, !tbaa !3171
-  call void @_ZN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEC2ERKS2_(%"class.__gnu_cxx::__normal_iterator.11"* nonnull %retval, float** nonnull dereferenceable(8) %ref.tmp) #24, !dbg !6287
-  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %0) #24, !dbg !6288
-  %coerce.dive = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator.11", %"class.__gnu_cxx::__normal_iterator.11"* %retval, i64 0, i32 0, !dbg !6288
-  %4 = load float*, float** %coerce.dive, align 8, !dbg !6288
-  ret float* %4, !dbg !6288
+  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !6285, metadata !DIExpression()), !dbg !6286
+  %0 = bitcast float** %ref.tmp to i8*, !dbg !6287
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %0) #24, !dbg !6287
+  %1 = bitcast %"class.std::vector"* %this to i64*, !dbg !6288
+  %2 = load i64, i64* %1, align 8, !dbg !6288, !tbaa !3193
+  %3 = bitcast float** %ref.tmp to i64*, !dbg !6287
+  store i64 %2, i64* %3, align 8, !dbg !6287, !tbaa !3171
+  call void @_ZN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEC2ERKS2_(%"class.__gnu_cxx::__normal_iterator.11"* nonnull %retval, float** nonnull dereferenceable(8) %ref.tmp) #24, !dbg !6289
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %0) #24, !dbg !6290
+  %coerce.dive = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator.11", %"class.__gnu_cxx::__normal_iterator.11"* %retval, i64 0, i32 0, !dbg !6290
+  %4 = load float*, float** %coerce.dive, align 8, !dbg !6290
+  ret float* %4, !dbg !6290
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr void @_ZNSt6vectorIfSaIfEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPfS1_EEmRKf(%"class.std::vector"* %this, float* %__position.coerce, i64 %__n, float* dereferenceable(4) %__x) local_unnamed_addr #0 comdat align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !6289 {
+define linkonce_odr void @_ZNSt6vectorIfSaIfEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPfS1_EEmRKf(%"class.std::vector"* %this, float* %__position.coerce, i64 %__n, float* dereferenceable(4) %__x) local_unnamed_addr #0 comdat align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !6291 {
 entry:
   %__position = alloca %"class.__gnu_cxx::__normal_iterator", align 8
   %__x_copy = alloca float, align 4
@@ -5426,525 +5428,525 @@ entry:
   %ref.tmp46 = alloca %"class.__gnu_cxx::__normal_iterator", align 8
   %coerce.dive = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator", %"class.__gnu_cxx::__normal_iterator"* %__position, i64 0, i32 0
   store float* %__position.coerce, float** %coerce.dive, align 8
-  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !6291, metadata !DIExpression()), !dbg !6307
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !6293, metadata !DIExpression()), !dbg !6307
-  call void @llvm.dbg.value(metadata float* %__x, metadata !6294, metadata !DIExpression()), !dbg !6307
-  %cmp = icmp eq i64 %__n, 0, !dbg !6308
-  br i1 %cmp, label %if.end102, label %if.then, !dbg !6309
+  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !6293, metadata !DIExpression()), !dbg !6309
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !6295, metadata !DIExpression()), !dbg !6309
+  call void @llvm.dbg.value(metadata float* %__x, metadata !6296, metadata !DIExpression()), !dbg !6309
+  %cmp = icmp eq i64 %__n, 0, !dbg !6310
+  br i1 %cmp, label %if.end102, label %if.then, !dbg !6311
 
 if.then:                                          ; preds = %entry
-  %0 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, !dbg !6310
-  %_M_end_of_storage = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 2, !dbg !6311
-  %1 = bitcast float** %_M_end_of_storage to i64*, !dbg !6311
-  %2 = load i64, i64* %1, align 8, !dbg !6311, !tbaa !5316
-  %_M_finish = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 1, !dbg !6312
-  %3 = bitcast float** %_M_finish to i64*, !dbg !6312
-  %4 = load i64, i64* %3, align 8, !dbg !6312, !tbaa !5284
-  %sub.ptr.sub = sub i64 %2, %4, !dbg !6313
-  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 2, !dbg !6313
-  %cmp3 = icmp ult i64 %sub.ptr.div, %__n, !dbg !6314
-  br i1 %cmp3, label %if.else44, label %if.then4, !dbg !6315
+  %0 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, !dbg !6312
+  %_M_end_of_storage = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 2, !dbg !6313
+  %1 = bitcast float** %_M_end_of_storage to i64*, !dbg !6313
+  %2 = load i64, i64* %1, align 8, !dbg !6313, !tbaa !5318
+  %_M_finish = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 1, !dbg !6314
+  %3 = bitcast float** %_M_finish to i64*, !dbg !6314
+  %4 = load i64, i64* %3, align 8, !dbg !6314, !tbaa !5286
+  %sub.ptr.sub = sub i64 %2, %4, !dbg !6315
+  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 2, !dbg !6315
+  %cmp3 = icmp ult i64 %sub.ptr.div, %__n, !dbg !6316
+  br i1 %cmp3, label %if.else44, label %if.then4, !dbg !6317
 
 if.then4:                                         ; preds = %if.then
-  %5 = bitcast float* %__x_copy to i8*, !dbg !6316
-  call void @llvm.lifetime.start.p0i8(i64 4, i8* nonnull %5) #24, !dbg !6316
-  %6 = bitcast float* %__x to i32*, !dbg !6317
-  %7 = load i32, i32* %6, align 4, !dbg !6317, !tbaa !3361
-  %8 = bitcast float* %__x_copy to i32*, !dbg !6318
-  store i32 %7, i32* %8, align 4, !dbg !6318, !tbaa !3361
-  %9 = bitcast %"class.__gnu_cxx::__normal_iterator"* %ref.tmp to i8*, !dbg !6319
-  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %9) #24, !dbg !6319
-  %call = tail call float* @_ZNSt6vectorIfSaIfEE3endEv(%"class.std::vector"* nonnull %this) #24, !dbg !6319
-  %coerce.dive5 = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator", %"class.__gnu_cxx::__normal_iterator"* %ref.tmp, i64 0, i32 0, !dbg !6319
-  store float* %call, float** %coerce.dive5, align 8, !dbg !6319
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__position, metadata !6292, metadata !DIExpression(DW_OP_deref)), !dbg !6307
-  %call6 = call i64 @_ZN9__gnu_cxxmiIPfSt6vectorIfSaIfEEEENS_17__normal_iteratorIT_T0_E15difference_typeERKS8_SB_(%"class.__gnu_cxx::__normal_iterator"* nonnull dereferenceable(8) %ref.tmp, %"class.__gnu_cxx::__normal_iterator"* nonnull dereferenceable(8) %__position) #24, !dbg !6320
-  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %9) #24, !dbg !6319
-  call void @llvm.dbg.value(metadata i64 %call6, metadata !6300, metadata !DIExpression()), !dbg !6321
-  %10 = load float*, float** %_M_finish, align 8, !dbg !6322, !tbaa !5284
-  call void @llvm.dbg.value(metadata float* %10, metadata !6301, metadata !DIExpression()), !dbg !6321
-  %cmp9 = icmp ugt i64 %call6, %__n, !dbg !6323
-  br i1 %cmp9, label %if.then10, label %if.else, !dbg !6325
+  %5 = bitcast float* %__x_copy to i8*, !dbg !6318
+  call void @llvm.lifetime.start.p0i8(i64 4, i8* nonnull %5) #24, !dbg !6318
+  %6 = bitcast float* %__x to i32*, !dbg !6319
+  %7 = load i32, i32* %6, align 4, !dbg !6319, !tbaa !3361
+  %8 = bitcast float* %__x_copy to i32*, !dbg !6320
+  store i32 %7, i32* %8, align 4, !dbg !6320, !tbaa !3361
+  %9 = bitcast %"class.__gnu_cxx::__normal_iterator"* %ref.tmp to i8*, !dbg !6321
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %9) #24, !dbg !6321
+  %call = tail call float* @_ZNSt6vectorIfSaIfEE3endEv(%"class.std::vector"* nonnull %this) #24, !dbg !6321
+  %coerce.dive5 = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator", %"class.__gnu_cxx::__normal_iterator"* %ref.tmp, i64 0, i32 0, !dbg !6321
+  store float* %call, float** %coerce.dive5, align 8, !dbg !6321
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__position, metadata !6294, metadata !DIExpression(DW_OP_deref)), !dbg !6309
+  %call6 = call i64 @_ZN9__gnu_cxxmiIPfSt6vectorIfSaIfEEEENS_17__normal_iteratorIT_T0_E15difference_typeERKS8_SB_(%"class.__gnu_cxx::__normal_iterator"* nonnull dereferenceable(8) %ref.tmp, %"class.__gnu_cxx::__normal_iterator"* nonnull dereferenceable(8) %__position) #24, !dbg !6322
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %9) #24, !dbg !6321
+  call void @llvm.dbg.value(metadata i64 %call6, metadata !6302, metadata !DIExpression()), !dbg !6323
+  %10 = load float*, float** %_M_finish, align 8, !dbg !6324, !tbaa !5286
+  call void @llvm.dbg.value(metadata float* %10, metadata !6303, metadata !DIExpression()), !dbg !6323
+  %cmp9 = icmp ugt i64 %call6, %__n, !dbg !6325
+  br i1 %cmp9, label %if.then10, label %if.else, !dbg !6327
 
 if.then10:                                        ; preds = %if.then4
-  %idx.neg = sub i64 0, %__n, !dbg !6326
-  %add.ptr = getelementptr inbounds float, float* %10, i64 %idx.neg, !dbg !6326
-  %call17 = call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* nonnull %0) #24, !dbg !6328
-  %call18 = call float* @_ZSt22__uninitialized_move_aIPfS0_SaIfEET0_T_S3_S2_RT1_(float* %add.ptr, float* %10, float* %10, %"class.std::allocator"* nonnull dereferenceable(1) %call17), !dbg !6329
-  %11 = load float*, float** %_M_finish, align 8, !dbg !6330, !tbaa !5284
-  %add.ptr21 = getelementptr inbounds float, float* %11, i64 %__n, !dbg !6330
-  store float* %add.ptr21, float** %_M_finish, align 8, !dbg !6330, !tbaa !5284
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__position, metadata !6292, metadata !DIExpression(DW_OP_deref)), !dbg !6307
-  %call22 = call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__position) #24, !dbg !6331
-  %12 = load float*, float** %call22, align 8, !dbg !6331, !tbaa !3171
-  %call25 = call float* @_ZSt13move_backwardIPfS0_ET0_T_S2_S1_(float* %12, float* %add.ptr, float* %10), !dbg !6331
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__position, metadata !6292, metadata !DIExpression(DW_OP_deref)), !dbg !6307
-  %call26 = call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__position) #24, !dbg !6332
-  %13 = load float*, float** %call26, align 8, !dbg !6332, !tbaa !3171
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__position, metadata !6292, metadata !DIExpression(DW_OP_deref)), !dbg !6307
-  %call27 = call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__position) #24, !dbg !6333
-  %14 = load float*, float** %call27, align 8, !dbg !6333, !tbaa !3171
-  %add.ptr28 = getelementptr inbounds float, float* %14, i64 %__n, !dbg !6334
-  call void @llvm.dbg.value(metadata float* %__x_copy, metadata !6295, metadata !DIExpression(DW_OP_deref)), !dbg !6321
-  call void @_ZSt4fillIPffEvT_S1_RKT0_(float* %13, float* %add.ptr28, float* nonnull dereferenceable(4) %__x_copy), !dbg !6335
-  br label %if.end, !dbg !6336
+  %idx.neg = sub i64 0, %__n, !dbg !6328
+  %add.ptr = getelementptr inbounds float, float* %10, i64 %idx.neg, !dbg !6328
+  %call17 = call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* nonnull %0) #24, !dbg !6330
+  %call18 = call float* @_ZSt22__uninitialized_move_aIPfS0_SaIfEET0_T_S3_S2_RT1_(float* %add.ptr, float* %10, float* %10, %"class.std::allocator"* nonnull dereferenceable(1) %call17), !dbg !6331
+  %11 = load float*, float** %_M_finish, align 8, !dbg !6332, !tbaa !5286
+  %add.ptr21 = getelementptr inbounds float, float* %11, i64 %__n, !dbg !6332
+  store float* %add.ptr21, float** %_M_finish, align 8, !dbg !6332, !tbaa !5286
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__position, metadata !6294, metadata !DIExpression(DW_OP_deref)), !dbg !6309
+  %call22 = call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__position) #24, !dbg !6333
+  %12 = load float*, float** %call22, align 8, !dbg !6333, !tbaa !3171
+  %call25 = call float* @_ZSt13move_backwardIPfS0_ET0_T_S2_S1_(float* %12, float* %add.ptr, float* %10), !dbg !6333
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__position, metadata !6294, metadata !DIExpression(DW_OP_deref)), !dbg !6309
+  %call26 = call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__position) #24, !dbg !6334
+  %13 = load float*, float** %call26, align 8, !dbg !6334, !tbaa !3171
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__position, metadata !6294, metadata !DIExpression(DW_OP_deref)), !dbg !6309
+  %call27 = call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__position) #24, !dbg !6335
+  %14 = load float*, float** %call27, align 8, !dbg !6335, !tbaa !3171
+  %add.ptr28 = getelementptr inbounds float, float* %14, i64 %__n, !dbg !6336
+  call void @llvm.dbg.value(metadata float* %__x_copy, metadata !6297, metadata !DIExpression(DW_OP_deref)), !dbg !6323
+  call void @_ZSt4fillIPffEvT_S1_RKT0_(float* %13, float* %add.ptr28, float* nonnull dereferenceable(4) %__x_copy), !dbg !6337
+  br label %if.end, !dbg !6338
 
 if.else:                                          ; preds = %if.then4
-  %sub = sub i64 %__n, %call6, !dbg !6337
-  %call31 = call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* nonnull %0) #24, !dbg !6339
-  call void @llvm.dbg.value(metadata float* %__x_copy, metadata !6295, metadata !DIExpression(DW_OP_deref)), !dbg !6321
-  %call32 = call float* @_ZSt24__uninitialized_fill_n_aIPfmffET_S1_T0_RKT1_RSaIT2_E(float* %10, i64 %sub, float* nonnull dereferenceable(4) %__x_copy, %"class.std::allocator"* nonnull dereferenceable(1) %call31), !dbg !6340
-  store float* %call32, float** %_M_finish, align 8, !dbg !6341, !tbaa !5284
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__position, metadata !6292, metadata !DIExpression(DW_OP_deref)), !dbg !6307
-  %call35 = call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__position) #24, !dbg !6342
-  %15 = load float*, float** %call35, align 8, !dbg !6342, !tbaa !3171
-  %16 = load float*, float** %_M_finish, align 8, !dbg !6343, !tbaa !5284
-  %call38 = call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* nonnull %0) #24, !dbg !6344
-  %call39 = call float* @_ZSt22__uninitialized_move_aIPfS0_SaIfEET0_T_S3_S2_RT1_(float* %15, float* %10, float* %16, %"class.std::allocator"* nonnull dereferenceable(1) %call38), !dbg !6345
-  %17 = load float*, float** %_M_finish, align 8, !dbg !6346, !tbaa !5284
-  %add.ptr42 = getelementptr inbounds float, float* %17, i64 %call6, !dbg !6346
-  store float* %add.ptr42, float** %_M_finish, align 8, !dbg !6346, !tbaa !5284
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__position, metadata !6292, metadata !DIExpression(DW_OP_deref)), !dbg !6307
-  %call43 = call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__position) #24, !dbg !6347
-  %18 = load float*, float** %call43, align 8, !dbg !6347, !tbaa !3171
-  call void @llvm.dbg.value(metadata float* %__x_copy, metadata !6295, metadata !DIExpression(DW_OP_deref)), !dbg !6321
-  call void @_ZSt4fillIPffEvT_S1_RKT0_(float* %18, float* %10, float* nonnull dereferenceable(4) %__x_copy), !dbg !6348
+  %sub = sub i64 %__n, %call6, !dbg !6339
+  %call31 = call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* nonnull %0) #24, !dbg !6341
+  call void @llvm.dbg.value(metadata float* %__x_copy, metadata !6297, metadata !DIExpression(DW_OP_deref)), !dbg !6323
+  %call32 = call float* @_ZSt24__uninitialized_fill_n_aIPfmffET_S1_T0_RKT1_RSaIT2_E(float* %10, i64 %sub, float* nonnull dereferenceable(4) %__x_copy, %"class.std::allocator"* nonnull dereferenceable(1) %call31), !dbg !6342
+  store float* %call32, float** %_M_finish, align 8, !dbg !6343, !tbaa !5286
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__position, metadata !6294, metadata !DIExpression(DW_OP_deref)), !dbg !6309
+  %call35 = call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__position) #24, !dbg !6344
+  %15 = load float*, float** %call35, align 8, !dbg !6344, !tbaa !3171
+  %16 = load float*, float** %_M_finish, align 8, !dbg !6345, !tbaa !5286
+  %call38 = call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* nonnull %0) #24, !dbg !6346
+  %call39 = call float* @_ZSt22__uninitialized_move_aIPfS0_SaIfEET0_T_S3_S2_RT1_(float* %15, float* %10, float* %16, %"class.std::allocator"* nonnull dereferenceable(1) %call38), !dbg !6347
+  %17 = load float*, float** %_M_finish, align 8, !dbg !6348, !tbaa !5286
+  %add.ptr42 = getelementptr inbounds float, float* %17, i64 %call6, !dbg !6348
+  store float* %add.ptr42, float** %_M_finish, align 8, !dbg !6348, !tbaa !5286
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__position, metadata !6294, metadata !DIExpression(DW_OP_deref)), !dbg !6309
+  %call43 = call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__position) #24, !dbg !6349
+  %18 = load float*, float** %call43, align 8, !dbg !6349, !tbaa !3171
+  call void @llvm.dbg.value(metadata float* %__x_copy, metadata !6297, metadata !DIExpression(DW_OP_deref)), !dbg !6323
+  call void @_ZSt4fillIPffEvT_S1_RKT0_(float* %18, float* %10, float* nonnull dereferenceable(4) %__x_copy), !dbg !6350
   br label %if.end
 
 if.end:                                           ; preds = %if.else, %if.then10
-  call void @llvm.lifetime.end.p0i8(i64 4, i8* nonnull %5) #24, !dbg !6349
-  br label %if.end102, !dbg !6350
+  call void @llvm.lifetime.end.p0i8(i64 4, i8* nonnull %5) #24, !dbg !6351
+  br label %if.end102, !dbg !6352
 
 if.else44:                                        ; preds = %if.then
-  %call45 = tail call i64 @_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc(%"class.std::vector"* nonnull %this, i64 %__n, i8* getelementptr inbounds ([23 x i8], [23 x i8]* @.str.13, i64 0, i64 0)), !dbg !6351
-  call void @llvm.dbg.value(metadata i64 %call45, metadata !6302, metadata !DIExpression()), !dbg !6352
-  %19 = bitcast %"class.__gnu_cxx::__normal_iterator"* %ref.tmp46 to i8*, !dbg !6353
-  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %19) #24, !dbg !6353
-  %call47 = tail call float* @_ZNSt6vectorIfSaIfEE5beginEv(%"class.std::vector"* nonnull %this) #24, !dbg !6353
-  %coerce.dive48 = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator", %"class.__gnu_cxx::__normal_iterator"* %ref.tmp46, i64 0, i32 0, !dbg !6353
-  store float* %call47, float** %coerce.dive48, align 8, !dbg !6353
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__position, metadata !6292, metadata !DIExpression(DW_OP_deref)), !dbg !6307
-  %call49 = call i64 @_ZN9__gnu_cxxmiIPfSt6vectorIfSaIfEEEENS_17__normal_iteratorIT_T0_E15difference_typeERKS8_SB_(%"class.__gnu_cxx::__normal_iterator"* nonnull dereferenceable(8) %__position, %"class.__gnu_cxx::__normal_iterator"* nonnull dereferenceable(8) %ref.tmp46) #24, !dbg !6354
-  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %19) #24, !dbg !6355
-  call void @llvm.dbg.value(metadata i64 %call49, metadata !6304, metadata !DIExpression()), !dbg !6352
-  %call50 = call float* @_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm(%"struct.std::_Vector_base"* %0, i64 %call45), !dbg !6356
-  call void @llvm.dbg.value(metadata float* %call50, metadata !6305, metadata !DIExpression()), !dbg !6352
-  call void @llvm.dbg.value(metadata float* %call50, metadata !6306, metadata !DIExpression()), !dbg !6352
-  %add.ptr51 = getelementptr inbounds float, float* %call50, i64 %call49, !dbg !6357
-  %call52 = call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %0) #24, !dbg !6359
+  %call45 = tail call i64 @_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc(%"class.std::vector"* nonnull %this, i64 %__n, i8* getelementptr inbounds ([23 x i8], [23 x i8]* @.str.13, i64 0, i64 0)), !dbg !6353
+  call void @llvm.dbg.value(metadata i64 %call45, metadata !6304, metadata !DIExpression()), !dbg !6354
+  %19 = bitcast %"class.__gnu_cxx::__normal_iterator"* %ref.tmp46 to i8*, !dbg !6355
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %19) #24, !dbg !6355
+  %call47 = tail call float* @_ZNSt6vectorIfSaIfEE5beginEv(%"class.std::vector"* nonnull %this) #24, !dbg !6355
+  %coerce.dive48 = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator", %"class.__gnu_cxx::__normal_iterator"* %ref.tmp46, i64 0, i32 0, !dbg !6355
+  store float* %call47, float** %coerce.dive48, align 8, !dbg !6355
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__position, metadata !6294, metadata !DIExpression(DW_OP_deref)), !dbg !6309
+  %call49 = call i64 @_ZN9__gnu_cxxmiIPfSt6vectorIfSaIfEEEENS_17__normal_iteratorIT_T0_E15difference_typeERKS8_SB_(%"class.__gnu_cxx::__normal_iterator"* nonnull dereferenceable(8) %__position, %"class.__gnu_cxx::__normal_iterator"* nonnull dereferenceable(8) %ref.tmp46) #24, !dbg !6356
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %19) #24, !dbg !6357
+  call void @llvm.dbg.value(metadata i64 %call49, metadata !6306, metadata !DIExpression()), !dbg !6354
+  %call50 = call float* @_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm(%"struct.std::_Vector_base"* %0, i64 %call45), !dbg !6358
+  call void @llvm.dbg.value(metadata float* %call50, metadata !6307, metadata !DIExpression()), !dbg !6354
+  call void @llvm.dbg.value(metadata float* %call50, metadata !6308, metadata !DIExpression()), !dbg !6354
+  %add.ptr51 = getelementptr inbounds float, float* %call50, i64 %call49, !dbg !6359
+  %call52 = call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %0) #24, !dbg !6361
   %call53 = invoke float* @_ZSt24__uninitialized_fill_n_aIPfmffET_S1_T0_RKT1_RSaIT2_E(float* %add.ptr51, i64 %__n, float* nonnull dereferenceable(4) %__x, %"class.std::allocator"* nonnull dereferenceable(1) %call52)
-          to label %invoke.cont unwind label %lpad, !dbg !6360
+          to label %invoke.cont unwind label %lpad, !dbg !6362
 
 invoke.cont:                                      ; preds = %if.else44
-  call void @llvm.dbg.value(metadata float* null, metadata !6306, metadata !DIExpression()), !dbg !6352
-  %_M_start = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 0, !dbg !6361
-  %20 = load float*, float** %_M_start, align 8, !dbg !6361, !tbaa !3193
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__position, metadata !6292, metadata !DIExpression(DW_OP_deref)), !dbg !6307
-  %call55 = call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__position) #24, !dbg !6362
-  %21 = load float*, float** %call55, align 8, !dbg !6362, !tbaa !3171
-  %call56 = call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %0) #24, !dbg !6363
+  call void @llvm.dbg.value(metadata float* null, metadata !6308, metadata !DIExpression()), !dbg !6354
+  %_M_start = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 0, !dbg !6363
+  %20 = load float*, float** %_M_start, align 8, !dbg !6363, !tbaa !3193
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__position, metadata !6294, metadata !DIExpression(DW_OP_deref)), !dbg !6309
+  %call55 = call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__position) #24, !dbg !6364
+  %21 = load float*, float** %call55, align 8, !dbg !6364, !tbaa !3171
+  %call56 = call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %0) #24, !dbg !6365
   %call58 = invoke float* @_ZSt34__uninitialized_move_if_noexcept_aIPfS0_SaIfEET0_T_S3_S2_RT1_(float* %20, float* %21, float* %call50, %"class.std::allocator"* nonnull dereferenceable(1) %call56)
-          to label %invoke.cont57 unwind label %lpad, !dbg !6364
+          to label %invoke.cont57 unwind label %lpad, !dbg !6366
 
 invoke.cont57:                                    ; preds = %invoke.cont
-  call void @llvm.dbg.value(metadata float* %call58, metadata !6306, metadata !DIExpression()), !dbg !6352
-  %add.ptr59 = getelementptr inbounds float, float* %call58, i64 %__n, !dbg !6365
-  call void @llvm.dbg.value(metadata float* %add.ptr59, metadata !6306, metadata !DIExpression()), !dbg !6352
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__position, metadata !6292, metadata !DIExpression(DW_OP_deref)), !dbg !6307
-  %call60 = call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__position) #24, !dbg !6366
-  %22 = load float*, float** %call60, align 8, !dbg !6366, !tbaa !3171
-  %23 = load float*, float** %_M_finish, align 8, !dbg !6367, !tbaa !5284
-  %call63 = call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* nonnull %0) #24, !dbg !6368
+  call void @llvm.dbg.value(metadata float* %call58, metadata !6308, metadata !DIExpression()), !dbg !6354
+  %add.ptr59 = getelementptr inbounds float, float* %call58, i64 %__n, !dbg !6367
+  call void @llvm.dbg.value(metadata float* %add.ptr59, metadata !6308, metadata !DIExpression()), !dbg !6354
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__position, metadata !6294, metadata !DIExpression(DW_OP_deref)), !dbg !6309
+  %call60 = call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__position) #24, !dbg !6368
+  %22 = load float*, float** %call60, align 8, !dbg !6368, !tbaa !3171
+  %23 = load float*, float** %_M_finish, align 8, !dbg !6369, !tbaa !5286
+  %call63 = call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* nonnull %0) #24, !dbg !6370
   %call65 = invoke float* @_ZSt34__uninitialized_move_if_noexcept_aIPfS0_SaIfEET0_T_S3_S2_RT1_(float* %22, float* %23, float* %add.ptr59, %"class.std::allocator"* nonnull dereferenceable(1) %call63)
-          to label %invoke.cont64 unwind label %lpad, !dbg !6369
+          to label %invoke.cont64 unwind label %lpad, !dbg !6371
 
 invoke.cont64:                                    ; preds = %invoke.cont57
-  call void @llvm.dbg.value(metadata float* %call65, metadata !6306, metadata !DIExpression()), !dbg !6352
-  %24 = load float*, float** %_M_start, align 8, !dbg !6370, !tbaa !3193
-  %25 = load float*, float** %_M_finish, align 8, !dbg !6371, !tbaa !5284
-  %call83 = call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* nonnull %0) #24, !dbg !6372
-  call void @_ZSt8_DestroyIPffEvT_S1_RSaIT0_E(float* %24, float* %25, %"class.std::allocator"* nonnull dereferenceable(1) %call83), !dbg !6373
-  %26 = load float*, float** %_M_start, align 8, !dbg !6374, !tbaa !3193
-  %27 = load i64, i64* %1, align 8, !dbg !6375, !tbaa !5316
-  %sub.ptr.rhs.cast91 = ptrtoint float* %26 to i64, !dbg !6376
-  %sub.ptr.sub92 = sub i64 %27, %sub.ptr.rhs.cast91, !dbg !6376
-  %sub.ptr.div93 = ashr exact i64 %sub.ptr.sub92, 2, !dbg !6376
-  call void @_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm(%"struct.std::_Vector_base"* nonnull %0, float* %26, i64 %sub.ptr.div93), !dbg !6377
-  store float* %call50, float** %_M_start, align 8, !dbg !6378, !tbaa !3193
-  store float* %call65, float** %_M_finish, align 8, !dbg !6379, !tbaa !5284
-  %add.ptr98 = getelementptr inbounds float, float* %call50, i64 %call45, !dbg !6380
-  store float* %add.ptr98, float** %_M_end_of_storage, align 8, !dbg !6381, !tbaa !5316
+  call void @llvm.dbg.value(metadata float* %call65, metadata !6308, metadata !DIExpression()), !dbg !6354
+  %24 = load float*, float** %_M_start, align 8, !dbg !6372, !tbaa !3193
+  %25 = load float*, float** %_M_finish, align 8, !dbg !6373, !tbaa !5286
+  %call83 = call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* nonnull %0) #24, !dbg !6374
+  call void @_ZSt8_DestroyIPffEvT_S1_RSaIT0_E(float* %24, float* %25, %"class.std::allocator"* nonnull dereferenceable(1) %call83), !dbg !6375
+  %26 = load float*, float** %_M_start, align 8, !dbg !6376, !tbaa !3193
+  %27 = load i64, i64* %1, align 8, !dbg !6377, !tbaa !5318
+  %sub.ptr.rhs.cast91 = ptrtoint float* %26 to i64, !dbg !6378
+  %sub.ptr.sub92 = sub i64 %27, %sub.ptr.rhs.cast91, !dbg !6378
+  %sub.ptr.div93 = ashr exact i64 %sub.ptr.sub92, 2, !dbg !6378
+  call void @_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm(%"struct.std::_Vector_base"* nonnull %0, float* %26, i64 %sub.ptr.div93), !dbg !6379
+  store float* %call50, float** %_M_start, align 8, !dbg !6380, !tbaa !3193
+  store float* %call65, float** %_M_finish, align 8, !dbg !6381, !tbaa !5286
+  %add.ptr98 = getelementptr inbounds float, float* %call50, i64 %call45, !dbg !6382
+  store float* %add.ptr98, float** %_M_end_of_storage, align 8, !dbg !6383, !tbaa !5318
   br label %if.end102
 
 lpad:                                             ; preds = %invoke.cont57, %invoke.cont, %if.else44
-  %__new_finish.0 = phi float* [ %add.ptr59, %invoke.cont57 ], [ null, %invoke.cont ], [ %call50, %if.else44 ], !dbg !6352
+  %__new_finish.0 = phi float* [ %add.ptr59, %invoke.cont57 ], [ null, %invoke.cont ], [ %call50, %if.else44 ], !dbg !6354
   %28 = landingpad { i8*, i32 }
-          catch i8* null, !dbg !6382
-  call void @llvm.dbg.value(metadata float* %__new_finish.0, metadata !6306, metadata !DIExpression()), !dbg !6352
-  %29 = extractvalue { i8*, i32 } %28, 0, !dbg !6382
-  %30 = call i8* @__cxa_begin_catch(i8* %29) #24, !dbg !6383
-  %tobool = icmp eq float* %__new_finish.0, null, !dbg !6384
-  br i1 %tobool, label %if.then66, label %if.else73, !dbg !6387
+          catch i8* null, !dbg !6384
+  call void @llvm.dbg.value(metadata float* %__new_finish.0, metadata !6308, metadata !DIExpression()), !dbg !6354
+  %29 = extractvalue { i8*, i32 } %28, 0, !dbg !6384
+  %30 = call i8* @__cxa_begin_catch(i8* %29) #24, !dbg !6385
+  %tobool = icmp eq float* %__new_finish.0, null, !dbg !6386
+  br i1 %tobool, label %if.then66, label %if.else73, !dbg !6389
 
 if.then66:                                        ; preds = %lpad
-  %add.ptr69 = getelementptr inbounds float, float* %add.ptr51, i64 %__n, !dbg !6388
-  %call70 = call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %0) #24, !dbg !6389
+  %add.ptr69 = getelementptr inbounds float, float* %add.ptr51, i64 %__n, !dbg !6390
+  %call70 = call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %0) #24, !dbg !6391
   invoke void @_ZSt8_DestroyIPffEvT_S1_RSaIT0_E(float* %add.ptr51, float* %add.ptr69, %"class.std::allocator"* nonnull dereferenceable(1) %call70)
-          to label %if.end76 unwind label %lpad71, !dbg !6390
+          to label %if.end76 unwind label %lpad71, !dbg !6392
 
 lpad71:                                           ; preds = %invoke.cont77, %if.end76, %if.else73, %if.then66
   %31 = landingpad { i8*, i32 }
-          cleanup, !dbg !6391
+          cleanup, !dbg !6393
   invoke void @__cxa_end_catch()
-          to label %invoke.cont78 unwind label %terminate.lpad, !dbg !6392
+          to label %invoke.cont78 unwind label %terminate.lpad, !dbg !6394
 
 if.else73:                                        ; preds = %lpad
-  %call74 = call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %0) #24, !dbg !6393
+  %call74 = call dereferenceable(1) %"class.std::allocator"* @_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base"* %0) #24, !dbg !6395
   invoke void @_ZSt8_DestroyIPffEvT_S1_RSaIT0_E(float* %call50, float* nonnull %__new_finish.0, %"class.std::allocator"* nonnull dereferenceable(1) %call74)
-          to label %if.end76 unwind label %lpad71, !dbg !6394
+          to label %if.end76 unwind label %lpad71, !dbg !6396
 
 if.end76:                                         ; preds = %if.else73, %if.then66
   invoke void @_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm(%"struct.std::_Vector_base"* %0, float* %call50, i64 %call45)
-          to label %invoke.cont77 unwind label %lpad71, !dbg !6395
+          to label %invoke.cont77 unwind label %lpad71, !dbg !6397
 
 invoke.cont77:                                    ; preds = %if.end76
   invoke void @__cxa_rethrow() #29
-          to label %unreachable unwind label %lpad71, !dbg !6396
+          to label %unreachable unwind label %lpad71, !dbg !6398
 
 invoke.cont78:                                    ; preds = %lpad71
-  resume { i8*, i32 } %31, !dbg !6397
+  resume { i8*, i32 } %31, !dbg !6399
 
 if.end102:                                        ; preds = %entry, %if.end, %invoke.cont64
-  ret void, !dbg !6398
+  ret void, !dbg !6400
 
 terminate.lpad:                                   ; preds = %lpad71
   %32 = landingpad { i8*, i32 }
-          catch i8* null, !dbg !6392
-  %33 = extractvalue { i8*, i32 } %32, 0, !dbg !6392
-  call void @__clang_call_terminate(i8* %33) #25, !dbg !6392
-  unreachable, !dbg !6392
+          catch i8* null, !dbg !6394
+  %33 = extractvalue { i8*, i32 } %32, 0, !dbg !6394
+  call void @__clang_call_terminate(i8* %33) #25, !dbg !6394
+  unreachable, !dbg !6394
 
 unreachable:                                      ; preds = %invoke.cont77
   unreachable
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr float* @_ZNSt6vectorIfSaIfEE5beginEv(%"class.std::vector"* %this) local_unnamed_addr #7 comdat align 2 !dbg !6399 {
+define linkonce_odr float* @_ZNSt6vectorIfSaIfEE5beginEv(%"class.std::vector"* %this) local_unnamed_addr #7 comdat align 2 !dbg !6401 {
 entry:
   %retval = alloca %"class.__gnu_cxx::__normal_iterator", align 8
-  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !6401, metadata !DIExpression()), !dbg !6402
-  %_M_start = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 0, !dbg !6403
-  call void @_ZN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEC2ERKS1_(%"class.__gnu_cxx::__normal_iterator"* nonnull %retval, float** dereferenceable(8) %_M_start) #24, !dbg !6404
-  %coerce.dive = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator", %"class.__gnu_cxx::__normal_iterator"* %retval, i64 0, i32 0, !dbg !6405
-  %0 = load float*, float** %coerce.dive, align 8, !dbg !6405
-  ret float* %0, !dbg !6405
+  call void @llvm.dbg.value(metadata %"class.std::vector"* %this, metadata !6403, metadata !DIExpression()), !dbg !6404
+  %_M_start = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %this, i64 0, i32 0, i32 0, i32 0, !dbg !6405
+  call void @_ZN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEC2ERKS1_(%"class.__gnu_cxx::__normal_iterator"* nonnull %retval, float** dereferenceable(8) %_M_start) #24, !dbg !6406
+  %coerce.dive = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator", %"class.__gnu_cxx::__normal_iterator"* %retval, i64 0, i32 0, !dbg !6407
+  %0 = load float*, float** %coerce.dive, align 8, !dbg !6407
+  ret float* %0, !dbg !6407
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr float* @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEplEl(%"class.__gnu_cxx::__normal_iterator"* %this, i64 %__n) local_unnamed_addr #7 comdat align 2 !dbg !6406 {
+define linkonce_odr float* @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEplEl(%"class.__gnu_cxx::__normal_iterator"* %this, i64 %__n) local_unnamed_addr #7 comdat align 2 !dbg !6408 {
 entry:
   %retval = alloca %"class.__gnu_cxx::__normal_iterator", align 8
   %ref.tmp = alloca float*, align 8
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %this, metadata !6408, metadata !DIExpression()), !dbg !6411
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !6410, metadata !DIExpression()), !dbg !6411
-  %0 = bitcast float** %ref.tmp to i8*, !dbg !6412
-  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %0) #24, !dbg !6412
-  %_M_current = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator", %"class.__gnu_cxx::__normal_iterator"* %this, i64 0, i32 0, !dbg !6412
-  %1 = load float*, float** %_M_current, align 8, !dbg !6412, !tbaa !6413
-  %add.ptr = getelementptr inbounds float, float* %1, i64 %__n, !dbg !6415
-  store float* %add.ptr, float** %ref.tmp, align 8, !dbg !6412, !tbaa !3171
-  call void @_ZN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEC2ERKS1_(%"class.__gnu_cxx::__normal_iterator"* nonnull %retval, float** nonnull dereferenceable(8) %ref.tmp) #24, !dbg !6416
-  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %0) #24, !dbg !6417
-  %coerce.dive = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator", %"class.__gnu_cxx::__normal_iterator"* %retval, i64 0, i32 0, !dbg !6417
-  %2 = load float*, float** %coerce.dive, align 8, !dbg !6417
-  ret float* %2, !dbg !6417
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %this, metadata !6410, metadata !DIExpression()), !dbg !6413
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !6412, metadata !DIExpression()), !dbg !6413
+  %0 = bitcast float** %ref.tmp to i8*, !dbg !6414
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %0) #24, !dbg !6414
+  %_M_current = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator", %"class.__gnu_cxx::__normal_iterator"* %this, i64 0, i32 0, !dbg !6414
+  %1 = load float*, float** %_M_current, align 8, !dbg !6414, !tbaa !6415
+  %add.ptr = getelementptr inbounds float, float* %1, i64 %__n, !dbg !6417
+  store float* %add.ptr, float** %ref.tmp, align 8, !dbg !6414, !tbaa !3171
+  call void @_ZN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEC2ERKS1_(%"class.__gnu_cxx::__normal_iterator"* nonnull %retval, float** nonnull dereferenceable(8) %ref.tmp) #24, !dbg !6418
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %0) #24, !dbg !6419
+  %coerce.dive = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator", %"class.__gnu_cxx::__normal_iterator"* %retval, i64 0, i32 0, !dbg !6419
+  %2 = load float*, float** %coerce.dive, align 8, !dbg !6419
+  ret float* %2, !dbg !6419
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator.11"* %this) local_unnamed_addr #7 comdat align 2 !dbg !6418 {
+define linkonce_odr dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator.11"* %this) local_unnamed_addr #7 comdat align 2 !dbg !6420 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator.11"* %this, metadata !6420, metadata !DIExpression()), !dbg !6422
-  %_M_current = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator.11", %"class.__gnu_cxx::__normal_iterator.11"* %this, i64 0, i32 0, !dbg !6423
-  ret float** %_M_current, !dbg !6424
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator.11"* %this, metadata !6422, metadata !DIExpression()), !dbg !6424
+  %_M_current = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator.11", %"class.__gnu_cxx::__normal_iterator.11"* %this, i64 0, i32 0, !dbg !6425
+  ret float** %_M_current, !dbg !6426
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEC2ERKS2_(%"class.__gnu_cxx::__normal_iterator.11"* %this, float** dereferenceable(8) %__i) unnamed_addr #7 comdat align 2 !dbg !6425 {
+define linkonce_odr void @_ZN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEC2ERKS2_(%"class.__gnu_cxx::__normal_iterator.11"* %this, float** dereferenceable(8) %__i) unnamed_addr #7 comdat align 2 !dbg !6427 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator.11"* %this, metadata !6427, metadata !DIExpression()), !dbg !6429
-  call void @llvm.dbg.value(metadata float** %__i, metadata !6428, metadata !DIExpression()), !dbg !6429
-  %0 = bitcast float** %__i to i64*, !dbg !6430
-  %1 = load i64, i64* %0, align 8, !dbg !6430, !tbaa !3171
-  %2 = bitcast %"class.__gnu_cxx::__normal_iterator.11"* %this to i64*, !dbg !6431
-  store i64 %1, i64* %2, align 8, !dbg !6431, !tbaa !6266
-  ret void, !dbg !6432
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator.11"* %this, metadata !6429, metadata !DIExpression()), !dbg !6431
+  call void @llvm.dbg.value(metadata float** %__i, metadata !6430, metadata !DIExpression()), !dbg !6431
+  %0 = bitcast float** %__i to i64*, !dbg !6432
+  %1 = load i64, i64* %0, align 8, !dbg !6432, !tbaa !3171
+  %2 = bitcast %"class.__gnu_cxx::__normal_iterator.11"* %this to i64*, !dbg !6433
+  store i64 %1, i64* %2, align 8, !dbg !6433, !tbaa !6268
+  ret void, !dbg !6434
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr i64 @_ZN9__gnu_cxxmiIPfSt6vectorIfSaIfEEEENS_17__normal_iteratorIT_T0_E15difference_typeERKS8_SB_(%"class.__gnu_cxx::__normal_iterator"* dereferenceable(8) %__lhs, %"class.__gnu_cxx::__normal_iterator"* dereferenceable(8) %__rhs) local_unnamed_addr #16 comdat !dbg !6433 {
+define linkonce_odr i64 @_ZN9__gnu_cxxmiIPfSt6vectorIfSaIfEEEENS_17__normal_iteratorIT_T0_E15difference_typeERKS8_SB_(%"class.__gnu_cxx::__normal_iterator"* dereferenceable(8) %__lhs, %"class.__gnu_cxx::__normal_iterator"* dereferenceable(8) %__rhs) local_unnamed_addr #16 comdat !dbg !6435 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__lhs, metadata !6437, metadata !DIExpression()), !dbg !6439
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__rhs, metadata !6438, metadata !DIExpression()), !dbg !6439
-  %call = tail call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__lhs) #24, !dbg !6440
-  %0 = bitcast float** %call to i64*, !dbg !6440
-  %1 = load i64, i64* %0, align 8, !dbg !6440, !tbaa !3171
-  %call1 = tail call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__rhs) #24, !dbg !6441
-  %2 = bitcast float** %call1 to i64*, !dbg !6441
-  %3 = load i64, i64* %2, align 8, !dbg !6441, !tbaa !3171
-  %sub.ptr.sub = sub i64 %1, %3, !dbg !6442
-  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 2, !dbg !6442
-  ret i64 %sub.ptr.div, !dbg !6443
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__lhs, metadata !6439, metadata !DIExpression()), !dbg !6441
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %__rhs, metadata !6440, metadata !DIExpression()), !dbg !6441
+  %call = tail call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__lhs) #24, !dbg !6442
+  %0 = bitcast float** %call to i64*, !dbg !6442
+  %1 = load i64, i64* %0, align 8, !dbg !6442, !tbaa !3171
+  %call1 = tail call dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* nonnull %__rhs) #24, !dbg !6443
+  %2 = bitcast float** %call1 to i64*, !dbg !6443
+  %3 = load i64, i64* %2, align 8, !dbg !6443, !tbaa !3171
+  %sub.ptr.sub = sub i64 %1, %3, !dbg !6444
+  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 2, !dbg !6444
+  ret i64 %sub.ptr.div, !dbg !6445
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr float* @_ZSt22__uninitialized_move_aIPfS0_SaIfEET0_T_S3_S2_RT1_(float* %__first, float* %__last, float* %__result, %"class.std::allocator"* dereferenceable(1) %__alloc) local_unnamed_addr #18 comdat !dbg !6444 {
+define linkonce_odr float* @_ZSt22__uninitialized_move_aIPfS0_SaIfEET0_T_S3_S2_RT1_(float* %__first, float* %__last, float* %__result, %"class.std::allocator"* dereferenceable(1) %__alloc) local_unnamed_addr #18 comdat !dbg !6446 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !6446, metadata !DIExpression()), !dbg !6450
-  call void @llvm.dbg.value(metadata float* %__last, metadata !6447, metadata !DIExpression()), !dbg !6450
-  call void @llvm.dbg.value(metadata float* %__result, metadata !6448, metadata !DIExpression()), !dbg !6450
-  call void @llvm.dbg.value(metadata %"class.std::allocator"* %__alloc, metadata !6449, metadata !DIExpression()), !dbg !6450
-  %call = tail call float* @_ZSt18make_move_iteratorIPfESt13move_iteratorIT_ES2_(float* %__first), !dbg !6451
-  %call2 = tail call float* @_ZSt18make_move_iteratorIPfESt13move_iteratorIT_ES2_(float* %__last), !dbg !6452
-  %call6 = tail call float* @_ZSt22__uninitialized_copy_aISt13move_iteratorIPfES1_fET0_T_S4_S3_RSaIT1_E(float* %call, float* %call2, float* %__result, %"class.std::allocator"* nonnull dereferenceable(1) %__alloc), !dbg !6453
-  ret float* %call6, !dbg !6454
+  call void @llvm.dbg.value(metadata float* %__first, metadata !6448, metadata !DIExpression()), !dbg !6452
+  call void @llvm.dbg.value(metadata float* %__last, metadata !6449, metadata !DIExpression()), !dbg !6452
+  call void @llvm.dbg.value(metadata float* %__result, metadata !6450, metadata !DIExpression()), !dbg !6452
+  call void @llvm.dbg.value(metadata %"class.std::allocator"* %__alloc, metadata !6451, metadata !DIExpression()), !dbg !6452
+  %call = tail call float* @_ZSt18make_move_iteratorIPfESt13move_iteratorIT_ES2_(float* %__first), !dbg !6453
+  %call2 = tail call float* @_ZSt18make_move_iteratorIPfESt13move_iteratorIT_ES2_(float* %__last), !dbg !6454
+  %call6 = tail call float* @_ZSt22__uninitialized_copy_aISt13move_iteratorIPfES1_fET0_T_S4_S3_RSaIT1_E(float* %call, float* %call2, float* %__result, %"class.std::allocator"* nonnull dereferenceable(1) %__alloc), !dbg !6455
+  ret float* %call6, !dbg !6456
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr float* @_ZSt13move_backwardIPfS0_ET0_T_S2_S1_(float* %__first, float* %__last, float* %__result) local_unnamed_addr #18 comdat !dbg !6455 {
+define linkonce_odr float* @_ZSt13move_backwardIPfS0_ET0_T_S2_S1_(float* %__first, float* %__last, float* %__result) local_unnamed_addr #18 comdat !dbg !6457 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !6457, metadata !DIExpression()), !dbg !6463
-  call void @llvm.dbg.value(metadata float* %__last, metadata !6458, metadata !DIExpression()), !dbg !6463
-  call void @llvm.dbg.value(metadata float* %__result, metadata !6459, metadata !DIExpression()), !dbg !6463
-  %call = tail call float* @_ZSt12__miter_baseIPfENSt11_Miter_baseIT_E13iterator_typeES2_(float* %__first), !dbg !6464
-  %call1 = tail call float* @_ZSt12__miter_baseIPfENSt11_Miter_baseIT_E13iterator_typeES2_(float* %__last), !dbg !6465
-  %call2 = tail call float* @_ZSt23__copy_move_backward_a2ILb1EPfS0_ET1_T0_S2_S1_(float* %call, float* %call1, float* %__result), !dbg !6466
-  ret float* %call2, !dbg !6467
+  call void @llvm.dbg.value(metadata float* %__first, metadata !6459, metadata !DIExpression()), !dbg !6465
+  call void @llvm.dbg.value(metadata float* %__last, metadata !6460, metadata !DIExpression()), !dbg !6465
+  call void @llvm.dbg.value(metadata float* %__result, metadata !6461, metadata !DIExpression()), !dbg !6465
+  %call = tail call float* @_ZSt12__miter_baseIPfENSt11_Miter_baseIT_E13iterator_typeES2_(float* %__first), !dbg !6466
+  %call1 = tail call float* @_ZSt12__miter_baseIPfENSt11_Miter_baseIT_E13iterator_typeES2_(float* %__last), !dbg !6467
+  %call2 = tail call float* @_ZSt23__copy_move_backward_a2ILb1EPfS0_ET1_T0_S2_S1_(float* %call, float* %call1, float* %__result), !dbg !6468
+  ret float* %call2, !dbg !6469
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* %this) local_unnamed_addr #7 comdat align 2 !dbg !6468 {
+define linkonce_odr dereferenceable(8) float** @_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv(%"class.__gnu_cxx::__normal_iterator"* %this) local_unnamed_addr #7 comdat align 2 !dbg !6470 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %this, metadata !6470, metadata !DIExpression()), !dbg !6471
-  %_M_current = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator", %"class.__gnu_cxx::__normal_iterator"* %this, i64 0, i32 0, !dbg !6472
-  ret float** %_M_current, !dbg !6473
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %this, metadata !6472, metadata !DIExpression()), !dbg !6473
+  %_M_current = getelementptr inbounds %"class.__gnu_cxx::__normal_iterator", %"class.__gnu_cxx::__normal_iterator"* %this, i64 0, i32 0, !dbg !6474
+  ret float** %_M_current, !dbg !6475
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr void @_ZSt4fillIPffEvT_S1_RKT0_(float* %__first, float* %__last, float* dereferenceable(4) %__value) local_unnamed_addr #18 comdat !dbg !6474 {
+define linkonce_odr void @_ZSt4fillIPffEvT_S1_RKT0_(float* %__first, float* %__last, float* dereferenceable(4) %__value) local_unnamed_addr #18 comdat !dbg !6476 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !6478, metadata !DIExpression()), !dbg !6481
-  call void @llvm.dbg.value(metadata float* %__last, metadata !6479, metadata !DIExpression()), !dbg !6481
-  call void @llvm.dbg.value(metadata float* %__value, metadata !6480, metadata !DIExpression()), !dbg !6481
-  %call = tail call float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__first), !dbg !6482
-  %call1 = tail call float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__last), !dbg !6483
-  tail call void @_ZSt8__fill_aIPffEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__typeET_S6_RKS3_(float* %call, float* %call1, float* nonnull dereferenceable(4) %__value), !dbg !6484
-  ret void, !dbg !6485
+  call void @llvm.dbg.value(metadata float* %__first, metadata !6480, metadata !DIExpression()), !dbg !6483
+  call void @llvm.dbg.value(metadata float* %__last, metadata !6481, metadata !DIExpression()), !dbg !6483
+  call void @llvm.dbg.value(metadata float* %__value, metadata !6482, metadata !DIExpression()), !dbg !6483
+  %call = tail call float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__first), !dbg !6484
+  %call1 = tail call float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__last), !dbg !6485
+  tail call void @_ZSt8__fill_aIPffEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__typeET_S6_RKS3_(float* %call, float* %call1, float* nonnull dereferenceable(4) %__value), !dbg !6486
+  ret void, !dbg !6487
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr float* @_ZSt24__uninitialized_fill_n_aIPfmffET_S1_T0_RKT1_RSaIT2_E(float* %__first, i64 %__n, float* dereferenceable(4) %__x, %"class.std::allocator"* dereferenceable(1)) local_unnamed_addr #18 comdat !dbg !6486 {
+define linkonce_odr float* @_ZSt24__uninitialized_fill_n_aIPfmffET_S1_T0_RKT1_RSaIT2_E(float* %__first, i64 %__n, float* dereferenceable(4) %__x, %"class.std::allocator"* dereferenceable(1)) local_unnamed_addr #18 comdat !dbg !6488 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !6490, metadata !DIExpression()), !dbg !6496
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !6491, metadata !DIExpression()), !dbg !6496
-  call void @llvm.dbg.value(metadata float* %__x, metadata !6492, metadata !DIExpression()), !dbg !6496
-  call void @llvm.dbg.value(metadata %"class.std::allocator"* %0, metadata !6493, metadata !DIExpression()), !dbg !6496
-  %call = tail call float* @_ZSt20uninitialized_fill_nIPfmfET_S1_T0_RKT1_(float* %__first, i64 %__n, float* nonnull dereferenceable(4) %__x), !dbg !6497
-  ret float* %call, !dbg !6498
+  call void @llvm.dbg.value(metadata float* %__first, metadata !6492, metadata !DIExpression()), !dbg !6498
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !6493, metadata !DIExpression()), !dbg !6498
+  call void @llvm.dbg.value(metadata float* %__x, metadata !6494, metadata !DIExpression()), !dbg !6498
+  call void @llvm.dbg.value(metadata %"class.std::allocator"* %0, metadata !6495, metadata !DIExpression()), !dbg !6498
+  %call = tail call float* @_ZSt20uninitialized_fill_nIPfmfET_S1_T0_RKT1_(float* %__first, i64 %__n, float* nonnull dereferenceable(4) %__x), !dbg !6499
+  ret float* %call, !dbg !6500
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr float* @_ZSt18make_move_iteratorIPfESt13move_iteratorIT_ES2_(float* %__i) local_unnamed_addr #18 comdat !dbg !6499 {
+define linkonce_odr float* @_ZSt18make_move_iteratorIPfESt13move_iteratorIT_ES2_(float* %__i) local_unnamed_addr #18 comdat !dbg !6501 {
 entry:
   %retval = alloca %"class.std::move_iterator", align 8
-  call void @llvm.dbg.value(metadata float* %__i, metadata !6501, metadata !DIExpression()), !dbg !6502
-  call void @_ZNSt13move_iteratorIPfEC2ES0_(%"class.std::move_iterator"* nonnull %retval, float* %__i), !dbg !6503
-  %coerce.dive = getelementptr inbounds %"class.std::move_iterator", %"class.std::move_iterator"* %retval, i64 0, i32 0, !dbg !6504
-  %0 = load float*, float** %coerce.dive, align 8, !dbg !6504
-  ret float* %0, !dbg !6504
+  call void @llvm.dbg.value(metadata float* %__i, metadata !6503, metadata !DIExpression()), !dbg !6504
+  call void @_ZNSt13move_iteratorIPfEC2ES0_(%"class.std::move_iterator"* nonnull %retval, float* %__i), !dbg !6505
+  %coerce.dive = getelementptr inbounds %"class.std::move_iterator", %"class.std::move_iterator"* %retval, i64 0, i32 0, !dbg !6506
+  %0 = load float*, float** %coerce.dive, align 8, !dbg !6506
+  ret float* %0, !dbg !6506
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr float* @_ZSt23__copy_move_backward_a2ILb1EPfS0_ET1_T0_S2_S1_(float* %__first, float* %__last, float* %__result) local_unnamed_addr #18 comdat !dbg !6505 {
+define linkonce_odr float* @_ZSt23__copy_move_backward_a2ILb1EPfS0_ET1_T0_S2_S1_(float* %__first, float* %__last, float* %__result) local_unnamed_addr #18 comdat !dbg !6507 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !6507, metadata !DIExpression()), !dbg !6511
-  call void @llvm.dbg.value(metadata float* %__last, metadata !6508, metadata !DIExpression()), !dbg !6511
-  call void @llvm.dbg.value(metadata float* %__result, metadata !6509, metadata !DIExpression()), !dbg !6511
-  %call = tail call float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__first), !dbg !6512
-  %call1 = tail call float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__last), !dbg !6513
-  %call2 = tail call float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__result), !dbg !6514
-  %call3 = tail call float* @_ZSt22__copy_move_backward_aILb1EPfS0_ET1_T0_S2_S1_(float* %call, float* %call1, float* %call2), !dbg !6515
-  ret float* %call3, !dbg !6516
+  call void @llvm.dbg.value(metadata float* %__first, metadata !6509, metadata !DIExpression()), !dbg !6513
+  call void @llvm.dbg.value(metadata float* %__last, metadata !6510, metadata !DIExpression()), !dbg !6513
+  call void @llvm.dbg.value(metadata float* %__result, metadata !6511, metadata !DIExpression()), !dbg !6513
+  %call = tail call float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__first), !dbg !6514
+  %call1 = tail call float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__last), !dbg !6515
+  %call2 = tail call float* @_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_(float* %__result), !dbg !6516
+  %call3 = tail call float* @_ZSt22__copy_move_backward_aILb1EPfS0_ET1_T0_S2_S1_(float* %call, float* %call1, float* %call2), !dbg !6517
+  ret float* %call3, !dbg !6518
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr float* @_ZSt12__miter_baseIPfENSt11_Miter_baseIT_E13iterator_typeES2_(float* %__it) local_unnamed_addr #16 comdat !dbg !6517 {
+define linkonce_odr float* @_ZSt12__miter_baseIPfENSt11_Miter_baseIT_E13iterator_typeES2_(float* %__it) local_unnamed_addr #16 comdat !dbg !6519 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__it, metadata !6519, metadata !DIExpression()), !dbg !6520
-  %call = tail call float* @_ZNSt10_Iter_baseIPfLb0EE7_S_baseES0_(float* %__it), !dbg !6521
-  ret float* %call, !dbg !6522
+  call void @llvm.dbg.value(metadata float* %__it, metadata !6521, metadata !DIExpression()), !dbg !6522
+  %call = tail call float* @_ZNSt10_Iter_baseIPfLb0EE7_S_baseES0_(float* %__it), !dbg !6523
+  ret float* %call, !dbg !6524
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr float* @_ZSt22__copy_move_backward_aILb1EPfS0_ET1_T0_S2_S1_(float* %__first, float* %__last, float* %__result) local_unnamed_addr #18 comdat !dbg !6523 {
+define linkonce_odr float* @_ZSt22__copy_move_backward_aILb1EPfS0_ET1_T0_S2_S1_(float* %__first, float* %__last, float* %__result) local_unnamed_addr #18 comdat !dbg !6525 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !6525, metadata !DIExpression()), !dbg !6529
-  call void @llvm.dbg.value(metadata float* %__last, metadata !6526, metadata !DIExpression()), !dbg !6529
-  call void @llvm.dbg.value(metadata float* %__result, metadata !6527, metadata !DIExpression()), !dbg !6529
-  call void @llvm.dbg.value(metadata i8 1, metadata !6528, metadata !DIExpression()), !dbg !6529
-  %call = tail call float* @_ZNSt20__copy_move_backwardILb1ELb1ESt26random_access_iterator_tagE13__copy_move_bIfEEPT_PKS3_S6_S4_(float* %__first, float* %__last, float* %__result), !dbg !6530
-  ret float* %call, !dbg !6531
+  call void @llvm.dbg.value(metadata float* %__first, metadata !6527, metadata !DIExpression()), !dbg !6531
+  call void @llvm.dbg.value(metadata float* %__last, metadata !6528, metadata !DIExpression()), !dbg !6531
+  call void @llvm.dbg.value(metadata float* %__result, metadata !6529, metadata !DIExpression()), !dbg !6531
+  call void @llvm.dbg.value(metadata i8 1, metadata !6530, metadata !DIExpression()), !dbg !6531
+  %call = tail call float* @_ZNSt20__copy_move_backwardILb1ELb1ESt26random_access_iterator_tagE13__copy_move_bIfEEPT_PKS3_S6_S4_(float* %__first, float* %__last, float* %__result), !dbg !6532
+  ret float* %call, !dbg !6533
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr float* @_ZNSt20__copy_move_backwardILb1ELb1ESt26random_access_iterator_tagE13__copy_move_bIfEEPT_PKS3_S6_S4_(float* %__first, float* %__last, float* %__result) local_unnamed_addr #7 comdat align 2 !dbg !6532 {
+define linkonce_odr float* @_ZNSt20__copy_move_backwardILb1ELb1ESt26random_access_iterator_tagE13__copy_move_bIfEEPT_PKS3_S6_S4_(float* %__first, float* %__last, float* %__result) local_unnamed_addr #7 comdat align 2 !dbg !6534 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !6536, metadata !DIExpression()), !dbg !6540
-  call void @llvm.dbg.value(metadata float* %__last, metadata !6537, metadata !DIExpression()), !dbg !6540
-  call void @llvm.dbg.value(metadata float* %__result, metadata !6538, metadata !DIExpression()), !dbg !6540
-  %sub.ptr.lhs.cast = ptrtoint float* %__last to i64, !dbg !6541
-  %sub.ptr.rhs.cast = ptrtoint float* %__first to i64, !dbg !6541
-  %sub.ptr.sub = sub i64 %sub.ptr.lhs.cast, %sub.ptr.rhs.cast, !dbg !6541
-  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 2, !dbg !6541
-  call void @llvm.dbg.value(metadata i64 %sub.ptr.div, metadata !6539, metadata !DIExpression()), !dbg !6540
-  %tobool = icmp eq i64 %sub.ptr.sub, 0, !dbg !6542
-  br i1 %tobool, label %if.end, label %if.then, !dbg !6544
+  call void @llvm.dbg.value(metadata float* %__first, metadata !6538, metadata !DIExpression()), !dbg !6542
+  call void @llvm.dbg.value(metadata float* %__last, metadata !6539, metadata !DIExpression()), !dbg !6542
+  call void @llvm.dbg.value(metadata float* %__result, metadata !6540, metadata !DIExpression()), !dbg !6542
+  %sub.ptr.lhs.cast = ptrtoint float* %__last to i64, !dbg !6543
+  %sub.ptr.rhs.cast = ptrtoint float* %__first to i64, !dbg !6543
+  %sub.ptr.sub = sub i64 %sub.ptr.lhs.cast, %sub.ptr.rhs.cast, !dbg !6543
+  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 2, !dbg !6543
+  call void @llvm.dbg.value(metadata i64 %sub.ptr.div, metadata !6541, metadata !DIExpression()), !dbg !6542
+  %tobool = icmp eq i64 %sub.ptr.sub, 0, !dbg !6544
+  br i1 %tobool, label %if.end, label %if.then, !dbg !6546
 
 if.then:                                          ; preds = %entry
-  %idx.neg = sub nsw i64 0, %sub.ptr.div, !dbg !6545
-  %add.ptr = getelementptr inbounds float, float* %__result, i64 %idx.neg, !dbg !6545
-  %0 = bitcast float* %add.ptr to i8*, !dbg !6546
-  %1 = bitcast float* %__first to i8*, !dbg !6546
-  tail call void @llvm.memmove.p0i8.p0i8.i64(i8* align 4 %0, i8* align 4 %1, i64 %sub.ptr.sub, i1 false), !dbg !6546
-  br label %if.end, !dbg !6546
+  %idx.neg = sub nsw i64 0, %sub.ptr.div, !dbg !6547
+  %add.ptr = getelementptr inbounds float, float* %__result, i64 %idx.neg, !dbg !6547
+  %0 = bitcast float* %add.ptr to i8*, !dbg !6548
+  %1 = bitcast float* %__first to i8*, !dbg !6548
+  tail call void @llvm.memmove.p0i8.p0i8.i64(i8* align 4 %0, i8* align 4 %1, i64 %sub.ptr.sub, i1 false), !dbg !6548
+  br label %if.end, !dbg !6548
 
 if.end:                                           ; preds = %entry, %if.then
-  %idx.neg1 = sub nsw i64 0, %sub.ptr.div, !dbg !6547
-  %add.ptr2 = getelementptr inbounds float, float* %__result, i64 %idx.neg1, !dbg !6547
-  ret float* %add.ptr2, !dbg !6548
+  %idx.neg1 = sub nsw i64 0, %sub.ptr.div, !dbg !6549
+  %add.ptr2 = getelementptr inbounds float, float* %__result, i64 %idx.neg1, !dbg !6549
+  ret float* %add.ptr2, !dbg !6550
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr void @_ZSt8__fill_aIPffEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__typeET_S6_RKS3_(float* %__first, float* %__last, float* dereferenceable(4) %__value) local_unnamed_addr #16 comdat !dbg !6549 {
+define linkonce_odr void @_ZSt8__fill_aIPffEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__typeET_S6_RKS3_(float* %__first, float* %__last, float* dereferenceable(4) %__value) local_unnamed_addr #16 comdat !dbg !6551 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !6557, metadata !DIExpression()), !dbg !6561
-  call void @llvm.dbg.value(metadata float* %__last, metadata !6558, metadata !DIExpression()), !dbg !6561
-  call void @llvm.dbg.value(metadata float* %__value, metadata !6559, metadata !DIExpression()), !dbg !6561
-  %0 = bitcast float* %__value to i32*, !dbg !6562
-  %1 = load i32, i32* %0, align 4, !dbg !6562, !tbaa !3361
-  call void @llvm.dbg.value(metadata float* %__first, metadata !6557, metadata !DIExpression()), !dbg !6561
-  %cmp4 = icmp eq float* %__first, %__last, !dbg !6563
-  br i1 %cmp4, label %for.end, label %for.body, !dbg !6566
+  call void @llvm.dbg.value(metadata float* %__first, metadata !6559, metadata !DIExpression()), !dbg !6563
+  call void @llvm.dbg.value(metadata float* %__last, metadata !6560, metadata !DIExpression()), !dbg !6563
+  call void @llvm.dbg.value(metadata float* %__value, metadata !6561, metadata !DIExpression()), !dbg !6563
+  %0 = bitcast float* %__value to i32*, !dbg !6564
+  %1 = load i32, i32* %0, align 4, !dbg !6564, !tbaa !3361
+  call void @llvm.dbg.value(metadata float* %__first, metadata !6559, metadata !DIExpression()), !dbg !6563
+  %cmp4 = icmp eq float* %__first, %__last, !dbg !6565
+  br i1 %cmp4, label %for.end, label %for.body, !dbg !6568
 
 for.body:                                         ; preds = %entry, %for.body
   %__first.addr.05 = phi float* [ %incdec.ptr, %for.body ], [ %__first, %entry ]
-  call void @llvm.dbg.value(metadata float* %__first.addr.05, metadata !6557, metadata !DIExpression()), !dbg !6561
-  %2 = bitcast float* %__first.addr.05 to i32*, !dbg !6567
-  store i32 %1, i32* %2, align 4, !dbg !6567, !tbaa !3361
-  %incdec.ptr = getelementptr inbounds float, float* %__first.addr.05, i64 1, !dbg !6568
-  call void @llvm.dbg.value(metadata float* %incdec.ptr, metadata !6557, metadata !DIExpression()), !dbg !6561
-  %cmp = icmp eq float* %incdec.ptr, %__last, !dbg !6563
-  br i1 %cmp, label %for.end, label %for.body, !dbg !6566, !llvm.loop !6569
+  call void @llvm.dbg.value(metadata float* %__first.addr.05, metadata !6559, metadata !DIExpression()), !dbg !6563
+  %2 = bitcast float* %__first.addr.05 to i32*, !dbg !6569
+  store i32 %1, i32* %2, align 4, !dbg !6569, !tbaa !3361
+  %incdec.ptr = getelementptr inbounds float, float* %__first.addr.05, i64 1, !dbg !6570
+  call void @llvm.dbg.value(metadata float* %incdec.ptr, metadata !6559, metadata !DIExpression()), !dbg !6563
+  %cmp = icmp eq float* %incdec.ptr, %__last, !dbg !6565
+  br i1 %cmp, label %for.end, label %for.body, !dbg !6568, !llvm.loop !6571
 
 for.end:                                          ; preds = %for.body, %entry
-  ret void, !dbg !6571
+  ret void, !dbg !6573
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr float* @_ZSt20uninitialized_fill_nIPfmfET_S1_T0_RKT1_(float* %__first, i64 %__n, float* dereferenceable(4) %__x) local_unnamed_addr #18 comdat !dbg !6572 {
+define linkonce_odr float* @_ZSt20uninitialized_fill_nIPfmfET_S1_T0_RKT1_(float* %__first, i64 %__n, float* dereferenceable(4) %__x) local_unnamed_addr #18 comdat !dbg !6574 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !6574, metadata !DIExpression()), !dbg !6578
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !6575, metadata !DIExpression()), !dbg !6578
-  call void @llvm.dbg.value(metadata float* %__x, metadata !6576, metadata !DIExpression()), !dbg !6578
-  call void @llvm.dbg.value(metadata i8 1, metadata !6577, metadata !DIExpression()), !dbg !6578
-  %call = tail call float* @_ZNSt22__uninitialized_fill_nILb1EE15__uninit_fill_nIPfmfEET_S3_T0_RKT1_(float* %__first, i64 %__n, float* nonnull dereferenceable(4) %__x), !dbg !6579
-  ret float* %call, !dbg !6580
+  call void @llvm.dbg.value(metadata float* %__first, metadata !6576, metadata !DIExpression()), !dbg !6580
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !6577, metadata !DIExpression()), !dbg !6580
+  call void @llvm.dbg.value(metadata float* %__x, metadata !6578, metadata !DIExpression()), !dbg !6580
+  call void @llvm.dbg.value(metadata i8 1, metadata !6579, metadata !DIExpression()), !dbg !6580
+  %call = tail call float* @_ZNSt22__uninitialized_fill_nILb1EE15__uninit_fill_nIPfmfEET_S3_T0_RKT1_(float* %__first, i64 %__n, float* nonnull dereferenceable(4) %__x), !dbg !6581
+  ret float* %call, !dbg !6582
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr float* @_ZNSt22__uninitialized_fill_nILb1EE15__uninit_fill_nIPfmfEET_S3_T0_RKT1_(float* %__first, i64 %__n, float* dereferenceable(4) %__x) local_unnamed_addr #0 comdat align 2 !dbg !6581 {
+define linkonce_odr float* @_ZNSt22__uninitialized_fill_nILb1EE15__uninit_fill_nIPfmfEET_S3_T0_RKT1_(float* %__first, i64 %__n, float* dereferenceable(4) %__x) local_unnamed_addr #0 comdat align 2 !dbg !6583 {
 entry:
-  call void @llvm.dbg.value(metadata float* %__first, metadata !6585, metadata !DIExpression()), !dbg !6588
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !6586, metadata !DIExpression()), !dbg !6588
-  call void @llvm.dbg.value(metadata float* %__x, metadata !6587, metadata !DIExpression()), !dbg !6588
-  %call = tail call float* @_ZSt6fill_nIPfmfET_S1_T0_RKT1_(float* %__first, i64 %__n, float* nonnull dereferenceable(4) %__x), !dbg !6589
-  ret float* %call, !dbg !6590
+  call void @llvm.dbg.value(metadata float* %__first, metadata !6587, metadata !DIExpression()), !dbg !6590
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !6588, metadata !DIExpression()), !dbg !6590
+  call void @llvm.dbg.value(metadata float* %__x, metadata !6589, metadata !DIExpression()), !dbg !6590
+  %call = tail call float* @_ZSt6fill_nIPfmfET_S1_T0_RKT1_(float* %__first, i64 %__n, float* nonnull dereferenceable(4) %__x), !dbg !6591
+  ret float* %call, !dbg !6592
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEC2ERKS1_(%"class.__gnu_cxx::__normal_iterator"* %this, float** dereferenceable(8) %__i) unnamed_addr #7 comdat align 2 !dbg !6591 {
+define linkonce_odr void @_ZN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEC2ERKS1_(%"class.__gnu_cxx::__normal_iterator"* %this, float** dereferenceable(8) %__i) unnamed_addr #7 comdat align 2 !dbg !6593 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %this, metadata !6593, metadata !DIExpression()), !dbg !6596
-  call void @llvm.dbg.value(metadata float** %__i, metadata !6595, metadata !DIExpression()), !dbg !6596
-  %0 = bitcast float** %__i to i64*, !dbg !6597
-  %1 = load i64, i64* %0, align 8, !dbg !6597, !tbaa !3171
-  %2 = bitcast %"class.__gnu_cxx::__normal_iterator"* %this to i64*, !dbg !6598
-  store i64 %1, i64* %2, align 8, !dbg !6598, !tbaa !6413
-  ret void, !dbg !6599
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::__normal_iterator"* %this, metadata !6595, metadata !DIExpression()), !dbg !6598
+  call void @llvm.dbg.value(metadata float** %__i, metadata !6597, metadata !DIExpression()), !dbg !6598
+  %0 = bitcast float** %__i to i64*, !dbg !6599
+  %1 = load i64, i64* %0, align 8, !dbg !6599, !tbaa !3171
+  %2 = bitcast %"class.__gnu_cxx::__normal_iterator"* %this to i64*, !dbg !6600
+  store i64 %1, i64* %2, align 8, !dbg !6600, !tbaa !6415
+  ret void, !dbg !6601
 }
 
 ; Function Attrs: nounwind uwtable
-define available_externally void @_ZNSt9basic_iosIcSt11char_traitsIcEEC2Ev(%"class.std::basic_ios"* %this) unnamed_addr #7 align 2 !dbg !6600 {
+define available_externally void @_ZNSt9basic_iosIcSt11char_traitsIcEEC2Ev(%"class.std::basic_ios"* %this) unnamed_addr #7 align 2 !dbg !6602 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::basic_ios"* %this, metadata !6609, metadata !DIExpression()), !dbg !6611
-  %0 = getelementptr inbounds %"class.std::basic_ios", %"class.std::basic_ios"* %this, i64 0, i32 0, !dbg !6612
-  tail call void @_ZNSt8ios_baseC2Ev(%"class.std::ios_base"* %0) #24, !dbg !6613
-  %1 = getelementptr inbounds %"class.std::basic_ios", %"class.std::basic_ios"* %this, i64 0, i32 0, i32 0, !dbg !6612
-  store i32 (...)** bitcast (i8** getelementptr inbounds ({ [4 x i8*] }, { [4 x i8*] }* @_ZTVSt9basic_iosIcSt11char_traitsIcEE, i64 0, inrange i32 0, i64 2) to i32 (...)**), i32 (...)*** %1, align 8, !dbg !6612, !tbaa !3042
-  %_M_tie = getelementptr inbounds %"class.std::basic_ios", %"class.std::basic_ios"* %this, i64 0, i32 1, !dbg !6614
-  store %"class.std::basic_ostream"* null, %"class.std::basic_ostream"** %_M_tie, align 8, !dbg !6614, !tbaa !6615
-  %_M_fill = getelementptr inbounds %"class.std::basic_ios", %"class.std::basic_ios"* %this, i64 0, i32 2, !dbg !6617
-  store i8 0, i8* %_M_fill, align 8, !dbg !6617, !tbaa !6618
-  %_M_fill_init = getelementptr inbounds %"class.std::basic_ios", %"class.std::basic_ios"* %this, i64 0, i32 3, !dbg !6619
-  store i8 0, i8* %_M_fill_init, align 1, !dbg !6619, !tbaa !6620
-  %_M_streambuf = getelementptr inbounds %"class.std::basic_ios", %"class.std::basic_ios"* %this, i64 0, i32 4, !dbg !6621
-  %2 = bitcast %"class.std::basic_streambuf"** %_M_streambuf to i8*, !dbg !6622
-  call void @llvm.memset.p0i8.i64(i8* nonnull align 8 %2, i8 0, i64 32, i1 false), !dbg !6621
-  ret void, !dbg !6622
+  call void @llvm.dbg.value(metadata %"class.std::basic_ios"* %this, metadata !6611, metadata !DIExpression()), !dbg !6613
+  %0 = getelementptr inbounds %"class.std::basic_ios", %"class.std::basic_ios"* %this, i64 0, i32 0, !dbg !6614
+  tail call void @_ZNSt8ios_baseC2Ev(%"class.std::ios_base"* %0) #24, !dbg !6615
+  %1 = getelementptr inbounds %"class.std::basic_ios", %"class.std::basic_ios"* %this, i64 0, i32 0, i32 0, !dbg !6614
+  store i32 (...)** bitcast (i8** getelementptr inbounds ({ [4 x i8*] }, { [4 x i8*] }* @_ZTVSt9basic_iosIcSt11char_traitsIcEE, i64 0, inrange i32 0, i64 2) to i32 (...)**), i32 (...)*** %1, align 8, !dbg !6614, !tbaa !3042
+  %_M_tie = getelementptr inbounds %"class.std::basic_ios", %"class.std::basic_ios"* %this, i64 0, i32 1, !dbg !6616
+  store %"class.std::basic_ostream"* null, %"class.std::basic_ostream"** %_M_tie, align 8, !dbg !6616, !tbaa !6617
+  %_M_fill = getelementptr inbounds %"class.std::basic_ios", %"class.std::basic_ios"* %this, i64 0, i32 2, !dbg !6619
+  store i8 0, i8* %_M_fill, align 8, !dbg !6619, !tbaa !6620
+  %_M_fill_init = getelementptr inbounds %"class.std::basic_ios", %"class.std::basic_ios"* %this, i64 0, i32 3, !dbg !6621
+  store i8 0, i8* %_M_fill_init, align 1, !dbg !6621, !tbaa !6622
+  %_M_streambuf = getelementptr inbounds %"class.std::basic_ios", %"class.std::basic_ios"* %this, i64 0, i32 4, !dbg !6623
+  %2 = bitcast %"class.std::basic_streambuf"** %_M_streambuf to i8*, !dbg !6624
+  call void @llvm.memset.p0i8.i64(i8* nonnull align 8 %2, i8 0, i64 32, i1 false), !dbg !6623
+  ret void, !dbg !6624
 }
 
 ; Function Attrs: uwtable
-define available_externally void @_ZNSdC2EPSt15basic_streambufIcSt11char_traitsIcEE(%"class.std::basic_iostream"* %this, i8** %vtt, %"class.std::basic_streambuf"* %__sb) unnamed_addr #0 align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !6623 {
+define available_externally void @_ZNSdC2EPSt15basic_streambufIcSt11char_traitsIcEE(%"class.std::basic_iostream"* %this, i8** %vtt, %"class.std::basic_streambuf"* %__sb) unnamed_addr #0 align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !6625 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::basic_iostream"* %this, metadata !6635, metadata !DIExpression()), !dbg !6640
-  call void @llvm.dbg.value(metadata i8** %vtt, metadata !6637, metadata !DIExpression()), !dbg !6640
-  call void @llvm.dbg.value(metadata %"class.std::basic_streambuf"* %__sb, metadata !6639, metadata !DIExpression()), !dbg !6640
-  %0 = bitcast %"class.std::basic_iostream"* %this to %"class.std::basic_istream"*, !dbg !6641
-  %1 = getelementptr inbounds i8*, i8** %vtt, i64 1, !dbg !6642
-  tail call void @_ZNSiC2EPSt15basic_streambufIcSt11char_traitsIcEE(%"class.std::basic_istream"* %0, i8** nonnull %1, %"class.std::basic_streambuf"* %__sb), !dbg !6642
-  %2 = getelementptr inbounds %"class.std::basic_iostream", %"class.std::basic_iostream"* %this, i64 0, i32 1, !dbg !6641
-  %3 = bitcast %"class.std::basic_ostream.base"* %2 to %"class.std::basic_ostream"*, !dbg !6641
-  %4 = getelementptr inbounds i8*, i8** %vtt, i64 3, !dbg !6643
+  call void @llvm.dbg.value(metadata %"class.std::basic_iostream"* %this, metadata !6637, metadata !DIExpression()), !dbg !6642
+  call void @llvm.dbg.value(metadata i8** %vtt, metadata !6639, metadata !DIExpression()), !dbg !6642
+  call void @llvm.dbg.value(metadata %"class.std::basic_streambuf"* %__sb, metadata !6641, metadata !DIExpression()), !dbg !6642
+  %0 = bitcast %"class.std::basic_iostream"* %this to %"class.std::basic_istream"*, !dbg !6643
+  %1 = getelementptr inbounds i8*, i8** %vtt, i64 1, !dbg !6644
+  tail call void @_ZNSiC2EPSt15basic_streambufIcSt11char_traitsIcEE(%"class.std::basic_istream"* %0, i8** nonnull %1, %"class.std::basic_streambuf"* %__sb), !dbg !6644
+  %2 = getelementptr inbounds %"class.std::basic_iostream", %"class.std::basic_iostream"* %this, i64 0, i32 1, !dbg !6643
+  %3 = bitcast %"class.std::basic_ostream.base"* %2 to %"class.std::basic_ostream"*, !dbg !6643
+  %4 = getelementptr inbounds i8*, i8** %vtt, i64 3, !dbg !6645
   invoke void @_ZNSoC2EPSt15basic_streambufIcSt11char_traitsIcEE(%"class.std::basic_ostream"* nonnull %3, i8** nonnull %4, %"class.std::basic_streambuf"* %__sb)
-          to label %invoke.cont unwind label %lpad, !dbg !6643
+          to label %invoke.cont unwind label %lpad, !dbg !6645
 
 invoke.cont:                                      ; preds = %entry
-  %5 = bitcast %"class.std::basic_iostream"* %this to i8*, !dbg !6641
-  %6 = bitcast i8** %vtt to i64*, !dbg !6641
-  %7 = load i64, i64* %6, align 8, !dbg !6641
-  %8 = bitcast %"class.std::basic_iostream"* %this to i64*, !dbg !6641
-  store i64 %7, i64* %8, align 8, !dbg !6641, !tbaa !3042
-  %9 = getelementptr inbounds i8*, i8** %vtt, i64 5, !dbg !6641
-  %10 = bitcast i8** %9 to i64*, !dbg !6641
-  %11 = load i64, i64* %10, align 8, !dbg !6641
-  %vtable.cast = inttoptr i64 %7 to i8*, !dbg !6641
-  %vbase.offset.ptr = getelementptr i8, i8* %vtable.cast, i64 -24, !dbg !6641
-  %12 = bitcast i8* %vbase.offset.ptr to i64*, !dbg !6641
-  %vbase.offset = load i64, i64* %12, align 8, !dbg !6641
-  %add.ptr = getelementptr inbounds i8, i8* %5, i64 %vbase.offset, !dbg !6641
-  %13 = bitcast i8* %add.ptr to i64*, !dbg !6641
-  store i64 %11, i64* %13, align 8, !dbg !6641, !tbaa !3042
-  %14 = getelementptr inbounds i8*, i8** %vtt, i64 6, !dbg !6641
-  %15 = bitcast i8** %14 to i64*, !dbg !6641
-  %16 = load i64, i64* %15, align 8, !dbg !6641
-  %17 = bitcast %"class.std::basic_ostream.base"* %2 to i64*, !dbg !6641
-  store i64 %16, i64* %17, align 8, !dbg !6641, !tbaa !3042
-  ret void, !dbg !6644
+  %5 = bitcast %"class.std::basic_iostream"* %this to i8*, !dbg !6643
+  %6 = bitcast i8** %vtt to i64*, !dbg !6643
+  %7 = load i64, i64* %6, align 8, !dbg !6643
+  %8 = bitcast %"class.std::basic_iostream"* %this to i64*, !dbg !6643
+  store i64 %7, i64* %8, align 8, !dbg !6643, !tbaa !3042
+  %9 = getelementptr inbounds i8*, i8** %vtt, i64 5, !dbg !6643
+  %10 = bitcast i8** %9 to i64*, !dbg !6643
+  %11 = load i64, i64* %10, align 8, !dbg !6643
+  %vtable.cast = inttoptr i64 %7 to i8*, !dbg !6643
+  %vbase.offset.ptr = getelementptr i8, i8* %vtable.cast, i64 -24, !dbg !6643
+  %12 = bitcast i8* %vbase.offset.ptr to i64*, !dbg !6643
+  %vbase.offset = load i64, i64* %12, align 8, !dbg !6643
+  %add.ptr = getelementptr inbounds i8, i8* %5, i64 %vbase.offset, !dbg !6643
+  %13 = bitcast i8* %add.ptr to i64*, !dbg !6643
+  store i64 %11, i64* %13, align 8, !dbg !6643, !tbaa !3042
+  %14 = getelementptr inbounds i8*, i8** %vtt, i64 6, !dbg !6643
+  %15 = bitcast i8** %14 to i64*, !dbg !6643
+  %16 = load i64, i64* %15, align 8, !dbg !6643
+  %17 = bitcast %"class.std::basic_ostream.base"* %2 to i64*, !dbg !6643
+  store i64 %16, i64* %17, align 8, !dbg !6643, !tbaa !3042
+  ret void, !dbg !6646
 
 lpad:                                             ; preds = %entry
   %18 = landingpad { i8*, i32 }
-          cleanup, !dbg !6644
-  tail call void @_ZNSiD2Ev(%"class.std::basic_istream"* %0, i8** nonnull %1) #24, !dbg !6645
-  resume { i8*, i32 } %18, !dbg !6645
+          cleanup, !dbg !6646
+  tail call void @_ZNSiD2Ev(%"class.std::basic_istream"* %0, i8** nonnull %1) #24, !dbg !6647
+  resume { i8*, i32 } %18, !dbg !6647
 }
 
 declare void @_ZNSt13basic_filebufIcSt11char_traitsIcEEC1Ev(%"class.std::basic_filebuf"*) unnamed_addr #1
@@ -5952,202 +5954,202 @@ declare void @_ZNSt13basic_filebufIcSt11char_traitsIcEEC1Ev(%"class.std::basic_f
 declare void @_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streambufIcS1_E(%"class.std::basic_ios"*, %"class.std::basic_streambuf"*) local_unnamed_addr #1
 
 ; Function Attrs: uwtable
-define available_externally void @_ZNSt13basic_fstreamIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode(%"class.std::basic_fstream"* %this, %"class.std::__cxx11::basic_string"* dereferenceable(32) %__s, i32 %__mode) local_unnamed_addr #0 align 2 !dbg !6647 {
+define available_externally void @_ZNSt13basic_fstreamIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode(%"class.std::basic_fstream"* %this, %"class.std::__cxx11::basic_string"* dereferenceable(32) %__s, i32 %__mode) local_unnamed_addr #0 align 2 !dbg !6649 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::basic_fstream"* %this, metadata !6650, metadata !DIExpression()), !dbg !6653
-  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %__s, metadata !6651, metadata !DIExpression()), !dbg !6653
-  call void @llvm.dbg.value(metadata i32 %__mode, metadata !6652, metadata !DIExpression()), !dbg !6653
-  %_M_filebuf = getelementptr inbounds %"class.std::basic_fstream", %"class.std::basic_fstream"* %this, i64 0, i32 1, !dbg !6654
-  %call = tail call %"class.std::basic_filebuf"* @_ZNSt13basic_filebufIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode(%"class.std::basic_filebuf"* nonnull %_M_filebuf, %"class.std::__cxx11::basic_string"* nonnull dereferenceable(32) %__s, i32 %__mode), !dbg !6656
-  %tobool = icmp eq %"class.std::basic_filebuf"* %call, null, !dbg !6654
-  %0 = bitcast %"class.std::basic_fstream"* %this to i8**, !dbg !6657
-  %vtable2 = load i8*, i8** %0, align 8, !dbg !6657, !tbaa !3042
-  %vbase.offset.ptr3 = getelementptr i8, i8* %vtable2, i64 -24, !dbg !6657
-  %1 = bitcast i8* %vbase.offset.ptr3 to i64*, !dbg !6657
-  %vbase.offset4 = load i64, i64* %1, align 8, !dbg !6657
-  %2 = bitcast %"class.std::basic_fstream"* %this to i8*, !dbg !6657
-  %add.ptr5 = getelementptr inbounds i8, i8* %2, i64 %vbase.offset4, !dbg !6657
-  %3 = bitcast i8* %add.ptr5 to %"class.std::basic_ios"*, !dbg !6657
-  br i1 %tobool, label %if.then, label %if.else, !dbg !6658
+  call void @llvm.dbg.value(metadata %"class.std::basic_fstream"* %this, metadata !6652, metadata !DIExpression()), !dbg !6655
+  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %__s, metadata !6653, metadata !DIExpression()), !dbg !6655
+  call void @llvm.dbg.value(metadata i32 %__mode, metadata !6654, metadata !DIExpression()), !dbg !6655
+  %_M_filebuf = getelementptr inbounds %"class.std::basic_fstream", %"class.std::basic_fstream"* %this, i64 0, i32 1, !dbg !6656
+  %call = tail call %"class.std::basic_filebuf"* @_ZNSt13basic_filebufIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode(%"class.std::basic_filebuf"* nonnull %_M_filebuf, %"class.std::__cxx11::basic_string"* nonnull dereferenceable(32) %__s, i32 %__mode), !dbg !6658
+  %tobool = icmp eq %"class.std::basic_filebuf"* %call, null, !dbg !6656
+  %0 = bitcast %"class.std::basic_fstream"* %this to i8**, !dbg !6659
+  %vtable2 = load i8*, i8** %0, align 8, !dbg !6659, !tbaa !3042
+  %vbase.offset.ptr3 = getelementptr i8, i8* %vtable2, i64 -24, !dbg !6659
+  %1 = bitcast i8* %vbase.offset.ptr3 to i64*, !dbg !6659
+  %vbase.offset4 = load i64, i64* %1, align 8, !dbg !6659
+  %2 = bitcast %"class.std::basic_fstream"* %this to i8*, !dbg !6659
+  %add.ptr5 = getelementptr inbounds i8, i8* %2, i64 %vbase.offset4, !dbg !6659
+  %3 = bitcast i8* %add.ptr5 to %"class.std::basic_ios"*, !dbg !6659
+  br i1 %tobool, label %if.then, label %if.else, !dbg !6660
 
 if.then:                                          ; preds = %entry
-  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate(%"class.std::basic_ios"* %3, i32 4), !dbg !6659
-  br label %if.end, !dbg !6660
+  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate(%"class.std::basic_ios"* %3, i32 4), !dbg !6661
+  br label %if.end, !dbg !6662
 
 if.else:                                          ; preds = %entry
-  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(%"class.std::basic_ios"* %3, i32 0), !dbg !6661
+  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(%"class.std::basic_ios"* %3, i32 0), !dbg !6663
   br label %if.end
 
 if.end:                                           ; preds = %if.else, %if.then
-  ret void, !dbg !6662
+  ret void, !dbg !6664
 }
 
 ; Function Attrs: nounwind uwtable
-define available_externally void @_ZNSt13basic_filebufIcSt11char_traitsIcEED2Ev(%"class.std::basic_filebuf"* %this) unnamed_addr #7 align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !6663 {
+define available_externally void @_ZNSt13basic_filebufIcSt11char_traitsIcEED2Ev(%"class.std::basic_filebuf"* %this) unnamed_addr #7 align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !6665 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::basic_filebuf"* %this, metadata !6670, metadata !DIExpression()), !dbg !6672
-  %0 = getelementptr inbounds %"class.std::basic_filebuf", %"class.std::basic_filebuf"* %this, i64 0, i32 0, i32 0, !dbg !6673
-  store i32 (...)** bitcast (i8** getelementptr inbounds ({ [16 x i8*] }, { [16 x i8*] }* @_ZTVSt13basic_filebufIcSt11char_traitsIcEE, i64 0, inrange i32 0, i64 2) to i32 (...)**), i32 (...)*** %0, align 8, !dbg !6673, !tbaa !3042
+  call void @llvm.dbg.value(metadata %"class.std::basic_filebuf"* %this, metadata !6672, metadata !DIExpression()), !dbg !6674
+  %0 = getelementptr inbounds %"class.std::basic_filebuf", %"class.std::basic_filebuf"* %this, i64 0, i32 0, i32 0, !dbg !6675
+  store i32 (...)** bitcast (i8** getelementptr inbounds ({ [16 x i8*] }, { [16 x i8*] }* @_ZTVSt13basic_filebufIcSt11char_traitsIcEE, i64 0, inrange i32 0, i64 2) to i32 (...)**), i32 (...)*** %0, align 8, !dbg !6675, !tbaa !3042
   %call = invoke %"class.std::basic_filebuf"* @_ZNSt13basic_filebufIcSt11char_traitsIcEE5closeEv(%"class.std::basic_filebuf"* %this)
-          to label %invoke.cont unwind label %lpad, !dbg !6674
+          to label %invoke.cont unwind label %lpad, !dbg !6676
 
 invoke.cont:                                      ; preds = %entry
-  %_M_file = getelementptr inbounds %"class.std::basic_filebuf", %"class.std::basic_filebuf"* %this, i64 0, i32 2, !dbg !6676
-  tail call void @_ZNSt12__basic_fileIcED1Ev(%"class.std::__basic_file"* nonnull %_M_file) #24, !dbg !6676
-  %1 = getelementptr inbounds %"class.std::basic_filebuf", %"class.std::basic_filebuf"* %this, i64 0, i32 0, !dbg !6676
-  tail call void @_ZNSt15basic_streambufIcSt11char_traitsIcEED2Ev(%"class.std::basic_streambuf"* %1) #24, !dbg !6676
-  ret void, !dbg !6677
+  %_M_file = getelementptr inbounds %"class.std::basic_filebuf", %"class.std::basic_filebuf"* %this, i64 0, i32 2, !dbg !6678
+  tail call void @_ZNSt12__basic_fileIcED1Ev(%"class.std::__basic_file"* nonnull %_M_file) #24, !dbg !6678
+  %1 = getelementptr inbounds %"class.std::basic_filebuf", %"class.std::basic_filebuf"* %this, i64 0, i32 0, !dbg !6678
+  tail call void @_ZNSt15basic_streambufIcSt11char_traitsIcEED2Ev(%"class.std::basic_streambuf"* %1) #24, !dbg !6678
+  ret void, !dbg !6679
 
 lpad:                                             ; preds = %entry
   %2 = landingpad { i8*, i32 }
-          filter [0 x i8*] zeroinitializer, !dbg !6676
-  %3 = extractvalue { i8*, i32 } %2, 0, !dbg !6676
-  %_M_file2 = getelementptr inbounds %"class.std::basic_filebuf", %"class.std::basic_filebuf"* %this, i64 0, i32 2, !dbg !6676
-  tail call void @_ZNSt12__basic_fileIcED1Ev(%"class.std::__basic_file"* nonnull %_M_file2) #24, !dbg !6676
-  %4 = getelementptr inbounds %"class.std::basic_filebuf", %"class.std::basic_filebuf"* %this, i64 0, i32 0, !dbg !6676
-  tail call void @_ZNSt15basic_streambufIcSt11char_traitsIcEED2Ev(%"class.std::basic_streambuf"* %4) #24, !dbg !6676
-  tail call void @__cxa_call_unexpected(i8* %3) #25, !dbg !6677
-  unreachable, !dbg !6677
+          filter [0 x i8*] zeroinitializer, !dbg !6678
+  %3 = extractvalue { i8*, i32 } %2, 0, !dbg !6678
+  %_M_file2 = getelementptr inbounds %"class.std::basic_filebuf", %"class.std::basic_filebuf"* %this, i64 0, i32 2, !dbg !6678
+  tail call void @_ZNSt12__basic_fileIcED1Ev(%"class.std::__basic_file"* nonnull %_M_file2) #24, !dbg !6678
+  %4 = getelementptr inbounds %"class.std::basic_filebuf", %"class.std::basic_filebuf"* %this, i64 0, i32 0, !dbg !6678
+  tail call void @_ZNSt15basic_streambufIcSt11char_traitsIcEED2Ev(%"class.std::basic_streambuf"* %4) #24, !dbg !6678
+  tail call void @__cxa_call_unexpected(i8* %3) #25, !dbg !6679
+  unreachable, !dbg !6679
 }
 
 ; Function Attrs: nounwind uwtable
-define available_externally void @_ZNSdD2Ev(%"class.std::basic_iostream"* %this, i8** %vtt) unnamed_addr #7 align 2 !dbg !6678 {
+define available_externally void @_ZNSdD2Ev(%"class.std::basic_iostream"* %this, i8** %vtt) unnamed_addr #7 align 2 !dbg !6680 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::basic_iostream"* %this, metadata !6683, metadata !DIExpression()), !dbg !6685
-  call void @llvm.dbg.value(metadata i8** %vtt, metadata !6684, metadata !DIExpression()), !dbg !6685
-  %0 = getelementptr inbounds %"class.std::basic_iostream", %"class.std::basic_iostream"* %this, i64 0, i32 1, !dbg !6686
-  %1 = bitcast %"class.std::basic_ostream.base"* %0 to %"class.std::basic_ostream"*, !dbg !6686
-  %2 = getelementptr inbounds i8*, i8** %vtt, i64 3, !dbg !6686
-  tail call void @_ZNSoD2Ev(%"class.std::basic_ostream"* nonnull %1, i8** nonnull %2) #24, !dbg !6686
-  %3 = bitcast %"class.std::basic_iostream"* %this to %"class.std::basic_istream"*, !dbg !6686
-  %4 = getelementptr inbounds i8*, i8** %vtt, i64 1, !dbg !6686
-  tail call void @_ZNSiD2Ev(%"class.std::basic_istream"* %3, i8** nonnull %4) #24, !dbg !6686
-  ret void, !dbg !6688
+  call void @llvm.dbg.value(metadata %"class.std::basic_iostream"* %this, metadata !6685, metadata !DIExpression()), !dbg !6687
+  call void @llvm.dbg.value(metadata i8** %vtt, metadata !6686, metadata !DIExpression()), !dbg !6687
+  %0 = getelementptr inbounds %"class.std::basic_iostream", %"class.std::basic_iostream"* %this, i64 0, i32 1, !dbg !6688
+  %1 = bitcast %"class.std::basic_ostream.base"* %0 to %"class.std::basic_ostream"*, !dbg !6688
+  %2 = getelementptr inbounds i8*, i8** %vtt, i64 3, !dbg !6688
+  tail call void @_ZNSoD2Ev(%"class.std::basic_ostream"* nonnull %1, i8** nonnull %2) #24, !dbg !6688
+  %3 = bitcast %"class.std::basic_iostream"* %this to %"class.std::basic_istream"*, !dbg !6688
+  %4 = getelementptr inbounds i8*, i8** %vtt, i64 1, !dbg !6688
+  tail call void @_ZNSiD2Ev(%"class.std::basic_istream"* %3, i8** nonnull %4) #24, !dbg !6688
+  ret void, !dbg !6690
 }
 
 ; Function Attrs: nounwind uwtable
-define available_externally void @_ZNSt9basic_iosIcSt11char_traitsIcEED2Ev(%"class.std::basic_ios"* %this) unnamed_addr #7 align 2 !dbg !6689 {
+define available_externally void @_ZNSt9basic_iosIcSt11char_traitsIcEED2Ev(%"class.std::basic_ios"* %this) unnamed_addr #7 align 2 !dbg !6691 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::basic_ios"* %this, metadata !6692, metadata !DIExpression()), !dbg !6693
-  %0 = getelementptr inbounds %"class.std::basic_ios", %"class.std::basic_ios"* %this, i64 0, i32 0, !dbg !6694
-  tail call void @_ZNSt8ios_baseD2Ev(%"class.std::ios_base"* %0) #24, !dbg !6694
-  ret void, !dbg !6696
+  call void @llvm.dbg.value(metadata %"class.std::basic_ios"* %this, metadata !6694, metadata !DIExpression()), !dbg !6695
+  %0 = getelementptr inbounds %"class.std::basic_ios", %"class.std::basic_ios"* %this, i64 0, i32 0, !dbg !6696
+  tail call void @_ZNSt8ios_baseD2Ev(%"class.std::ios_base"* %0) #24, !dbg !6696
+  ret void, !dbg !6698
 }
 
 ; Function Attrs: nounwind
 declare void @_ZNSt8ios_baseC2Ev(%"class.std::ios_base"*) unnamed_addr #2
 
 ; Function Attrs: uwtable
-define available_externally void @_ZNSiC2EPSt15basic_streambufIcSt11char_traitsIcEE(%"class.std::basic_istream"* %this, i8** %vtt, %"class.std::basic_streambuf"* %__sb) unnamed_addr #0 align 2 !dbg !6697 {
+define available_externally void @_ZNSiC2EPSt15basic_streambufIcSt11char_traitsIcEE(%"class.std::basic_istream"* %this, i8** %vtt, %"class.std::basic_streambuf"* %__sb) unnamed_addr #0 align 2 !dbg !6699 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::basic_istream"* %this, metadata !6706, metadata !DIExpression()), !dbg !6710
-  call void @llvm.dbg.value(metadata i8** %vtt, metadata !6708, metadata !DIExpression()), !dbg !6710
-  call void @llvm.dbg.value(metadata %"class.std::basic_streambuf"* %__sb, metadata !6709, metadata !DIExpression()), !dbg !6710
-  %0 = bitcast i8** %vtt to i64*, !dbg !6711
-  %1 = load i64, i64* %0, align 8, !dbg !6711
-  %2 = bitcast %"class.std::basic_istream"* %this to i64*, !dbg !6711
-  store i64 %1, i64* %2, align 8, !dbg !6711, !tbaa !3042
-  %3 = getelementptr inbounds i8*, i8** %vtt, i64 1, !dbg !6711
-  %4 = bitcast i8** %3 to i64*, !dbg !6711
-  %5 = load i64, i64* %4, align 8, !dbg !6711
-  %6 = bitcast %"class.std::basic_istream"* %this to i8**, !dbg !6711
-  %vtable.cast = inttoptr i64 %1 to i8*, !dbg !6711
-  %vbase.offset.ptr = getelementptr i8, i8* %vtable.cast, i64 -24, !dbg !6711
-  %7 = bitcast i8* %vbase.offset.ptr to i64*, !dbg !6711
-  %vbase.offset = load i64, i64* %7, align 8, !dbg !6711
-  %8 = bitcast %"class.std::basic_istream"* %this to i8*, !dbg !6711
-  %add.ptr = getelementptr inbounds i8, i8* %8, i64 %vbase.offset, !dbg !6711
-  %9 = bitcast i8* %add.ptr to i64*, !dbg !6711
-  store i64 %5, i64* %9, align 8, !dbg !6711, !tbaa !3042
-  %_M_gcount = getelementptr inbounds %"class.std::basic_istream", %"class.std::basic_istream"* %this, i64 0, i32 1, !dbg !6712
-  store i64 0, i64* %_M_gcount, align 8, !dbg !6712, !tbaa !6713
-  %vtable3 = load i8*, i8** %6, align 8, !dbg !6715, !tbaa !3042
-  %vbase.offset.ptr4 = getelementptr i8, i8* %vtable3, i64 -24, !dbg !6715
-  %10 = bitcast i8* %vbase.offset.ptr4 to i64*, !dbg !6715
-  %vbase.offset5 = load i64, i64* %10, align 8, !dbg !6715
-  %add.ptr6 = getelementptr inbounds i8, i8* %8, i64 %vbase.offset5, !dbg !6715
-  %11 = bitcast i8* %add.ptr6 to %"class.std::basic_ios"*, !dbg !6715
-  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streambufIcS1_E(%"class.std::basic_ios"* %11, %"class.std::basic_streambuf"* %__sb), !dbg !6715
-  ret void, !dbg !6717
+  call void @llvm.dbg.value(metadata %"class.std::basic_istream"* %this, metadata !6708, metadata !DIExpression()), !dbg !6712
+  call void @llvm.dbg.value(metadata i8** %vtt, metadata !6710, metadata !DIExpression()), !dbg !6712
+  call void @llvm.dbg.value(metadata %"class.std::basic_streambuf"* %__sb, metadata !6711, metadata !DIExpression()), !dbg !6712
+  %0 = bitcast i8** %vtt to i64*, !dbg !6713
+  %1 = load i64, i64* %0, align 8, !dbg !6713
+  %2 = bitcast %"class.std::basic_istream"* %this to i64*, !dbg !6713
+  store i64 %1, i64* %2, align 8, !dbg !6713, !tbaa !3042
+  %3 = getelementptr inbounds i8*, i8** %vtt, i64 1, !dbg !6713
+  %4 = bitcast i8** %3 to i64*, !dbg !6713
+  %5 = load i64, i64* %4, align 8, !dbg !6713
+  %6 = bitcast %"class.std::basic_istream"* %this to i8**, !dbg !6713
+  %vtable.cast = inttoptr i64 %1 to i8*, !dbg !6713
+  %vbase.offset.ptr = getelementptr i8, i8* %vtable.cast, i64 -24, !dbg !6713
+  %7 = bitcast i8* %vbase.offset.ptr to i64*, !dbg !6713
+  %vbase.offset = load i64, i64* %7, align 8, !dbg !6713
+  %8 = bitcast %"class.std::basic_istream"* %this to i8*, !dbg !6713
+  %add.ptr = getelementptr inbounds i8, i8* %8, i64 %vbase.offset, !dbg !6713
+  %9 = bitcast i8* %add.ptr to i64*, !dbg !6713
+  store i64 %5, i64* %9, align 8, !dbg !6713, !tbaa !3042
+  %_M_gcount = getelementptr inbounds %"class.std::basic_istream", %"class.std::basic_istream"* %this, i64 0, i32 1, !dbg !6714
+  store i64 0, i64* %_M_gcount, align 8, !dbg !6714, !tbaa !6715
+  %vtable3 = load i8*, i8** %6, align 8, !dbg !6717, !tbaa !3042
+  %vbase.offset.ptr4 = getelementptr i8, i8* %vtable3, i64 -24, !dbg !6717
+  %10 = bitcast i8* %vbase.offset.ptr4 to i64*, !dbg !6717
+  %vbase.offset5 = load i64, i64* %10, align 8, !dbg !6717
+  %add.ptr6 = getelementptr inbounds i8, i8* %8, i64 %vbase.offset5, !dbg !6717
+  %11 = bitcast i8* %add.ptr6 to %"class.std::basic_ios"*, !dbg !6717
+  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streambufIcS1_E(%"class.std::basic_ios"* %11, %"class.std::basic_streambuf"* %__sb), !dbg !6717
+  ret void, !dbg !6719
 }
 
 ; Function Attrs: uwtable
-define available_externally void @_ZNSoC2EPSt15basic_streambufIcSt11char_traitsIcEE(%"class.std::basic_ostream"* %this, i8** %vtt, %"class.std::basic_streambuf"* %__sb) unnamed_addr #0 align 2 !dbg !6718 {
+define available_externally void @_ZNSoC2EPSt15basic_streambufIcSt11char_traitsIcEE(%"class.std::basic_ostream"* %this, i8** %vtt, %"class.std::basic_streambuf"* %__sb) unnamed_addr #0 align 2 !dbg !6720 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::basic_ostream"* %this, metadata !6726, metadata !DIExpression()), !dbg !6730
-  call void @llvm.dbg.value(metadata i8** %vtt, metadata !6728, metadata !DIExpression()), !dbg !6730
-  call void @llvm.dbg.value(metadata %"class.std::basic_streambuf"* %__sb, metadata !6729, metadata !DIExpression()), !dbg !6730
-  %0 = bitcast i8** %vtt to i64*, !dbg !6731
-  %1 = load i64, i64* %0, align 8, !dbg !6731
-  %2 = bitcast %"class.std::basic_ostream"* %this to i64*, !dbg !6731
-  store i64 %1, i64* %2, align 8, !dbg !6731, !tbaa !3042
-  %3 = getelementptr inbounds i8*, i8** %vtt, i64 1, !dbg !6731
-  %4 = bitcast i8** %3 to i64*, !dbg !6731
-  %5 = load i64, i64* %4, align 8, !dbg !6731
-  %6 = bitcast %"class.std::basic_ostream"* %this to i8**, !dbg !6731
-  %vtable.cast = inttoptr i64 %1 to i8*, !dbg !6731
-  %vbase.offset.ptr = getelementptr i8, i8* %vtable.cast, i64 -24, !dbg !6731
-  %7 = bitcast i8* %vbase.offset.ptr to i64*, !dbg !6731
-  %vbase.offset = load i64, i64* %7, align 8, !dbg !6731
-  %8 = bitcast %"class.std::basic_ostream"* %this to i8*, !dbg !6731
-  %add.ptr = getelementptr inbounds i8, i8* %8, i64 %vbase.offset, !dbg !6731
-  %9 = bitcast i8* %add.ptr to i64*, !dbg !6731
-  store i64 %5, i64* %9, align 8, !dbg !6731, !tbaa !3042
-  %vtable3 = load i8*, i8** %6, align 8, !dbg !6732, !tbaa !3042
-  %vbase.offset.ptr4 = getelementptr i8, i8* %vtable3, i64 -24, !dbg !6732
-  %10 = bitcast i8* %vbase.offset.ptr4 to i64*, !dbg !6732
-  %vbase.offset5 = load i64, i64* %10, align 8, !dbg !6732
-  %add.ptr6 = getelementptr inbounds i8, i8* %8, i64 %vbase.offset5, !dbg !6732
-  %11 = bitcast i8* %add.ptr6 to %"class.std::basic_ios"*, !dbg !6732
-  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streambufIcS1_E(%"class.std::basic_ios"* %11, %"class.std::basic_streambuf"* %__sb), !dbg !6732
-  ret void, !dbg !6734
+  call void @llvm.dbg.value(metadata %"class.std::basic_ostream"* %this, metadata !6728, metadata !DIExpression()), !dbg !6732
+  call void @llvm.dbg.value(metadata i8** %vtt, metadata !6730, metadata !DIExpression()), !dbg !6732
+  call void @llvm.dbg.value(metadata %"class.std::basic_streambuf"* %__sb, metadata !6731, metadata !DIExpression()), !dbg !6732
+  %0 = bitcast i8** %vtt to i64*, !dbg !6733
+  %1 = load i64, i64* %0, align 8, !dbg !6733
+  %2 = bitcast %"class.std::basic_ostream"* %this to i64*, !dbg !6733
+  store i64 %1, i64* %2, align 8, !dbg !6733, !tbaa !3042
+  %3 = getelementptr inbounds i8*, i8** %vtt, i64 1, !dbg !6733
+  %4 = bitcast i8** %3 to i64*, !dbg !6733
+  %5 = load i64, i64* %4, align 8, !dbg !6733
+  %6 = bitcast %"class.std::basic_ostream"* %this to i8**, !dbg !6733
+  %vtable.cast = inttoptr i64 %1 to i8*, !dbg !6733
+  %vbase.offset.ptr = getelementptr i8, i8* %vtable.cast, i64 -24, !dbg !6733
+  %7 = bitcast i8* %vbase.offset.ptr to i64*, !dbg !6733
+  %vbase.offset = load i64, i64* %7, align 8, !dbg !6733
+  %8 = bitcast %"class.std::basic_ostream"* %this to i8*, !dbg !6733
+  %add.ptr = getelementptr inbounds i8, i8* %8, i64 %vbase.offset, !dbg !6733
+  %9 = bitcast i8* %add.ptr to i64*, !dbg !6733
+  store i64 %5, i64* %9, align 8, !dbg !6733, !tbaa !3042
+  %vtable3 = load i8*, i8** %6, align 8, !dbg !6734, !tbaa !3042
+  %vbase.offset.ptr4 = getelementptr i8, i8* %vtable3, i64 -24, !dbg !6734
+  %10 = bitcast i8* %vbase.offset.ptr4 to i64*, !dbg !6734
+  %vbase.offset5 = load i64, i64* %10, align 8, !dbg !6734
+  %add.ptr6 = getelementptr inbounds i8, i8* %8, i64 %vbase.offset5, !dbg !6734
+  %11 = bitcast i8* %add.ptr6 to %"class.std::basic_ios"*, !dbg !6734
+  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streambufIcS1_E(%"class.std::basic_ios"* %11, %"class.std::basic_streambuf"* %__sb), !dbg !6734
+  ret void, !dbg !6736
 }
 
 ; Function Attrs: nounwind uwtable
-define available_externally void @_ZNSiD2Ev(%"class.std::basic_istream"* %this, i8** %vtt) unnamed_addr #7 align 2 !dbg !6735 {
+define available_externally void @_ZNSiD2Ev(%"class.std::basic_istream"* %this, i8** %vtt) unnamed_addr #7 align 2 !dbg !6737 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::basic_istream"* %this, metadata !6740, metadata !DIExpression()), !dbg !6742
-  call void @llvm.dbg.value(metadata i8** %vtt, metadata !6741, metadata !DIExpression()), !dbg !6742
-  %0 = bitcast i8** %vtt to i64*, !dbg !6743
-  %1 = load i64, i64* %0, align 8, !dbg !6743
-  %2 = bitcast %"class.std::basic_istream"* %this to i64*, !dbg !6743
-  store i64 %1, i64* %2, align 8, !dbg !6743, !tbaa !3042
-  %3 = getelementptr inbounds i8*, i8** %vtt, i64 1, !dbg !6743
-  %4 = bitcast i8** %3 to i64*, !dbg !6743
-  %5 = load i64, i64* %4, align 8, !dbg !6743
-  %vtable.cast = inttoptr i64 %1 to i8*, !dbg !6743
-  %vbase.offset.ptr = getelementptr i8, i8* %vtable.cast, i64 -24, !dbg !6743
-  %6 = bitcast i8* %vbase.offset.ptr to i64*, !dbg !6743
-  %vbase.offset = load i64, i64* %6, align 8, !dbg !6743
-  %7 = bitcast %"class.std::basic_istream"* %this to i8*, !dbg !6743
-  %add.ptr = getelementptr inbounds i8, i8* %7, i64 %vbase.offset, !dbg !6743
-  %8 = bitcast i8* %add.ptr to i64*, !dbg !6743
-  store i64 %5, i64* %8, align 8, !dbg !6743, !tbaa !3042
-  %_M_gcount = getelementptr inbounds %"class.std::basic_istream", %"class.std::basic_istream"* %this, i64 0, i32 1, !dbg !6744
-  store i64 0, i64* %_M_gcount, align 8, !dbg !6746, !tbaa !6713
-  ret void, !dbg !6747
+  call void @llvm.dbg.value(metadata %"class.std::basic_istream"* %this, metadata !6742, metadata !DIExpression()), !dbg !6744
+  call void @llvm.dbg.value(metadata i8** %vtt, metadata !6743, metadata !DIExpression()), !dbg !6744
+  %0 = bitcast i8** %vtt to i64*, !dbg !6745
+  %1 = load i64, i64* %0, align 8, !dbg !6745
+  %2 = bitcast %"class.std::basic_istream"* %this to i64*, !dbg !6745
+  store i64 %1, i64* %2, align 8, !dbg !6745, !tbaa !3042
+  %3 = getelementptr inbounds i8*, i8** %vtt, i64 1, !dbg !6745
+  %4 = bitcast i8** %3 to i64*, !dbg !6745
+  %5 = load i64, i64* %4, align 8, !dbg !6745
+  %vtable.cast = inttoptr i64 %1 to i8*, !dbg !6745
+  %vbase.offset.ptr = getelementptr i8, i8* %vtable.cast, i64 -24, !dbg !6745
+  %6 = bitcast i8* %vbase.offset.ptr to i64*, !dbg !6745
+  %vbase.offset = load i64, i64* %6, align 8, !dbg !6745
+  %7 = bitcast %"class.std::basic_istream"* %this to i8*, !dbg !6745
+  %add.ptr = getelementptr inbounds i8, i8* %7, i64 %vbase.offset, !dbg !6745
+  %8 = bitcast i8* %add.ptr to i64*, !dbg !6745
+  store i64 %5, i64* %8, align 8, !dbg !6745, !tbaa !3042
+  %_M_gcount = getelementptr inbounds %"class.std::basic_istream", %"class.std::basic_istream"* %this, i64 0, i32 1, !dbg !6746
+  store i64 0, i64* %_M_gcount, align 8, !dbg !6748, !tbaa !6715
+  ret void, !dbg !6749
 }
 
 ; Function Attrs: uwtable
-define available_externally %"class.std::basic_filebuf"* @_ZNSt13basic_filebufIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode(%"class.std::basic_filebuf"* %this, %"class.std::__cxx11::basic_string"* dereferenceable(32) %__s, i32 %__mode) local_unnamed_addr #0 align 2 !dbg !6748 {
+define available_externally %"class.std::basic_filebuf"* @_ZNSt13basic_filebufIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode(%"class.std::basic_filebuf"* %this, %"class.std::__cxx11::basic_string"* dereferenceable(32) %__s, i32 %__mode) local_unnamed_addr #0 align 2 !dbg !6750 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::basic_filebuf"* %this, metadata !6755, metadata !DIExpression()), !dbg !6758
-  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %__s, metadata !6756, metadata !DIExpression()), !dbg !6758
-  call void @llvm.dbg.value(metadata i32 %__mode, metadata !6757, metadata !DIExpression()), !dbg !6758
-  %call = tail call i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5c_strEv(%"class.std::__cxx11::basic_string"* nonnull %__s) #24, !dbg !6759
-  %call2 = tail call %"class.std::basic_filebuf"* @_ZNSt13basic_filebufIcSt11char_traitsIcEE4openEPKcSt13_Ios_Openmode(%"class.std::basic_filebuf"* %this, i8* %call, i32 %__mode), !dbg !6760
-  ret %"class.std::basic_filebuf"* %call2, !dbg !6761
+  call void @llvm.dbg.value(metadata %"class.std::basic_filebuf"* %this, metadata !6757, metadata !DIExpression()), !dbg !6760
+  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %__s, metadata !6758, metadata !DIExpression()), !dbg !6760
+  call void @llvm.dbg.value(metadata i32 %__mode, metadata !6759, metadata !DIExpression()), !dbg !6760
+  %call = tail call i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5c_strEv(%"class.std::__cxx11::basic_string"* nonnull %__s) #24, !dbg !6761
+  %call2 = tail call %"class.std::basic_filebuf"* @_ZNSt13basic_filebufIcSt11char_traitsIcEE4openEPKcSt13_Ios_Openmode(%"class.std::basic_filebuf"* %this, i8* %call, i32 %__mode), !dbg !6762
+  ret %"class.std::basic_filebuf"* %call2, !dbg !6763
 }
 
 ; Function Attrs: uwtable
-define available_externally void @_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate(%"class.std::basic_ios"* %this, i32 %__state) local_unnamed_addr #0 align 2 !dbg !6762 {
+define available_externally void @_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate(%"class.std::basic_ios"* %this, i32 %__state) local_unnamed_addr #0 align 2 !dbg !6764 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::basic_ios"* %this, metadata !6768, metadata !DIExpression()), !dbg !6770
-  call void @llvm.dbg.value(metadata i32 %__state, metadata !6769, metadata !DIExpression()), !dbg !6770
-  %call = tail call i32 @_ZNKSt9basic_iosIcSt11char_traitsIcEE7rdstateEv(%"class.std::basic_ios"* %this), !dbg !6771
-  %call2 = tail call i32 @_ZStorSt12_Ios_IostateS_(i32 %call, i32 %__state), !dbg !6772
-  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(%"class.std::basic_ios"* %this, i32 %call2), !dbg !6773
-  ret void, !dbg !6774
+  call void @llvm.dbg.value(metadata %"class.std::basic_ios"* %this, metadata !6770, metadata !DIExpression()), !dbg !6772
+  call void @llvm.dbg.value(metadata i32 %__state, metadata !6771, metadata !DIExpression()), !dbg !6772
+  %call = tail call i32 @_ZNKSt9basic_iosIcSt11char_traitsIcEE7rdstateEv(%"class.std::basic_ios"* %this), !dbg !6773
+  %call2 = tail call i32 @_ZStorSt12_Ios_IostateS_(i32 %call, i32 %__state), !dbg !6774
+  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(%"class.std::basic_ios"* %this, i32 %call2), !dbg !6775
+  ret void, !dbg !6776
 }
 
 declare void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(%"class.std::basic_ios"*, i32) local_unnamed_addr #1
@@ -6155,29 +6157,29 @@ declare void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(%"clas
 declare %"class.std::basic_filebuf"* @_ZNSt13basic_filebufIcSt11char_traitsIcEE4openEPKcSt13_Ios_Openmode(%"class.std::basic_filebuf"*, i8*, i32) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define available_externally i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5c_strEv(%"class.std::__cxx11::basic_string"* %this) local_unnamed_addr #7 align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !6775 {
+define available_externally i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5c_strEv(%"class.std::__cxx11::basic_string"* %this) local_unnamed_addr #7 align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !6777 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !6780, metadata !DIExpression()), !dbg !6781
-  %call = tail call i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEv(%"class.std::__cxx11::basic_string"* %this), !dbg !6782
-  ret i8* %call, !dbg !6783
+  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !6782, metadata !DIExpression()), !dbg !6783
+  %call = tail call i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEv(%"class.std::__cxx11::basic_string"* %this), !dbg !6784
+  ret i8* %call, !dbg !6785
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr i32 @_ZStorSt12_Ios_IostateS_(i32 %__a, i32 %__b) local_unnamed_addr #16 comdat !dbg !6784 {
+define linkonce_odr i32 @_ZStorSt12_Ios_IostateS_(i32 %__a, i32 %__b) local_unnamed_addr #16 comdat !dbg !6786 {
 entry:
-  call void @llvm.dbg.value(metadata i32 %__a, metadata !6788, metadata !DIExpression()), !dbg !6790
-  call void @llvm.dbg.value(metadata i32 %__b, metadata !6789, metadata !DIExpression()), !dbg !6790
-  %or = or i32 %__b, %__a, !dbg !6791
-  ret i32 %or, !dbg !6792
+  call void @llvm.dbg.value(metadata i32 %__a, metadata !6790, metadata !DIExpression()), !dbg !6792
+  call void @llvm.dbg.value(metadata i32 %__b, metadata !6791, metadata !DIExpression()), !dbg !6792
+  %or = or i32 %__b, %__a, !dbg !6793
+  ret i32 %or, !dbg !6794
 }
 
 ; Function Attrs: nounwind uwtable
-define available_externally i32 @_ZNKSt9basic_iosIcSt11char_traitsIcEE7rdstateEv(%"class.std::basic_ios"* %this) local_unnamed_addr #7 align 2 !dbg !6793 {
+define available_externally i32 @_ZNKSt9basic_iosIcSt11char_traitsIcEE7rdstateEv(%"class.std::basic_ios"* %this) local_unnamed_addr #7 align 2 !dbg !6795 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::basic_ios"* %this, metadata !6800, metadata !DIExpression()), !dbg !6802
-  %_M_streambuf_state = getelementptr inbounds %"class.std::basic_ios", %"class.std::basic_ios"* %this, i64 0, i32 0, i32 5, !dbg !6803
-  %0 = load i32, i32* %_M_streambuf_state, align 8, !dbg !6803, !tbaa !6804
-  ret i32 %0, !dbg !6810
+  call void @llvm.dbg.value(metadata %"class.std::basic_ios"* %this, metadata !6802, metadata !DIExpression()), !dbg !6804
+  %_M_streambuf_state = getelementptr inbounds %"class.std::basic_ios", %"class.std::basic_ios"* %this, i64 0, i32 0, i32 5, !dbg !6805
+  %0 = load i32, i32* %_M_streambuf_state, align 8, !dbg !6805, !tbaa !6806
+  ret i32 %0, !dbg !6812
 }
 
 declare %"class.std::basic_filebuf"* @_ZNSt13basic_filebufIcSt11char_traitsIcEE5closeEv(%"class.std::basic_filebuf"*) local_unnamed_addr #1
@@ -6186,965 +6188,965 @@ declare %"class.std::basic_filebuf"* @_ZNSt13basic_filebufIcSt11char_traitsIcEE5
 declare void @_ZNSt12__basic_fileIcED1Ev(%"class.std::__basic_file"*) unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define available_externally void @_ZNSt15basic_streambufIcSt11char_traitsIcEED2Ev(%"class.std::basic_streambuf"* %this) unnamed_addr #7 align 2 !dbg !6811 {
+define available_externally void @_ZNSt15basic_streambufIcSt11char_traitsIcEED2Ev(%"class.std::basic_streambuf"* %this) unnamed_addr #7 align 2 !dbg !6813 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::basic_streambuf"* %this, metadata !6818, metadata !DIExpression()), !dbg !6819
-  %0 = getelementptr inbounds %"class.std::basic_streambuf", %"class.std::basic_streambuf"* %this, i64 0, i32 0, !dbg !6820
-  store i32 (...)** bitcast (i8** getelementptr inbounds ({ [16 x i8*] }, { [16 x i8*] }* @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 0, inrange i32 0, i64 2) to i32 (...)**), i32 (...)*** %0, align 8, !dbg !6820, !tbaa !3042
-  %_M_buf_locale = getelementptr inbounds %"class.std::basic_streambuf", %"class.std::basic_streambuf"* %this, i64 0, i32 7, !dbg !6821
-  tail call void @_ZNSt6localeD1Ev(%"class.std::locale"* nonnull %_M_buf_locale) #24, !dbg !6821
-  ret void, !dbg !6823
+  call void @llvm.dbg.value(metadata %"class.std::basic_streambuf"* %this, metadata !6820, metadata !DIExpression()), !dbg !6821
+  %0 = getelementptr inbounds %"class.std::basic_streambuf", %"class.std::basic_streambuf"* %this, i64 0, i32 0, !dbg !6822
+  store i32 (...)** bitcast (i8** getelementptr inbounds ({ [16 x i8*] }, { [16 x i8*] }* @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 0, inrange i32 0, i64 2) to i32 (...)**), i32 (...)*** %0, align 8, !dbg !6822, !tbaa !3042
+  %_M_buf_locale = getelementptr inbounds %"class.std::basic_streambuf", %"class.std::basic_streambuf"* %this, i64 0, i32 7, !dbg !6823
+  tail call void @_ZNSt6localeD1Ev(%"class.std::locale"* nonnull %_M_buf_locale) #24, !dbg !6823
+  ret void, !dbg !6825
 }
 
 ; Function Attrs: nounwind
 declare void @_ZNSt6localeD1Ev(%"class.std::locale"*) unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define available_externally void @_ZNSoD2Ev(%"class.std::basic_ostream"* %this, i8** %vtt) unnamed_addr #7 align 2 !dbg !6824 {
+define available_externally void @_ZNSoD2Ev(%"class.std::basic_ostream"* %this, i8** %vtt) unnamed_addr #7 align 2 !dbg !6826 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::basic_ostream"* %this, metadata !6829, metadata !DIExpression()), !dbg !6831
-  call void @llvm.dbg.value(metadata i8** %vtt, metadata !6830, metadata !DIExpression()), !dbg !6831
-  ret void, !dbg !6832
+  call void @llvm.dbg.value(metadata %"class.std::basic_ostream"* %this, metadata !6831, metadata !DIExpression()), !dbg !6833
+  call void @llvm.dbg.value(metadata i8** %vtt, metadata !6832, metadata !DIExpression()), !dbg !6833
+  ret void, !dbg !6834
 }
 
 ; Function Attrs: nounwind
 declare void @_ZNSt8ios_baseD2Ev(%"class.std::ios_base"*) unnamed_addr #2
 
 ; Function Attrs: uwtable
-define available_externally void @_ZNSoC2Ev(%"class.std::basic_ostream"* %this, i8** %vtt) unnamed_addr #0 align 2 !dbg !6833 {
+define available_externally void @_ZNSoC2Ev(%"class.std::basic_ostream"* %this, i8** %vtt) unnamed_addr #0 align 2 !dbg !6835 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::basic_ostream"* %this, metadata !6836, metadata !DIExpression()), !dbg !6838
-  call void @llvm.dbg.value(metadata i8** %vtt, metadata !6837, metadata !DIExpression()), !dbg !6838
-  %0 = bitcast i8** %vtt to i64*, !dbg !6839
-  %1 = load i64, i64* %0, align 8, !dbg !6839
-  %2 = bitcast %"class.std::basic_ostream"* %this to i64*, !dbg !6839
-  store i64 %1, i64* %2, align 8, !dbg !6839, !tbaa !3042
-  %3 = getelementptr inbounds i8*, i8** %vtt, i64 1, !dbg !6839
-  %4 = bitcast i8** %3 to i64*, !dbg !6839
-  %5 = load i64, i64* %4, align 8, !dbg !6839
-  %6 = bitcast %"class.std::basic_ostream"* %this to i8**, !dbg !6839
-  %vtable.cast = inttoptr i64 %1 to i8*, !dbg !6839
-  %vbase.offset.ptr = getelementptr i8, i8* %vtable.cast, i64 -24, !dbg !6839
-  %7 = bitcast i8* %vbase.offset.ptr to i64*, !dbg !6839
-  %vbase.offset = load i64, i64* %7, align 8, !dbg !6839
-  %8 = bitcast %"class.std::basic_ostream"* %this to i8*, !dbg !6839
-  %add.ptr = getelementptr inbounds i8, i8* %8, i64 %vbase.offset, !dbg !6839
-  %9 = bitcast i8* %add.ptr to i64*, !dbg !6839
-  store i64 %5, i64* %9, align 8, !dbg !6839, !tbaa !3042
-  %vtable3 = load i8*, i8** %6, align 8, !dbg !6840, !tbaa !3042
-  %vbase.offset.ptr4 = getelementptr i8, i8* %vtable3, i64 -24, !dbg !6840
-  %10 = bitcast i8* %vbase.offset.ptr4 to i64*, !dbg !6840
-  %vbase.offset5 = load i64, i64* %10, align 8, !dbg !6840
-  %add.ptr6 = getelementptr inbounds i8, i8* %8, i64 %vbase.offset5, !dbg !6840
-  %11 = bitcast i8* %add.ptr6 to %"class.std::basic_ios"*, !dbg !6840
-  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streambufIcS1_E(%"class.std::basic_ios"* %11, %"class.std::basic_streambuf"* null), !dbg !6840
-  ret void, !dbg !6842
+  call void @llvm.dbg.value(metadata %"class.std::basic_ostream"* %this, metadata !6838, metadata !DIExpression()), !dbg !6840
+  call void @llvm.dbg.value(metadata i8** %vtt, metadata !6839, metadata !DIExpression()), !dbg !6840
+  %0 = bitcast i8** %vtt to i64*, !dbg !6841
+  %1 = load i64, i64* %0, align 8, !dbg !6841
+  %2 = bitcast %"class.std::basic_ostream"* %this to i64*, !dbg !6841
+  store i64 %1, i64* %2, align 8, !dbg !6841, !tbaa !3042
+  %3 = getelementptr inbounds i8*, i8** %vtt, i64 1, !dbg !6841
+  %4 = bitcast i8** %3 to i64*, !dbg !6841
+  %5 = load i64, i64* %4, align 8, !dbg !6841
+  %6 = bitcast %"class.std::basic_ostream"* %this to i8**, !dbg !6841
+  %vtable.cast = inttoptr i64 %1 to i8*, !dbg !6841
+  %vbase.offset.ptr = getelementptr i8, i8* %vtable.cast, i64 -24, !dbg !6841
+  %7 = bitcast i8* %vbase.offset.ptr to i64*, !dbg !6841
+  %vbase.offset = load i64, i64* %7, align 8, !dbg !6841
+  %8 = bitcast %"class.std::basic_ostream"* %this to i8*, !dbg !6841
+  %add.ptr = getelementptr inbounds i8, i8* %8, i64 %vbase.offset, !dbg !6841
+  %9 = bitcast i8* %add.ptr to i64*, !dbg !6841
+  store i64 %5, i64* %9, align 8, !dbg !6841, !tbaa !3042
+  %vtable3 = load i8*, i8** %6, align 8, !dbg !6842, !tbaa !3042
+  %vbase.offset.ptr4 = getelementptr i8, i8* %vtable3, i64 -24, !dbg !6842
+  %10 = bitcast i8* %vbase.offset.ptr4 to i64*, !dbg !6842
+  %vbase.offset5 = load i64, i64* %10, align 8, !dbg !6842
+  %add.ptr6 = getelementptr inbounds i8, i8* %8, i64 %vbase.offset5, !dbg !6842
+  %11 = bitcast i8* %add.ptr6 to %"class.std::basic_ios"*, !dbg !6842
+  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streambufIcS1_E(%"class.std::basic_ios"* %11, %"class.std::basic_streambuf"* null), !dbg !6842
+  ret void, !dbg !6844
 }
 
 ; Function Attrs: uwtable
-define available_externally void @_ZNSt14basic_ofstreamIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode(%"class.std::basic_ofstream"* %this, %"class.std::__cxx11::basic_string"* dereferenceable(32) %__s, i32 %__mode) local_unnamed_addr #0 align 2 !dbg !6843 {
+define available_externally void @_ZNSt14basic_ofstreamIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode(%"class.std::basic_ofstream"* %this, %"class.std::__cxx11::basic_string"* dereferenceable(32) %__s, i32 %__mode) local_unnamed_addr #0 align 2 !dbg !6845 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::basic_ofstream"* %this, metadata !6846, metadata !DIExpression()), !dbg !6849
-  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %__s, metadata !6847, metadata !DIExpression()), !dbg !6849
-  call void @llvm.dbg.value(metadata i32 %__mode, metadata !6848, metadata !DIExpression()), !dbg !6849
-  %_M_filebuf = getelementptr inbounds %"class.std::basic_ofstream", %"class.std::basic_ofstream"* %this, i64 0, i32 1, !dbg !6850
-  %call = tail call i32 @_ZStorSt13_Ios_OpenmodeS_(i32 %__mode, i32 16), !dbg !6852
-  %call2 = tail call %"class.std::basic_filebuf"* @_ZNSt13basic_filebufIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode(%"class.std::basic_filebuf"* nonnull %_M_filebuf, %"class.std::__cxx11::basic_string"* nonnull dereferenceable(32) %__s, i32 %call), !dbg !6853
-  %tobool = icmp eq %"class.std::basic_filebuf"* %call2, null, !dbg !6850
-  %0 = bitcast %"class.std::basic_ofstream"* %this to i8**, !dbg !6854
-  %vtable3 = load i8*, i8** %0, align 8, !dbg !6854, !tbaa !3042
-  %vbase.offset.ptr4 = getelementptr i8, i8* %vtable3, i64 -24, !dbg !6854
-  %1 = bitcast i8* %vbase.offset.ptr4 to i64*, !dbg !6854
-  %vbase.offset5 = load i64, i64* %1, align 8, !dbg !6854
-  %2 = bitcast %"class.std::basic_ofstream"* %this to i8*, !dbg !6854
-  %add.ptr6 = getelementptr inbounds i8, i8* %2, i64 %vbase.offset5, !dbg !6854
-  %3 = bitcast i8* %add.ptr6 to %"class.std::basic_ios"*, !dbg !6854
-  br i1 %tobool, label %if.then, label %if.else, !dbg !6855
+  call void @llvm.dbg.value(metadata %"class.std::basic_ofstream"* %this, metadata !6848, metadata !DIExpression()), !dbg !6851
+  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %__s, metadata !6849, metadata !DIExpression()), !dbg !6851
+  call void @llvm.dbg.value(metadata i32 %__mode, metadata !6850, metadata !DIExpression()), !dbg !6851
+  %_M_filebuf = getelementptr inbounds %"class.std::basic_ofstream", %"class.std::basic_ofstream"* %this, i64 0, i32 1, !dbg !6852
+  %call = tail call i32 @_ZStorSt13_Ios_OpenmodeS_(i32 %__mode, i32 16), !dbg !6854
+  %call2 = tail call %"class.std::basic_filebuf"* @_ZNSt13basic_filebufIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode(%"class.std::basic_filebuf"* nonnull %_M_filebuf, %"class.std::__cxx11::basic_string"* nonnull dereferenceable(32) %__s, i32 %call), !dbg !6855
+  %tobool = icmp eq %"class.std::basic_filebuf"* %call2, null, !dbg !6852
+  %0 = bitcast %"class.std::basic_ofstream"* %this to i8**, !dbg !6856
+  %vtable3 = load i8*, i8** %0, align 8, !dbg !6856, !tbaa !3042
+  %vbase.offset.ptr4 = getelementptr i8, i8* %vtable3, i64 -24, !dbg !6856
+  %1 = bitcast i8* %vbase.offset.ptr4 to i64*, !dbg !6856
+  %vbase.offset5 = load i64, i64* %1, align 8, !dbg !6856
+  %2 = bitcast %"class.std::basic_ofstream"* %this to i8*, !dbg !6856
+  %add.ptr6 = getelementptr inbounds i8, i8* %2, i64 %vbase.offset5, !dbg !6856
+  %3 = bitcast i8* %add.ptr6 to %"class.std::basic_ios"*, !dbg !6856
+  br i1 %tobool, label %if.then, label %if.else, !dbg !6857
 
 if.then:                                          ; preds = %entry
-  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate(%"class.std::basic_ios"* %3, i32 4), !dbg !6856
-  br label %if.end, !dbg !6857
+  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate(%"class.std::basic_ios"* %3, i32 4), !dbg !6858
+  br label %if.end, !dbg !6859
 
 if.else:                                          ; preds = %entry
-  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(%"class.std::basic_ios"* %3, i32 0), !dbg !6858
+  tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(%"class.std::basic_ios"* %3, i32 0), !dbg !6860
   br label %if.end
 
 if.end:                                           ; preds = %if.else, %if.then
-  ret void, !dbg !6859
+  ret void, !dbg !6861
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr void @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EEC2Ev(%"struct.std::_Vector_base.7"* %this) unnamed_addr #0 comdat align 2 !dbg !6860 {
+define linkonce_odr void @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EEC2Ev(%"struct.std::_Vector_base.7"* %this) unnamed_addr #0 comdat align 2 !dbg !6862 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base.7"* %this, metadata !6862, metadata !DIExpression()), !dbg !6864
-  %_M_impl = getelementptr inbounds %"struct.std::_Vector_base.7", %"struct.std::_Vector_base.7"* %this, i64 0, i32 0, !dbg !6865
-  tail call void @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE12_Vector_implC2Ev(%"struct.std::_Vector_base<ILLIXR_AUDIO::Sound *, std::allocator<ILLIXR_AUDIO::Sound *> >::_Vector_impl"* %_M_impl), !dbg !6865
-  ret void, !dbg !6866
+  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base.7"* %this, metadata !6864, metadata !DIExpression()), !dbg !6866
+  %_M_impl = getelementptr inbounds %"struct.std::_Vector_base.7", %"struct.std::_Vector_base.7"* %this, i64 0, i32 0, !dbg !6867
+  tail call void @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE12_Vector_implC2Ev(%"struct.std::_Vector_base<ILLIXR_AUDIO::Sound *, std::allocator<ILLIXR_AUDIO::Sound *> >::_Vector_impl"* %_M_impl), !dbg !6867
+  ret void, !dbg !6868
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE12_Vector_implC2Ev(%"struct.std::_Vector_base<ILLIXR_AUDIO::Sound *, std::allocator<ILLIXR_AUDIO::Sound *> >::_Vector_impl"* %this) unnamed_addr #7 comdat align 2 !dbg !6867 {
+define linkonce_odr void @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE12_Vector_implC2Ev(%"struct.std::_Vector_base<ILLIXR_AUDIO::Sound *, std::allocator<ILLIXR_AUDIO::Sound *> >::_Vector_impl"* %this) unnamed_addr #7 comdat align 2 !dbg !6869 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base<ILLIXR_AUDIO::Sound *, std::allocator<ILLIXR_AUDIO::Sound *> >::_Vector_impl"* %this, metadata !6869, metadata !DIExpression()), !dbg !6871
-  %0 = bitcast %"struct.std::_Vector_base<ILLIXR_AUDIO::Sound *, std::allocator<ILLIXR_AUDIO::Sound *> >::_Vector_impl"* %this to %"class.std::allocator.8"*, !dbg !6872
-  tail call void @_ZNSaIPN12ILLIXR_AUDIO5SoundEEC2Ev(%"class.std::allocator.8"* %0) #24, !dbg !6873
-  %1 = bitcast %"struct.std::_Vector_base<ILLIXR_AUDIO::Sound *, std::allocator<ILLIXR_AUDIO::Sound *> >::_Vector_impl"* %this to i8*, !dbg !6874
-  call void @llvm.memset.p0i8.i64(i8* align 8 %1, i8 0, i64 24, i1 false), !dbg !6875
-  ret void, !dbg !6874
+  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base<ILLIXR_AUDIO::Sound *, std::allocator<ILLIXR_AUDIO::Sound *> >::_Vector_impl"* %this, metadata !6871, metadata !DIExpression()), !dbg !6873
+  %0 = bitcast %"struct.std::_Vector_base<ILLIXR_AUDIO::Sound *, std::allocator<ILLIXR_AUDIO::Sound *> >::_Vector_impl"* %this to %"class.std::allocator.8"*, !dbg !6874
+  tail call void @_ZNSaIPN12ILLIXR_AUDIO5SoundEEC2Ev(%"class.std::allocator.8"* %0) #24, !dbg !6875
+  %1 = bitcast %"struct.std::_Vector_base<ILLIXR_AUDIO::Sound *, std::allocator<ILLIXR_AUDIO::Sound *> >::_Vector_impl"* %this to i8*, !dbg !6876
+  call void @llvm.memset.p0i8.i64(i8* align 8 %1, i8 0, i64 24, i1 false), !dbg !6877
+  ret void, !dbg !6876
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZNSaIPN12ILLIXR_AUDIO5SoundEEC2Ev(%"class.std::allocator.8"* %this) unnamed_addr #7 comdat align 2 !dbg !6876 {
+define linkonce_odr void @_ZNSaIPN12ILLIXR_AUDIO5SoundEEC2Ev(%"class.std::allocator.8"* %this) unnamed_addr #7 comdat align 2 !dbg !6878 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::allocator.8"* %this, metadata !6878, metadata !DIExpression()), !dbg !6880
-  %0 = bitcast %"class.std::allocator.8"* %this to %"class.__gnu_cxx::new_allocator.9"*, !dbg !6881
-  tail call void @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEEC2Ev(%"class.__gnu_cxx::new_allocator.9"* %0) #24, !dbg !6882
-  ret void, !dbg !6883
+  call void @llvm.dbg.value(metadata %"class.std::allocator.8"* %this, metadata !6880, metadata !DIExpression()), !dbg !6882
+  %0 = bitcast %"class.std::allocator.8"* %this to %"class.__gnu_cxx::new_allocator.9"*, !dbg !6883
+  tail call void @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEEC2Ev(%"class.__gnu_cxx::new_allocator.9"* %0) #24, !dbg !6884
+  ret void, !dbg !6885
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEEC2Ev(%"class.__gnu_cxx::new_allocator.9"* %this) unnamed_addr #7 comdat align 2 !dbg !6884 {
+define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEEC2Ev(%"class.__gnu_cxx::new_allocator.9"* %this) unnamed_addr #7 comdat align 2 !dbg !6886 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.9"* %this, metadata !6886, metadata !DIExpression()), !dbg !6888
-  ret void, !dbg !6889
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.9"* %this, metadata !6888, metadata !DIExpression()), !dbg !6890
+  ret void, !dbg !6891
 }
 
 ; Function Attrs: nounwind uwtable
-define available_externally i8* @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_local_dataEv(%"class.std::__cxx11::basic_string"* %this) local_unnamed_addr #7 align 2 !dbg !6890 {
+define available_externally i8* @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_local_dataEv(%"class.std::__cxx11::basic_string"* %this) local_unnamed_addr #7 align 2 !dbg !6892 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !6895, metadata !DIExpression()), !dbg !6896
-  %0 = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %this, i64 0, i32 2, !dbg !6897
-  %arraydecay = bitcast %union.anon.5* %0 to i8*, !dbg !6898
-  %call = tail call i8* @_ZNSt14pointer_traitsIPcE10pointer_toERc(i8* nonnull dereferenceable(1) %arraydecay) #24, !dbg !6899
-  ret i8* %call, !dbg !6900
+  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !6897, metadata !DIExpression()), !dbg !6898
+  %0 = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %this, i64 0, i32 2, !dbg !6899
+  %arraydecay = bitcast %union.anon.5* %0 to i8*, !dbg !6900
+  %call = tail call i8* @_ZNSt14pointer_traitsIPcE10pointer_toERc(i8* nonnull dereferenceable(1) %arraydecay) #24, !dbg !6901
+  ret i8* %call, !dbg !6902
 }
 
 ; Function Attrs: nounwind uwtable
-define available_externally void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderC2EPcRKS3_(%"struct.std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider"* %this, i8* %__dat, %"class.std::allocator.2"* dereferenceable(1) %__a) unnamed_addr #7 align 2 !dbg !6901 {
+define available_externally void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderC2EPcRKS3_(%"struct.std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider"* %this, i8* %__dat, %"class.std::allocator.2"* dereferenceable(1) %__a) unnamed_addr #7 align 2 !dbg !6903 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider"* %this, metadata !6911, metadata !DIExpression()), !dbg !6915
-  call void @llvm.dbg.value(metadata i8* %__dat, metadata !6913, metadata !DIExpression()), !dbg !6915
-  call void @llvm.dbg.value(metadata %"class.std::allocator.2"* %__a, metadata !6914, metadata !DIExpression()), !dbg !6915
-  %0 = bitcast %"struct.std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider"* %this to %"class.std::allocator.2"*, !dbg !6916
-  tail call void @_ZNSaIcEC2ERKS_(%"class.std::allocator.2"* %0, %"class.std::allocator.2"* nonnull dereferenceable(1) %__a) #24, !dbg !6917
-  %_M_p = getelementptr inbounds %"struct.std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider", %"struct.std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider"* %this, i64 0, i32 0, !dbg !6918
-  store i8* %__dat, i8** %_M_p, align 8, !dbg !6918, !tbaa !6919
-  ret void, !dbg !6920
+  call void @llvm.dbg.value(metadata %"struct.std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider"* %this, metadata !6913, metadata !DIExpression()), !dbg !6917
+  call void @llvm.dbg.value(metadata i8* %__dat, metadata !6915, metadata !DIExpression()), !dbg !6917
+  call void @llvm.dbg.value(metadata %"class.std::allocator.2"* %__a, metadata !6916, metadata !DIExpression()), !dbg !6917
+  %0 = bitcast %"struct.std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider"* %this to %"class.std::allocator.2"*, !dbg !6918
+  tail call void @_ZNSaIcEC2ERKS_(%"class.std::allocator.2"* %0, %"class.std::allocator.2"* nonnull dereferenceable(1) %__a) #24, !dbg !6919
+  %_M_p = getelementptr inbounds %"struct.std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider", %"struct.std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider"* %this, i64 0, i32 0, !dbg !6920
+  store i8* %__dat, i8** %_M_p, align 8, !dbg !6920, !tbaa !6921
+  ret void, !dbg !6922
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_(%"class.std::__cxx11::basic_string"* %this, i8* %__beg, i8* %__end) local_unnamed_addr #0 comdat align 2 !dbg !6921 {
+define linkonce_odr void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_(%"class.std::__cxx11::basic_string"* %this, i8* %__beg, i8* %__end) local_unnamed_addr #0 comdat align 2 !dbg !6923 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !6928, metadata !DIExpression()), !dbg !6931
-  call void @llvm.dbg.value(metadata i8* %__beg, metadata !6929, metadata !DIExpression()), !dbg !6931
-  call void @llvm.dbg.value(metadata i8* %__end, metadata !6930, metadata !DIExpression()), !dbg !6931
-  tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16_M_construct_auxIPKcEEvT_S8_St12__false_type(%"class.std::__cxx11::basic_string"* %this, i8* %__beg, i8* %__end), !dbg !6932
-  ret void, !dbg !6933
+  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !6930, metadata !DIExpression()), !dbg !6933
+  call void @llvm.dbg.value(metadata i8* %__beg, metadata !6931, metadata !DIExpression()), !dbg !6933
+  call void @llvm.dbg.value(metadata i8* %__end, metadata !6932, metadata !DIExpression()), !dbg !6933
+  tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16_M_construct_auxIPKcEEvT_S8_St12__false_type(%"class.std::__cxx11::basic_string"* %this, i8* %__beg, i8* %__end), !dbg !6934
+  ret void, !dbg !6935
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr i64 @_ZNSt11char_traitsIcE6lengthEPKc(i8* %__s) local_unnamed_addr #7 comdat align 2 !dbg !6934 {
+define linkonce_odr i64 @_ZNSt11char_traitsIcE6lengthEPKc(i8* %__s) local_unnamed_addr #7 comdat align 2 !dbg !6936 {
 entry:
-  call void @llvm.dbg.value(metadata i8* %__s, metadata !6936, metadata !DIExpression()), !dbg !6937
-  %call = tail call i64 @strlen(i8* %__s) #24, !dbg !6938
-  ret i64 %call, !dbg !6939
+  call void @llvm.dbg.value(metadata i8* %__s, metadata !6938, metadata !DIExpression()), !dbg !6939
+  %call = tail call i64 @strlen(i8* %__s) #24, !dbg !6940
+  ret i64 %call, !dbg !6941
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr i8* @_ZNSt14pointer_traitsIPcE10pointer_toERc(i8* dereferenceable(1) %__r) local_unnamed_addr #7 comdat align 2 !dbg !6940 {
+define linkonce_odr i8* @_ZNSt14pointer_traitsIPcE10pointer_toERc(i8* dereferenceable(1) %__r) local_unnamed_addr #7 comdat align 2 !dbg !6942 {
 entry:
-  call void @llvm.dbg.value(metadata i8* %__r, metadata !6954, metadata !DIExpression()), !dbg !6955
-  %call = tail call i8* @_ZSt9addressofIcEPT_RS0_(i8* nonnull dereferenceable(1) %__r) #24, !dbg !6956
-  ret i8* %call, !dbg !6957
+  call void @llvm.dbg.value(metadata i8* %__r, metadata !6956, metadata !DIExpression()), !dbg !6957
+  %call = tail call i8* @_ZSt9addressofIcEPT_RS0_(i8* nonnull dereferenceable(1) %__r) #24, !dbg !6958
+  ret i8* %call, !dbg !6959
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr i8* @_ZSt9addressofIcEPT_RS0_(i8* dereferenceable(1) %__r) local_unnamed_addr #16 comdat !dbg !6958 {
+define linkonce_odr i8* @_ZSt9addressofIcEPT_RS0_(i8* dereferenceable(1) %__r) local_unnamed_addr #16 comdat !dbg !6960 {
 entry:
-  call void @llvm.dbg.value(metadata i8* %__r, metadata !6962, metadata !DIExpression()), !dbg !6963
-  %call = tail call i8* @_ZSt11__addressofIcEPT_RS0_(i8* nonnull dereferenceable(1) %__r) #24, !dbg !6964
-  ret i8* %call, !dbg !6965
+  call void @llvm.dbg.value(metadata i8* %__r, metadata !6964, metadata !DIExpression()), !dbg !6965
+  %call = tail call i8* @_ZSt11__addressofIcEPT_RS0_(i8* nonnull dereferenceable(1) %__r) #24, !dbg !6966
+  ret i8* %call, !dbg !6967
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr i8* @_ZSt11__addressofIcEPT_RS0_(i8* dereferenceable(1) %__r) local_unnamed_addr #16 comdat !dbg !6966 {
+define linkonce_odr i8* @_ZSt11__addressofIcEPT_RS0_(i8* dereferenceable(1) %__r) local_unnamed_addr #16 comdat !dbg !6968 {
 entry:
-  call void @llvm.dbg.value(metadata i8* %__r, metadata !6968, metadata !DIExpression()), !dbg !6969
-  ret i8* %__r, !dbg !6970
+  call void @llvm.dbg.value(metadata i8* %__r, metadata !6970, metadata !DIExpression()), !dbg !6971
+  ret i8* %__r, !dbg !6972
 }
 
 ; Function Attrs: nounwind uwtable
-define available_externally void @_ZNSaIcEC2ERKS_(%"class.std::allocator.2"* %this, %"class.std::allocator.2"* dereferenceable(1) %__a) unnamed_addr #7 align 2 !dbg !6971 {
+define available_externally void @_ZNSaIcEC2ERKS_(%"class.std::allocator.2"* %this, %"class.std::allocator.2"* dereferenceable(1) %__a) unnamed_addr #7 align 2 !dbg !6973 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::allocator.2"* %this, metadata !6976, metadata !DIExpression()), !dbg !6978
-  call void @llvm.dbg.value(metadata %"class.std::allocator.2"* %__a, metadata !6977, metadata !DIExpression()), !dbg !6978
-  %0 = bitcast %"class.std::allocator.2"* %this to %"class.__gnu_cxx::new_allocator.3"*, !dbg !6979
-  %1 = bitcast %"class.std::allocator.2"* %__a to %"class.__gnu_cxx::new_allocator.3"*, !dbg !6980
-  tail call void @_ZN9__gnu_cxx13new_allocatorIcEC2ERKS1_(%"class.__gnu_cxx::new_allocator.3"* %0, %"class.__gnu_cxx::new_allocator.3"* nonnull dereferenceable(1) %1) #24, !dbg !6981
-  ret void, !dbg !6982
+  call void @llvm.dbg.value(metadata %"class.std::allocator.2"* %this, metadata !6978, metadata !DIExpression()), !dbg !6980
+  call void @llvm.dbg.value(metadata %"class.std::allocator.2"* %__a, metadata !6979, metadata !DIExpression()), !dbg !6980
+  %0 = bitcast %"class.std::allocator.2"* %this to %"class.__gnu_cxx::new_allocator.3"*, !dbg !6981
+  %1 = bitcast %"class.std::allocator.2"* %__a to %"class.__gnu_cxx::new_allocator.3"*, !dbg !6982
+  tail call void @_ZN9__gnu_cxx13new_allocatorIcEC2ERKS1_(%"class.__gnu_cxx::new_allocator.3"* %0, %"class.__gnu_cxx::new_allocator.3"* nonnull dereferenceable(1) %1) #24, !dbg !6983
+  ret void, !dbg !6984
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIcEC2ERKS1_(%"class.__gnu_cxx::new_allocator.3"* %this, %"class.__gnu_cxx::new_allocator.3"* dereferenceable(1)) unnamed_addr #7 comdat align 2 !dbg !6983 {
+define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIcEC2ERKS1_(%"class.__gnu_cxx::new_allocator.3"* %this, %"class.__gnu_cxx::new_allocator.3"* dereferenceable(1)) unnamed_addr #7 comdat align 2 !dbg !6985 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.3"* %this, metadata !6985, metadata !DIExpression()), !dbg !6987
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.3"* %0, metadata !6986, metadata !DIExpression()), !dbg !6987
-  ret void, !dbg !6988
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.3"* %this, metadata !6987, metadata !DIExpression()), !dbg !6989
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.3"* %0, metadata !6988, metadata !DIExpression()), !dbg !6989
+  ret void, !dbg !6990
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16_M_construct_auxIPKcEEvT_S8_St12__false_type(%"class.std::__cxx11::basic_string"* %this, i8* %__beg, i8* %__end) local_unnamed_addr #0 comdat align 2 !dbg !6989 {
+define linkonce_odr void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16_M_construct_auxIPKcEEvT_S8_St12__false_type(%"class.std::__cxx11::basic_string"* %this, i8* %__beg, i8* %__end) local_unnamed_addr #0 comdat align 2 !dbg !6991 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !6996, metadata !DIExpression()), !dbg !7000
-  call void @llvm.dbg.value(metadata i8* %__beg, metadata !6997, metadata !DIExpression()), !dbg !7000
-  call void @llvm.dbg.value(metadata i8* %__end, metadata !6998, metadata !DIExpression()), !dbg !7000
-  tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag(%"class.std::__cxx11::basic_string"* %this, i8* %__beg, i8* %__end), !dbg !7001
-  ret void, !dbg !7002
+  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !6998, metadata !DIExpression()), !dbg !7002
+  call void @llvm.dbg.value(metadata i8* %__beg, metadata !6999, metadata !DIExpression()), !dbg !7002
+  call void @llvm.dbg.value(metadata i8* %__end, metadata !7000, metadata !DIExpression()), !dbg !7002
+  tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag(%"class.std::__cxx11::basic_string"* %this, i8* %__beg, i8* %__end), !dbg !7003
+  ret void, !dbg !7004
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag(%"class.std::__cxx11::basic_string"* %this, i8* %__beg, i8* %__end) local_unnamed_addr #0 comdat align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !7003 {
+define linkonce_odr void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag(%"class.std::__cxx11::basic_string"* %this, i8* %__beg, i8* %__end) local_unnamed_addr #0 comdat align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !7005 {
 entry:
   %__dnew = alloca i64, align 8
-  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !7010, metadata !DIExpression()), !dbg !7015
-  call void @llvm.dbg.value(metadata i8* %__beg, metadata !7011, metadata !DIExpression()), !dbg !7015
-  call void @llvm.dbg.value(metadata i8* %__end, metadata !7012, metadata !DIExpression()), !dbg !7015
-  %call = tail call zeroext i1 @_ZN9__gnu_cxx17__is_null_pointerIKcEEbPT_(i8* %__beg), !dbg !7016
-  %call.not = xor i1 %call, true, !dbg !7018
-  %cmp = icmp eq i8* %__beg, %__end, !dbg !7019
-  %or.cond = or i1 %cmp, %call.not, !dbg !7018
-  br i1 %or.cond, label %if.end, label %if.then, !dbg !7018
+  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !7012, metadata !DIExpression()), !dbg !7017
+  call void @llvm.dbg.value(metadata i8* %__beg, metadata !7013, metadata !DIExpression()), !dbg !7017
+  call void @llvm.dbg.value(metadata i8* %__end, metadata !7014, metadata !DIExpression()), !dbg !7017
+  %call = tail call zeroext i1 @_ZN9__gnu_cxx17__is_null_pointerIKcEEbPT_(i8* %__beg), !dbg !7018
+  %call.not = xor i1 %call, true, !dbg !7020
+  %cmp = icmp eq i8* %__beg, %__end, !dbg !7021
+  %or.cond = or i1 %cmp, %call.not, !dbg !7020
+  br i1 %or.cond, label %if.end, label %if.then, !dbg !7020
 
 if.then:                                          ; preds = %entry
-  tail call void @_ZSt19__throw_logic_errorPKc(i8* getelementptr inbounds ([42 x i8], [42 x i8]* @.str.14, i64 0, i64 0)) #29, !dbg !7020
-  unreachable, !dbg !7020
+  tail call void @_ZSt19__throw_logic_errorPKc(i8* getelementptr inbounds ([42 x i8], [42 x i8]* @.str.14, i64 0, i64 0)) #29, !dbg !7022
+  unreachable, !dbg !7022
 
 if.end:                                           ; preds = %entry
-  %0 = bitcast i64* %__dnew to i8*, !dbg !7021
-  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %0) #24, !dbg !7021
-  %call2 = tail call i64 @_ZSt8distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_(i8* %__beg, i8* %__end), !dbg !7022
-  call void @llvm.dbg.value(metadata i64 %call2, metadata !7014, metadata !DIExpression()), !dbg !7015
-  store i64 %call2, i64* %__dnew, align 8, !dbg !7023, !tbaa !5796
-  %cmp3 = icmp ugt i64 %call2, 15, !dbg !7024
-  br i1 %cmp3, label %if.then4, label %if.end6, !dbg !7026
+  %0 = bitcast i64* %__dnew to i8*, !dbg !7023
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %0) #24, !dbg !7023
+  %call2 = tail call i64 @_ZSt8distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_(i8* %__beg, i8* %__end), !dbg !7024
+  call void @llvm.dbg.value(metadata i64 %call2, metadata !7016, metadata !DIExpression()), !dbg !7017
+  store i64 %call2, i64* %__dnew, align 8, !dbg !7025, !tbaa !5798
+  %cmp3 = icmp ugt i64 %call2, 15, !dbg !7026
+  br i1 %cmp3, label %if.then4, label %if.end6, !dbg !7028
 
 if.then4:                                         ; preds = %if.end
-  call void @llvm.dbg.value(metadata i64* %__dnew, metadata !7014, metadata !DIExpression(DW_OP_deref)), !dbg !7015
-  %call5 = call i8* @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(%"class.std::__cxx11::basic_string"* %this, i64* nonnull dereferenceable(8) %__dnew, i64 0), !dbg !7027
-  call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEPc(%"class.std::__cxx11::basic_string"* %this, i8* %call5), !dbg !7029
-  %1 = load i64, i64* %__dnew, align 8, !dbg !7030, !tbaa !5796
-  call void @llvm.dbg.value(metadata i64 %1, metadata !7014, metadata !DIExpression()), !dbg !7015
-  call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_capacityEm(%"class.std::__cxx11::basic_string"* %this, i64 %1), !dbg !7031
-  br label %if.end6, !dbg !7032
+  call void @llvm.dbg.value(metadata i64* %__dnew, metadata !7016, metadata !DIExpression(DW_OP_deref)), !dbg !7017
+  %call5 = call i8* @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(%"class.std::__cxx11::basic_string"* %this, i64* nonnull dereferenceable(8) %__dnew, i64 0), !dbg !7029
+  call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEPc(%"class.std::__cxx11::basic_string"* %this, i8* %call5), !dbg !7031
+  %1 = load i64, i64* %__dnew, align 8, !dbg !7032, !tbaa !5798
+  call void @llvm.dbg.value(metadata i64 %1, metadata !7016, metadata !DIExpression()), !dbg !7017
+  call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_capacityEm(%"class.std::__cxx11::basic_string"* %this, i64 %1), !dbg !7033
+  br label %if.end6, !dbg !7034
 
 if.end6:                                          ; preds = %if.then4, %if.end
-  %call7 = call i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEv(%"class.std::__cxx11::basic_string"* %this), !dbg !7033
-  call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_S_copy_charsEPcPKcS7_(i8* %call7, i8* %__beg, i8* %__end) #24, !dbg !7035
-  %2 = load i64, i64* %__dnew, align 8, !dbg !7036, !tbaa !5796
-  call void @llvm.dbg.value(metadata i64 %2, metadata !7014, metadata !DIExpression()), !dbg !7015
-  call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_set_lengthEm(%"class.std::__cxx11::basic_string"* %this, i64 %2), !dbg !7037
-  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %0) #24, !dbg !7038
-  ret void, !dbg !7038
+  %call7 = call i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEv(%"class.std::__cxx11::basic_string"* %this), !dbg !7035
+  call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_S_copy_charsEPcPKcS7_(i8* %call7, i8* %__beg, i8* %__end) #24, !dbg !7037
+  %2 = load i64, i64* %__dnew, align 8, !dbg !7038, !tbaa !5798
+  call void @llvm.dbg.value(metadata i64 %2, metadata !7016, metadata !DIExpression()), !dbg !7017
+  call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_set_lengthEm(%"class.std::__cxx11::basic_string"* %this, i64 %2), !dbg !7039
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %0) #24, !dbg !7040
+  ret void, !dbg !7040
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr zeroext i1 @_ZN9__gnu_cxx17__is_null_pointerIKcEEbPT_(i8* %__ptr) local_unnamed_addr #16 comdat !dbg !7039 {
+define linkonce_odr zeroext i1 @_ZN9__gnu_cxx17__is_null_pointerIKcEEbPT_(i8* %__ptr) local_unnamed_addr #16 comdat !dbg !7041 {
 entry:
-  call void @llvm.dbg.value(metadata i8* %__ptr, metadata !7043, metadata !DIExpression()), !dbg !7046
-  %cmp = icmp eq i8* %__ptr, null, !dbg !7047
-  ret i1 %cmp, !dbg !7048
+  call void @llvm.dbg.value(metadata i8* %__ptr, metadata !7045, metadata !DIExpression()), !dbg !7048
+  %cmp = icmp eq i8* %__ptr, null, !dbg !7049
+  ret i1 %cmp, !dbg !7050
 }
 
 ; Function Attrs: noreturn
 declare void @_ZSt19__throw_logic_errorPKc(i8*) local_unnamed_addr #22
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr i64 @_ZSt8distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_(i8* %__first, i8* %__last) local_unnamed_addr #18 comdat !dbg !7049 {
+define linkonce_odr i64 @_ZSt8distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_(i8* %__first, i8* %__last) local_unnamed_addr #18 comdat !dbg !7051 {
 entry:
   %__first.addr = alloca i8*, align 8
-  call void @llvm.dbg.value(metadata i8* %__first, metadata !7058, metadata !DIExpression()), !dbg !7062
+  call void @llvm.dbg.value(metadata i8* %__first, metadata !7060, metadata !DIExpression()), !dbg !7064
   store i8* %__first, i8** %__first.addr, align 8, !tbaa !3171
-  call void @llvm.dbg.value(metadata i8* %__last, metadata !7059, metadata !DIExpression()), !dbg !7062
-  call void @llvm.dbg.value(metadata i8** %__first.addr, metadata !7058, metadata !DIExpression(DW_OP_deref)), !dbg !7062
-  call void @_ZSt19__iterator_categoryIPKcENSt15iterator_traitsIT_E17iterator_categoryERKS3_(i8** nonnull dereferenceable(8) %__first.addr), !dbg !7063
-  %call = call i64 @_ZSt10__distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_St26random_access_iterator_tag(i8* %__first, i8* %__last), !dbg !7064
-  ret i64 %call, !dbg !7065
+  call void @llvm.dbg.value(metadata i8* %__last, metadata !7061, metadata !DIExpression()), !dbg !7064
+  call void @llvm.dbg.value(metadata i8** %__first.addr, metadata !7060, metadata !DIExpression(DW_OP_deref)), !dbg !7064
+  call void @_ZSt19__iterator_categoryIPKcENSt15iterator_traitsIT_E17iterator_categoryERKS3_(i8** nonnull dereferenceable(8) %__first.addr), !dbg !7065
+  %call = call i64 @_ZSt10__distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_St26random_access_iterator_tag(i8* %__first, i8* %__last), !dbg !7066
+  ret i64 %call, !dbg !7067
 }
 
 ; Function Attrs: nounwind uwtable
-define available_externally void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEPc(%"class.std::__cxx11::basic_string"* %this, i8* %__p) local_unnamed_addr #7 align 2 !dbg !7066 {
+define available_externally void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEPc(%"class.std::__cxx11::basic_string"* %this, i8* %__p) local_unnamed_addr #7 align 2 !dbg !7068 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !7071, metadata !DIExpression()), !dbg !7073
-  call void @llvm.dbg.value(metadata i8* %__p, metadata !7072, metadata !DIExpression()), !dbg !7073
-  %_M_p = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %this, i64 0, i32 0, i32 0, !dbg !7074
-  store i8* %__p, i8** %_M_p, align 8, !dbg !7075, !tbaa !5581
-  ret void, !dbg !7076
+  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !7073, metadata !DIExpression()), !dbg !7075
+  call void @llvm.dbg.value(metadata i8* %__p, metadata !7074, metadata !DIExpression()), !dbg !7075
+  %_M_p = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %this, i64 0, i32 0, i32 0, !dbg !7076
+  store i8* %__p, i8** %_M_p, align 8, !dbg !7077, !tbaa !5583
+  ret void, !dbg !7078
 }
 
 declare i8* @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(%"class.std::__cxx11::basic_string"*, i64* dereferenceable(8), i64) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define available_externally void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_capacityEm(%"class.std::__cxx11::basic_string"* %this, i64 %__capacity) local_unnamed_addr #7 align 2 !dbg !7077 {
+define available_externally void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_capacityEm(%"class.std::__cxx11::basic_string"* %this, i64 %__capacity) local_unnamed_addr #7 align 2 !dbg !7079 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !7080, metadata !DIExpression()), !dbg !7082
-  call void @llvm.dbg.value(metadata i64 %__capacity, metadata !7081, metadata !DIExpression()), !dbg !7082
-  %_M_allocated_capacity = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %this, i64 0, i32 2, i32 0, !dbg !7083
-  store i64 %__capacity, i64* %_M_allocated_capacity, align 8, !dbg !7084, !tbaa !5541
-  ret void, !dbg !7085
+  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !7082, metadata !DIExpression()), !dbg !7084
+  call void @llvm.dbg.value(metadata i64 %__capacity, metadata !7083, metadata !DIExpression()), !dbg !7084
+  %_M_allocated_capacity = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %this, i64 0, i32 2, i32 0, !dbg !7085
+  store i64 %__capacity, i64* %_M_allocated_capacity, align 8, !dbg !7086, !tbaa !5543
+  ret void, !dbg !7087
 }
 
 ; Function Attrs: nounwind uwtable
-define available_externally void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_S_copy_charsEPcPKcS7_(i8* %__p, i8* %__k1, i8* %__k2) local_unnamed_addr #7 align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !7086 {
+define available_externally void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_S_copy_charsEPcPKcS7_(i8* %__p, i8* %__k1, i8* %__k2) local_unnamed_addr #7 align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !7088 {
 entry:
-  call void @llvm.dbg.value(metadata i8* %__p, metadata !7091, metadata !DIExpression()), !dbg !7094
-  call void @llvm.dbg.value(metadata i8* %__k1, metadata !7092, metadata !DIExpression()), !dbg !7094
-  call void @llvm.dbg.value(metadata i8* %__k2, metadata !7093, metadata !DIExpression()), !dbg !7094
-  %sub.ptr.lhs.cast = ptrtoint i8* %__k2 to i64, !dbg !7095
-  %sub.ptr.rhs.cast = ptrtoint i8* %__k1 to i64, !dbg !7095
-  %sub.ptr.sub = sub i64 %sub.ptr.lhs.cast, %sub.ptr.rhs.cast, !dbg !7095
+  call void @llvm.dbg.value(metadata i8* %__p, metadata !7093, metadata !DIExpression()), !dbg !7096
+  call void @llvm.dbg.value(metadata i8* %__k1, metadata !7094, metadata !DIExpression()), !dbg !7096
+  call void @llvm.dbg.value(metadata i8* %__k2, metadata !7095, metadata !DIExpression()), !dbg !7096
+  %sub.ptr.lhs.cast = ptrtoint i8* %__k2 to i64, !dbg !7097
+  %sub.ptr.rhs.cast = ptrtoint i8* %__k1 to i64, !dbg !7097
+  %sub.ptr.sub = sub i64 %sub.ptr.lhs.cast, %sub.ptr.rhs.cast, !dbg !7097
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm(i8* %__p, i8* %__k1, i64 %sub.ptr.sub)
-          to label %invoke.cont unwind label %terminate.lpad, !dbg !7096
+          to label %invoke.cont unwind label %terminate.lpad, !dbg !7098
 
 invoke.cont:                                      ; preds = %entry
-  ret void, !dbg !7097
+  ret void, !dbg !7099
 
 terminate.lpad:                                   ; preds = %entry
   %0 = landingpad { i8*, i32 }
-          catch i8* null, !dbg !7096
-  %1 = extractvalue { i8*, i32 } %0, 0, !dbg !7096
-  tail call void @__clang_call_terminate(i8* %1) #25, !dbg !7096
-  unreachable, !dbg !7096
+          catch i8* null, !dbg !7098
+  %1 = extractvalue { i8*, i32 } %0, 0, !dbg !7098
+  tail call void @__clang_call_terminate(i8* %1) #25, !dbg !7098
+  unreachable, !dbg !7098
 }
 
 ; Function Attrs: uwtable
-define available_externally void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_set_lengthEm(%"class.std::__cxx11::basic_string"* %this, i64 %__n) local_unnamed_addr #0 align 2 !dbg !7098 {
+define available_externally void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_set_lengthEm(%"class.std::__cxx11::basic_string"* %this, i64 %__n) local_unnamed_addr #0 align 2 !dbg !7100 {
 entry:
   %ref.tmp = alloca i8, align 1
-  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !7101, metadata !DIExpression()), !dbg !7103
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !7102, metadata !DIExpression()), !dbg !7103
-  tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_lengthEm(%"class.std::__cxx11::basic_string"* %this, i64 %__n), !dbg !7104
-  %call = tail call i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEv(%"class.std::__cxx11::basic_string"* %this), !dbg !7105
-  %arrayidx = getelementptr inbounds i8, i8* %call, i64 %__n, !dbg !7105
-  call void @llvm.lifetime.start.p0i8(i64 1, i8* nonnull %ref.tmp) #24, !dbg !7106
-  store i8 0, i8* %ref.tmp, align 1, !dbg !7106, !tbaa !5541
-  call void @_ZNSt11char_traitsIcE6assignERcRKc(i8* dereferenceable(1) %arrayidx, i8* nonnull dereferenceable(1) %ref.tmp) #24, !dbg !7107
-  call void @llvm.lifetime.end.p0i8(i64 1, i8* nonnull %ref.tmp) #24, !dbg !7107
-  ret void, !dbg !7108
+  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !7103, metadata !DIExpression()), !dbg !7105
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !7104, metadata !DIExpression()), !dbg !7105
+  tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_lengthEm(%"class.std::__cxx11::basic_string"* %this, i64 %__n), !dbg !7106
+  %call = tail call i8* @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEv(%"class.std::__cxx11::basic_string"* %this), !dbg !7107
+  %arrayidx = getelementptr inbounds i8, i8* %call, i64 %__n, !dbg !7107
+  call void @llvm.lifetime.start.p0i8(i64 1, i8* nonnull %ref.tmp) #24, !dbg !7108
+  store i8 0, i8* %ref.tmp, align 1, !dbg !7108, !tbaa !5543
+  call void @_ZNSt11char_traitsIcE6assignERcRKc(i8* dereferenceable(1) %arrayidx, i8* nonnull dereferenceable(1) %ref.tmp) #24, !dbg !7109
+  call void @llvm.lifetime.end.p0i8(i64 1, i8* nonnull %ref.tmp) #24, !dbg !7109
+  ret void, !dbg !7110
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr i64 @_ZSt10__distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_St26random_access_iterator_tag(i8* %__first, i8* %__last) local_unnamed_addr #16 comdat !dbg !7109 {
+define linkonce_odr i64 @_ZSt10__distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_St26random_access_iterator_tag(i8* %__first, i8* %__last) local_unnamed_addr #16 comdat !dbg !7111 {
 entry:
-  call void @llvm.dbg.value(metadata i8* %__first, metadata !7113, metadata !DIExpression()), !dbg !7118
-  call void @llvm.dbg.value(metadata i8* %__last, metadata !7114, metadata !DIExpression()), !dbg !7118
-  %sub.ptr.lhs.cast = ptrtoint i8* %__last to i64, !dbg !7119
-  %sub.ptr.rhs.cast = ptrtoint i8* %__first to i64, !dbg !7119
-  %sub.ptr.sub = sub i64 %sub.ptr.lhs.cast, %sub.ptr.rhs.cast, !dbg !7119
-  ret i64 %sub.ptr.sub, !dbg !7120
+  call void @llvm.dbg.value(metadata i8* %__first, metadata !7115, metadata !DIExpression()), !dbg !7120
+  call void @llvm.dbg.value(metadata i8* %__last, metadata !7116, metadata !DIExpression()), !dbg !7120
+  %sub.ptr.lhs.cast = ptrtoint i8* %__last to i64, !dbg !7121
+  %sub.ptr.rhs.cast = ptrtoint i8* %__first to i64, !dbg !7121
+  %sub.ptr.sub = sub i64 %sub.ptr.lhs.cast, %sub.ptr.rhs.cast, !dbg !7121
+  ret i64 %sub.ptr.sub, !dbg !7122
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define linkonce_odr void @_ZSt19__iterator_categoryIPKcENSt15iterator_traitsIT_E17iterator_categoryERKS3_(i8** dereferenceable(8)) local_unnamed_addr #16 comdat !dbg !7121 {
+define linkonce_odr void @_ZSt19__iterator_categoryIPKcENSt15iterator_traitsIT_E17iterator_categoryERKS3_(i8** dereferenceable(8)) local_unnamed_addr #16 comdat !dbg !7123 {
 entry:
-  call void @llvm.dbg.value(metadata i8** %0, metadata !7128, metadata !DIExpression()), !dbg !7131
-  ret void, !dbg !7132
+  call void @llvm.dbg.value(metadata i8** %0, metadata !7130, metadata !DIExpression()), !dbg !7133
+  ret void, !dbg !7134
 }
 
 ; Function Attrs: uwtable
-define available_externally void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm(i8* %__d, i8* %__s, i64 %__n) local_unnamed_addr #0 align 2 !dbg !7133 {
+define available_externally void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm(i8* %__d, i8* %__s, i64 %__n) local_unnamed_addr #0 align 2 !dbg !7135 {
 entry:
-  call void @llvm.dbg.value(metadata i8* %__d, metadata !7138, metadata !DIExpression()), !dbg !7141
-  call void @llvm.dbg.value(metadata i8* %__s, metadata !7139, metadata !DIExpression()), !dbg !7141
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !7140, metadata !DIExpression()), !dbg !7141
-  %cmp = icmp eq i64 %__n, 1, !dbg !7142
-  br i1 %cmp, label %if.then, label %if.else, !dbg !7144
+  call void @llvm.dbg.value(metadata i8* %__d, metadata !7140, metadata !DIExpression()), !dbg !7143
+  call void @llvm.dbg.value(metadata i8* %__s, metadata !7141, metadata !DIExpression()), !dbg !7143
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !7142, metadata !DIExpression()), !dbg !7143
+  %cmp = icmp eq i64 %__n, 1, !dbg !7144
+  br i1 %cmp, label %if.then, label %if.else, !dbg !7146
 
 if.then:                                          ; preds = %entry
-  tail call void @_ZNSt11char_traitsIcE6assignERcRKc(i8* dereferenceable(1) %__d, i8* dereferenceable(1) %__s) #24, !dbg !7145
-  br label %if.end, !dbg !7145
+  tail call void @_ZNSt11char_traitsIcE6assignERcRKc(i8* dereferenceable(1) %__d, i8* dereferenceable(1) %__s) #24, !dbg !7147
+  br label %if.end, !dbg !7147
 
 if.else:                                          ; preds = %entry
-  %call = tail call i8* @_ZNSt11char_traitsIcE4copyEPcPKcm(i8* %__d, i8* %__s, i64 %__n), !dbg !7146
+  %call = tail call i8* @_ZNSt11char_traitsIcE4copyEPcPKcm(i8* %__d, i8* %__s, i64 %__n), !dbg !7148
   br label %if.end
 
 if.end:                                           ; preds = %if.else, %if.then
-  ret void, !dbg !7147
+  ret void, !dbg !7149
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZNSt11char_traitsIcE6assignERcRKc(i8* dereferenceable(1) %__c1, i8* dereferenceable(1) %__c2) local_unnamed_addr #7 comdat align 2 !dbg !7148 {
+define linkonce_odr void @_ZNSt11char_traitsIcE6assignERcRKc(i8* dereferenceable(1) %__c1, i8* dereferenceable(1) %__c2) local_unnamed_addr #7 comdat align 2 !dbg !7150 {
 entry:
-  call void @llvm.dbg.value(metadata i8* %__c1, metadata !7150, metadata !DIExpression()), !dbg !7152
-  call void @llvm.dbg.value(metadata i8* %__c2, metadata !7151, metadata !DIExpression()), !dbg !7152
-  %0 = load i8, i8* %__c2, align 1, !dbg !7153, !tbaa !5541
-  store i8 %0, i8* %__c1, align 1, !dbg !7154, !tbaa !5541
-  ret void, !dbg !7155
+  call void @llvm.dbg.value(metadata i8* %__c1, metadata !7152, metadata !DIExpression()), !dbg !7154
+  call void @llvm.dbg.value(metadata i8* %__c2, metadata !7153, metadata !DIExpression()), !dbg !7154
+  %0 = load i8, i8* %__c2, align 1, !dbg !7155, !tbaa !5543
+  store i8 %0, i8* %__c1, align 1, !dbg !7156, !tbaa !5543
+  ret void, !dbg !7157
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr i8* @_ZNSt11char_traitsIcE4copyEPcPKcm(i8* %__s1, i8* %__s2, i64 %__n) local_unnamed_addr #7 comdat align 2 !dbg !7156 {
+define linkonce_odr i8* @_ZNSt11char_traitsIcE4copyEPcPKcm(i8* %__s1, i8* %__s2, i64 %__n) local_unnamed_addr #7 comdat align 2 !dbg !7158 {
 entry:
-  call void @llvm.dbg.value(metadata i8* %__s1, metadata !7158, metadata !DIExpression()), !dbg !7161
-  call void @llvm.dbg.value(metadata i8* %__s2, metadata !7159, metadata !DIExpression()), !dbg !7161
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !7160, metadata !DIExpression()), !dbg !7161
-  %cmp = icmp eq i64 %__n, 0, !dbg !7162
-  br i1 %cmp, label %return, label %if.end, !dbg !7164
+  call void @llvm.dbg.value(metadata i8* %__s1, metadata !7160, metadata !DIExpression()), !dbg !7163
+  call void @llvm.dbg.value(metadata i8* %__s2, metadata !7161, metadata !DIExpression()), !dbg !7163
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !7162, metadata !DIExpression()), !dbg !7163
+  %cmp = icmp eq i64 %__n, 0, !dbg !7164
+  br i1 %cmp, label %return, label %if.end, !dbg !7166
 
 if.end:                                           ; preds = %entry
-  tail call void @llvm.memcpy.p0i8.p0i8.i64(i8* align 1 %__s1, i8* align 1 %__s2, i64 %__n, i1 false), !dbg !7165
-  br label %return, !dbg !7166
+  tail call void @llvm.memcpy.p0i8.p0i8.i64(i8* align 1 %__s1, i8* align 1 %__s2, i64 %__n, i1 false), !dbg !7167
+  br label %return, !dbg !7168
 
 return:                                           ; preds = %entry, %if.end
-  ret i8* %__s1, !dbg !7167
+  ret i8* %__s1, !dbg !7169
 }
 
 ; Function Attrs: nounwind uwtable
-define available_externally void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_lengthEm(%"class.std::__cxx11::basic_string"* %this, i64 %__length) local_unnamed_addr #7 align 2 !dbg !7168 {
+define available_externally void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_lengthEm(%"class.std::__cxx11::basic_string"* %this, i64 %__length) local_unnamed_addr #7 align 2 !dbg !7170 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !7171, metadata !DIExpression()), !dbg !7173
-  call void @llvm.dbg.value(metadata i64 %__length, metadata !7172, metadata !DIExpression()), !dbg !7173
-  %_M_string_length = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %this, i64 0, i32 1, !dbg !7174
-  store i64 %__length, i64* %_M_string_length, align 8, !dbg !7175, !tbaa !7176
-  ret void, !dbg !7177
+  call void @llvm.dbg.value(metadata %"class.std::__cxx11::basic_string"* %this, metadata !7173, metadata !DIExpression()), !dbg !7175
+  call void @llvm.dbg.value(metadata i64 %__length, metadata !7174, metadata !DIExpression()), !dbg !7175
+  %_M_string_length = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %this, i64 0, i32 1, !dbg !7176
+  store i64 %__length, i64* %_M_string_length, align 8, !dbg !7177, !tbaa !7178
+  ret void, !dbg !7179
 }
 
 ; Function Attrs: argmemonly nofree nounwind readonly
 declare i64 @strlen(i8* nocapture) local_unnamed_addr #23
 
 ; Function Attrs: uwtable
-define linkonce_odr void @_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE9constructIS2_JRKS2_EEEvRS3_PT_DpOT0_(%"class.std::allocator.8"* dereferenceable(1) %__a, %"class.ILLIXR_AUDIO::Sound"** %__p, %"class.ILLIXR_AUDIO::Sound"** dereferenceable(8) %__args) local_unnamed_addr #0 comdat align 2 !dbg !7178 {
+define linkonce_odr void @_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE9constructIS2_JRKS2_EEEvRS3_PT_DpOT0_(%"class.std::allocator.8"* dereferenceable(1) %__a, %"class.ILLIXR_AUDIO::Sound"** %__p, %"class.ILLIXR_AUDIO::Sound"** dereferenceable(8) %__args) local_unnamed_addr #0 comdat align 2 !dbg !7180 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::allocator.8"* %__a, metadata !7188, metadata !DIExpression()), !dbg !7191
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__p, metadata !7189, metadata !DIExpression()), !dbg !7191
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__args, metadata !7190, metadata !DIExpression()), !dbg !7191
-  %0 = bitcast %"class.std::allocator.8"* %__a to %"class.__gnu_cxx::new_allocator.9"*, !dbg !7192
-  %call = tail call dereferenceable(8) %"class.ILLIXR_AUDIO::Sound"** @_ZSt7forwardIRKPN12ILLIXR_AUDIO5SoundEEOT_RNSt16remove_referenceIS5_E4typeE(%"class.ILLIXR_AUDIO::Sound"** nonnull dereferenceable(8) %__args) #24, !dbg !7193
-  tail call void @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE9constructIS3_JRKS3_EEEvPT_DpOT0_(%"class.__gnu_cxx::new_allocator.9"* nonnull %0, %"class.ILLIXR_AUDIO::Sound"** %__p, %"class.ILLIXR_AUDIO::Sound"** nonnull dereferenceable(8) %call), !dbg !7194
-  ret void, !dbg !7195
+  call void @llvm.dbg.value(metadata %"class.std::allocator.8"* %__a, metadata !7190, metadata !DIExpression()), !dbg !7193
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__p, metadata !7191, metadata !DIExpression()), !dbg !7193
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__args, metadata !7192, metadata !DIExpression()), !dbg !7193
+  %0 = bitcast %"class.std::allocator.8"* %__a to %"class.__gnu_cxx::new_allocator.9"*, !dbg !7194
+  %call = tail call dereferenceable(8) %"class.ILLIXR_AUDIO::Sound"** @_ZSt7forwardIRKPN12ILLIXR_AUDIO5SoundEEOT_RNSt16remove_referenceIS5_E4typeE(%"class.ILLIXR_AUDIO::Sound"** nonnull dereferenceable(8) %__args) #24, !dbg !7195
+  tail call void @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE9constructIS3_JRKS3_EEEvPT_DpOT0_(%"class.__gnu_cxx::new_allocator.9"* nonnull %0, %"class.ILLIXR_AUDIO::Sound"** %__p, %"class.ILLIXR_AUDIO::Sound"** nonnull dereferenceable(8) %call), !dbg !7196
+  ret void, !dbg !7197
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr void @_ZNSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_(%"class.std::vector.6"* %this, %"class.ILLIXR_AUDIO::Sound"** dereferenceable(8) %__args) local_unnamed_addr #0 comdat align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !7196 {
+define linkonce_odr void @_ZNSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_(%"class.std::vector.6"* %this, %"class.ILLIXR_AUDIO::Sound"** dereferenceable(8) %__args) local_unnamed_addr #0 comdat align 2 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) !dbg !7198 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %this, metadata !7202, metadata !DIExpression()), !dbg !7207
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__args, metadata !7203, metadata !DIExpression()), !dbg !7207
-  %call = tail call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE12_M_check_lenEmPKc(%"class.std::vector.6"* %this, i64 1, i8* getelementptr inbounds ([28 x i8], [28 x i8]* @.str.15, i64 0, i64 0)), !dbg !7208
-  call void @llvm.dbg.value(metadata i64 %call, metadata !7204, metadata !DIExpression()), !dbg !7207
-  %0 = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %this, i64 0, i32 0, !dbg !7209
-  %call2 = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE11_M_allocateEm(%"struct.std::_Vector_base.7"* %0, i64 %call), !dbg !7209
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %call2, metadata !7205, metadata !DIExpression()), !dbg !7207
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %call2, metadata !7206, metadata !DIExpression()), !dbg !7207
-  %1 = bitcast %"class.std::vector.6"* %this to %"class.std::allocator.8"*, !dbg !7210
-  %call3 = tail call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE4sizeEv(%"class.std::vector.6"* %this) #24, !dbg !7212
-  %add.ptr = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %call2, i64 %call3, !dbg !7213
-  %call4 = tail call dereferenceable(8) %"class.ILLIXR_AUDIO::Sound"** @_ZSt7forwardIRKPN12ILLIXR_AUDIO5SoundEEOT_RNSt16remove_referenceIS5_E4typeE(%"class.ILLIXR_AUDIO::Sound"** nonnull dereferenceable(8) %__args) #24, !dbg !7214
+  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %this, metadata !7204, metadata !DIExpression()), !dbg !7209
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__args, metadata !7205, metadata !DIExpression()), !dbg !7209
+  %call = tail call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE12_M_check_lenEmPKc(%"class.std::vector.6"* %this, i64 1, i8* getelementptr inbounds ([28 x i8], [28 x i8]* @.str.15, i64 0, i64 0)), !dbg !7210
+  call void @llvm.dbg.value(metadata i64 %call, metadata !7206, metadata !DIExpression()), !dbg !7209
+  %0 = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %this, i64 0, i32 0, !dbg !7211
+  %call2 = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE11_M_allocateEm(%"struct.std::_Vector_base.7"* %0, i64 %call), !dbg !7211
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %call2, metadata !7207, metadata !DIExpression()), !dbg !7209
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %call2, metadata !7208, metadata !DIExpression()), !dbg !7209
+  %1 = bitcast %"class.std::vector.6"* %this to %"class.std::allocator.8"*, !dbg !7212
+  %call3 = tail call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE4sizeEv(%"class.std::vector.6"* %this) #24, !dbg !7214
+  %add.ptr = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %call2, i64 %call3, !dbg !7215
+  %call4 = tail call dereferenceable(8) %"class.ILLIXR_AUDIO::Sound"** @_ZSt7forwardIRKPN12ILLIXR_AUDIO5SoundEEOT_RNSt16remove_referenceIS5_E4typeE(%"class.ILLIXR_AUDIO::Sound"** nonnull dereferenceable(8) %__args) #24, !dbg !7216
   invoke void @_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE9constructIS2_JRKS2_EEEvRS3_PT_DpOT0_(%"class.std::allocator.8"* dereferenceable(1) %1, %"class.ILLIXR_AUDIO::Sound"** %add.ptr, %"class.ILLIXR_AUDIO::Sound"** nonnull dereferenceable(8) %call4)
-          to label %invoke.cont unwind label %lpad, !dbg !7215
+          to label %invoke.cont unwind label %lpad, !dbg !7217
 
 invoke.cont:                                      ; preds = %entry
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** null, metadata !7206, metadata !DIExpression()), !dbg !7207
-  %_M_start = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %this, i64 0, i32 0, i32 0, i32 0, !dbg !7216
-  %2 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start, align 8, !dbg !7216, !tbaa !4656
-  %_M_finish = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %this, i64 0, i32 0, i32 0, i32 1, !dbg !7217
-  %3 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_finish, align 8, !dbg !7217, !tbaa !4652
-  %call7 = tail call dereferenceable(1) %"class.std::allocator.8"* @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base.7"* %0) #24, !dbg !7218
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** null, metadata !7208, metadata !DIExpression()), !dbg !7209
+  %_M_start = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %this, i64 0, i32 0, i32 0, i32 0, !dbg !7218
+  %2 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start, align 8, !dbg !7218, !tbaa !4656
+  %_M_finish = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %this, i64 0, i32 0, i32 0, i32 1, !dbg !7219
+  %3 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_finish, align 8, !dbg !7219, !tbaa !4652
+  %call7 = tail call dereferenceable(1) %"class.std::allocator.8"* @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base.7"* %0) #24, !dbg !7220
   %call9 = invoke %"class.ILLIXR_AUDIO::Sound"** @_ZSt34__uninitialized_move_if_noexcept_aIPPN12ILLIXR_AUDIO5SoundES3_SaIS2_EET0_T_S6_S5_RT1_(%"class.ILLIXR_AUDIO::Sound"** %2, %"class.ILLIXR_AUDIO::Sound"** %3, %"class.ILLIXR_AUDIO::Sound"** %call2, %"class.std::allocator.8"* nonnull dereferenceable(1) %call7)
-          to label %invoke.cont8 unwind label %lpad, !dbg !7219
+          to label %invoke.cont8 unwind label %lpad, !dbg !7221
 
 invoke.cont8:                                     ; preds = %invoke.cont
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %call9, metadata !7206, metadata !DIExpression()), !dbg !7207
-  %incdec.ptr = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %call9, i64 1, !dbg !7220
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %incdec.ptr, metadata !7206, metadata !DIExpression()), !dbg !7207
-  %4 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start, align 8, !dbg !7221, !tbaa !4656
-  %5 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_finish, align 8, !dbg !7222, !tbaa !4652
-  %call23 = tail call dereferenceable(1) %"class.std::allocator.8"* @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base.7"* nonnull %0) #24, !dbg !7223
-  tail call void @_ZSt8_DestroyIPPN12ILLIXR_AUDIO5SoundES2_EvT_S4_RSaIT0_E(%"class.ILLIXR_AUDIO::Sound"** %4, %"class.ILLIXR_AUDIO::Sound"** %5, %"class.std::allocator.8"* nonnull dereferenceable(1) %call23), !dbg !7224
-  %6 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start, align 8, !dbg !7225, !tbaa !4656
-  %_M_end_of_storage = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %this, i64 0, i32 0, i32 0, i32 2, !dbg !7226
-  %7 = bitcast %"class.ILLIXR_AUDIO::Sound"*** %_M_end_of_storage to i64*, !dbg !7226
-  %8 = load i64, i64* %7, align 8, !dbg !7226, !tbaa !4801
-  %sub.ptr.rhs.cast = ptrtoint %"class.ILLIXR_AUDIO::Sound"** %6 to i64, !dbg !7227
-  %sub.ptr.sub = sub i64 %8, %sub.ptr.rhs.cast, !dbg !7227
-  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 3, !dbg !7227
-  tail call void @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE13_M_deallocateEPS2_m(%"struct.std::_Vector_base.7"* nonnull %0, %"class.ILLIXR_AUDIO::Sound"** %6, i64 %sub.ptr.div), !dbg !7228
-  store %"class.ILLIXR_AUDIO::Sound"** %call2, %"class.ILLIXR_AUDIO::Sound"*** %_M_start, align 8, !dbg !7229, !tbaa !4656
-  store %"class.ILLIXR_AUDIO::Sound"** %incdec.ptr, %"class.ILLIXR_AUDIO::Sound"*** %_M_finish, align 8, !dbg !7230, !tbaa !4652
-  %add.ptr33 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %call2, i64 %call, !dbg !7231
-  store %"class.ILLIXR_AUDIO::Sound"** %add.ptr33, %"class.ILLIXR_AUDIO::Sound"*** %_M_end_of_storage, align 8, !dbg !7232, !tbaa !4801
-  ret void, !dbg !7233
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %call9, metadata !7208, metadata !DIExpression()), !dbg !7209
+  %incdec.ptr = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %call9, i64 1, !dbg !7222
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %incdec.ptr, metadata !7208, metadata !DIExpression()), !dbg !7209
+  %4 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start, align 8, !dbg !7223, !tbaa !4656
+  %5 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_finish, align 8, !dbg !7224, !tbaa !4652
+  %call23 = tail call dereferenceable(1) %"class.std::allocator.8"* @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base.7"* nonnull %0) #24, !dbg !7225
+  tail call void @_ZSt8_DestroyIPPN12ILLIXR_AUDIO5SoundES2_EvT_S4_RSaIT0_E(%"class.ILLIXR_AUDIO::Sound"** %4, %"class.ILLIXR_AUDIO::Sound"** %5, %"class.std::allocator.8"* nonnull dereferenceable(1) %call23), !dbg !7226
+  %6 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start, align 8, !dbg !7227, !tbaa !4656
+  %_M_end_of_storage = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %this, i64 0, i32 0, i32 0, i32 2, !dbg !7228
+  %7 = bitcast %"class.ILLIXR_AUDIO::Sound"*** %_M_end_of_storage to i64*, !dbg !7228
+  %8 = load i64, i64* %7, align 8, !dbg !7228, !tbaa !4801
+  %sub.ptr.rhs.cast = ptrtoint %"class.ILLIXR_AUDIO::Sound"** %6 to i64, !dbg !7229
+  %sub.ptr.sub = sub i64 %8, %sub.ptr.rhs.cast, !dbg !7229
+  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 3, !dbg !7229
+  tail call void @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE13_M_deallocateEPS2_m(%"struct.std::_Vector_base.7"* nonnull %0, %"class.ILLIXR_AUDIO::Sound"** %6, i64 %sub.ptr.div), !dbg !7230
+  store %"class.ILLIXR_AUDIO::Sound"** %call2, %"class.ILLIXR_AUDIO::Sound"*** %_M_start, align 8, !dbg !7231, !tbaa !4656
+  store %"class.ILLIXR_AUDIO::Sound"** %incdec.ptr, %"class.ILLIXR_AUDIO::Sound"*** %_M_finish, align 8, !dbg !7232, !tbaa !4652
+  %add.ptr33 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %call2, i64 %call, !dbg !7233
+  store %"class.ILLIXR_AUDIO::Sound"** %add.ptr33, %"class.ILLIXR_AUDIO::Sound"*** %_M_end_of_storage, align 8, !dbg !7234, !tbaa !4801
+  ret void, !dbg !7235
 
 lpad:                                             ; preds = %invoke.cont, %entry
-  %__new_finish.0 = phi %"class.ILLIXR_AUDIO::Sound"** [ null, %invoke.cont ], [ %call2, %entry ], !dbg !7207
+  %__new_finish.0 = phi %"class.ILLIXR_AUDIO::Sound"** [ null, %invoke.cont ], [ %call2, %entry ], !dbg !7209
   %9 = landingpad { i8*, i32 }
-          catch i8* null, !dbg !7234
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__new_finish.0, metadata !7206, metadata !DIExpression()), !dbg !7207
-  %10 = extractvalue { i8*, i32 } %9, 0, !dbg !7234
-  %11 = tail call i8* @__cxa_begin_catch(i8* %10) #24, !dbg !7235
-  %tobool = icmp eq %"class.ILLIXR_AUDIO::Sound"** %__new_finish.0, null, !dbg !7236
-  br i1 %tobool, label %if.then, label %if.else, !dbg !7239
+          catch i8* null, !dbg !7236
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__new_finish.0, metadata !7208, metadata !DIExpression()), !dbg !7209
+  %10 = extractvalue { i8*, i32 } %9, 0, !dbg !7236
+  %11 = tail call i8* @__cxa_begin_catch(i8* %10) #24, !dbg !7237
+  %tobool = icmp eq %"class.ILLIXR_AUDIO::Sound"** %__new_finish.0, null, !dbg !7238
+  br i1 %tobool, label %if.then, label %if.else, !dbg !7241
 
 if.then:                                          ; preds = %lpad
-  %call11 = tail call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE4sizeEv(%"class.std::vector.6"* %this) #24, !dbg !7240
-  %add.ptr12 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %call2, i64 %call11, !dbg !7241
+  %call11 = tail call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE4sizeEv(%"class.std::vector.6"* %this) #24, !dbg !7242
+  %add.ptr12 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %call2, i64 %call11, !dbg !7243
   invoke void @_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE7destroyIS2_EEvRS3_PT_(%"class.std::allocator.8"* dereferenceable(1) %1, %"class.ILLIXR_AUDIO::Sound"** %add.ptr12)
-          to label %if.end unwind label %lpad13, !dbg !7242
+          to label %if.end unwind label %lpad13, !dbg !7244
 
 lpad13:                                           ; preds = %invoke.cont17, %if.end, %if.else, %if.then
   %12 = landingpad { i8*, i32 }
-          cleanup, !dbg !7243
+          cleanup, !dbg !7245
   invoke void @__cxa_end_catch()
-          to label %invoke.cont18 unwind label %terminate.lpad, !dbg !7244
+          to label %invoke.cont18 unwind label %terminate.lpad, !dbg !7246
 
 if.else:                                          ; preds = %lpad
-  %call15 = tail call dereferenceable(1) %"class.std::allocator.8"* @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base.7"* %0) #24, !dbg !7245
+  %call15 = tail call dereferenceable(1) %"class.std::allocator.8"* @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base.7"* %0) #24, !dbg !7247
   invoke void @_ZSt8_DestroyIPPN12ILLIXR_AUDIO5SoundES2_EvT_S4_RSaIT0_E(%"class.ILLIXR_AUDIO::Sound"** %call2, %"class.ILLIXR_AUDIO::Sound"** nonnull %__new_finish.0, %"class.std::allocator.8"* nonnull dereferenceable(1) %call15)
-          to label %if.end unwind label %lpad13, !dbg !7246
+          to label %if.end unwind label %lpad13, !dbg !7248
 
 if.end:                                           ; preds = %if.else, %if.then
   invoke void @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE13_M_deallocateEPS2_m(%"struct.std::_Vector_base.7"* %0, %"class.ILLIXR_AUDIO::Sound"** %call2, i64 %call)
-          to label %invoke.cont17 unwind label %lpad13, !dbg !7247
+          to label %invoke.cont17 unwind label %lpad13, !dbg !7249
 
 invoke.cont17:                                    ; preds = %if.end
   invoke void @__cxa_rethrow() #29
-          to label %unreachable unwind label %lpad13, !dbg !7248
+          to label %unreachable unwind label %lpad13, !dbg !7250
 
 invoke.cont18:                                    ; preds = %lpad13
-  resume { i8*, i32 } %12, !dbg !7233
+  resume { i8*, i32 } %12, !dbg !7235
 
 terminate.lpad:                                   ; preds = %lpad13
   %13 = landingpad { i8*, i32 }
-          catch i8* null, !dbg !7244
-  %14 = extractvalue { i8*, i32 } %13, 0, !dbg !7244
-  tail call void @__clang_call_terminate(i8* %14) #25, !dbg !7244
-  unreachable, !dbg !7244
+          catch i8* null, !dbg !7246
+  %14 = extractvalue { i8*, i32 } %13, 0, !dbg !7246
+  tail call void @__clang_call_terminate(i8* %14) #25, !dbg !7246
+  unreachable, !dbg !7246
 
 unreachable:                                      ; preds = %invoke.cont17
   unreachable
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE9constructIS3_JRKS3_EEEvPT_DpOT0_(%"class.__gnu_cxx::new_allocator.9"* %this, %"class.ILLIXR_AUDIO::Sound"** %__p, %"class.ILLIXR_AUDIO::Sound"** dereferenceable(8) %__args) local_unnamed_addr #7 comdat align 2 !dbg !7249 {
+define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE9constructIS3_JRKS3_EEEvPT_DpOT0_(%"class.__gnu_cxx::new_allocator.9"* %this, %"class.ILLIXR_AUDIO::Sound"** %__p, %"class.ILLIXR_AUDIO::Sound"** dereferenceable(8) %__args) local_unnamed_addr #7 comdat align 2 !dbg !7251 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.9"* %this, metadata !7254, metadata !DIExpression()), !dbg !7257
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__p, metadata !7255, metadata !DIExpression()), !dbg !7257
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__args, metadata !7256, metadata !DIExpression()), !dbg !7257
-  %call = tail call dereferenceable(8) %"class.ILLIXR_AUDIO::Sound"** @_ZSt7forwardIRKPN12ILLIXR_AUDIO5SoundEEOT_RNSt16remove_referenceIS5_E4typeE(%"class.ILLIXR_AUDIO::Sound"** nonnull dereferenceable(8) %__args) #24, !dbg !7258
-  %0 = bitcast %"class.ILLIXR_AUDIO::Sound"** %call to i64*, !dbg !7258
-  %1 = load i64, i64* %0, align 8, !dbg !7258, !tbaa !3171
-  %2 = bitcast %"class.ILLIXR_AUDIO::Sound"** %__p to i64*, !dbg !7259
-  store i64 %1, i64* %2, align 8, !dbg !7259, !tbaa !3171
-  ret void, !dbg !7260
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.9"* %this, metadata !7256, metadata !DIExpression()), !dbg !7259
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__p, metadata !7257, metadata !DIExpression()), !dbg !7259
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__args, metadata !7258, metadata !DIExpression()), !dbg !7259
+  %call = tail call dereferenceable(8) %"class.ILLIXR_AUDIO::Sound"** @_ZSt7forwardIRKPN12ILLIXR_AUDIO5SoundEEOT_RNSt16remove_referenceIS5_E4typeE(%"class.ILLIXR_AUDIO::Sound"** nonnull dereferenceable(8) %__args) #24, !dbg !7260
+  %0 = bitcast %"class.ILLIXR_AUDIO::Sound"** %call to i64*, !dbg !7260
+  %1 = load i64, i64* %0, align 8, !dbg !7260, !tbaa !3171
+  %2 = bitcast %"class.ILLIXR_AUDIO::Sound"** %__p to i64*, !dbg !7261
+  store i64 %1, i64* %2, align 8, !dbg !7261, !tbaa !3171
+  ret void, !dbg !7262
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(8) %"class.ILLIXR_AUDIO::Sound"** @_ZSt7forwardIRKPN12ILLIXR_AUDIO5SoundEEOT_RNSt16remove_referenceIS5_E4typeE(%"class.ILLIXR_AUDIO::Sound"** dereferenceable(8) %__t) local_unnamed_addr #7 comdat !dbg !7261 {
+define linkonce_odr dereferenceable(8) %"class.ILLIXR_AUDIO::Sound"** @_ZSt7forwardIRKPN12ILLIXR_AUDIO5SoundEEOT_RNSt16remove_referenceIS5_E4typeE(%"class.ILLIXR_AUDIO::Sound"** dereferenceable(8) %__t) local_unnamed_addr #7 comdat !dbg !7263 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__t, metadata !7270, metadata !DIExpression()), !dbg !7271
-  ret %"class.ILLIXR_AUDIO::Sound"** %__t, !dbg !7272
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__t, metadata !7272, metadata !DIExpression()), !dbg !7273
+  ret %"class.ILLIXR_AUDIO::Sound"** %__t, !dbg !7274
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE12_M_check_lenEmPKc(%"class.std::vector.6"* %this, i64 %__n, i8* %__s) local_unnamed_addr #0 comdat align 2 !dbg !7273 {
+define linkonce_odr i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE12_M_check_lenEmPKc(%"class.std::vector.6"* %this, i64 %__n, i8* %__s) local_unnamed_addr #0 comdat align 2 !dbg !7275 {
 entry:
   %__n.addr = alloca i64, align 8
   %ref.tmp = alloca i64, align 8
-  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %this, metadata !7275, metadata !DIExpression()), !dbg !7279
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !7276, metadata !DIExpression()), !dbg !7279
-  store i64 %__n, i64* %__n.addr, align 8, !tbaa !5796
-  call void @llvm.dbg.value(metadata i8* %__s, metadata !7277, metadata !DIExpression()), !dbg !7279
-  %call = tail call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE8max_sizeEv(%"class.std::vector.6"* %this) #24, !dbg !7280
-  %call2 = tail call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE4sizeEv(%"class.std::vector.6"* %this) #24, !dbg !7282
-  %sub = sub i64 %call, %call2, !dbg !7283
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !7276, metadata !DIExpression()), !dbg !7279
-  %cmp = icmp ult i64 %sub, %__n, !dbg !7284
-  br i1 %cmp, label %if.then, label %if.end, !dbg !7285
+  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %this, metadata !7277, metadata !DIExpression()), !dbg !7281
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !7278, metadata !DIExpression()), !dbg !7281
+  store i64 %__n, i64* %__n.addr, align 8, !tbaa !5798
+  call void @llvm.dbg.value(metadata i8* %__s, metadata !7279, metadata !DIExpression()), !dbg !7281
+  %call = tail call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE8max_sizeEv(%"class.std::vector.6"* %this) #24, !dbg !7282
+  %call2 = tail call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE4sizeEv(%"class.std::vector.6"* %this) #24, !dbg !7284
+  %sub = sub i64 %call, %call2, !dbg !7285
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !7278, metadata !DIExpression()), !dbg !7281
+  %cmp = icmp ult i64 %sub, %__n, !dbg !7286
+  br i1 %cmp, label %if.then, label %if.end, !dbg !7287
 
 if.then:                                          ; preds = %entry
-  tail call void @_ZSt20__throw_length_errorPKc(i8* %__s) #29, !dbg !7286
-  unreachable, !dbg !7286
+  tail call void @_ZSt20__throw_length_errorPKc(i8* %__s) #29, !dbg !7288
+  unreachable, !dbg !7288
 
 if.end:                                           ; preds = %entry
-  %call3 = tail call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE4sizeEv(%"class.std::vector.6"* %this) #24, !dbg !7287
-  %0 = bitcast i64* %ref.tmp to i8*, !dbg !7288
-  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %0) #24, !dbg !7288
-  %call4 = tail call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE4sizeEv(%"class.std::vector.6"* %this) #24, !dbg !7288
-  store i64 %call4, i64* %ref.tmp, align 8, !dbg !7288, !tbaa !5796
-  call void @llvm.dbg.value(metadata i64* %__n.addr, metadata !7276, metadata !DIExpression(DW_OP_deref)), !dbg !7279
-  %call5 = call dereferenceable(8) i64* @_ZSt3maxImERKT_S2_S2_(i64* nonnull dereferenceable(8) %ref.tmp, i64* nonnull dereferenceable(8) %__n.addr), !dbg !7289
-  %1 = load i64, i64* %call5, align 8, !dbg !7289, !tbaa !5796
-  %add = add i64 %1, %call3, !dbg !7290
-  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %0) #24, !dbg !7287
-  call void @llvm.dbg.value(metadata i64 %add, metadata !7278, metadata !DIExpression()), !dbg !7279
-  %call6 = call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE4sizeEv(%"class.std::vector.6"* %this) #24, !dbg !7291
-  %cmp7 = icmp ult i64 %add, %call6, !dbg !7292
-  br i1 %cmp7, label %cond.true, label %lor.lhs.false, !dbg !7293
+  %call3 = tail call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE4sizeEv(%"class.std::vector.6"* %this) #24, !dbg !7289
+  %0 = bitcast i64* %ref.tmp to i8*, !dbg !7290
+  call void @llvm.lifetime.start.p0i8(i64 8, i8* nonnull %0) #24, !dbg !7290
+  %call4 = tail call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE4sizeEv(%"class.std::vector.6"* %this) #24, !dbg !7290
+  store i64 %call4, i64* %ref.tmp, align 8, !dbg !7290, !tbaa !5798
+  call void @llvm.dbg.value(metadata i64* %__n.addr, metadata !7278, metadata !DIExpression(DW_OP_deref)), !dbg !7281
+  %call5 = call dereferenceable(8) i64* @_ZSt3maxImERKT_S2_S2_(i64* nonnull dereferenceable(8) %ref.tmp, i64* nonnull dereferenceable(8) %__n.addr), !dbg !7291
+  %1 = load i64, i64* %call5, align 8, !dbg !7291, !tbaa !5798
+  %add = add i64 %1, %call3, !dbg !7292
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* nonnull %0) #24, !dbg !7289
+  call void @llvm.dbg.value(metadata i64 %add, metadata !7280, metadata !DIExpression()), !dbg !7281
+  %call6 = call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE4sizeEv(%"class.std::vector.6"* %this) #24, !dbg !7293
+  %cmp7 = icmp ult i64 %add, %call6, !dbg !7294
+  br i1 %cmp7, label %cond.true, label %lor.lhs.false, !dbg !7295
 
 lor.lhs.false:                                    ; preds = %if.end
-  %call8 = call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE8max_sizeEv(%"class.std::vector.6"* %this) #24, !dbg !7294
-  %cmp9 = icmp ugt i64 %add, %call8, !dbg !7295
-  br i1 %cmp9, label %cond.true, label %cond.end, !dbg !7296
+  %call8 = call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE8max_sizeEv(%"class.std::vector.6"* %this) #24, !dbg !7296
+  %cmp9 = icmp ugt i64 %add, %call8, !dbg !7297
+  br i1 %cmp9, label %cond.true, label %cond.end, !dbg !7298
 
 cond.true:                                        ; preds = %lor.lhs.false, %if.end
-  %call10 = call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE8max_sizeEv(%"class.std::vector.6"* %this) #24, !dbg !7297
-  br label %cond.end, !dbg !7296
+  %call10 = call i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE8max_sizeEv(%"class.std::vector.6"* %this) #24, !dbg !7299
+  br label %cond.end, !dbg !7298
 
 cond.end:                                         ; preds = %lor.lhs.false, %cond.true
-  %cond = phi i64 [ %call10, %cond.true ], [ %add, %lor.lhs.false ], !dbg !7296
-  ret i64 %cond, !dbg !7298
+  %cond = phi i64 [ %call10, %cond.true ], [ %add, %lor.lhs.false ], !dbg !7298
+  ret i64 %cond, !dbg !7300
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE11_M_allocateEm(%"struct.std::_Vector_base.7"* %this, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !7299 {
+define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE11_M_allocateEm(%"struct.std::_Vector_base.7"* %this, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !7301 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base.7"* %this, metadata !7301, metadata !DIExpression()), !dbg !7303
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !7302, metadata !DIExpression()), !dbg !7303
-  %cmp = icmp eq i64 %__n, 0, !dbg !7304
-  br i1 %cmp, label %cond.end, label %cond.true, !dbg !7305
+  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base.7"* %this, metadata !7303, metadata !DIExpression()), !dbg !7305
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !7304, metadata !DIExpression()), !dbg !7305
+  %cmp = icmp eq i64 %__n, 0, !dbg !7306
+  br i1 %cmp, label %cond.end, label %cond.true, !dbg !7307
 
 cond.true:                                        ; preds = %entry
-  %0 = bitcast %"struct.std::_Vector_base.7"* %this to %"class.std::allocator.8"*, !dbg !7306
-  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE8allocateERS3_m(%"class.std::allocator.8"* dereferenceable(1) %0, i64 %__n), !dbg !7307
-  br label %cond.end, !dbg !7305
+  %0 = bitcast %"struct.std::_Vector_base.7"* %this to %"class.std::allocator.8"*, !dbg !7308
+  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE8allocateERS3_m(%"class.std::allocator.8"* dereferenceable(1) %0, i64 %__n), !dbg !7309
+  br label %cond.end, !dbg !7307
 
 cond.end:                                         ; preds = %entry, %cond.true
-  %cond = phi %"class.ILLIXR_AUDIO::Sound"** [ %call, %cond.true ], [ null, %entry ], !dbg !7305
-  ret %"class.ILLIXR_AUDIO::Sound"** %cond, !dbg !7308
+  %cond = phi %"class.ILLIXR_AUDIO::Sound"** [ %call, %cond.true ], [ null, %entry ], !dbg !7307
+  ret %"class.ILLIXR_AUDIO::Sound"** %cond, !dbg !7310
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZSt34__uninitialized_move_if_noexcept_aIPPN12ILLIXR_AUDIO5SoundES3_SaIS2_EET0_T_S6_S5_RT1_(%"class.ILLIXR_AUDIO::Sound"** %__first, %"class.ILLIXR_AUDIO::Sound"** %__last, %"class.ILLIXR_AUDIO::Sound"** %__result, %"class.std::allocator.8"* dereferenceable(1) %__alloc) local_unnamed_addr #18 comdat !dbg !7309 {
+define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZSt34__uninitialized_move_if_noexcept_aIPPN12ILLIXR_AUDIO5SoundES3_SaIS2_EET0_T_S6_S5_RT1_(%"class.ILLIXR_AUDIO::Sound"** %__first, %"class.ILLIXR_AUDIO::Sound"** %__last, %"class.ILLIXR_AUDIO::Sound"** %__result, %"class.std::allocator.8"* dereferenceable(1) %__alloc) local_unnamed_addr #18 comdat !dbg !7311 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first, metadata !7313, metadata !DIExpression()), !dbg !7321
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last, metadata !7314, metadata !DIExpression()), !dbg !7321
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__result, metadata !7315, metadata !DIExpression()), !dbg !7321
-  call void @llvm.dbg.value(metadata %"class.std::allocator.8"* %__alloc, metadata !7316, metadata !DIExpression()), !dbg !7321
-  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt32__make_move_if_noexcept_iteratorIPPN12ILLIXR_AUDIO5SoundESt13move_iteratorIS3_EET0_T_(%"class.ILLIXR_AUDIO::Sound"** %__first), !dbg !7322
-  %call2 = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt32__make_move_if_noexcept_iteratorIPPN12ILLIXR_AUDIO5SoundESt13move_iteratorIS3_EET0_T_(%"class.ILLIXR_AUDIO::Sound"** %__last), !dbg !7323
-  %call6 = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt22__uninitialized_copy_aISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES4_S3_ET0_T_S7_S6_RSaIT1_E(%"class.ILLIXR_AUDIO::Sound"** %call, %"class.ILLIXR_AUDIO::Sound"** %call2, %"class.ILLIXR_AUDIO::Sound"** %__result, %"class.std::allocator.8"* nonnull dereferenceable(1) %__alloc), !dbg !7324
-  ret %"class.ILLIXR_AUDIO::Sound"** %call6, !dbg !7325
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first, metadata !7315, metadata !DIExpression()), !dbg !7323
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last, metadata !7316, metadata !DIExpression()), !dbg !7323
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__result, metadata !7317, metadata !DIExpression()), !dbg !7323
+  call void @llvm.dbg.value(metadata %"class.std::allocator.8"* %__alloc, metadata !7318, metadata !DIExpression()), !dbg !7323
+  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt32__make_move_if_noexcept_iteratorIPPN12ILLIXR_AUDIO5SoundESt13move_iteratorIS3_EET0_T_(%"class.ILLIXR_AUDIO::Sound"** %__first), !dbg !7324
+  %call2 = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt32__make_move_if_noexcept_iteratorIPPN12ILLIXR_AUDIO5SoundESt13move_iteratorIS3_EET0_T_(%"class.ILLIXR_AUDIO::Sound"** %__last), !dbg !7325
+  %call6 = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt22__uninitialized_copy_aISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES4_S3_ET0_T_S7_S6_RSaIT1_E(%"class.ILLIXR_AUDIO::Sound"** %call, %"class.ILLIXR_AUDIO::Sound"** %call2, %"class.ILLIXR_AUDIO::Sound"** %__result, %"class.std::allocator.8"* nonnull dereferenceable(1) %__alloc), !dbg !7326
+  ret %"class.ILLIXR_AUDIO::Sound"** %call6, !dbg !7327
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(1) %"class.std::allocator.8"* @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base.7"* %this) local_unnamed_addr #7 comdat align 2 !dbg !7326 {
+define linkonce_odr dereferenceable(1) %"class.std::allocator.8"* @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base.7"* %this) local_unnamed_addr #7 comdat align 2 !dbg !7328 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base.7"* %this, metadata !7328, metadata !DIExpression()), !dbg !7329
-  %0 = bitcast %"struct.std::_Vector_base.7"* %this to %"class.std::allocator.8"*, !dbg !7330
-  ret %"class.std::allocator.8"* %0, !dbg !7331
+  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base.7"* %this, metadata !7330, metadata !DIExpression()), !dbg !7331
+  %0 = bitcast %"struct.std::_Vector_base.7"* %this to %"class.std::allocator.8"*, !dbg !7332
+  ret %"class.std::allocator.8"* %0, !dbg !7333
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr void @_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE7destroyIS2_EEvRS3_PT_(%"class.std::allocator.8"* dereferenceable(1) %__a, %"class.ILLIXR_AUDIO::Sound"** %__p) local_unnamed_addr #0 comdat align 2 !dbg !7332 {
+define linkonce_odr void @_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE7destroyIS2_EEvRS3_PT_(%"class.std::allocator.8"* dereferenceable(1) %__a, %"class.ILLIXR_AUDIO::Sound"** %__p) local_unnamed_addr #0 comdat align 2 !dbg !7334 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::allocator.8"* %__a, metadata !7338, metadata !DIExpression()), !dbg !7340
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__p, metadata !7339, metadata !DIExpression()), !dbg !7340
-  %0 = bitcast %"class.std::allocator.8"* %__a to %"class.__gnu_cxx::new_allocator.9"*, !dbg !7341
-  tail call void @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE7destroyIS3_EEvPT_(%"class.__gnu_cxx::new_allocator.9"* nonnull %0, %"class.ILLIXR_AUDIO::Sound"** %__p), !dbg !7342
-  ret void, !dbg !7343
+  call void @llvm.dbg.value(metadata %"class.std::allocator.8"* %__a, metadata !7340, metadata !DIExpression()), !dbg !7342
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__p, metadata !7341, metadata !DIExpression()), !dbg !7342
+  %0 = bitcast %"class.std::allocator.8"* %__a to %"class.__gnu_cxx::new_allocator.9"*, !dbg !7343
+  tail call void @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE7destroyIS3_EEvPT_(%"class.__gnu_cxx::new_allocator.9"* nonnull %0, %"class.ILLIXR_AUDIO::Sound"** %__p), !dbg !7344
+  ret void, !dbg !7345
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr void @_ZSt8_DestroyIPPN12ILLIXR_AUDIO5SoundES2_EvT_S4_RSaIT0_E(%"class.ILLIXR_AUDIO::Sound"** %__first, %"class.ILLIXR_AUDIO::Sound"** %__last, %"class.std::allocator.8"* dereferenceable(1)) local_unnamed_addr #18 comdat !dbg !7344 {
+define linkonce_odr void @_ZSt8_DestroyIPPN12ILLIXR_AUDIO5SoundES2_EvT_S4_RSaIT0_E(%"class.ILLIXR_AUDIO::Sound"** %__first, %"class.ILLIXR_AUDIO::Sound"** %__last, %"class.std::allocator.8"* dereferenceable(1)) local_unnamed_addr #18 comdat !dbg !7346 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first, metadata !7348, metadata !DIExpression()), !dbg !7352
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last, metadata !7349, metadata !DIExpression()), !dbg !7352
-  call void @llvm.dbg.value(metadata %"class.std::allocator.8"* %0, metadata !7350, metadata !DIExpression()), !dbg !7352
-  tail call void @_ZSt8_DestroyIPPN12ILLIXR_AUDIO5SoundEEvT_S4_(%"class.ILLIXR_AUDIO::Sound"** %__first, %"class.ILLIXR_AUDIO::Sound"** %__last), !dbg !7353
-  ret void, !dbg !7354
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first, metadata !7350, metadata !DIExpression()), !dbg !7354
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last, metadata !7351, metadata !DIExpression()), !dbg !7354
+  call void @llvm.dbg.value(metadata %"class.std::allocator.8"* %0, metadata !7352, metadata !DIExpression()), !dbg !7354
+  tail call void @_ZSt8_DestroyIPPN12ILLIXR_AUDIO5SoundEEvT_S4_(%"class.ILLIXR_AUDIO::Sound"** %__first, %"class.ILLIXR_AUDIO::Sound"** %__last), !dbg !7355
+  ret void, !dbg !7356
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr void @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE13_M_deallocateEPS2_m(%"struct.std::_Vector_base.7"* %this, %"class.ILLIXR_AUDIO::Sound"** %__p, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !7355 {
+define linkonce_odr void @_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE13_M_deallocateEPS2_m(%"struct.std::_Vector_base.7"* %this, %"class.ILLIXR_AUDIO::Sound"** %__p, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !7357 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base.7"* %this, metadata !7357, metadata !DIExpression()), !dbg !7360
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__p, metadata !7358, metadata !DIExpression()), !dbg !7360
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !7359, metadata !DIExpression()), !dbg !7360
-  %tobool = icmp eq %"class.ILLIXR_AUDIO::Sound"** %__p, null, !dbg !7361
-  br i1 %tobool, label %if.end, label %if.then, !dbg !7363
+  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base.7"* %this, metadata !7359, metadata !DIExpression()), !dbg !7362
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__p, metadata !7360, metadata !DIExpression()), !dbg !7362
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !7361, metadata !DIExpression()), !dbg !7362
+  %tobool = icmp eq %"class.ILLIXR_AUDIO::Sound"** %__p, null, !dbg !7363
+  br i1 %tobool, label %if.end, label %if.then, !dbg !7365
 
 if.then:                                          ; preds = %entry
-  %0 = bitcast %"struct.std::_Vector_base.7"* %this to %"class.std::allocator.8"*, !dbg !7364
-  tail call void @_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE10deallocateERS3_PS2_m(%"class.std::allocator.8"* dereferenceable(1) %0, %"class.ILLIXR_AUDIO::Sound"** nonnull %__p, i64 %__n), !dbg !7365
-  br label %if.end, !dbg !7365
+  %0 = bitcast %"struct.std::_Vector_base.7"* %this to %"class.std::allocator.8"*, !dbg !7366
+  tail call void @_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE10deallocateERS3_PS2_m(%"class.std::allocator.8"* dereferenceable(1) %0, %"class.ILLIXR_AUDIO::Sound"** nonnull %__p, i64 %__n), !dbg !7367
+  br label %if.end, !dbg !7367
 
 if.end:                                           ; preds = %entry, %if.then
-  ret void, !dbg !7366
+  ret void, !dbg !7368
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE8max_sizeEv(%"class.std::vector.6"* %this) local_unnamed_addr #7 comdat align 2 !dbg !7367 {
+define linkonce_odr i64 @_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE8max_sizeEv(%"class.std::vector.6"* %this) local_unnamed_addr #7 comdat align 2 !dbg !7369 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %this, metadata !7369, metadata !DIExpression()), !dbg !7370
-  %0 = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %this, i64 0, i32 0, !dbg !7371
-  %call = tail call dereferenceable(1) %"class.std::allocator.8"* @_ZNKSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base.7"* %0) #24, !dbg !7371
-  %call2 = tail call i64 @_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE8max_sizeERKS3_(%"class.std::allocator.8"* nonnull dereferenceable(1) %call) #24, !dbg !7372
-  ret i64 %call2, !dbg !7373
+  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %this, metadata !7371, metadata !DIExpression()), !dbg !7372
+  %0 = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %this, i64 0, i32 0, !dbg !7373
+  %call = tail call dereferenceable(1) %"class.std::allocator.8"* @_ZNKSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base.7"* %0) #24, !dbg !7373
+  %call2 = tail call i64 @_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE8max_sizeERKS3_(%"class.std::allocator.8"* nonnull dereferenceable(1) %call) #24, !dbg !7374
+  ret i64 %call2, !dbg !7375
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr i64 @_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE8max_sizeERKS3_(%"class.std::allocator.8"* dereferenceable(1) %__a) local_unnamed_addr #7 comdat align 2 !dbg !7374 {
+define linkonce_odr i64 @_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE8max_sizeERKS3_(%"class.std::allocator.8"* dereferenceable(1) %__a) local_unnamed_addr #7 comdat align 2 !dbg !7376 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::allocator.8"* %__a, metadata !7376, metadata !DIExpression()), !dbg !7377
-  %0 = bitcast %"class.std::allocator.8"* %__a to %"class.__gnu_cxx::new_allocator.9"*, !dbg !7378
-  %call = tail call i64 @_ZNK9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE8max_sizeEv(%"class.__gnu_cxx::new_allocator.9"* nonnull %0) #24, !dbg !7379
-  ret i64 %call, !dbg !7380
+  call void @llvm.dbg.value(metadata %"class.std::allocator.8"* %__a, metadata !7378, metadata !DIExpression()), !dbg !7379
+  %0 = bitcast %"class.std::allocator.8"* %__a to %"class.__gnu_cxx::new_allocator.9"*, !dbg !7380
+  %call = tail call i64 @_ZNK9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE8max_sizeEv(%"class.__gnu_cxx::new_allocator.9"* nonnull %0) #24, !dbg !7381
+  ret i64 %call, !dbg !7382
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr dereferenceable(1) %"class.std::allocator.8"* @_ZNKSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base.7"* %this) local_unnamed_addr #7 comdat align 2 !dbg !7381 {
+define linkonce_odr dereferenceable(1) %"class.std::allocator.8"* @_ZNKSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_get_Tp_allocatorEv(%"struct.std::_Vector_base.7"* %this) local_unnamed_addr #7 comdat align 2 !dbg !7383 {
 entry:
-  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base.7"* %this, metadata !7383, metadata !DIExpression()), !dbg !7385
-  %0 = bitcast %"struct.std::_Vector_base.7"* %this to %"class.std::allocator.8"*, !dbg !7386
-  ret %"class.std::allocator.8"* %0, !dbg !7387
+  call void @llvm.dbg.value(metadata %"struct.std::_Vector_base.7"* %this, metadata !7385, metadata !DIExpression()), !dbg !7387
+  %0 = bitcast %"struct.std::_Vector_base.7"* %this to %"class.std::allocator.8"*, !dbg !7388
+  ret %"class.std::allocator.8"* %0, !dbg !7389
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr i64 @_ZNK9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE8max_sizeEv(%"class.__gnu_cxx::new_allocator.9"* %this) local_unnamed_addr #7 comdat align 2 !dbg !7388 {
+define linkonce_odr i64 @_ZNK9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE8max_sizeEv(%"class.__gnu_cxx::new_allocator.9"* %this) local_unnamed_addr #7 comdat align 2 !dbg !7390 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.9"* %this, metadata !7390, metadata !DIExpression()), !dbg !7392
-  ret i64 2305843009213693951, !dbg !7393
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.9"* %this, metadata !7392, metadata !DIExpression()), !dbg !7394
+  ret i64 2305843009213693951, !dbg !7395
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE8allocateERS3_m(%"class.std::allocator.8"* dereferenceable(1) %__a, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !7394 {
+define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE8allocateERS3_m(%"class.std::allocator.8"* dereferenceable(1) %__a, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !7396 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::allocator.8"* %__a, metadata !7396, metadata !DIExpression()), !dbg !7398
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !7397, metadata !DIExpression()), !dbg !7398
-  %0 = bitcast %"class.std::allocator.8"* %__a to %"class.__gnu_cxx::new_allocator.9"*, !dbg !7399
-  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE8allocateEmPKv(%"class.__gnu_cxx::new_allocator.9"* nonnull %0, i64 %__n, i8* null), !dbg !7400
-  ret %"class.ILLIXR_AUDIO::Sound"** %call, !dbg !7401
+  call void @llvm.dbg.value(metadata %"class.std::allocator.8"* %__a, metadata !7398, metadata !DIExpression()), !dbg !7400
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !7399, metadata !DIExpression()), !dbg !7400
+  %0 = bitcast %"class.std::allocator.8"* %__a to %"class.__gnu_cxx::new_allocator.9"*, !dbg !7401
+  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE8allocateEmPKv(%"class.__gnu_cxx::new_allocator.9"* nonnull %0, i64 %__n, i8* null), !dbg !7402
+  ret %"class.ILLIXR_AUDIO::Sound"** %call, !dbg !7403
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE8allocateEmPKv(%"class.__gnu_cxx::new_allocator.9"* %this, i64 %__n, i8*) local_unnamed_addr #0 comdat align 2 !dbg !7402 {
+define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE8allocateEmPKv(%"class.__gnu_cxx::new_allocator.9"* %this, i64 %__n, i8*) local_unnamed_addr #0 comdat align 2 !dbg !7404 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.9"* %this, metadata !7404, metadata !DIExpression()), !dbg !7407
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !7405, metadata !DIExpression()), !dbg !7407
-  call void @llvm.dbg.value(metadata i8* %0, metadata !7406, metadata !DIExpression()), !dbg !7407
-  %call = tail call i64 @_ZNK9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE8max_sizeEv(%"class.__gnu_cxx::new_allocator.9"* %this) #24, !dbg !7408
-  %cmp = icmp ult i64 %call, %__n, !dbg !7410
-  br i1 %cmp, label %if.then, label %if.end, !dbg !7411
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.9"* %this, metadata !7406, metadata !DIExpression()), !dbg !7409
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !7407, metadata !DIExpression()), !dbg !7409
+  call void @llvm.dbg.value(metadata i8* %0, metadata !7408, metadata !DIExpression()), !dbg !7409
+  %call = tail call i64 @_ZNK9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE8max_sizeEv(%"class.__gnu_cxx::new_allocator.9"* %this) #24, !dbg !7410
+  %cmp = icmp ult i64 %call, %__n, !dbg !7412
+  br i1 %cmp, label %if.then, label %if.end, !dbg !7413
 
 if.then:                                          ; preds = %entry
-  tail call void @_ZSt17__throw_bad_allocv() #29, !dbg !7412
-  unreachable, !dbg !7412
+  tail call void @_ZSt17__throw_bad_allocv() #29, !dbg !7414
+  unreachable, !dbg !7414
 
 if.end:                                           ; preds = %entry
-  %mul = shl i64 %__n, 3, !dbg !7413
-  %call2 = tail call i8* @_Znwm(i64 %mul), !dbg !7414
-  %1 = bitcast i8* %call2 to %"class.ILLIXR_AUDIO::Sound"**, !dbg !7415
-  ret %"class.ILLIXR_AUDIO::Sound"** %1, !dbg !7416
+  %mul = shl i64 %__n, 3, !dbg !7415
+  %call2 = tail call i8* @_Znwm(i64 %mul), !dbg !7416
+  %1 = bitcast i8* %call2 to %"class.ILLIXR_AUDIO::Sound"**, !dbg !7417
+  ret %"class.ILLIXR_AUDIO::Sound"** %1, !dbg !7418
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZSt22__uninitialized_copy_aISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES4_S3_ET0_T_S7_S6_RSaIT1_E(%"class.ILLIXR_AUDIO::Sound"** %__first.coerce, %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, %"class.ILLIXR_AUDIO::Sound"** %__result, %"class.std::allocator.8"* dereferenceable(1)) local_unnamed_addr #18 comdat !dbg !7417 {
+define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZSt22__uninitialized_copy_aISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES4_S3_ET0_T_S7_S6_RSaIT1_E(%"class.ILLIXR_AUDIO::Sound"** %__first.coerce, %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, %"class.ILLIXR_AUDIO::Sound"** %__result, %"class.std::allocator.8"* dereferenceable(1)) local_unnamed_addr #18 comdat !dbg !7419 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first.coerce, metadata !7421, metadata !DIExpression()), !dbg !7427
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, metadata !7422, metadata !DIExpression()), !dbg !7427
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__result, metadata !7423, metadata !DIExpression()), !dbg !7427
-  call void @llvm.dbg.value(metadata %"class.std::allocator.8"* %0, metadata !7424, metadata !DIExpression()), !dbg !7427
-  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt18uninitialized_copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES4_ET0_T_S7_S6_(%"class.ILLIXR_AUDIO::Sound"** %__first.coerce, %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, %"class.ILLIXR_AUDIO::Sound"** %__result), !dbg !7428
-  ret %"class.ILLIXR_AUDIO::Sound"** %call, !dbg !7429
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first.coerce, metadata !7423, metadata !DIExpression()), !dbg !7429
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, metadata !7424, metadata !DIExpression()), !dbg !7429
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__result, metadata !7425, metadata !DIExpression()), !dbg !7429
+  call void @llvm.dbg.value(metadata %"class.std::allocator.8"* %0, metadata !7426, metadata !DIExpression()), !dbg !7429
+  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt18uninitialized_copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES4_ET0_T_S7_S6_(%"class.ILLIXR_AUDIO::Sound"** %__first.coerce, %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, %"class.ILLIXR_AUDIO::Sound"** %__result), !dbg !7430
+  ret %"class.ILLIXR_AUDIO::Sound"** %call, !dbg !7431
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZSt32__make_move_if_noexcept_iteratorIPPN12ILLIXR_AUDIO5SoundESt13move_iteratorIS3_EET0_T_(%"class.ILLIXR_AUDIO::Sound"** %__i) local_unnamed_addr #18 comdat !dbg !7430 {
+define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZSt32__make_move_if_noexcept_iteratorIPPN12ILLIXR_AUDIO5SoundESt13move_iteratorIS3_EET0_T_(%"class.ILLIXR_AUDIO::Sound"** %__i) local_unnamed_addr #18 comdat !dbg !7432 {
 entry:
   %retval = alloca %"class.std::move_iterator.12", align 8
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__i, metadata !7434, metadata !DIExpression()), !dbg !7437
-  call void @_ZNSt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEEC2ES3_(%"class.std::move_iterator.12"* nonnull %retval, %"class.ILLIXR_AUDIO::Sound"** %__i), !dbg !7438
-  %coerce.dive = getelementptr inbounds %"class.std::move_iterator.12", %"class.std::move_iterator.12"* %retval, i64 0, i32 0, !dbg !7439
-  %0 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %coerce.dive, align 8, !dbg !7439
-  ret %"class.ILLIXR_AUDIO::Sound"** %0, !dbg !7439
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__i, metadata !7436, metadata !DIExpression()), !dbg !7439
+  call void @_ZNSt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEEC2ES3_(%"class.std::move_iterator.12"* nonnull %retval, %"class.ILLIXR_AUDIO::Sound"** %__i), !dbg !7440
+  %coerce.dive = getelementptr inbounds %"class.std::move_iterator.12", %"class.std::move_iterator.12"* %retval, i64 0, i32 0, !dbg !7441
+  %0 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %coerce.dive, align 8, !dbg !7441
+  ret %"class.ILLIXR_AUDIO::Sound"** %0, !dbg !7441
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZSt18uninitialized_copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES4_ET0_T_S7_S6_(%"class.ILLIXR_AUDIO::Sound"** %__first.coerce, %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, %"class.ILLIXR_AUDIO::Sound"** %__result) local_unnamed_addr #18 comdat !dbg !7440 {
+define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZSt18uninitialized_copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES4_ET0_T_S7_S6_(%"class.ILLIXR_AUDIO::Sound"** %__first.coerce, %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, %"class.ILLIXR_AUDIO::Sound"** %__result) local_unnamed_addr #18 comdat !dbg !7442 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first.coerce, metadata !7444, metadata !DIExpression()), !dbg !7449
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, metadata !7445, metadata !DIExpression()), !dbg !7449
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__result, metadata !7446, metadata !DIExpression()), !dbg !7449
-  call void @llvm.dbg.value(metadata i8 1, metadata !7447, metadata !DIExpression()), !dbg !7449
-  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZNSt20__uninitialized_copyILb1EE13__uninit_copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES6_EET0_T_S9_S8_(%"class.ILLIXR_AUDIO::Sound"** %__first.coerce, %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, %"class.ILLIXR_AUDIO::Sound"** %__result), !dbg !7450
-  ret %"class.ILLIXR_AUDIO::Sound"** %call, !dbg !7451
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first.coerce, metadata !7446, metadata !DIExpression()), !dbg !7451
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, metadata !7447, metadata !DIExpression()), !dbg !7451
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__result, metadata !7448, metadata !DIExpression()), !dbg !7451
+  call void @llvm.dbg.value(metadata i8 1, metadata !7449, metadata !DIExpression()), !dbg !7451
+  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZNSt20__uninitialized_copyILb1EE13__uninit_copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES6_EET0_T_S9_S8_(%"class.ILLIXR_AUDIO::Sound"** %__first.coerce, %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, %"class.ILLIXR_AUDIO::Sound"** %__result), !dbg !7452
+  ret %"class.ILLIXR_AUDIO::Sound"** %call, !dbg !7453
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZNSt20__uninitialized_copyILb1EE13__uninit_copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES6_EET0_T_S9_S8_(%"class.ILLIXR_AUDIO::Sound"** %__first.coerce, %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, %"class.ILLIXR_AUDIO::Sound"** %__result) local_unnamed_addr #0 comdat align 2 !dbg !7452 {
+define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZNSt20__uninitialized_copyILb1EE13__uninit_copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES6_EET0_T_S9_S8_(%"class.ILLIXR_AUDIO::Sound"** %__first.coerce, %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, %"class.ILLIXR_AUDIO::Sound"** %__result) local_unnamed_addr #0 comdat align 2 !dbg !7454 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first.coerce, metadata !7455, metadata !DIExpression()), !dbg !7458
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, metadata !7456, metadata !DIExpression()), !dbg !7458
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__result, metadata !7457, metadata !DIExpression()), !dbg !7458
-  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt4copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES4_ET0_T_S7_S6_(%"class.ILLIXR_AUDIO::Sound"** %__first.coerce, %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, %"class.ILLIXR_AUDIO::Sound"** %__result), !dbg !7459
-  ret %"class.ILLIXR_AUDIO::Sound"** %call, !dbg !7460
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first.coerce, metadata !7457, metadata !DIExpression()), !dbg !7460
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, metadata !7458, metadata !DIExpression()), !dbg !7460
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__result, metadata !7459, metadata !DIExpression()), !dbg !7460
+  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt4copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES4_ET0_T_S7_S6_(%"class.ILLIXR_AUDIO::Sound"** %__first.coerce, %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, %"class.ILLIXR_AUDIO::Sound"** %__result), !dbg !7461
+  ret %"class.ILLIXR_AUDIO::Sound"** %call, !dbg !7462
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZSt4copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES4_ET0_T_S7_S6_(%"class.ILLIXR_AUDIO::Sound"** %__first.coerce, %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, %"class.ILLIXR_AUDIO::Sound"** %__result) local_unnamed_addr #18 comdat !dbg !7461 {
+define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZSt4copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES4_ET0_T_S7_S6_(%"class.ILLIXR_AUDIO::Sound"** %__first.coerce, %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, %"class.ILLIXR_AUDIO::Sound"** %__result) local_unnamed_addr #18 comdat !dbg !7463 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first.coerce, metadata !7463, metadata !DIExpression()), !dbg !7469
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, metadata !7464, metadata !DIExpression()), !dbg !7469
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__result, metadata !7465, metadata !DIExpression()), !dbg !7469
-  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt12__miter_baseISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEEENSt11_Miter_baseIT_E13iterator_typeES7_(%"class.ILLIXR_AUDIO::Sound"** %__first.coerce), !dbg !7470
-  %call5 = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt12__miter_baseISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEEENSt11_Miter_baseIT_E13iterator_typeES7_(%"class.ILLIXR_AUDIO::Sound"** %__last.coerce), !dbg !7471
-  %call6 = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt14__copy_move_a2ILb1EPPN12ILLIXR_AUDIO5SoundES3_ET1_T0_S5_S4_(%"class.ILLIXR_AUDIO::Sound"** %call, %"class.ILLIXR_AUDIO::Sound"** %call5, %"class.ILLIXR_AUDIO::Sound"** %__result), !dbg !7472
-  ret %"class.ILLIXR_AUDIO::Sound"** %call6, !dbg !7473
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first.coerce, metadata !7465, metadata !DIExpression()), !dbg !7471
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last.coerce, metadata !7466, metadata !DIExpression()), !dbg !7471
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__result, metadata !7467, metadata !DIExpression()), !dbg !7471
+  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt12__miter_baseISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEEENSt11_Miter_baseIT_E13iterator_typeES7_(%"class.ILLIXR_AUDIO::Sound"** %__first.coerce), !dbg !7472
+  %call5 = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt12__miter_baseISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEEENSt11_Miter_baseIT_E13iterator_typeES7_(%"class.ILLIXR_AUDIO::Sound"** %__last.coerce), !dbg !7473
+  %call6 = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt14__copy_move_a2ILb1EPPN12ILLIXR_AUDIO5SoundES3_ET1_T0_S5_S4_(%"class.ILLIXR_AUDIO::Sound"** %call, %"class.ILLIXR_AUDIO::Sound"** %call5, %"class.ILLIXR_AUDIO::Sound"** %__result), !dbg !7474
+  ret %"class.ILLIXR_AUDIO::Sound"** %call6, !dbg !7475
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZSt14__copy_move_a2ILb1EPPN12ILLIXR_AUDIO5SoundES3_ET1_T0_S5_S4_(%"class.ILLIXR_AUDIO::Sound"** %__first, %"class.ILLIXR_AUDIO::Sound"** %__last, %"class.ILLIXR_AUDIO::Sound"** %__result) local_unnamed_addr #18 comdat !dbg !7474 {
+define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZSt14__copy_move_a2ILb1EPPN12ILLIXR_AUDIO5SoundES3_ET1_T0_S5_S4_(%"class.ILLIXR_AUDIO::Sound"** %__first, %"class.ILLIXR_AUDIO::Sound"** %__last, %"class.ILLIXR_AUDIO::Sound"** %__result) local_unnamed_addr #18 comdat !dbg !7476 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first, metadata !7478, metadata !DIExpression()), !dbg !7483
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last, metadata !7479, metadata !DIExpression()), !dbg !7483
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__result, metadata !7480, metadata !DIExpression()), !dbg !7483
-  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt12__niter_baseIPPN12ILLIXR_AUDIO5SoundEENSt11_Niter_baseIT_E13iterator_typeES5_(%"class.ILLIXR_AUDIO::Sound"** %__first), !dbg !7484
-  %call1 = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt12__niter_baseIPPN12ILLIXR_AUDIO5SoundEENSt11_Niter_baseIT_E13iterator_typeES5_(%"class.ILLIXR_AUDIO::Sound"** %__last), !dbg !7485
-  %call2 = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt12__niter_baseIPPN12ILLIXR_AUDIO5SoundEENSt11_Niter_baseIT_E13iterator_typeES5_(%"class.ILLIXR_AUDIO::Sound"** %__result), !dbg !7486
-  %call3 = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt13__copy_move_aILb1EPPN12ILLIXR_AUDIO5SoundES3_ET1_T0_S5_S4_(%"class.ILLIXR_AUDIO::Sound"** %call, %"class.ILLIXR_AUDIO::Sound"** %call1, %"class.ILLIXR_AUDIO::Sound"** %call2), !dbg !7487
-  ret %"class.ILLIXR_AUDIO::Sound"** %call3, !dbg !7488
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first, metadata !7480, metadata !DIExpression()), !dbg !7485
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last, metadata !7481, metadata !DIExpression()), !dbg !7485
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__result, metadata !7482, metadata !DIExpression()), !dbg !7485
+  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt12__niter_baseIPPN12ILLIXR_AUDIO5SoundEENSt11_Niter_baseIT_E13iterator_typeES5_(%"class.ILLIXR_AUDIO::Sound"** %__first), !dbg !7486
+  %call1 = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt12__niter_baseIPPN12ILLIXR_AUDIO5SoundEENSt11_Niter_baseIT_E13iterator_typeES5_(%"class.ILLIXR_AUDIO::Sound"** %__last), !dbg !7487
+  %call2 = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt12__niter_baseIPPN12ILLIXR_AUDIO5SoundEENSt11_Niter_baseIT_E13iterator_typeES5_(%"class.ILLIXR_AUDIO::Sound"** %__result), !dbg !7488
+  %call3 = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZSt13__copy_move_aILb1EPPN12ILLIXR_AUDIO5SoundES3_ET1_T0_S5_S4_(%"class.ILLIXR_AUDIO::Sound"** %call, %"class.ILLIXR_AUDIO::Sound"** %call1, %"class.ILLIXR_AUDIO::Sound"** %call2), !dbg !7489
+  ret %"class.ILLIXR_AUDIO::Sound"** %call3, !dbg !7490
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZSt12__miter_baseISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEEENSt11_Miter_baseIT_E13iterator_typeES7_(%"class.ILLIXR_AUDIO::Sound"** %__it.coerce) local_unnamed_addr #18 comdat !dbg !7489 {
+define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZSt12__miter_baseISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEEENSt11_Miter_baseIT_E13iterator_typeES7_(%"class.ILLIXR_AUDIO::Sound"** %__it.coerce) local_unnamed_addr #18 comdat !dbg !7491 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__it.coerce, metadata !7499, metadata !DIExpression()), !dbg !7501
-  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZNSt10_Iter_baseISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEELb1EE7_S_baseES5_(%"class.ILLIXR_AUDIO::Sound"** %__it.coerce), !dbg !7502
-  ret %"class.ILLIXR_AUDIO::Sound"** %call, !dbg !7503
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__it.coerce, metadata !7501, metadata !DIExpression()), !dbg !7503
+  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZNSt10_Iter_baseISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEELb1EE7_S_baseES5_(%"class.ILLIXR_AUDIO::Sound"** %__it.coerce), !dbg !7504
+  ret %"class.ILLIXR_AUDIO::Sound"** %call, !dbg !7505
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZSt13__copy_move_aILb1EPPN12ILLIXR_AUDIO5SoundES3_ET1_T0_S5_S4_(%"class.ILLIXR_AUDIO::Sound"** %__first, %"class.ILLIXR_AUDIO::Sound"** %__last, %"class.ILLIXR_AUDIO::Sound"** %__result) local_unnamed_addr #18 comdat !dbg !7504 {
+define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZSt13__copy_move_aILb1EPPN12ILLIXR_AUDIO5SoundES3_ET1_T0_S5_S4_(%"class.ILLIXR_AUDIO::Sound"** %__first, %"class.ILLIXR_AUDIO::Sound"** %__last, %"class.ILLIXR_AUDIO::Sound"** %__result) local_unnamed_addr #18 comdat !dbg !7506 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first, metadata !7506, metadata !DIExpression()), !dbg !7510
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last, metadata !7507, metadata !DIExpression()), !dbg !7510
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__result, metadata !7508, metadata !DIExpression()), !dbg !7510
-  call void @llvm.dbg.value(metadata i8 1, metadata !7509, metadata !DIExpression()), !dbg !7510
-  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZNSt11__copy_moveILb1ELb1ESt26random_access_iterator_tagE8__copy_mIPN12ILLIXR_AUDIO5SoundEEEPT_PKS6_S9_S7_(%"class.ILLIXR_AUDIO::Sound"** %__first, %"class.ILLIXR_AUDIO::Sound"** %__last, %"class.ILLIXR_AUDIO::Sound"** %__result), !dbg !7511
-  ret %"class.ILLIXR_AUDIO::Sound"** %call, !dbg !7512
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first, metadata !7508, metadata !DIExpression()), !dbg !7512
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last, metadata !7509, metadata !DIExpression()), !dbg !7512
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__result, metadata !7510, metadata !DIExpression()), !dbg !7512
+  call void @llvm.dbg.value(metadata i8 1, metadata !7511, metadata !DIExpression()), !dbg !7512
+  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZNSt11__copy_moveILb1ELb1ESt26random_access_iterator_tagE8__copy_mIPN12ILLIXR_AUDIO5SoundEEEPT_PKS6_S9_S7_(%"class.ILLIXR_AUDIO::Sound"** %__first, %"class.ILLIXR_AUDIO::Sound"** %__last, %"class.ILLIXR_AUDIO::Sound"** %__result), !dbg !7513
+  ret %"class.ILLIXR_AUDIO::Sound"** %call, !dbg !7514
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZSt12__niter_baseIPPN12ILLIXR_AUDIO5SoundEENSt11_Niter_baseIT_E13iterator_typeES5_(%"class.ILLIXR_AUDIO::Sound"** %__it) local_unnamed_addr #18 comdat !dbg !7513 {
+define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZSt12__niter_baseIPPN12ILLIXR_AUDIO5SoundEENSt11_Niter_baseIT_E13iterator_typeES5_(%"class.ILLIXR_AUDIO::Sound"** %__it) local_unnamed_addr #18 comdat !dbg !7515 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__it, metadata !7522, metadata !DIExpression()), !dbg !7523
-  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZNSt10_Iter_baseIPPN12ILLIXR_AUDIO5SoundELb0EE7_S_baseES3_(%"class.ILLIXR_AUDIO::Sound"** %__it), !dbg !7524
-  ret %"class.ILLIXR_AUDIO::Sound"** %call, !dbg !7525
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__it, metadata !7524, metadata !DIExpression()), !dbg !7525
+  %call = tail call %"class.ILLIXR_AUDIO::Sound"** @_ZNSt10_Iter_baseIPPN12ILLIXR_AUDIO5SoundELb0EE7_S_baseES3_(%"class.ILLIXR_AUDIO::Sound"** %__it), !dbg !7526
+  ret %"class.ILLIXR_AUDIO::Sound"** %call, !dbg !7527
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZNSt11__copy_moveILb1ELb1ESt26random_access_iterator_tagE8__copy_mIPN12ILLIXR_AUDIO5SoundEEEPT_PKS6_S9_S7_(%"class.ILLIXR_AUDIO::Sound"** %__first, %"class.ILLIXR_AUDIO::Sound"** %__last, %"class.ILLIXR_AUDIO::Sound"** %__result) local_unnamed_addr #7 comdat align 2 !dbg !7526 {
+define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZNSt11__copy_moveILb1ELb1ESt26random_access_iterator_tagE8__copy_mIPN12ILLIXR_AUDIO5SoundEEEPT_PKS6_S9_S7_(%"class.ILLIXR_AUDIO::Sound"** %__first, %"class.ILLIXR_AUDIO::Sound"** %__last, %"class.ILLIXR_AUDIO::Sound"** %__result) local_unnamed_addr #7 comdat align 2 !dbg !7528 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first, metadata !7531, metadata !DIExpression()), !dbg !7535
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last, metadata !7532, metadata !DIExpression()), !dbg !7535
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__result, metadata !7533, metadata !DIExpression()), !dbg !7535
-  %sub.ptr.lhs.cast = ptrtoint %"class.ILLIXR_AUDIO::Sound"** %__last to i64, !dbg !7536
-  %sub.ptr.rhs.cast = ptrtoint %"class.ILLIXR_AUDIO::Sound"** %__first to i64, !dbg !7536
-  %sub.ptr.sub = sub i64 %sub.ptr.lhs.cast, %sub.ptr.rhs.cast, !dbg !7536
-  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 3, !dbg !7536
-  call void @llvm.dbg.value(metadata i64 %sub.ptr.div, metadata !7534, metadata !DIExpression()), !dbg !7535
-  %tobool = icmp eq i64 %sub.ptr.sub, 0, !dbg !7537
-  br i1 %tobool, label %if.end, label %if.then, !dbg !7539
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first, metadata !7533, metadata !DIExpression()), !dbg !7537
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last, metadata !7534, metadata !DIExpression()), !dbg !7537
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__result, metadata !7535, metadata !DIExpression()), !dbg !7537
+  %sub.ptr.lhs.cast = ptrtoint %"class.ILLIXR_AUDIO::Sound"** %__last to i64, !dbg !7538
+  %sub.ptr.rhs.cast = ptrtoint %"class.ILLIXR_AUDIO::Sound"** %__first to i64, !dbg !7538
+  %sub.ptr.sub = sub i64 %sub.ptr.lhs.cast, %sub.ptr.rhs.cast, !dbg !7538
+  %sub.ptr.div = ashr exact i64 %sub.ptr.sub, 3, !dbg !7538
+  call void @llvm.dbg.value(metadata i64 %sub.ptr.div, metadata !7536, metadata !DIExpression()), !dbg !7537
+  %tobool = icmp eq i64 %sub.ptr.sub, 0, !dbg !7539
+  br i1 %tobool, label %if.end, label %if.then, !dbg !7541
 
 if.then:                                          ; preds = %entry
-  %0 = bitcast %"class.ILLIXR_AUDIO::Sound"** %__result to i8*, !dbg !7540
-  %1 = bitcast %"class.ILLIXR_AUDIO::Sound"** %__first to i8*, !dbg !7540
-  tail call void @llvm.memmove.p0i8.p0i8.i64(i8* align 8 %0, i8* align 8 %1, i64 %sub.ptr.sub, i1 false), !dbg !7540
-  br label %if.end, !dbg !7540
+  %0 = bitcast %"class.ILLIXR_AUDIO::Sound"** %__result to i8*, !dbg !7542
+  %1 = bitcast %"class.ILLIXR_AUDIO::Sound"** %__first to i8*, !dbg !7542
+  tail call void @llvm.memmove.p0i8.p0i8.i64(i8* align 8 %0, i8* align 8 %1, i64 %sub.ptr.sub, i1 false), !dbg !7542
+  br label %if.end, !dbg !7542
 
 if.end:                                           ; preds = %entry, %if.then
-  %add.ptr = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %__result, i64 %sub.ptr.div, !dbg !7541
-  ret %"class.ILLIXR_AUDIO::Sound"** %add.ptr, !dbg !7542
+  %add.ptr = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %__result, i64 %sub.ptr.div, !dbg !7543
+  ret %"class.ILLIXR_AUDIO::Sound"** %add.ptr, !dbg !7544
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZNSt10_Iter_baseIPPN12ILLIXR_AUDIO5SoundELb0EE7_S_baseES3_(%"class.ILLIXR_AUDIO::Sound"** %__it) local_unnamed_addr #7 comdat align 2 !dbg !7543 {
+define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZNSt10_Iter_baseIPPN12ILLIXR_AUDIO5SoundELb0EE7_S_baseES3_(%"class.ILLIXR_AUDIO::Sound"** %__it) local_unnamed_addr #7 comdat align 2 !dbg !7545 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__it, metadata !7545, metadata !DIExpression()), !dbg !7546
-  ret %"class.ILLIXR_AUDIO::Sound"** %__it, !dbg !7547
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__it, metadata !7547, metadata !DIExpression()), !dbg !7548
+  ret %"class.ILLIXR_AUDIO::Sound"** %__it, !dbg !7549
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZNSt10_Iter_baseISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEELb1EE7_S_baseES5_(%"class.ILLIXR_AUDIO::Sound"** %__it.coerce) local_unnamed_addr #0 comdat align 2 !dbg !7548 {
+define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZNSt10_Iter_baseISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEELb1EE7_S_baseES5_(%"class.ILLIXR_AUDIO::Sound"** %__it.coerce) local_unnamed_addr #0 comdat align 2 !dbg !7550 {
 entry:
   %__it = alloca %"class.std::move_iterator.12", align 8
   %coerce.dive = getelementptr inbounds %"class.std::move_iterator.12", %"class.std::move_iterator.12"* %__it, i64 0, i32 0
   store %"class.ILLIXR_AUDIO::Sound"** %__it.coerce, %"class.ILLIXR_AUDIO::Sound"*** %coerce.dive, align 8
-  call void @llvm.dbg.value(metadata %"class.std::move_iterator.12"* %__it, metadata !7550, metadata !DIExpression(DW_OP_deref)), !dbg !7551
-  %call = call %"class.ILLIXR_AUDIO::Sound"** @_ZNKSt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEE4baseEv(%"class.std::move_iterator.12"* nonnull %__it), !dbg !7552
-  ret %"class.ILLIXR_AUDIO::Sound"** %call, !dbg !7553
+  call void @llvm.dbg.value(metadata %"class.std::move_iterator.12"* %__it, metadata !7552, metadata !DIExpression(DW_OP_deref)), !dbg !7553
+  %call = call %"class.ILLIXR_AUDIO::Sound"** @_ZNKSt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEE4baseEv(%"class.std::move_iterator.12"* nonnull %__it), !dbg !7554
+  ret %"class.ILLIXR_AUDIO::Sound"** %call, !dbg !7555
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZNKSt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEE4baseEv(%"class.std::move_iterator.12"* %this) local_unnamed_addr #7 comdat align 2 !dbg !7554 {
+define linkonce_odr %"class.ILLIXR_AUDIO::Sound"** @_ZNKSt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEE4baseEv(%"class.std::move_iterator.12"* %this) local_unnamed_addr #7 comdat align 2 !dbg !7556 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::move_iterator.12"* %this, metadata !7556, metadata !DIExpression()), !dbg !7558
-  %_M_current = getelementptr inbounds %"class.std::move_iterator.12", %"class.std::move_iterator.12"* %this, i64 0, i32 0, !dbg !7559
-  %0 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_current, align 8, !dbg !7559, !tbaa !7560
-  ret %"class.ILLIXR_AUDIO::Sound"** %0, !dbg !7562
+  call void @llvm.dbg.value(metadata %"class.std::move_iterator.12"* %this, metadata !7558, metadata !DIExpression()), !dbg !7560
+  %_M_current = getelementptr inbounds %"class.std::move_iterator.12", %"class.std::move_iterator.12"* %this, i64 0, i32 0, !dbg !7561
+  %0 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_current, align 8, !dbg !7561, !tbaa !7562
+  ret %"class.ILLIXR_AUDIO::Sound"** %0, !dbg !7564
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZNSt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEEC2ES3_(%"class.std::move_iterator.12"* %this, %"class.ILLIXR_AUDIO::Sound"** %__i) unnamed_addr #7 comdat align 2 !dbg !7563 {
+define linkonce_odr void @_ZNSt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEEC2ES3_(%"class.std::move_iterator.12"* %this, %"class.ILLIXR_AUDIO::Sound"** %__i) unnamed_addr #7 comdat align 2 !dbg !7565 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::move_iterator.12"* %this, metadata !7565, metadata !DIExpression()), !dbg !7568
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__i, metadata !7567, metadata !DIExpression()), !dbg !7568
-  %_M_current = getelementptr inbounds %"class.std::move_iterator.12", %"class.std::move_iterator.12"* %this, i64 0, i32 0, !dbg !7569
-  store %"class.ILLIXR_AUDIO::Sound"** %__i, %"class.ILLIXR_AUDIO::Sound"*** %_M_current, align 8, !dbg !7569, !tbaa !7560
-  ret void, !dbg !7570
+  call void @llvm.dbg.value(metadata %"class.std::move_iterator.12"* %this, metadata !7567, metadata !DIExpression()), !dbg !7570
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__i, metadata !7569, metadata !DIExpression()), !dbg !7570
+  %_M_current = getelementptr inbounds %"class.std::move_iterator.12", %"class.std::move_iterator.12"* %this, i64 0, i32 0, !dbg !7571
+  store %"class.ILLIXR_AUDIO::Sound"** %__i, %"class.ILLIXR_AUDIO::Sound"*** %_M_current, align 8, !dbg !7571, !tbaa !7562
+  ret void, !dbg !7572
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE7destroyIS3_EEvPT_(%"class.__gnu_cxx::new_allocator.9"* %this, %"class.ILLIXR_AUDIO::Sound"** %__p) local_unnamed_addr #7 comdat align 2 !dbg !7571 {
+define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE7destroyIS3_EEvPT_(%"class.__gnu_cxx::new_allocator.9"* %this, %"class.ILLIXR_AUDIO::Sound"** %__p) local_unnamed_addr #7 comdat align 2 !dbg !7573 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.9"* %this, metadata !7576, metadata !DIExpression()), !dbg !7578
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__p, metadata !7577, metadata !DIExpression()), !dbg !7578
-  ret void, !dbg !7579
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.9"* %this, metadata !7578, metadata !DIExpression()), !dbg !7580
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__p, metadata !7579, metadata !DIExpression()), !dbg !7580
+  ret void, !dbg !7581
 }
 
 ; Function Attrs: inlinehint uwtable
-define linkonce_odr void @_ZSt8_DestroyIPPN12ILLIXR_AUDIO5SoundEEvT_S4_(%"class.ILLIXR_AUDIO::Sound"** %__first, %"class.ILLIXR_AUDIO::Sound"** %__last) local_unnamed_addr #18 comdat !dbg !7580 {
+define linkonce_odr void @_ZSt8_DestroyIPPN12ILLIXR_AUDIO5SoundEEvT_S4_(%"class.ILLIXR_AUDIO::Sound"** %__first, %"class.ILLIXR_AUDIO::Sound"** %__last) local_unnamed_addr #18 comdat !dbg !7582 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first, metadata !7584, metadata !DIExpression()), !dbg !7587
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last, metadata !7585, metadata !DIExpression()), !dbg !7587
-  tail call void @_ZNSt12_Destroy_auxILb1EE9__destroyIPPN12ILLIXR_AUDIO5SoundEEEvT_S6_(%"class.ILLIXR_AUDIO::Sound"** %__first, %"class.ILLIXR_AUDIO::Sound"** %__last), !dbg !7588
-  ret void, !dbg !7589
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__first, metadata !7586, metadata !DIExpression()), !dbg !7589
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__last, metadata !7587, metadata !DIExpression()), !dbg !7589
+  tail call void @_ZNSt12_Destroy_auxILb1EE9__destroyIPPN12ILLIXR_AUDIO5SoundEEEvT_S6_(%"class.ILLIXR_AUDIO::Sound"** %__first, %"class.ILLIXR_AUDIO::Sound"** %__last), !dbg !7590
+  ret void, !dbg !7591
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZNSt12_Destroy_auxILb1EE9__destroyIPPN12ILLIXR_AUDIO5SoundEEEvT_S6_(%"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"**) local_unnamed_addr #7 comdat align 2 !dbg !7590 {
+define linkonce_odr void @_ZNSt12_Destroy_auxILb1EE9__destroyIPPN12ILLIXR_AUDIO5SoundEEEvT_S6_(%"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"**) local_unnamed_addr #7 comdat align 2 !dbg !7592 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %0, metadata !7593, metadata !DIExpression()), !dbg !7595
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %1, metadata !7594, metadata !DIExpression()), !dbg !7595
-  ret void, !dbg !7596
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %0, metadata !7595, metadata !DIExpression()), !dbg !7597
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %1, metadata !7596, metadata !DIExpression()), !dbg !7597
+  ret void, !dbg !7598
 }
 
 ; Function Attrs: uwtable
-define linkonce_odr void @_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE10deallocateERS3_PS2_m(%"class.std::allocator.8"* dereferenceable(1) %__a, %"class.ILLIXR_AUDIO::Sound"** %__p, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !7597 {
+define linkonce_odr void @_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE10deallocateERS3_PS2_m(%"class.std::allocator.8"* dereferenceable(1) %__a, %"class.ILLIXR_AUDIO::Sound"** %__p, i64 %__n) local_unnamed_addr #0 comdat align 2 !dbg !7599 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.std::allocator.8"* %__a, metadata !7599, metadata !DIExpression()), !dbg !7602
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__p, metadata !7600, metadata !DIExpression()), !dbg !7602
-  call void @llvm.dbg.value(metadata i64 %__n, metadata !7601, metadata !DIExpression()), !dbg !7602
-  %0 = bitcast %"class.std::allocator.8"* %__a to %"class.__gnu_cxx::new_allocator.9"*, !dbg !7603
-  tail call void @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE10deallocateEPS3_m(%"class.__gnu_cxx::new_allocator.9"* nonnull %0, %"class.ILLIXR_AUDIO::Sound"** %__p, i64 %__n), !dbg !7604
-  ret void, !dbg !7605
+  call void @llvm.dbg.value(metadata %"class.std::allocator.8"* %__a, metadata !7601, metadata !DIExpression()), !dbg !7604
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__p, metadata !7602, metadata !DIExpression()), !dbg !7604
+  call void @llvm.dbg.value(metadata i64 %__n, metadata !7603, metadata !DIExpression()), !dbg !7604
+  %0 = bitcast %"class.std::allocator.8"* %__a to %"class.__gnu_cxx::new_allocator.9"*, !dbg !7605
+  tail call void @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE10deallocateEPS3_m(%"class.__gnu_cxx::new_allocator.9"* nonnull %0, %"class.ILLIXR_AUDIO::Sound"** %__p, i64 %__n), !dbg !7606
+  ret void, !dbg !7607
 }
 
 ; Function Attrs: nounwind uwtable
-define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE10deallocateEPS3_m(%"class.__gnu_cxx::new_allocator.9"* %this, %"class.ILLIXR_AUDIO::Sound"** %__p, i64) local_unnamed_addr #7 comdat align 2 !dbg !7606 {
+define linkonce_odr void @_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE10deallocateEPS3_m(%"class.__gnu_cxx::new_allocator.9"* %this, %"class.ILLIXR_AUDIO::Sound"** %__p, i64) local_unnamed_addr #7 comdat align 2 !dbg !7608 {
 entry:
-  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.9"* %this, metadata !7608, metadata !DIExpression()), !dbg !7611
-  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__p, metadata !7609, metadata !DIExpression()), !dbg !7611
-  call void @llvm.dbg.value(metadata i64 %0, metadata !7610, metadata !DIExpression()), !dbg !7611
-  %1 = bitcast %"class.ILLIXR_AUDIO::Sound"** %__p to i8*, !dbg !7612
-  tail call void @_ZdlPv(i8* %1) #24, !dbg !7613
-  ret void, !dbg !7614
+  call void @llvm.dbg.value(metadata %"class.__gnu_cxx::new_allocator.9"* %this, metadata !7610, metadata !DIExpression()), !dbg !7613
+  call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::Sound"** %__p, metadata !7611, metadata !DIExpression()), !dbg !7613
+  call void @llvm.dbg.value(metadata i64 %0, metadata !7612, metadata !DIExpression()), !dbg !7613
+  %1 = bitcast %"class.ILLIXR_AUDIO::Sound"** %__p to i8*, !dbg !7614
+  tail call void @_ZdlPv(i8* %1) #24, !dbg !7615
+  ret void, !dbg !7616
 }
 
 declare dereferenceable(272) %"class.std::basic_ostream"* @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(%"class.std::basic_ostream"* dereferenceable(272), i8*, i64) local_unnamed_addr #1
 
 ; Function Attrs: uwtable
-define internal void @_GLOBAL__sub_I_main.cpp() #0 section ".text.startup" !dbg !7615 {
+define internal void @_GLOBAL__sub_I_main.cpp() #0 section ".text.startup" !dbg !7617 {
 entry:
-  tail call fastcc void @__cxx_global_var_init(), !dbg !7617
+  tail call fastcc void @__cxx_global_var_init(), !dbg !7619
   ret void
 }
 
@@ -12153,2660 +12155,2662 @@ attributes #29 = { noreturn }
 !4958 = !DILocalVariable(name: "soundIdx", scope: !4950, file: !1559, line: 699, type: !25)
 !4959 = !DILocation(line: 0, scope: !4950)
 !4960 = !DILocation(line: 694, column: 5, scope: !4950)
-!4961 = !DILocation(line: 700, column: 18, scope: !4950)
-!4962 = !DILocation(line: 700, column: 39, scope: !4950)
-!4963 = !DILocation(line: 700, column: 16, scope: !4950)
-!4964 = !DILocation(line: 702, column: 33, scope: !4965)
-!4965 = distinct !DILexicalBlock(scope: !4966, file: !1559, line: 702, column: 5)
-!4966 = distinct !DILexicalBlock(scope: !4950, file: !1559, line: 702, column: 5)
-!4967 = !DILocation(line: 702, column: 5, scope: !4966)
-!4968 = !DILocation(line: 703, column: 23, scope: !4969)
-!4969 = distinct !DILexicalBlock(scope: !4965, file: !1559, line: 702, column: 62)
-!4970 = !DILocation(line: 703, column: 44, scope: !4969)
-!4971 = !DILocation(line: 703, column: 20, scope: !4969)
-!4972 = !DILocation(line: 702, column: 50, scope: !4965)
-!4973 = distinct !{!4973, !4967, !4974}
-!4974 = !DILocation(line: 704, column: 5, scope: !4966)
-!4975 = !DILocation(line: 705, column: 1, scope: !4950)
-!4976 = distinct !DISubprogram(name: "encodingPipeline", linkageName: "_ZN12ILLIXR_AUDIO7ABAudio16encodingPipelineEPPNS_5SoundEmP8CBFormatmjj", scope: !63, file: !1559, line: 708, type: !1520, scopeLine: 708, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1519, retainedNodes: !4977)
-!4977 = !{!4978, !4979, !4980, !4981, !4982, !4983, !4984, !4985, !4987, !4989, !4990}
-!4978 = !DILocalVariable(name: "this", arg: 1, scope: !4976, type: !4521, flags: DIFlagArtificial | DIFlagObjectPointer)
-!4979 = !DILocalVariable(name: "soundSrcs", arg: 2, scope: !4976, file: !1559, line: 708, type: !93)
-!4980 = !DILocalVariable(name: "bytes_soundSrcs", arg: 3, scope: !4976, file: !1559, line: 708, type: !1117)
-!4981 = !DILocalVariable(name: "addrSumBF", arg: 4, scope: !4976, file: !1559, line: 708, type: !109)
-!4982 = !DILocalVariable(name: "bytes_sumBF", arg: 5, scope: !4976, file: !1559, line: 708, type: !1117)
-!4983 = !DILocalVariable(name: "nSamples", arg: 6, scope: !4976, file: !1559, line: 708, type: !25)
-!4984 = !DILocalVariable(name: "soundSrcsSize", arg: 7, scope: !4976, file: !1559, line: 708, type: !25)
-!4985 = !DILocalVariable(name: "funcProcess", scope: !4976, file: !1559, line: 713, type: !4986)
-!4986 = !DIDerivedType(tag: DW_TAG_ptr_to_member_type, baseType: !1514, size: 128, extraData: !63)
-!4987 = !DILocalVariable(name: "funcSum", scope: !4976, file: !1559, line: 715, type: !4988)
-!4988 = !DIDerivedType(tag: DW_TAG_ptr_to_member_type, baseType: !1517, size: 128, extraData: !63)
-!4989 = !DILocalVariable(name: "audioProcessNode", scope: !4976, file: !1559, line: 718, type: !1568)
-!4990 = !DILocalVariable(name: "sumBFNode", scope: !4976, file: !1559, line: 719, type: !1568)
-!4991 = !DILocation(line: 0, scope: !4976)
-!4992 = !DILocation(line: 709, column: 5, scope: !4976)
-!4993 = !DILocation(line: 718, column: 30, scope: !4976)
-!4994 = !DILocation(line: 719, column: 23, scope: !4976)
-!4995 = !DILocation(line: 722, column: 5, scope: !4976)
-!4996 = !DILocation(line: 723, column: 5, scope: !4976)
-!4997 = !DILocation(line: 724, column: 5, scope: !4976)
-!4998 = !DILocation(line: 725, column: 5, scope: !4976)
-!4999 = !DILocation(line: 728, column: 5, scope: !4976)
-!5000 = !DILocation(line: 729, column: 5, scope: !4976)
-!5001 = !DILocation(line: 730, column: 5, scope: !4976)
-!5002 = !DILocation(line: 731, column: 5, scope: !4976)
-!5003 = !DILocation(line: 732, column: 5, scope: !4976)
-!5004 = !DILocation(line: 733, column: 1, scope: !4976)
-!5005 = distinct !DISubprogram(name: "readNEncodeNew", linkageName: "_ZN12ILLIXR_AUDIO7ABAudio14readNEncodeNewER8CBFormat", scope: !63, file: !1559, line: 736, type: !1511, scopeLine: 736, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1522, retainedNodes: !5006)
-!5006 = !{!5007, !5008, !5009, !5010, !5011, !5013, !5014, !5015, !5016, !5018}
-!5007 = !DILocalVariable(name: "this", arg: 1, scope: !5005, type: !4521, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5008 = !DILocalVariable(name: "sumBF", arg: 2, scope: !5005, file: !1559, line: 736, type: !1011)
-!5009 = !DILocalVariable(name: "addrSumBF", scope: !5005, file: !1559, line: 739, type: !109)
-!5010 = !DILocalVariable(name: "soundSrcsSize", scope: !5005, file: !1559, line: 741, type: !25)
-!5011 = !DILocalVariable(name: "soundIdx", scope: !5012, file: !1559, line: 742, type: !25)
-!5012 = distinct !DILexicalBlock(scope: !5005, file: !1559, line: 742, column: 5)
-!5013 = !DILocalVariable(name: "bytes_soundSrcs", scope: !5005, file: !1559, line: 747, type: !1117)
-!5014 = !DILocalVariable(name: "bytes_sumBF", scope: !5005, file: !1559, line: 748, type: !1117)
-!5015 = !DILocalVariable(name: "rootArgs", scope: !5005, file: !1559, line: 753, type: !1557)
-!5016 = !DILocalVariable(name: "funcEncodePipe", scope: !5005, file: !1559, line: 769, type: !5017)
-!5017 = !DIDerivedType(tag: DW_TAG_ptr_to_member_type, baseType: !1520, size: 128, extraData: !63)
-!5018 = !DILocalVariable(name: "audioEncodingDFG", scope: !5005, file: !1559, line: 772, type: !1568)
-!5019 = !DILocation(line: 0, scope: !5005)
-!5020 = !DILocation(line: 741, column: 34, scope: !5005)
-!5021 = !DILocation(line: 741, column: 45, scope: !5005)
-!5022 = !DILocation(line: 0, scope: !5012)
-!5023 = !DILocation(line: 742, column: 46, scope: !5024)
-!5024 = distinct !DILexicalBlock(scope: !5012, file: !1559, line: 742, column: 5)
-!5025 = !DILocation(line: 742, column: 5, scope: !5012)
-!5026 = !DILocation(line: 747, column: 46, scope: !5005)
-!5027 = !DILocation(line: 747, column: 44, scope: !5005)
-!5028 = !DILocation(line: 750, column: 5, scope: !5005)
-!5029 = !DILocation(line: 753, column: 33, scope: !5005)
-!5030 = !DILocation(line: 755, column: 37, scope: !5005)
-!5031 = !DILocation(line: 755, column: 25, scope: !5005)
-!5032 = !{!5033, !3172, i64 0}
-!5033 = !{!"_ZTS6RootIn", !3172, i64 0, !5034, i64 8, !3048, i64 16, !3172, i64 20, !5034, i64 28, !3048, i64 36}
-!5034 = !{!"long", !3049, i64 0}
-!5035 = !DILocation(line: 756, column: 15, scope: !5005)
-!5036 = !DILocation(line: 756, column: 31, scope: !5005)
-!5037 = !{!5033, !5034, i64 8}
-!5038 = !DILocation(line: 757, column: 15, scope: !5005)
-!5039 = !DILocation(line: 757, column: 24, scope: !5005)
-!5040 = !{!5033, !3048, i64 16}
-!5041 = !DILocation(line: 758, column: 15, scope: !5005)
-!5042 = !DILocation(line: 758, column: 25, scope: !5005)
-!5043 = !{!5033, !3172, i64 20}
-!5044 = !DILocation(line: 759, column: 15, scope: !5005)
-!5045 = !DILocation(line: 759, column: 27, scope: !5005)
-!5046 = !{!5033, !5034, i64 28}
-!5047 = !DILocation(line: 760, column: 15, scope: !5005)
-!5048 = !DILocation(line: 760, column: 29, scope: !5005)
-!5049 = !{!5033, !3048, i64 36}
-!5050 = !DILocation(line: 763, column: 25, scope: !5005)
-!5051 = !DILocation(line: 763, column: 5, scope: !5005)
-!5052 = !DILocation(line: 764, column: 25, scope: !5005)
-!5053 = !DILocation(line: 764, column: 5, scope: !5005)
-!5054 = !DILocation(line: 766, column: 5, scope: !5005)
-!5055 = !DILocation(line: 772, column: 30, scope: !5005)
-!5056 = !DILocation(line: 773, column: 5, scope: !5005)
-!5057 = !DILocation(line: 775, column: 5, scope: !5005)
-!5058 = !DILocation(line: 776, column: 5, scope: !5005)
-!5059 = !DILocation(line: 779, column: 27, scope: !5005)
-!5060 = !DILocation(line: 779, column: 5, scope: !5005)
-!5061 = !DILocation(line: 780, column: 5, scope: !5005)
-!5062 = !DILocation(line: 782, column: 5, scope: !5005)
-!5063 = !DILocation(line: 784, column: 27, scope: !5005)
-!5064 = !DILocation(line: 784, column: 5, scope: !5005)
-!5065 = !DILocation(line: 785, column: 5, scope: !5005)
-!5066 = !DILocation(line: 787, column: 5, scope: !5005)
-!5067 = !DILocation(line: 792, column: 1, scope: !5005)
-!5068 = !DILocation(line: 743, column: 11, scope: !5069)
-!5069 = distinct !DILexicalBlock(scope: !5024, file: !1559, line: 742, column: 75)
-!5070 = !DILocation(line: 743, column: 9, scope: !5069)
-!5071 = !DILocation(line: 743, column: 33, scope: !5069)
-!5072 = !DILocation(line: 742, column: 63, scope: !5024)
-!5073 = distinct !{!5073, !5025, !5074}
-!5074 = !DILocation(line: 744, column: 5, scope: !5012)
-!5075 = distinct !DISubprogram(name: "processBlock", linkageName: "_ZN12ILLIXR_AUDIO7ABAudio12processBlockEv", scope: !63, file: !1559, line: 829, type: !1505, scopeLine: 829, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1507, retainedNodes: !5076)
-!5076 = !{!5077, !5078, !5079}
-!5077 = !DILocalVariable(name: "this", arg: 1, scope: !5075, type: !4521, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5078 = !DILocalVariable(name: "resultSample", scope: !5075, file: !1559, line: 830, type: !699)
-!5079 = !DILocalVariable(name: "sumBF", scope: !5075, file: !1559, line: 835, type: !110)
-!5080 = !DILocation(line: 0, scope: !5075)
-!5081 = !DILocation(line: 830, column: 28, scope: !5075)
-!5082 = !DILocation(line: 831, column: 23, scope: !5075)
-!5083 = !DILocation(line: 831, column: 21, scope: !5075)
-!5084 = !DILocation(line: 832, column: 23, scope: !5075)
-!5085 = !DILocation(line: 832, column: 5, scope: !5075)
-!5086 = !DILocation(line: 832, column: 21, scope: !5075)
-!5087 = !DILocation(line: 835, column: 5, scope: !5075)
-!5088 = !DILocation(line: 835, column: 14, scope: !5075)
-!5089 = !DILocation(line: 836, column: 11, scope: !5075)
-!5090 = !DILocation(line: 838, column: 9, scope: !5091)
-!5091 = distinct !DILexicalBlock(scope: !5075, file: !1559, line: 838, column: 9)
-!5092 = !DILocation(line: 838, column: 21, scope: !5091)
-!5093 = !DILocation(line: 838, column: 9, scope: !5075)
-!5094 = !DILocation(line: 840, column: 9, scope: !5095)
-!5095 = distinct !DILexicalBlock(scope: !5091, file: !1559, line: 838, column: 67)
-!5096 = !DILocation(line: 857, column: 1, scope: !5075)
-!5097 = !DILocation(line: 854, column: 14, scope: !5075)
-!5098 = !DILocation(line: 854, column: 5, scope: !5075)
-!5099 = !DILocation(line: 855, column: 14, scope: !5075)
-!5100 = !DILocation(line: 855, column: 5, scope: !5075)
-!5101 = !DILocation(line: 856, column: 5, scope: !5075)
-!5102 = distinct !DISubprogram(name: "~CBFormat", linkageName: "_ZN8CBFormatD2Ev", scope: !110, file: !62, line: 72, type: !984, scopeLine: 72, flags: DIFlagArtificial | DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5103, retainedNodes: !5104)
-!5103 = !DISubprogram(name: "~CBFormat", scope: !110, type: !984, containingType: !110, virtualIndex: 0, flags: DIFlagPublic | DIFlagArtificial | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
-!5104 = !{!5105}
-!5105 = !DILocalVariable(name: "this", arg: 1, scope: !5102, type: !109, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5106 = !DILocation(line: 0, scope: !5102)
-!5107 = !DILocation(line: 72, column: 7, scope: !5102)
-!5108 = !DILocation(line: 72, column: 7, scope: !5109)
-!5109 = distinct !DILexicalBlock(scope: !5102, file: !62, line: 72, column: 7)
-!5110 = distinct !DISubprogram(name: "WAVHeader_t", linkageName: "_ZN12ILLIXR_AUDIO11WAVHeader_tC2Ev", scope: !4586, file: !62, line: 300, type: !5111, scopeLine: 300, flags: DIFlagArtificial | DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5114, retainedNodes: !5115)
-!5111 = !DISubroutineType(types: !5112)
-!5112 = !{null, !5113}
-!5113 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !4586, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5114 = !DISubprogram(name: "WAVHeader_t", scope: !4586, type: !5111, flags: DIFlagArtificial | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!5115 = !{!5116}
-!5116 = !DILocalVariable(name: "this", arg: 1, scope: !5110, type: !5117, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5117 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !4586, size: 64)
-!5118 = !DILocation(line: 0, scope: !5110)
-!5119 = !DILocation(line: 302, column: 19, scope: !5110)
-!5120 = !{!5121, !3048, i64 0}
-!5121 = !{!"_ZTSN12ILLIXR_AUDIO11WAVHeader_tE", !3048, i64 0, !3048, i64 4, !3048, i64 8, !3048, i64 12, !3048, i64 16, !4432, i64 20, !4432, i64 22, !3048, i64 24, !3048, i64 28, !4432, i64 32, !4432, i64 34, !3048, i64 36, !3048, i64 40}
-!5122 = !DILocation(line: 303, column: 19, scope: !5110)
-!5123 = !{!5121, !3048, i64 4}
-!5124 = !DILocation(line: 304, column: 19, scope: !5110)
-!5125 = !{!5121, !3048, i64 8}
-!5126 = !DILocation(line: 305, column: 19, scope: !5110)
-!5127 = !{!5121, !3048, i64 12}
-!5128 = !DILocation(line: 306, column: 19, scope: !5110)
-!5129 = !{!5121, !3048, i64 16}
-!5130 = !DILocation(line: 307, column: 21, scope: !5110)
-!5131 = !{!5121, !4432, i64 20}
-!5132 = !DILocation(line: 308, column: 21, scope: !5110)
-!5133 = !{!5121, !4432, i64 22}
-!5134 = !DILocation(line: 309, column: 19, scope: !5110)
-!5135 = !{!5121, !3048, i64 24}
-!5136 = !DILocation(line: 310, column: 19, scope: !5110)
-!5137 = !{!5121, !3048, i64 28}
-!5138 = !DILocation(line: 311, column: 21, scope: !5110)
-!5139 = !{!5121, !4432, i64 32}
-!5140 = !DILocation(line: 312, column: 21, scope: !5110)
-!5141 = !{!5121, !4432, i64 34}
-!5142 = !DILocation(line: 313, column: 19, scope: !5110)
-!5143 = !{!5121, !3048, i64 36}
-!5144 = !DILocation(line: 314, column: 19, scope: !5110)
-!5145 = !{!5121, !3048, i64 40}
-!5146 = !DILocation(line: 300, column: 45, scope: !5110)
-!5147 = !DILocation(line: 0, scope: !3017)
-!5148 = !DILocation(line: 871, column: 14, scope: !5149)
-!5149 = distinct !DILexicalBlock(scope: !3017, file: !1559, line: 871, column: 9)
-!5150 = !DILocation(line: 871, column: 9, scope: !3017)
-!5151 = !DILocation(line: 872, column: 19, scope: !5152)
-!5152 = distinct !DILexicalBlock(scope: !5149, file: !1559, line: 871, column: 19)
-!5153 = !DILocation(line: 872, column: 35, scope: !5152)
-!5154 = !DILocation(line: 872, column: 32, scope: !5152)
-!5155 = !DILocation(line: 872, column: 43, scope: !5152)
-!5156 = !DILocation(line: 873, column: 19, scope: !5152)
-!5157 = !DILocation(line: 874, column: 19, scope: !5152)
-!5158 = !DILocation(line: 875, column: 9, scope: !5152)
-!5159 = !DILocation(line: 878, column: 32, scope: !3017)
-!5160 = !DILocation(line: 878, column: 27, scope: !3017)
-!5161 = !DILocation(line: 880, column: 14, scope: !5162)
-!5162 = distinct !DILexicalBlock(scope: !3017, file: !1559, line: 880, column: 9)
-!5163 = !DILocation(line: 880, column: 9, scope: !3017)
-!5164 = !DILocation(line: 881, column: 21, scope: !5165)
-!5165 = distinct !DILexicalBlock(scope: !5166, file: !1559, line: 881, column: 13)
-!5166 = distinct !DILexicalBlock(scope: !5162, file: !1559, line: 880, column: 18)
-!5167 = !DILocation(line: 881, column: 14, scope: !5165)
-!5168 = !DILocation(line: 887, column: 5, scope: !3017)
-!5169 = !DILocation(line: 887, column: 19, scope: !3017)
-!5170 = !DILocation(line: 887, column: 13, scope: !3017)
-!5171 = !DILocation(line: 888, column: 11, scope: !3017)
-!5172 = !DILocation(line: 0, scope: !3028)
-!5173 = !DILocation(line: 889, column: 23, scope: !5174)
-!5174 = distinct !DILexicalBlock(scope: !3028, file: !1559, line: 889, column: 5)
-!5175 = !DILocation(line: 889, column: 5, scope: !3028)
-!5176 = !DILocation(line: 893, column: 1, scope: !3017)
-!5177 = !DILocation(line: 890, column: 15, scope: !5178)
-!5178 = distinct !DILexicalBlock(scope: !5174, file: !1559, line: 889, column: 40)
-!5179 = !DILocation(line: 889, column: 36, scope: !5174)
-!5180 = distinct !{!5180, !5175, !5181}
-!5181 = !DILocation(line: 891, column: 5, scope: !3028)
-!5182 = !DILocation(line: 893, column: 1, scope: !5178)
-!5183 = !DILocation(line: 889, column: 5, scope: !5174)
-!5184 = distinct !DISubprogram(name: "operator<<<std::char_traits<char> >", linkageName: "_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc", scope: !2, file: !5185, line: 556, type: !5186, scopeLine: 557, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5194, retainedNodes: !5191)
-!5185 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/ostream", directory: "")
-!5186 = !DISubroutineType(types: !5187)
-!5187 = !{!5188, !5188, !621}
-!5188 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !5189, size: 64)
-!5189 = !DICompositeType(tag: DW_TAG_class_type, name: "basic_ostream<char, std::char_traits<char> >", scope: !2, file: !5190, line: 359, flags: DIFlagFwdDecl)
-!5190 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/ostream.tcc", directory: "")
-!5191 = !{!5192, !5193}
-!5192 = !DILocalVariable(name: "__out", arg: 1, scope: !5184, file: !5185, line: 556, type: !5188)
-!5193 = !DILocalVariable(name: "__s", arg: 2, scope: !5184, file: !5185, line: 556, type: !621)
-!5194 = !{!5195}
-!5195 = !DITemplateTypeParameter(name: "_Traits", type: !1677)
-!5196 = !DILocation(line: 0, scope: !5184)
-!5197 = !DILocation(line: 558, column: 12, scope: !5198)
-!5198 = distinct !DILexicalBlock(scope: !5184, file: !5185, line: 558, column: 11)
-!5199 = !DILocation(line: 558, column: 11, scope: !5184)
-!5200 = !DILocation(line: 559, column: 2, scope: !5198)
-!5201 = !DILocation(line: 559, column: 8, scope: !5198)
-!5202 = !DILocation(line: 562, column: 29, scope: !5198)
-!5203 = !DILocation(line: 561, column: 2, scope: !5198)
-!5204 = !DILocation(line: 563, column: 7, scope: !5184)
-!5205 = !DILocation(line: 0, scope: !2308)
-!5206 = !DILocation(line: 280, column: 16, scope: !2308)
-!5207 = !DILocation(line: 280, column: 3, scope: !2308)
-!5208 = distinct !DISubprogram(name: "~CAmbisonicBase", linkageName: "_ZN14CAmbisonicBaseD2Ev", scope: !113, file: !62, line: 29, type: !125, scopeLine: 29, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !128, retainedNodes: !5209)
-!5209 = !{!5210}
-!5210 = !DILocalVariable(name: "this", arg: 1, scope: !5208, type: !3039, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5211 = !DILocation(line: 0, scope: !5208)
-!5212 = !DILocation(line: 29, column: 39, scope: !5208)
-!5213 = distinct !DISubprogram(name: "~CAmbisonicBase", linkageName: "_ZN14CAmbisonicBaseD0Ev", scope: !113, file: !62, line: 29, type: !125, scopeLine: 29, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !128, retainedNodes: !5214)
-!5214 = !{!5215}
-!5215 = !DILocalVariable(name: "this", arg: 1, scope: !5213, type: !3039, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5216 = !DILocation(line: 0, scope: !5213)
-!5217 = !DILocation(line: 29, column: 39, scope: !5213)
-!5218 = distinct !DISubprogram(name: "~CBFormat", linkageName: "_ZN8CBFormatD0Ev", scope: !110, file: !62, line: 72, type: !984, scopeLine: 72, flags: DIFlagArtificial | DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5103, retainedNodes: !5219)
-!5219 = !{!5220}
-!5220 = !DILocalVariable(name: "this", arg: 1, scope: !5218, type: !109, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5221 = !DILocation(line: 0, scope: !5218)
-!5222 = !DILocation(line: 72, column: 7, scope: !5218)
-!5223 = distinct !DISubprogram(name: "~CAmbisonicSource", linkageName: "_ZN16CAmbisonicSourceD2Ev", scope: !1029, file: !62, line: 149, type: !1043, scopeLine: 149, flags: DIFlagArtificial | DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5224, retainedNodes: !5225)
-!5224 = !DISubprogram(name: "~CAmbisonicSource", scope: !1029, type: !1043, containingType: !1029, virtualIndex: 0, flags: DIFlagPublic | DIFlagArtificial | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
-!5225 = !{!5226}
-!5226 = !DILocalVariable(name: "this", arg: 1, scope: !5223, type: !3592, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5227 = !DILocation(line: 0, scope: !5223)
-!5228 = !DILocation(line: 149, column: 7, scope: !5223)
-!5229 = !DILocation(line: 149, column: 7, scope: !5230)
-!5230 = distinct !DILexicalBlock(scope: !5223, file: !62, line: 149, column: 7)
-!5231 = distinct !DISubprogram(name: "~CAmbisonicSource", linkageName: "_ZN16CAmbisonicSourceD0Ev", scope: !1029, file: !62, line: 149, type: !1043, scopeLine: 149, flags: DIFlagArtificial | DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5224, retainedNodes: !5232)
-!5232 = !{!5233}
-!5233 = !DILocalVariable(name: "this", arg: 1, scope: !5231, type: !3592, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5234 = !DILocation(line: 0, scope: !5231)
-!5235 = !DILocation(line: 149, column: 7, scope: !5231)
-!5236 = distinct !DISubprogram(name: "tuple", linkageName: "_ZNSt5tupleIJPPfSt14default_deleteIA_S0_EEEC2Ev", scope: !675, file: !676, line: 601, type: !870, scopeLine: 602, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !869, retainedNodes: !5237)
-!5237 = !{!5238}
-!5238 = !DILocalVariable(name: "this", arg: 1, scope: !5236, type: !5239, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5239 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !675, size: 64)
-!5240 = !DILocation(line: 0, scope: !5236)
-!5241 = !DILocation(line: 602, column: 22, scope: !5236)
-!5242 = !DILocation(line: 602, column: 9, scope: !5236)
-!5243 = !DILocation(line: 602, column: 24, scope: !5236)
-!5244 = distinct !DISubprogram(name: "_Tuple_impl", linkageName: "_ZNSt11_Tuple_implILm0EJPPfSt14default_deleteIA_S0_EEEC2Ev", scope: !679, file: !676, line: 201, type: !843, scopeLine: 202, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !842, retainedNodes: !5245)
-!5245 = !{!5246}
-!5246 = !DILocalVariable(name: "this", arg: 1, scope: !5244, type: !5247, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5247 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !679, size: 64)
-!5248 = !DILocation(line: 0, scope: !5244)
-!5249 = !DILocation(line: 202, column: 31, scope: !5244)
-!5250 = !DILocation(line: 202, column: 9, scope: !5244)
-!5251 = !DILocation(line: 202, column: 23, scope: !5244)
-!5252 = !DILocation(line: 202, column: 33, scope: !5244)
-!5253 = distinct !DISubprogram(name: "_Tuple_impl", linkageName: "_ZNSt11_Tuple_implILm1EJSt14default_deleteIA_PfEEEC2Ev", scope: !682, file: !676, line: 352, type: !760, scopeLine: 353, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !759, retainedNodes: !5254)
-!5254 = !{!5255}
-!5255 = !DILocalVariable(name: "this", arg: 1, scope: !5253, type: !5256, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5256 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !682, size: 64)
-!5257 = !DILocation(line: 0, scope: !5253)
-!5258 = !DILocation(line: 353, column: 17, scope: !5253)
-!5259 = !DILocation(line: 353, column: 9, scope: !5253)
-!5260 = !DILocation(line: 353, column: 19, scope: !5253)
-!5261 = distinct !DISubprogram(name: "_Head_base", linkageName: "_ZNSt10_Head_baseILm0EPPfLb0EEC2Ev", scope: !787, file: !676, line: 104, type: !791, scopeLine: 105, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !790, retainedNodes: !5262)
-!5262 = !{!5263}
-!5263 = !DILocalVariable(name: "this", arg: 1, scope: !5261, type: !5264, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5264 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !787, size: 64)
-!5265 = !DILocation(line: 0, scope: !5261)
-!5266 = !DILocation(line: 105, column: 9, scope: !5261)
-!5267 = !{!5268, !3172, i64 0}
-!5268 = !{!"_ZTSSt10_Head_baseILm0EPPfLb0EE", !3172, i64 0}
-!5269 = !DILocation(line: 105, column: 26, scope: !5261)
-!5270 = distinct !DISubprogram(name: "_Head_base", linkageName: "_ZNSt10_Head_baseILm1ESt14default_deleteIA_PfELb1EEC2Ev", scope: !685, file: !676, line: 58, type: !706, scopeLine: 59, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !705, retainedNodes: !5271)
-!5271 = !{!5272}
-!5272 = !DILocalVariable(name: "this", arg: 1, scope: !5270, type: !5273, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5273 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !685, size: 64)
-!5274 = !DILocation(line: 0, scope: !5270)
-!5275 = !DILocation(line: 59, column: 19, scope: !5270)
-!5276 = distinct !DISubprogram(name: "~vector", linkageName: "_ZNSt6vectorIfSaIfEED2Ev", scope: !144, file: !70, line: 423, type: !335, scopeLine: 424, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !374, retainedNodes: !5277)
-!5277 = !{!5278}
-!5278 = !DILocalVariable(name: "this", arg: 1, scope: !5276, type: !3113, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5279 = !DILocation(line: 0, scope: !5276)
-!5280 = !DILocation(line: 424, column: 29, scope: !5281)
-!5281 = distinct !DILexicalBlock(scope: !5276, file: !70, line: 424, column: 7)
-!5282 = !DILocation(line: 424, column: 37, scope: !5281)
-!5283 = !DILocation(line: 424, column: 61, scope: !5281)
-!5284 = !{!3194, !3172, i64 8}
-!5285 = !DILocation(line: 425, column: 9, scope: !5281)
-!5286 = !DILocation(line: 424, column: 9, scope: !5281)
-!5287 = !DILocation(line: 425, column: 33, scope: !5281)
-!5288 = !DILocation(line: 425, column: 33, scope: !5276)
-!5289 = distinct !DISubprogram(name: "_Destroy<float *, float>", linkageName: "_ZSt8_DestroyIPffEvT_S1_RSaIT0_E", scope: !2, file: !5290, line: 148, type: !5291, scopeLine: 150, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5297, retainedNodes: !5293)
-!5290 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_construct.h", directory: "")
-!5291 = !DISubroutineType(types: !5292)
-!5292 = !{null, !165, !165, !254}
-!5293 = !{!5294, !5295, !5296}
-!5294 = !DILocalVariable(name: "__first", arg: 1, scope: !5289, file: !5290, line: 148, type: !165)
-!5295 = !DILocalVariable(name: "__last", arg: 2, scope: !5289, file: !5290, line: 148, type: !165)
-!5296 = !DILocalVariable(arg: 3, scope: !5289, file: !5290, line: 149, type: !254)
-!5297 = !{!5298, !218}
-!5298 = !DITemplateTypeParameter(name: "_ForwardIterator", type: !165)
-!5299 = !DILocation(line: 0, scope: !5289)
-!5300 = !DILocation(line: 151, column: 7, scope: !5289)
-!5301 = !DILocation(line: 152, column: 5, scope: !5289)
-!5302 = distinct !DISubprogram(name: "_M_get_Tp_allocator", linkageName: "_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv", scope: !147, file: !70, line: 113, type: !288, scopeLine: 114, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !287, retainedNodes: !5303)
-!5303 = !{!5304}
-!5304 = !DILocalVariable(name: "this", arg: 1, scope: !5302, type: !5305, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5305 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !147, size: 64)
-!5306 = !DILocation(line: 0, scope: !5302)
-!5307 = !DILocation(line: 114, column: 16, scope: !5302)
-!5308 = !DILocation(line: 114, column: 9, scope: !5302)
-!5309 = distinct !DISubprogram(name: "~_Vector_base", linkageName: "_ZNSt12_Vector_baseIfSaIfEED2Ev", scope: !147, file: !70, line: 159, type: !302, scopeLine: 160, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !325, retainedNodes: !5310)
-!5310 = !{!5311}
-!5311 = !DILocalVariable(name: "this", arg: 1, scope: !5309, type: !5305, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5312 = !DILocation(line: 0, scope: !5309)
-!5313 = !DILocation(line: 160, column: 37, scope: !5314)
-!5314 = distinct !DILexicalBlock(scope: !5309, file: !70, line: 160, column: 7)
-!5315 = !DILocation(line: 160, column: 61, scope: !5314)
-!5316 = !{!3194, !3172, i64 16}
-!5317 = !DILocation(line: 161, column: 9, scope: !5314)
-!5318 = !DILocation(line: 160, column: 9, scope: !5314)
-!5319 = !DILocation(line: 161, column: 36, scope: !5314)
-!5320 = !DILocation(line: 161, column: 36, scope: !5309)
-!5321 = distinct !DISubprogram(name: "_Destroy<float *>", linkageName: "_ZSt8_DestroyIPfEvT_S1_", scope: !2, file: !5290, line: 122, type: !5322, scopeLine: 123, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5327, retainedNodes: !5324)
-!5322 = !DISubroutineType(types: !5323)
-!5323 = !{null, !165, !165}
-!5324 = !{!5325, !5326}
-!5325 = !DILocalVariable(name: "__first", arg: 1, scope: !5321, file: !5290, line: 122, type: !165)
-!5326 = !DILocalVariable(name: "__last", arg: 2, scope: !5321, file: !5290, line: 122, type: !165)
-!5327 = !{!5298}
-!5328 = !DILocation(line: 0, scope: !5321)
-!5329 = !DILocation(line: 126, column: 7, scope: !5321)
-!5330 = !DILocation(line: 128, column: 5, scope: !5321)
-!5331 = distinct !DISubprogram(name: "__destroy<float *>", linkageName: "_ZNSt12_Destroy_auxILb1EE9__destroyIPfEEvT_S3_", scope: !5332, file: !5290, line: 112, type: !5322, scopeLine: 112, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5327, declaration: !5334, retainedNodes: !5335)
-!5332 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "_Destroy_aux<true>", scope: !2, file: !5290, line: 108, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !5333, identifier: "_ZTSSt12_Destroy_auxILb1EE")
-!5333 = !{!947}
-!5334 = !DISubprogram(name: "__destroy<float *>", linkageName: "_ZNSt12_Destroy_auxILb1EE9__destroyIPfEEvT_S3_", scope: !5332, file: !5290, line: 112, type: !5322, scopeLine: 112, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !5327)
-!5335 = !{!5336, !5337}
-!5336 = !DILocalVariable(arg: 1, scope: !5331, file: !5290, line: 112, type: !165)
-!5337 = !DILocalVariable(arg: 2, scope: !5331, file: !5290, line: 112, type: !165)
-!5338 = !DILocation(line: 0, scope: !5331)
-!5339 = !DILocation(line: 112, column: 57, scope: !5331)
-!5340 = distinct !DISubprogram(name: "_M_deallocate", linkageName: "_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm", scope: !147, file: !70, line: 174, type: !330, scopeLine: 175, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !329, retainedNodes: !5341)
-!5341 = !{!5342, !5343, !5344}
-!5342 = !DILocalVariable(name: "this", arg: 1, scope: !5340, type: !5305, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5343 = !DILocalVariable(name: "__p", arg: 2, scope: !5340, file: !70, line: 174, type: !266)
-!5344 = !DILocalVariable(name: "__n", arg: 3, scope: !5340, file: !70, line: 174, type: !206)
-!5345 = !DILocation(line: 0, scope: !5340)
-!5346 = !DILocation(line: 177, column: 6, scope: !5347)
-!5347 = distinct !DILexicalBlock(scope: !5340, file: !70, line: 177, column: 6)
-!5348 = !DILocation(line: 177, column: 6, scope: !5340)
-!5349 = !DILocation(line: 178, column: 20, scope: !5347)
-!5350 = !DILocation(line: 178, column: 4, scope: !5347)
-!5351 = !DILocation(line: 179, column: 7, scope: !5340)
-!5352 = distinct !DISubprogram(name: "~new_allocator", linkageName: "_ZN9__gnu_cxx13new_allocatorIfED2Ev", scope: !174, file: !175, line: 86, type: !178, scopeLine: 86, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !186, retainedNodes: !5353)
-!5353 = !{!5354}
-!5354 = !DILocalVariable(name: "this", arg: 1, scope: !5352, type: !5355, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5355 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !174, size: 64)
-!5356 = !DILocation(line: 0, scope: !5352)
-!5357 = !DILocation(line: 86, column: 48, scope: !5352)
-!5358 = distinct !DISubprogram(name: "deallocate", linkageName: "_ZNSt16allocator_traitsISaIfEE10deallocateERS0_Pfm", scope: !159, file: !87, line: 516, type: !235, scopeLine: 517, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !234, retainedNodes: !5359)
-!5359 = !{!5360, !5361, !5362}
-!5360 = !DILocalVariable(name: "__a", arg: 1, scope: !5358, file: !87, line: 516, type: !166)
-!5361 = !DILocalVariable(name: "__p", arg: 2, scope: !5358, file: !87, line: 516, type: !164)
-!5362 = !DILocalVariable(name: "__n", arg: 3, scope: !5358, file: !87, line: 516, type: !229)
-!5363 = !DILocation(line: 0, scope: !5358)
-!5364 = !DILocation(line: 517, column: 9, scope: !5358)
-!5365 = !DILocation(line: 517, column: 13, scope: !5358)
-!5366 = !DILocation(line: 517, column: 35, scope: !5358)
-!5367 = distinct !DISubprogram(name: "deallocate", linkageName: "_ZN9__gnu_cxx13new_allocatorIfE10deallocateEPfm", scope: !174, file: !175, line: 109, type: !212, scopeLine: 110, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !211, retainedNodes: !5368)
-!5368 = !{!5369, !5370, !5371}
-!5369 = !DILocalVariable(name: "this", arg: 1, scope: !5367, type: !5355, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5370 = !DILocalVariable(name: "__p", arg: 2, scope: !5367, file: !175, line: 109, type: !190)
-!5371 = !DILocalVariable(arg: 3, scope: !5367, file: !175, line: 109, type: !205)
-!5372 = !DILocation(line: 0, scope: !5367)
-!5373 = !DILocation(line: 110, column: 27, scope: !5367)
-!5374 = !DILocation(line: 110, column: 9, scope: !5367)
-!5375 = !DILocation(line: 110, column: 33, scope: !5367)
-!5376 = distinct !DISubprogram(name: "~unique_ptr", linkageName: "_ZNSt10unique_ptrIA_PfSt14default_deleteIS1_EED2Ev", scope: !670, file: !671, line: 480, type: !897, scopeLine: 481, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !932, retainedNodes: !5377)
-!5377 = !{!5378, !5379}
-!5378 = !DILocalVariable(name: "this", arg: 1, scope: !5376, type: !3121, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5379 = !DILocalVariable(name: "__ptr", scope: !5380, file: !671, line: 482, type: !814)
-!5380 = distinct !DILexicalBlock(scope: !5376, file: !671, line: 481, column: 7)
-!5381 = !DILocation(line: 0, scope: !5376)
-!5382 = !DILocation(line: 482, column: 28, scope: !5380)
-!5383 = !DILocation(line: 482, column: 16, scope: !5380)
-!5384 = !DILocation(line: 0, scope: !5380)
-!5385 = !DILocation(line: 483, column: 6, scope: !5386)
-!5386 = distinct !DILexicalBlock(scope: !5380, file: !671, line: 483, column: 6)
-!5387 = !DILocation(line: 483, column: 12, scope: !5386)
-!5388 = !DILocation(line: 483, column: 6, scope: !5380)
-!5389 = !DILocation(line: 484, column: 4, scope: !5386)
-!5390 = !DILocation(line: 484, column: 18, scope: !5386)
-!5391 = !DILocation(line: 485, column: 8, scope: !5380)
-!5392 = !DILocation(line: 486, column: 7, scope: !5376)
-!5393 = distinct !DISubprogram(name: "get<0, float **, std::default_delete<float *[]> >", linkageName: "_ZSt3getILm0EJPPfSt14default_deleteIA_S0_EEERNSt13tuple_elementIXT_ESt5tupleIJDpT0_EEE4typeERS9_", scope: !2, file: !676, line: 832, type: !5394, scopeLine: 833, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5405, retainedNodes: !5403)
-!5394 = !DISubroutineType(types: !5395)
-!5395 = !{!5396, !888}
-!5396 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !5397, size: 64)
-!5397 = !DIDerivedType(tag: DW_TAG_typedef, name: "__tuple_element_t<0UL, tuple<float **, std::default_delete<float *[]> > >", scope: !2, file: !676, line: 769, baseType: !5398)
-!5398 = !DIDerivedType(tag: DW_TAG_typedef, name: "type", scope: !5399, file: !676, line: 764, baseType: !699)
-!5399 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "tuple_element<0, std::tuple<float **, std::default_delete<float *[]> > >", scope: !2, file: !676, line: 762, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !5400, identifier: "_ZTSSt13tuple_elementILm0ESt5tupleIJPPfSt14default_deleteIA_S1_EEEE")
-!5400 = !{!5401, !5402}
-!5401 = !DITemplateValueParameter(name: "__i", type: !208, value: i64 0)
-!5402 = !DITemplateTypeParameter(name: "_Tp", type: !675)
-!5403 = !{!5404}
-!5404 = !DILocalVariable(name: "__t", arg: 1, scope: !5393, file: !676, line: 832, type: !888)
-!5405 = !{!5401, !866}
-!5406 = !DILocation(line: 0, scope: !5393)
-!5407 = !DILocation(line: 833, column: 37, scope: !5393)
-!5408 = !DILocation(line: 833, column: 14, scope: !5393)
-!5409 = !DILocation(line: 833, column: 7, scope: !5393)
-!5410 = distinct !DISubprogram(name: "get_deleter", linkageName: "_ZNSt10unique_ptrIA_PfSt14default_deleteIS1_EE11get_deleterEv", scope: !670, file: !671, line: 546, type: !955, scopeLine: 547, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !954, retainedNodes: !5411)
-!5411 = !{!5412}
-!5412 = !DILocalVariable(name: "this", arg: 1, scope: !5410, type: !3121, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5413 = !DILocation(line: 0, scope: !5410)
-!5414 = !DILocation(line: 547, column: 28, scope: !5410)
-!5415 = !DILocation(line: 547, column: 16, scope: !5410)
-!5416 = !DILocation(line: 547, column: 9, scope: !5410)
-!5417 = distinct !DISubprogram(name: "operator()", linkageName: "_ZNKSt14default_deleteIA_PfEclEPS0_", scope: !688, file: !671, line: 115, type: !695, scopeLine: 116, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !694, retainedNodes: !5418)
-!5418 = !{!5419, !5421}
-!5419 = !DILocalVariable(name: "this", arg: 1, scope: !5417, type: !5420, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5420 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !698, size: 64)
-!5421 = !DILocalVariable(name: "__ptr", arg: 2, scope: !5417, file: !671, line: 115, type: !699)
-!5422 = !DILocation(line: 0, scope: !5417)
-!5423 = !DILocation(line: 119, column: 2, scope: !5417)
-!5424 = !DILocation(line: 120, column: 7, scope: !5417)
-!5425 = distinct !DISubprogram(name: "__get_helper<0, float **, std::default_delete<float *[]> >", linkageName: "_ZSt12__get_helperILm0EPPfJSt14default_deleteIA_S0_EEERT0_RSt11_Tuple_implIXT_EJS5_DpT1_EE", scope: !2, file: !676, line: 821, type: !824, scopeLine: 822, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5428, retainedNodes: !5426)
-!5426 = !{!5427}
-!5427 = !DILocalVariable(name: "__t", arg: 1, scope: !5425, file: !676, line: 821, type: !826)
-!5428 = !{!5401, !821, !5429}
-!5429 = !DITemplateValueParameter(tag: DW_TAG_GNU_template_parameter_pack, name: "_Tail", value: !784)
-!5430 = !DILocation(line: 0, scope: !5425)
-!5431 = !DILocation(line: 822, column: 14, scope: !5425)
-!5432 = !DILocation(line: 822, column: 7, scope: !5425)
-!5433 = distinct !DISubprogram(name: "_M_head", linkageName: "_ZNSt11_Tuple_implILm0EJPPfSt14default_deleteIA_S0_EEE7_M_headERS5_", scope: !679, file: !676, line: 190, type: !824, scopeLine: 190, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !823, retainedNodes: !5434)
-!5434 = !{!5435}
-!5435 = !DILocalVariable(name: "__t", arg: 1, scope: !5433, file: !676, line: 190, type: !826)
-!5436 = !DILocation(line: 0, scope: !5433)
-!5437 = !DILocation(line: 190, column: 66, scope: !5433)
-!5438 = !DILocation(line: 190, column: 51, scope: !5433)
-!5439 = !DILocation(line: 190, column: 44, scope: !5433)
-!5440 = distinct !DISubprogram(name: "_M_head", linkageName: "_ZNSt10_Head_baseILm0EPPfLb0EE7_M_headERS2_", scope: !787, file: !676, line: 142, type: !812, scopeLine: 142, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !811, retainedNodes: !5441)
-!5441 = !{!5442}
-!5442 = !DILocalVariable(name: "__b", arg: 1, scope: !5440, file: !676, line: 142, type: !815)
-!5443 = !DILocation(line: 0, scope: !5440)
-!5444 = !DILocation(line: 142, column: 54, scope: !5440)
-!5445 = !DILocation(line: 142, column: 43, scope: !5440)
-!5446 = distinct !DISubprogram(name: "get<1, float **, std::default_delete<float *[]> >", linkageName: "_ZSt3getILm1EJPPfSt14default_deleteIA_S0_EEERNSt13tuple_elementIXT_ESt5tupleIJDpT0_EEE4typeERS9_", scope: !2, file: !676, line: 832, type: !5447, scopeLine: 833, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5458, retainedNodes: !5456)
-!5447 = !DISubroutineType(types: !5448)
-!5448 = !{!5449, !888}
-!5449 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !5450, size: 64)
-!5450 = !DIDerivedType(tag: DW_TAG_typedef, name: "__tuple_element_t<1UL, tuple<float **, std::default_delete<float *[]> > >", scope: !2, file: !676, line: 769, baseType: !5451)
-!5451 = !DIDerivedType(tag: DW_TAG_typedef, name: "type", scope: !5452, file: !676, line: 764, baseType: !688)
-!5452 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "tuple_element<0, std::tuple<std::default_delete<float *[]> > >", scope: !2, file: !676, line: 762, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !5453, identifier: "_ZTSSt13tuple_elementILm0ESt5tupleIJSt14default_deleteIA_PfEEEE")
-!5453 = !{!5401, !5454}
-!5454 = !DITemplateTypeParameter(name: "_Tp", type: !5455)
-!5455 = !DICompositeType(tag: DW_TAG_class_type, name: "tuple<std::default_delete<float *[]> >", scope: !2, file: !676, line: 463, flags: DIFlagFwdDecl, identifier: "_ZTSSt5tupleIJSt14default_deleteIA_PfEEE")
-!5456 = !{!5457}
-!5457 = !DILocalVariable(name: "__t", arg: 1, scope: !5446, file: !676, line: 832, type: !888)
-!5458 = !{!5459, !866}
-!5459 = !DITemplateValueParameter(name: "__i", type: !208, value: i64 1)
-!5460 = !DILocation(line: 0, scope: !5446)
-!5461 = !DILocation(line: 833, column: 37, scope: !5446)
-!5462 = !DILocation(line: 833, column: 14, scope: !5446)
-!5463 = !DILocation(line: 833, column: 7, scope: !5446)
-!5464 = distinct !DISubprogram(name: "__get_helper<1, std::default_delete<float *[]>>", linkageName: "_ZSt12__get_helperILm1ESt14default_deleteIA_PfEJEERT0_RSt11_Tuple_implIXT_EJS4_DpT1_EE", scope: !2, file: !676, line: 821, type: !751, scopeLine: 822, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5467, retainedNodes: !5465)
-!5465 = !{!5466}
-!5466 = !DILocalVariable(name: "__t", arg: 1, scope: !5464, file: !676, line: 821, type: !753)
-!5467 = !{!5459, !748, !5468}
-!5468 = !DITemplateValueParameter(tag: DW_TAG_GNU_template_parameter_pack, name: "_Tail", value: !263)
-!5469 = !DILocation(line: 0, scope: !5464)
-!5470 = !DILocation(line: 822, column: 14, scope: !5464)
-!5471 = !DILocation(line: 822, column: 7, scope: !5464)
-!5472 = distinct !DISubprogram(name: "_M_head", linkageName: "_ZNSt11_Tuple_implILm1EJSt14default_deleteIA_PfEEE7_M_headERS4_", scope: !682, file: !676, line: 347, type: !751, scopeLine: 347, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !750, retainedNodes: !5473)
-!5473 = !{!5474}
-!5474 = !DILocalVariable(name: "__t", arg: 1, scope: !5472, file: !676, line: 347, type: !753)
-!5475 = !DILocation(line: 0, scope: !5472)
-!5476 = !DILocation(line: 347, column: 66, scope: !5472)
-!5477 = !DILocation(line: 347, column: 51, scope: !5472)
-!5478 = !DILocation(line: 347, column: 44, scope: !5472)
-!5479 = distinct !DISubprogram(name: "_M_head", linkageName: "_ZNSt10_Head_baseILm1ESt14default_deleteIA_PfELb1EE7_M_headERS4_", scope: !685, file: !676, line: 95, type: !739, scopeLine: 95, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !738, retainedNodes: !5480)
-!5480 = !{!5481}
-!5481 = !DILocalVariable(name: "__b", arg: 1, scope: !5479, file: !676, line: 95, type: !742)
-!5482 = !DILocation(line: 0, scope: !5479)
-!5483 = !DILocation(line: 95, column: 50, scope: !5479)
-!5484 = !DILocation(line: 95, column: 43, scope: !5479)
-!5485 = distinct !DISubprogram(name: "new_allocator", linkageName: "_ZN9__gnu_cxx13new_allocatorIcEC2Ev", scope: !5486, file: !175, line: 79, type: !5489, scopeLine: 79, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5488, retainedNodes: !5522)
-!5486 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "new_allocator<char>", scope: !24, file: !175, line: 58, size: 8, flags: DIFlagTypePassByReference | DIFlagNonTrivial, elements: !5487, templateParams: !5520, identifier: "_ZTSN9__gnu_cxx13new_allocatorIcEE")
-!5487 = !{!5488, !5492, !5497, !5498, !5505, !5511, !5514, !5517}
-!5488 = !DISubprogram(name: "new_allocator", scope: !5486, file: !175, line: 79, type: !5489, scopeLine: 79, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!5489 = !DISubroutineType(types: !5490)
-!5490 = !{null, !5491}
-!5491 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !5486, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5492 = !DISubprogram(name: "new_allocator", scope: !5486, file: !175, line: 81, type: !5493, scopeLine: 81, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!5493 = !DISubroutineType(types: !5494)
-!5494 = !{null, !5491, !5495}
-!5495 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !5496, size: 64)
-!5496 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !5486)
-!5497 = !DISubprogram(name: "~new_allocator", scope: !5486, file: !175, line: 86, type: !5489, scopeLine: 86, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!5498 = !DISubprogram(name: "address", linkageName: "_ZNK9__gnu_cxx13new_allocatorIcE7addressERc", scope: !5486, file: !175, line: 89, type: !5499, scopeLine: 89, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!5499 = !DISubroutineType(types: !5500)
-!5500 = !{!5501, !5502, !5503}
-!5501 = !DIDerivedType(tag: DW_TAG_typedef, name: "pointer", scope: !5486, file: !175, line: 63, baseType: !1556)
-!5502 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !5496, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5503 = !DIDerivedType(tag: DW_TAG_typedef, name: "reference", scope: !5486, file: !175, line: 65, baseType: !5504)
-!5504 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !623, size: 64)
-!5505 = !DISubprogram(name: "address", linkageName: "_ZNK9__gnu_cxx13new_allocatorIcE7addressERKc", scope: !5486, file: !175, line: 93, type: !5506, scopeLine: 93, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!5506 = !DISubroutineType(types: !5507)
-!5507 = !{!5508, !5502, !5509}
-!5508 = !DIDerivedType(tag: DW_TAG_typedef, name: "const_pointer", scope: !5486, file: !175, line: 64, baseType: !621)
-!5509 = !DIDerivedType(tag: DW_TAG_typedef, name: "const_reference", scope: !5486, file: !175, line: 66, baseType: !5510)
-!5510 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !622, size: 64)
-!5511 = !DISubprogram(name: "allocate", linkageName: "_ZN9__gnu_cxx13new_allocatorIcE8allocateEmPKv", scope: !5486, file: !175, line: 99, type: !5512, scopeLine: 99, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!5512 = !DISubroutineType(types: !5513)
-!5513 = !{!5501, !5491, !205, !209}
-!5514 = !DISubprogram(name: "deallocate", linkageName: "_ZN9__gnu_cxx13new_allocatorIcE10deallocateEPcm", scope: !5486, file: !175, line: 109, type: !5515, scopeLine: 109, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!5515 = !DISubroutineType(types: !5516)
-!5516 = !{null, !5491, !5501, !205}
-!5517 = !DISubprogram(name: "max_size", linkageName: "_ZNK9__gnu_cxx13new_allocatorIcE8max_sizeEv", scope: !5486, file: !175, line: 113, type: !5518, scopeLine: 113, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!5518 = !DISubroutineType(types: !5519)
-!5519 = !{!205, !5502}
-!5520 = !{!5521}
-!5521 = !DITemplateTypeParameter(name: "_Tp", type: !623)
+!4961 = !DILocation(line: 695, column: 5, scope: !4950)
+!4962 = !DILocation(line: 700, column: 18, scope: !4950)
+!4963 = !DILocation(line: 700, column: 39, scope: !4950)
+!4964 = !DILocation(line: 700, column: 16, scope: !4950)
+!4965 = !DILocation(line: 702, column: 33, scope: !4966)
+!4966 = distinct !DILexicalBlock(scope: !4967, file: !1559, line: 702, column: 5)
+!4967 = distinct !DILexicalBlock(scope: !4950, file: !1559, line: 702, column: 5)
+!4968 = !DILocation(line: 702, column: 5, scope: !4967)
+!4969 = !DILocation(line: 703, column: 23, scope: !4970)
+!4970 = distinct !DILexicalBlock(scope: !4966, file: !1559, line: 702, column: 62)
+!4971 = !DILocation(line: 703, column: 44, scope: !4970)
+!4972 = !DILocation(line: 703, column: 20, scope: !4970)
+!4973 = !DILocation(line: 702, column: 50, scope: !4966)
+!4974 = distinct !{!4974, !4968, !4975}
+!4975 = !DILocation(line: 704, column: 5, scope: !4967)
+!4976 = !DILocation(line: 705, column: 1, scope: !4950)
+!4977 = distinct !DISubprogram(name: "encodingPipeline", linkageName: "_ZN12ILLIXR_AUDIO7ABAudio16encodingPipelineEPPNS_5SoundEmP8CBFormatmjj", scope: !63, file: !1559, line: 708, type: !1520, scopeLine: 708, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1519, retainedNodes: !4978)
+!4978 = !{!4979, !4980, !4981, !4982, !4983, !4984, !4985, !4986, !4988, !4990, !4991}
+!4979 = !DILocalVariable(name: "this", arg: 1, scope: !4977, type: !4521, flags: DIFlagArtificial | DIFlagObjectPointer)
+!4980 = !DILocalVariable(name: "soundSrcs", arg: 2, scope: !4977, file: !1559, line: 708, type: !93)
+!4981 = !DILocalVariable(name: "bytes_soundSrcs", arg: 3, scope: !4977, file: !1559, line: 708, type: !1117)
+!4982 = !DILocalVariable(name: "addrSumBF", arg: 4, scope: !4977, file: !1559, line: 708, type: !109)
+!4983 = !DILocalVariable(name: "bytes_sumBF", arg: 5, scope: !4977, file: !1559, line: 708, type: !1117)
+!4984 = !DILocalVariable(name: "nSamples", arg: 6, scope: !4977, file: !1559, line: 708, type: !25)
+!4985 = !DILocalVariable(name: "soundSrcsSize", arg: 7, scope: !4977, file: !1559, line: 708, type: !25)
+!4986 = !DILocalVariable(name: "funcProcess", scope: !4977, file: !1559, line: 713, type: !4987)
+!4987 = !DIDerivedType(tag: DW_TAG_ptr_to_member_type, baseType: !1514, size: 128, extraData: !63)
+!4988 = !DILocalVariable(name: "funcSum", scope: !4977, file: !1559, line: 715, type: !4989)
+!4989 = !DIDerivedType(tag: DW_TAG_ptr_to_member_type, baseType: !1517, size: 128, extraData: !63)
+!4990 = !DILocalVariable(name: "audioProcessNode", scope: !4977, file: !1559, line: 718, type: !1568)
+!4991 = !DILocalVariable(name: "sumBFNode", scope: !4977, file: !1559, line: 719, type: !1568)
+!4992 = !DILocation(line: 0, scope: !4977)
+!4993 = !DILocation(line: 709, column: 5, scope: !4977)
+!4994 = !DILocation(line: 710, column: 5, scope: !4977)
+!4995 = !DILocation(line: 718, column: 30, scope: !4977)
+!4996 = !DILocation(line: 719, column: 23, scope: !4977)
+!4997 = !DILocation(line: 722, column: 5, scope: !4977)
+!4998 = !DILocation(line: 723, column: 5, scope: !4977)
+!4999 = !DILocation(line: 724, column: 5, scope: !4977)
+!5000 = !DILocation(line: 725, column: 5, scope: !4977)
+!5001 = !DILocation(line: 728, column: 5, scope: !4977)
+!5002 = !DILocation(line: 729, column: 5, scope: !4977)
+!5003 = !DILocation(line: 730, column: 5, scope: !4977)
+!5004 = !DILocation(line: 731, column: 5, scope: !4977)
+!5005 = !DILocation(line: 732, column: 5, scope: !4977)
+!5006 = !DILocation(line: 733, column: 1, scope: !4977)
+!5007 = distinct !DISubprogram(name: "readNEncodeNew", linkageName: "_ZN12ILLIXR_AUDIO7ABAudio14readNEncodeNewER8CBFormat", scope: !63, file: !1559, line: 736, type: !1511, scopeLine: 736, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1522, retainedNodes: !5008)
+!5008 = !{!5009, !5010, !5011, !5012, !5013, !5015, !5016, !5017, !5018, !5020}
+!5009 = !DILocalVariable(name: "this", arg: 1, scope: !5007, type: !4521, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5010 = !DILocalVariable(name: "sumBF", arg: 2, scope: !5007, file: !1559, line: 736, type: !1011)
+!5011 = !DILocalVariable(name: "addrSumBF", scope: !5007, file: !1559, line: 739, type: !109)
+!5012 = !DILocalVariable(name: "soundSrcsSize", scope: !5007, file: !1559, line: 741, type: !25)
+!5013 = !DILocalVariable(name: "soundIdx", scope: !5014, file: !1559, line: 742, type: !25)
+!5014 = distinct !DILexicalBlock(scope: !5007, file: !1559, line: 742, column: 5)
+!5015 = !DILocalVariable(name: "bytes_soundSrcs", scope: !5007, file: !1559, line: 747, type: !1117)
+!5016 = !DILocalVariable(name: "bytes_sumBF", scope: !5007, file: !1559, line: 748, type: !1117)
+!5017 = !DILocalVariable(name: "rootArgs", scope: !5007, file: !1559, line: 753, type: !1557)
+!5018 = !DILocalVariable(name: "funcEncodePipe", scope: !5007, file: !1559, line: 769, type: !5019)
+!5019 = !DIDerivedType(tag: DW_TAG_ptr_to_member_type, baseType: !1520, size: 128, extraData: !63)
+!5020 = !DILocalVariable(name: "audioEncodingDFG", scope: !5007, file: !1559, line: 772, type: !1568)
+!5021 = !DILocation(line: 0, scope: !5007)
+!5022 = !DILocation(line: 741, column: 34, scope: !5007)
+!5023 = !DILocation(line: 741, column: 45, scope: !5007)
+!5024 = !DILocation(line: 0, scope: !5014)
+!5025 = !DILocation(line: 742, column: 46, scope: !5026)
+!5026 = distinct !DILexicalBlock(scope: !5014, file: !1559, line: 742, column: 5)
+!5027 = !DILocation(line: 742, column: 5, scope: !5014)
+!5028 = !DILocation(line: 747, column: 46, scope: !5007)
+!5029 = !DILocation(line: 747, column: 44, scope: !5007)
+!5030 = !DILocation(line: 750, column: 5, scope: !5007)
+!5031 = !DILocation(line: 753, column: 33, scope: !5007)
+!5032 = !DILocation(line: 755, column: 37, scope: !5007)
+!5033 = !DILocation(line: 755, column: 25, scope: !5007)
+!5034 = !{!5035, !3172, i64 0}
+!5035 = !{!"_ZTS6RootIn", !3172, i64 0, !5036, i64 8, !3048, i64 16, !3172, i64 20, !5036, i64 28, !3048, i64 36}
+!5036 = !{!"long", !3049, i64 0}
+!5037 = !DILocation(line: 756, column: 15, scope: !5007)
+!5038 = !DILocation(line: 756, column: 31, scope: !5007)
+!5039 = !{!5035, !5036, i64 8}
+!5040 = !DILocation(line: 757, column: 15, scope: !5007)
+!5041 = !DILocation(line: 757, column: 24, scope: !5007)
+!5042 = !{!5035, !3048, i64 16}
+!5043 = !DILocation(line: 758, column: 15, scope: !5007)
+!5044 = !DILocation(line: 758, column: 25, scope: !5007)
+!5045 = !{!5035, !3172, i64 20}
+!5046 = !DILocation(line: 759, column: 15, scope: !5007)
+!5047 = !DILocation(line: 759, column: 27, scope: !5007)
+!5048 = !{!5035, !5036, i64 28}
+!5049 = !DILocation(line: 760, column: 15, scope: !5007)
+!5050 = !DILocation(line: 760, column: 29, scope: !5007)
+!5051 = !{!5035, !3048, i64 36}
+!5052 = !DILocation(line: 763, column: 25, scope: !5007)
+!5053 = !DILocation(line: 763, column: 5, scope: !5007)
+!5054 = !DILocation(line: 764, column: 25, scope: !5007)
+!5055 = !DILocation(line: 764, column: 5, scope: !5007)
+!5056 = !DILocation(line: 766, column: 5, scope: !5007)
+!5057 = !DILocation(line: 772, column: 30, scope: !5007)
+!5058 = !DILocation(line: 773, column: 5, scope: !5007)
+!5059 = !DILocation(line: 775, column: 5, scope: !5007)
+!5060 = !DILocation(line: 776, column: 5, scope: !5007)
+!5061 = !DILocation(line: 779, column: 27, scope: !5007)
+!5062 = !DILocation(line: 779, column: 5, scope: !5007)
+!5063 = !DILocation(line: 780, column: 5, scope: !5007)
+!5064 = !DILocation(line: 782, column: 5, scope: !5007)
+!5065 = !DILocation(line: 784, column: 27, scope: !5007)
+!5066 = !DILocation(line: 784, column: 5, scope: !5007)
+!5067 = !DILocation(line: 785, column: 5, scope: !5007)
+!5068 = !DILocation(line: 787, column: 5, scope: !5007)
+!5069 = !DILocation(line: 792, column: 1, scope: !5007)
+!5070 = !DILocation(line: 743, column: 11, scope: !5071)
+!5071 = distinct !DILexicalBlock(scope: !5026, file: !1559, line: 742, column: 75)
+!5072 = !DILocation(line: 743, column: 9, scope: !5071)
+!5073 = !DILocation(line: 743, column: 33, scope: !5071)
+!5074 = !DILocation(line: 742, column: 63, scope: !5026)
+!5075 = distinct !{!5075, !5027, !5076}
+!5076 = !DILocation(line: 744, column: 5, scope: !5014)
+!5077 = distinct !DISubprogram(name: "processBlock", linkageName: "_ZN12ILLIXR_AUDIO7ABAudio12processBlockEv", scope: !63, file: !1559, line: 829, type: !1505, scopeLine: 829, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1507, retainedNodes: !5078)
+!5078 = !{!5079, !5080, !5081}
+!5079 = !DILocalVariable(name: "this", arg: 1, scope: !5077, type: !4521, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5080 = !DILocalVariable(name: "resultSample", scope: !5077, file: !1559, line: 830, type: !699)
+!5081 = !DILocalVariable(name: "sumBF", scope: !5077, file: !1559, line: 835, type: !110)
+!5082 = !DILocation(line: 0, scope: !5077)
+!5083 = !DILocation(line: 830, column: 28, scope: !5077)
+!5084 = !DILocation(line: 831, column: 23, scope: !5077)
+!5085 = !DILocation(line: 831, column: 21, scope: !5077)
+!5086 = !DILocation(line: 832, column: 23, scope: !5077)
+!5087 = !DILocation(line: 832, column: 5, scope: !5077)
+!5088 = !DILocation(line: 832, column: 21, scope: !5077)
+!5089 = !DILocation(line: 835, column: 5, scope: !5077)
+!5090 = !DILocation(line: 835, column: 14, scope: !5077)
+!5091 = !DILocation(line: 836, column: 11, scope: !5077)
+!5092 = !DILocation(line: 838, column: 9, scope: !5093)
+!5093 = distinct !DILexicalBlock(scope: !5077, file: !1559, line: 838, column: 9)
+!5094 = !DILocation(line: 838, column: 21, scope: !5093)
+!5095 = !DILocation(line: 838, column: 9, scope: !5077)
+!5096 = !DILocation(line: 840, column: 9, scope: !5097)
+!5097 = distinct !DILexicalBlock(scope: !5093, file: !1559, line: 838, column: 67)
+!5098 = !DILocation(line: 857, column: 1, scope: !5077)
+!5099 = !DILocation(line: 854, column: 14, scope: !5077)
+!5100 = !DILocation(line: 854, column: 5, scope: !5077)
+!5101 = !DILocation(line: 855, column: 14, scope: !5077)
+!5102 = !DILocation(line: 855, column: 5, scope: !5077)
+!5103 = !DILocation(line: 856, column: 5, scope: !5077)
+!5104 = distinct !DISubprogram(name: "~CBFormat", linkageName: "_ZN8CBFormatD2Ev", scope: !110, file: !62, line: 72, type: !984, scopeLine: 72, flags: DIFlagArtificial | DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5105, retainedNodes: !5106)
+!5105 = !DISubprogram(name: "~CBFormat", scope: !110, type: !984, containingType: !110, virtualIndex: 0, flags: DIFlagPublic | DIFlagArtificial | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!5106 = !{!5107}
+!5107 = !DILocalVariable(name: "this", arg: 1, scope: !5104, type: !109, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5108 = !DILocation(line: 0, scope: !5104)
+!5109 = !DILocation(line: 72, column: 7, scope: !5104)
+!5110 = !DILocation(line: 72, column: 7, scope: !5111)
+!5111 = distinct !DILexicalBlock(scope: !5104, file: !62, line: 72, column: 7)
+!5112 = distinct !DISubprogram(name: "WAVHeader_t", linkageName: "_ZN12ILLIXR_AUDIO11WAVHeader_tC2Ev", scope: !4586, file: !62, line: 300, type: !5113, scopeLine: 300, flags: DIFlagArtificial | DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5116, retainedNodes: !5117)
+!5113 = !DISubroutineType(types: !5114)
+!5114 = !{null, !5115}
+!5115 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !4586, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5116 = !DISubprogram(name: "WAVHeader_t", scope: !4586, type: !5113, flags: DIFlagArtificial | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!5117 = !{!5118}
+!5118 = !DILocalVariable(name: "this", arg: 1, scope: !5112, type: !5119, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5119 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !4586, size: 64)
+!5120 = !DILocation(line: 0, scope: !5112)
+!5121 = !DILocation(line: 302, column: 19, scope: !5112)
+!5122 = !{!5123, !3048, i64 0}
+!5123 = !{!"_ZTSN12ILLIXR_AUDIO11WAVHeader_tE", !3048, i64 0, !3048, i64 4, !3048, i64 8, !3048, i64 12, !3048, i64 16, !4432, i64 20, !4432, i64 22, !3048, i64 24, !3048, i64 28, !4432, i64 32, !4432, i64 34, !3048, i64 36, !3048, i64 40}
+!5124 = !DILocation(line: 303, column: 19, scope: !5112)
+!5125 = !{!5123, !3048, i64 4}
+!5126 = !DILocation(line: 304, column: 19, scope: !5112)
+!5127 = !{!5123, !3048, i64 8}
+!5128 = !DILocation(line: 305, column: 19, scope: !5112)
+!5129 = !{!5123, !3048, i64 12}
+!5130 = !DILocation(line: 306, column: 19, scope: !5112)
+!5131 = !{!5123, !3048, i64 16}
+!5132 = !DILocation(line: 307, column: 21, scope: !5112)
+!5133 = !{!5123, !4432, i64 20}
+!5134 = !DILocation(line: 308, column: 21, scope: !5112)
+!5135 = !{!5123, !4432, i64 22}
+!5136 = !DILocation(line: 309, column: 19, scope: !5112)
+!5137 = !{!5123, !3048, i64 24}
+!5138 = !DILocation(line: 310, column: 19, scope: !5112)
+!5139 = !{!5123, !3048, i64 28}
+!5140 = !DILocation(line: 311, column: 21, scope: !5112)
+!5141 = !{!5123, !4432, i64 32}
+!5142 = !DILocation(line: 312, column: 21, scope: !5112)
+!5143 = !{!5123, !4432, i64 34}
+!5144 = !DILocation(line: 313, column: 19, scope: !5112)
+!5145 = !{!5123, !3048, i64 36}
+!5146 = !DILocation(line: 314, column: 19, scope: !5112)
+!5147 = !{!5123, !3048, i64 40}
+!5148 = !DILocation(line: 300, column: 45, scope: !5112)
+!5149 = !DILocation(line: 0, scope: !3017)
+!5150 = !DILocation(line: 871, column: 14, scope: !5151)
+!5151 = distinct !DILexicalBlock(scope: !3017, file: !1559, line: 871, column: 9)
+!5152 = !DILocation(line: 871, column: 9, scope: !3017)
+!5153 = !DILocation(line: 872, column: 19, scope: !5154)
+!5154 = distinct !DILexicalBlock(scope: !5151, file: !1559, line: 871, column: 19)
+!5155 = !DILocation(line: 872, column: 35, scope: !5154)
+!5156 = !DILocation(line: 872, column: 32, scope: !5154)
+!5157 = !DILocation(line: 872, column: 43, scope: !5154)
+!5158 = !DILocation(line: 873, column: 19, scope: !5154)
+!5159 = !DILocation(line: 874, column: 19, scope: !5154)
+!5160 = !DILocation(line: 875, column: 9, scope: !5154)
+!5161 = !DILocation(line: 878, column: 32, scope: !3017)
+!5162 = !DILocation(line: 878, column: 27, scope: !3017)
+!5163 = !DILocation(line: 880, column: 14, scope: !5164)
+!5164 = distinct !DILexicalBlock(scope: !3017, file: !1559, line: 880, column: 9)
+!5165 = !DILocation(line: 880, column: 9, scope: !3017)
+!5166 = !DILocation(line: 881, column: 21, scope: !5167)
+!5167 = distinct !DILexicalBlock(scope: !5168, file: !1559, line: 881, column: 13)
+!5168 = distinct !DILexicalBlock(scope: !5164, file: !1559, line: 880, column: 18)
+!5169 = !DILocation(line: 881, column: 14, scope: !5167)
+!5170 = !DILocation(line: 887, column: 5, scope: !3017)
+!5171 = !DILocation(line: 887, column: 19, scope: !3017)
+!5172 = !DILocation(line: 887, column: 13, scope: !3017)
+!5173 = !DILocation(line: 888, column: 11, scope: !3017)
+!5174 = !DILocation(line: 0, scope: !3028)
+!5175 = !DILocation(line: 889, column: 23, scope: !5176)
+!5176 = distinct !DILexicalBlock(scope: !3028, file: !1559, line: 889, column: 5)
+!5177 = !DILocation(line: 889, column: 5, scope: !3028)
+!5178 = !DILocation(line: 893, column: 1, scope: !3017)
+!5179 = !DILocation(line: 890, column: 15, scope: !5180)
+!5180 = distinct !DILexicalBlock(scope: !5176, file: !1559, line: 889, column: 40)
+!5181 = !DILocation(line: 889, column: 36, scope: !5176)
+!5182 = distinct !{!5182, !5177, !5183}
+!5183 = !DILocation(line: 891, column: 5, scope: !3028)
+!5184 = !DILocation(line: 893, column: 1, scope: !5180)
+!5185 = !DILocation(line: 889, column: 5, scope: !5176)
+!5186 = distinct !DISubprogram(name: "operator<<<std::char_traits<char> >", linkageName: "_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc", scope: !2, file: !5187, line: 556, type: !5188, scopeLine: 557, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5196, retainedNodes: !5193)
+!5187 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/ostream", directory: "")
+!5188 = !DISubroutineType(types: !5189)
+!5189 = !{!5190, !5190, !621}
+!5190 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !5191, size: 64)
+!5191 = !DICompositeType(tag: DW_TAG_class_type, name: "basic_ostream<char, std::char_traits<char> >", scope: !2, file: !5192, line: 359, flags: DIFlagFwdDecl)
+!5192 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/ostream.tcc", directory: "")
+!5193 = !{!5194, !5195}
+!5194 = !DILocalVariable(name: "__out", arg: 1, scope: !5186, file: !5187, line: 556, type: !5190)
+!5195 = !DILocalVariable(name: "__s", arg: 2, scope: !5186, file: !5187, line: 556, type: !621)
+!5196 = !{!5197}
+!5197 = !DITemplateTypeParameter(name: "_Traits", type: !1677)
+!5198 = !DILocation(line: 0, scope: !5186)
+!5199 = !DILocation(line: 558, column: 12, scope: !5200)
+!5200 = distinct !DILexicalBlock(scope: !5186, file: !5187, line: 558, column: 11)
+!5201 = !DILocation(line: 558, column: 11, scope: !5186)
+!5202 = !DILocation(line: 559, column: 2, scope: !5200)
+!5203 = !DILocation(line: 559, column: 8, scope: !5200)
+!5204 = !DILocation(line: 562, column: 29, scope: !5200)
+!5205 = !DILocation(line: 561, column: 2, scope: !5200)
+!5206 = !DILocation(line: 563, column: 7, scope: !5186)
+!5207 = !DILocation(line: 0, scope: !2308)
+!5208 = !DILocation(line: 280, column: 16, scope: !2308)
+!5209 = !DILocation(line: 280, column: 3, scope: !2308)
+!5210 = distinct !DISubprogram(name: "~CAmbisonicBase", linkageName: "_ZN14CAmbisonicBaseD2Ev", scope: !113, file: !62, line: 29, type: !125, scopeLine: 29, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !128, retainedNodes: !5211)
+!5211 = !{!5212}
+!5212 = !DILocalVariable(name: "this", arg: 1, scope: !5210, type: !3039, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5213 = !DILocation(line: 0, scope: !5210)
+!5214 = !DILocation(line: 29, column: 39, scope: !5210)
+!5215 = distinct !DISubprogram(name: "~CAmbisonicBase", linkageName: "_ZN14CAmbisonicBaseD0Ev", scope: !113, file: !62, line: 29, type: !125, scopeLine: 29, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !128, retainedNodes: !5216)
+!5216 = !{!5217}
+!5217 = !DILocalVariable(name: "this", arg: 1, scope: !5215, type: !3039, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5218 = !DILocation(line: 0, scope: !5215)
+!5219 = !DILocation(line: 29, column: 39, scope: !5215)
+!5220 = distinct !DISubprogram(name: "~CBFormat", linkageName: "_ZN8CBFormatD0Ev", scope: !110, file: !62, line: 72, type: !984, scopeLine: 72, flags: DIFlagArtificial | DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5105, retainedNodes: !5221)
+!5221 = !{!5222}
+!5222 = !DILocalVariable(name: "this", arg: 1, scope: !5220, type: !109, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5223 = !DILocation(line: 0, scope: !5220)
+!5224 = !DILocation(line: 72, column: 7, scope: !5220)
+!5225 = distinct !DISubprogram(name: "~CAmbisonicSource", linkageName: "_ZN16CAmbisonicSourceD2Ev", scope: !1029, file: !62, line: 149, type: !1043, scopeLine: 149, flags: DIFlagArtificial | DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5226, retainedNodes: !5227)
+!5226 = !DISubprogram(name: "~CAmbisonicSource", scope: !1029, type: !1043, containingType: !1029, virtualIndex: 0, flags: DIFlagPublic | DIFlagArtificial | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!5227 = !{!5228}
+!5228 = !DILocalVariable(name: "this", arg: 1, scope: !5225, type: !3592, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5229 = !DILocation(line: 0, scope: !5225)
+!5230 = !DILocation(line: 149, column: 7, scope: !5225)
+!5231 = !DILocation(line: 149, column: 7, scope: !5232)
+!5232 = distinct !DILexicalBlock(scope: !5225, file: !62, line: 149, column: 7)
+!5233 = distinct !DISubprogram(name: "~CAmbisonicSource", linkageName: "_ZN16CAmbisonicSourceD0Ev", scope: !1029, file: !62, line: 149, type: !1043, scopeLine: 149, flags: DIFlagArtificial | DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5226, retainedNodes: !5234)
+!5234 = !{!5235}
+!5235 = !DILocalVariable(name: "this", arg: 1, scope: !5233, type: !3592, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5236 = !DILocation(line: 0, scope: !5233)
+!5237 = !DILocation(line: 149, column: 7, scope: !5233)
+!5238 = distinct !DISubprogram(name: "tuple", linkageName: "_ZNSt5tupleIJPPfSt14default_deleteIA_S0_EEEC2Ev", scope: !675, file: !676, line: 601, type: !870, scopeLine: 602, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !869, retainedNodes: !5239)
+!5239 = !{!5240}
+!5240 = !DILocalVariable(name: "this", arg: 1, scope: !5238, type: !5241, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5241 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !675, size: 64)
+!5242 = !DILocation(line: 0, scope: !5238)
+!5243 = !DILocation(line: 602, column: 22, scope: !5238)
+!5244 = !DILocation(line: 602, column: 9, scope: !5238)
+!5245 = !DILocation(line: 602, column: 24, scope: !5238)
+!5246 = distinct !DISubprogram(name: "_Tuple_impl", linkageName: "_ZNSt11_Tuple_implILm0EJPPfSt14default_deleteIA_S0_EEEC2Ev", scope: !679, file: !676, line: 201, type: !843, scopeLine: 202, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !842, retainedNodes: !5247)
+!5247 = !{!5248}
+!5248 = !DILocalVariable(name: "this", arg: 1, scope: !5246, type: !5249, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5249 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !679, size: 64)
+!5250 = !DILocation(line: 0, scope: !5246)
+!5251 = !DILocation(line: 202, column: 31, scope: !5246)
+!5252 = !DILocation(line: 202, column: 9, scope: !5246)
+!5253 = !DILocation(line: 202, column: 23, scope: !5246)
+!5254 = !DILocation(line: 202, column: 33, scope: !5246)
+!5255 = distinct !DISubprogram(name: "_Tuple_impl", linkageName: "_ZNSt11_Tuple_implILm1EJSt14default_deleteIA_PfEEEC2Ev", scope: !682, file: !676, line: 352, type: !760, scopeLine: 353, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !759, retainedNodes: !5256)
+!5256 = !{!5257}
+!5257 = !DILocalVariable(name: "this", arg: 1, scope: !5255, type: !5258, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5258 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !682, size: 64)
+!5259 = !DILocation(line: 0, scope: !5255)
+!5260 = !DILocation(line: 353, column: 17, scope: !5255)
+!5261 = !DILocation(line: 353, column: 9, scope: !5255)
+!5262 = !DILocation(line: 353, column: 19, scope: !5255)
+!5263 = distinct !DISubprogram(name: "_Head_base", linkageName: "_ZNSt10_Head_baseILm0EPPfLb0EEC2Ev", scope: !787, file: !676, line: 104, type: !791, scopeLine: 105, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !790, retainedNodes: !5264)
+!5264 = !{!5265}
+!5265 = !DILocalVariable(name: "this", arg: 1, scope: !5263, type: !5266, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5266 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !787, size: 64)
+!5267 = !DILocation(line: 0, scope: !5263)
+!5268 = !DILocation(line: 105, column: 9, scope: !5263)
+!5269 = !{!5270, !3172, i64 0}
+!5270 = !{!"_ZTSSt10_Head_baseILm0EPPfLb0EE", !3172, i64 0}
+!5271 = !DILocation(line: 105, column: 26, scope: !5263)
+!5272 = distinct !DISubprogram(name: "_Head_base", linkageName: "_ZNSt10_Head_baseILm1ESt14default_deleteIA_PfELb1EEC2Ev", scope: !685, file: !676, line: 58, type: !706, scopeLine: 59, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !705, retainedNodes: !5273)
+!5273 = !{!5274}
+!5274 = !DILocalVariable(name: "this", arg: 1, scope: !5272, type: !5275, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5275 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !685, size: 64)
+!5276 = !DILocation(line: 0, scope: !5272)
+!5277 = !DILocation(line: 59, column: 19, scope: !5272)
+!5278 = distinct !DISubprogram(name: "~vector", linkageName: "_ZNSt6vectorIfSaIfEED2Ev", scope: !144, file: !70, line: 423, type: !335, scopeLine: 424, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !374, retainedNodes: !5279)
+!5279 = !{!5280}
+!5280 = !DILocalVariable(name: "this", arg: 1, scope: !5278, type: !3113, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5281 = !DILocation(line: 0, scope: !5278)
+!5282 = !DILocation(line: 424, column: 29, scope: !5283)
+!5283 = distinct !DILexicalBlock(scope: !5278, file: !70, line: 424, column: 7)
+!5284 = !DILocation(line: 424, column: 37, scope: !5283)
+!5285 = !DILocation(line: 424, column: 61, scope: !5283)
+!5286 = !{!3194, !3172, i64 8}
+!5287 = !DILocation(line: 425, column: 9, scope: !5283)
+!5288 = !DILocation(line: 424, column: 9, scope: !5283)
+!5289 = !DILocation(line: 425, column: 33, scope: !5283)
+!5290 = !DILocation(line: 425, column: 33, scope: !5278)
+!5291 = distinct !DISubprogram(name: "_Destroy<float *, float>", linkageName: "_ZSt8_DestroyIPffEvT_S1_RSaIT0_E", scope: !2, file: !5292, line: 148, type: !5293, scopeLine: 150, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5299, retainedNodes: !5295)
+!5292 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_construct.h", directory: "")
+!5293 = !DISubroutineType(types: !5294)
+!5294 = !{null, !165, !165, !254}
+!5295 = !{!5296, !5297, !5298}
+!5296 = !DILocalVariable(name: "__first", arg: 1, scope: !5291, file: !5292, line: 148, type: !165)
+!5297 = !DILocalVariable(name: "__last", arg: 2, scope: !5291, file: !5292, line: 148, type: !165)
+!5298 = !DILocalVariable(arg: 3, scope: !5291, file: !5292, line: 149, type: !254)
+!5299 = !{!5300, !218}
+!5300 = !DITemplateTypeParameter(name: "_ForwardIterator", type: !165)
+!5301 = !DILocation(line: 0, scope: !5291)
+!5302 = !DILocation(line: 151, column: 7, scope: !5291)
+!5303 = !DILocation(line: 152, column: 5, scope: !5291)
+!5304 = distinct !DISubprogram(name: "_M_get_Tp_allocator", linkageName: "_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv", scope: !147, file: !70, line: 113, type: !288, scopeLine: 114, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !287, retainedNodes: !5305)
+!5305 = !{!5306}
+!5306 = !DILocalVariable(name: "this", arg: 1, scope: !5304, type: !5307, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5307 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !147, size: 64)
+!5308 = !DILocation(line: 0, scope: !5304)
+!5309 = !DILocation(line: 114, column: 16, scope: !5304)
+!5310 = !DILocation(line: 114, column: 9, scope: !5304)
+!5311 = distinct !DISubprogram(name: "~_Vector_base", linkageName: "_ZNSt12_Vector_baseIfSaIfEED2Ev", scope: !147, file: !70, line: 159, type: !302, scopeLine: 160, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !325, retainedNodes: !5312)
+!5312 = !{!5313}
+!5313 = !DILocalVariable(name: "this", arg: 1, scope: !5311, type: !5307, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5314 = !DILocation(line: 0, scope: !5311)
+!5315 = !DILocation(line: 160, column: 37, scope: !5316)
+!5316 = distinct !DILexicalBlock(scope: !5311, file: !70, line: 160, column: 7)
+!5317 = !DILocation(line: 160, column: 61, scope: !5316)
+!5318 = !{!3194, !3172, i64 16}
+!5319 = !DILocation(line: 161, column: 9, scope: !5316)
+!5320 = !DILocation(line: 160, column: 9, scope: !5316)
+!5321 = !DILocation(line: 161, column: 36, scope: !5316)
+!5322 = !DILocation(line: 161, column: 36, scope: !5311)
+!5323 = distinct !DISubprogram(name: "_Destroy<float *>", linkageName: "_ZSt8_DestroyIPfEvT_S1_", scope: !2, file: !5292, line: 122, type: !5324, scopeLine: 123, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5329, retainedNodes: !5326)
+!5324 = !DISubroutineType(types: !5325)
+!5325 = !{null, !165, !165}
+!5326 = !{!5327, !5328}
+!5327 = !DILocalVariable(name: "__first", arg: 1, scope: !5323, file: !5292, line: 122, type: !165)
+!5328 = !DILocalVariable(name: "__last", arg: 2, scope: !5323, file: !5292, line: 122, type: !165)
+!5329 = !{!5300}
+!5330 = !DILocation(line: 0, scope: !5323)
+!5331 = !DILocation(line: 126, column: 7, scope: !5323)
+!5332 = !DILocation(line: 128, column: 5, scope: !5323)
+!5333 = distinct !DISubprogram(name: "__destroy<float *>", linkageName: "_ZNSt12_Destroy_auxILb1EE9__destroyIPfEEvT_S3_", scope: !5334, file: !5292, line: 112, type: !5324, scopeLine: 112, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5329, declaration: !5336, retainedNodes: !5337)
+!5334 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "_Destroy_aux<true>", scope: !2, file: !5292, line: 108, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !5335, identifier: "_ZTSSt12_Destroy_auxILb1EE")
+!5335 = !{!947}
+!5336 = !DISubprogram(name: "__destroy<float *>", linkageName: "_ZNSt12_Destroy_auxILb1EE9__destroyIPfEEvT_S3_", scope: !5334, file: !5292, line: 112, type: !5324, scopeLine: 112, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !5329)
+!5337 = !{!5338, !5339}
+!5338 = !DILocalVariable(arg: 1, scope: !5333, file: !5292, line: 112, type: !165)
+!5339 = !DILocalVariable(arg: 2, scope: !5333, file: !5292, line: 112, type: !165)
+!5340 = !DILocation(line: 0, scope: !5333)
+!5341 = !DILocation(line: 112, column: 57, scope: !5333)
+!5342 = distinct !DISubprogram(name: "_M_deallocate", linkageName: "_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm", scope: !147, file: !70, line: 174, type: !330, scopeLine: 175, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !329, retainedNodes: !5343)
+!5343 = !{!5344, !5345, !5346}
+!5344 = !DILocalVariable(name: "this", arg: 1, scope: !5342, type: !5307, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5345 = !DILocalVariable(name: "__p", arg: 2, scope: !5342, file: !70, line: 174, type: !266)
+!5346 = !DILocalVariable(name: "__n", arg: 3, scope: !5342, file: !70, line: 174, type: !206)
+!5347 = !DILocation(line: 0, scope: !5342)
+!5348 = !DILocation(line: 177, column: 6, scope: !5349)
+!5349 = distinct !DILexicalBlock(scope: !5342, file: !70, line: 177, column: 6)
+!5350 = !DILocation(line: 177, column: 6, scope: !5342)
+!5351 = !DILocation(line: 178, column: 20, scope: !5349)
+!5352 = !DILocation(line: 178, column: 4, scope: !5349)
+!5353 = !DILocation(line: 179, column: 7, scope: !5342)
+!5354 = distinct !DISubprogram(name: "~new_allocator", linkageName: "_ZN9__gnu_cxx13new_allocatorIfED2Ev", scope: !174, file: !175, line: 86, type: !178, scopeLine: 86, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !186, retainedNodes: !5355)
+!5355 = !{!5356}
+!5356 = !DILocalVariable(name: "this", arg: 1, scope: !5354, type: !5357, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5357 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !174, size: 64)
+!5358 = !DILocation(line: 0, scope: !5354)
+!5359 = !DILocation(line: 86, column: 48, scope: !5354)
+!5360 = distinct !DISubprogram(name: "deallocate", linkageName: "_ZNSt16allocator_traitsISaIfEE10deallocateERS0_Pfm", scope: !159, file: !87, line: 516, type: !235, scopeLine: 517, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !234, retainedNodes: !5361)
+!5361 = !{!5362, !5363, !5364}
+!5362 = !DILocalVariable(name: "__a", arg: 1, scope: !5360, file: !87, line: 516, type: !166)
+!5363 = !DILocalVariable(name: "__p", arg: 2, scope: !5360, file: !87, line: 516, type: !164)
+!5364 = !DILocalVariable(name: "__n", arg: 3, scope: !5360, file: !87, line: 516, type: !229)
+!5365 = !DILocation(line: 0, scope: !5360)
+!5366 = !DILocation(line: 517, column: 9, scope: !5360)
+!5367 = !DILocation(line: 517, column: 13, scope: !5360)
+!5368 = !DILocation(line: 517, column: 35, scope: !5360)
+!5369 = distinct !DISubprogram(name: "deallocate", linkageName: "_ZN9__gnu_cxx13new_allocatorIfE10deallocateEPfm", scope: !174, file: !175, line: 109, type: !212, scopeLine: 110, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !211, retainedNodes: !5370)
+!5370 = !{!5371, !5372, !5373}
+!5371 = !DILocalVariable(name: "this", arg: 1, scope: !5369, type: !5357, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5372 = !DILocalVariable(name: "__p", arg: 2, scope: !5369, file: !175, line: 109, type: !190)
+!5373 = !DILocalVariable(arg: 3, scope: !5369, file: !175, line: 109, type: !205)
+!5374 = !DILocation(line: 0, scope: !5369)
+!5375 = !DILocation(line: 110, column: 27, scope: !5369)
+!5376 = !DILocation(line: 110, column: 9, scope: !5369)
+!5377 = !DILocation(line: 110, column: 33, scope: !5369)
+!5378 = distinct !DISubprogram(name: "~unique_ptr", linkageName: "_ZNSt10unique_ptrIA_PfSt14default_deleteIS1_EED2Ev", scope: !670, file: !671, line: 480, type: !897, scopeLine: 481, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !932, retainedNodes: !5379)
+!5379 = !{!5380, !5381}
+!5380 = !DILocalVariable(name: "this", arg: 1, scope: !5378, type: !3121, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5381 = !DILocalVariable(name: "__ptr", scope: !5382, file: !671, line: 482, type: !814)
+!5382 = distinct !DILexicalBlock(scope: !5378, file: !671, line: 481, column: 7)
+!5383 = !DILocation(line: 0, scope: !5378)
+!5384 = !DILocation(line: 482, column: 28, scope: !5382)
+!5385 = !DILocation(line: 482, column: 16, scope: !5382)
+!5386 = !DILocation(line: 0, scope: !5382)
+!5387 = !DILocation(line: 483, column: 6, scope: !5388)
+!5388 = distinct !DILexicalBlock(scope: !5382, file: !671, line: 483, column: 6)
+!5389 = !DILocation(line: 483, column: 12, scope: !5388)
+!5390 = !DILocation(line: 483, column: 6, scope: !5382)
+!5391 = !DILocation(line: 484, column: 4, scope: !5388)
+!5392 = !DILocation(line: 484, column: 18, scope: !5388)
+!5393 = !DILocation(line: 485, column: 8, scope: !5382)
+!5394 = !DILocation(line: 486, column: 7, scope: !5378)
+!5395 = distinct !DISubprogram(name: "get<0, float **, std::default_delete<float *[]> >", linkageName: "_ZSt3getILm0EJPPfSt14default_deleteIA_S0_EEERNSt13tuple_elementIXT_ESt5tupleIJDpT0_EEE4typeERS9_", scope: !2, file: !676, line: 832, type: !5396, scopeLine: 833, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5407, retainedNodes: !5405)
+!5396 = !DISubroutineType(types: !5397)
+!5397 = !{!5398, !888}
+!5398 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !5399, size: 64)
+!5399 = !DIDerivedType(tag: DW_TAG_typedef, name: "__tuple_element_t<0UL, tuple<float **, std::default_delete<float *[]> > >", scope: !2, file: !676, line: 769, baseType: !5400)
+!5400 = !DIDerivedType(tag: DW_TAG_typedef, name: "type", scope: !5401, file: !676, line: 764, baseType: !699)
+!5401 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "tuple_element<0, std::tuple<float **, std::default_delete<float *[]> > >", scope: !2, file: !676, line: 762, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !5402, identifier: "_ZTSSt13tuple_elementILm0ESt5tupleIJPPfSt14default_deleteIA_S1_EEEE")
+!5402 = !{!5403, !5404}
+!5403 = !DITemplateValueParameter(name: "__i", type: !208, value: i64 0)
+!5404 = !DITemplateTypeParameter(name: "_Tp", type: !675)
+!5405 = !{!5406}
+!5406 = !DILocalVariable(name: "__t", arg: 1, scope: !5395, file: !676, line: 832, type: !888)
+!5407 = !{!5403, !866}
+!5408 = !DILocation(line: 0, scope: !5395)
+!5409 = !DILocation(line: 833, column: 37, scope: !5395)
+!5410 = !DILocation(line: 833, column: 14, scope: !5395)
+!5411 = !DILocation(line: 833, column: 7, scope: !5395)
+!5412 = distinct !DISubprogram(name: "get_deleter", linkageName: "_ZNSt10unique_ptrIA_PfSt14default_deleteIS1_EE11get_deleterEv", scope: !670, file: !671, line: 546, type: !955, scopeLine: 547, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !954, retainedNodes: !5413)
+!5413 = !{!5414}
+!5414 = !DILocalVariable(name: "this", arg: 1, scope: !5412, type: !3121, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5415 = !DILocation(line: 0, scope: !5412)
+!5416 = !DILocation(line: 547, column: 28, scope: !5412)
+!5417 = !DILocation(line: 547, column: 16, scope: !5412)
+!5418 = !DILocation(line: 547, column: 9, scope: !5412)
+!5419 = distinct !DISubprogram(name: "operator()", linkageName: "_ZNKSt14default_deleteIA_PfEclEPS0_", scope: !688, file: !671, line: 115, type: !695, scopeLine: 116, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !694, retainedNodes: !5420)
+!5420 = !{!5421, !5423}
+!5421 = !DILocalVariable(name: "this", arg: 1, scope: !5419, type: !5422, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5422 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !698, size: 64)
+!5423 = !DILocalVariable(name: "__ptr", arg: 2, scope: !5419, file: !671, line: 115, type: !699)
+!5424 = !DILocation(line: 0, scope: !5419)
+!5425 = !DILocation(line: 119, column: 2, scope: !5419)
+!5426 = !DILocation(line: 120, column: 7, scope: !5419)
+!5427 = distinct !DISubprogram(name: "__get_helper<0, float **, std::default_delete<float *[]> >", linkageName: "_ZSt12__get_helperILm0EPPfJSt14default_deleteIA_S0_EEERT0_RSt11_Tuple_implIXT_EJS5_DpT1_EE", scope: !2, file: !676, line: 821, type: !824, scopeLine: 822, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5430, retainedNodes: !5428)
+!5428 = !{!5429}
+!5429 = !DILocalVariable(name: "__t", arg: 1, scope: !5427, file: !676, line: 821, type: !826)
+!5430 = !{!5403, !821, !5431}
+!5431 = !DITemplateValueParameter(tag: DW_TAG_GNU_template_parameter_pack, name: "_Tail", value: !784)
+!5432 = !DILocation(line: 0, scope: !5427)
+!5433 = !DILocation(line: 822, column: 14, scope: !5427)
+!5434 = !DILocation(line: 822, column: 7, scope: !5427)
+!5435 = distinct !DISubprogram(name: "_M_head", linkageName: "_ZNSt11_Tuple_implILm0EJPPfSt14default_deleteIA_S0_EEE7_M_headERS5_", scope: !679, file: !676, line: 190, type: !824, scopeLine: 190, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !823, retainedNodes: !5436)
+!5436 = !{!5437}
+!5437 = !DILocalVariable(name: "__t", arg: 1, scope: !5435, file: !676, line: 190, type: !826)
+!5438 = !DILocation(line: 0, scope: !5435)
+!5439 = !DILocation(line: 190, column: 66, scope: !5435)
+!5440 = !DILocation(line: 190, column: 51, scope: !5435)
+!5441 = !DILocation(line: 190, column: 44, scope: !5435)
+!5442 = distinct !DISubprogram(name: "_M_head", linkageName: "_ZNSt10_Head_baseILm0EPPfLb0EE7_M_headERS2_", scope: !787, file: !676, line: 142, type: !812, scopeLine: 142, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !811, retainedNodes: !5443)
+!5443 = !{!5444}
+!5444 = !DILocalVariable(name: "__b", arg: 1, scope: !5442, file: !676, line: 142, type: !815)
+!5445 = !DILocation(line: 0, scope: !5442)
+!5446 = !DILocation(line: 142, column: 54, scope: !5442)
+!5447 = !DILocation(line: 142, column: 43, scope: !5442)
+!5448 = distinct !DISubprogram(name: "get<1, float **, std::default_delete<float *[]> >", linkageName: "_ZSt3getILm1EJPPfSt14default_deleteIA_S0_EEERNSt13tuple_elementIXT_ESt5tupleIJDpT0_EEE4typeERS9_", scope: !2, file: !676, line: 832, type: !5449, scopeLine: 833, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5460, retainedNodes: !5458)
+!5449 = !DISubroutineType(types: !5450)
+!5450 = !{!5451, !888}
+!5451 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !5452, size: 64)
+!5452 = !DIDerivedType(tag: DW_TAG_typedef, name: "__tuple_element_t<1UL, tuple<float **, std::default_delete<float *[]> > >", scope: !2, file: !676, line: 769, baseType: !5453)
+!5453 = !DIDerivedType(tag: DW_TAG_typedef, name: "type", scope: !5454, file: !676, line: 764, baseType: !688)
+!5454 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "tuple_element<0, std::tuple<std::default_delete<float *[]> > >", scope: !2, file: !676, line: 762, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !5455, identifier: "_ZTSSt13tuple_elementILm0ESt5tupleIJSt14default_deleteIA_PfEEEE")
+!5455 = !{!5403, !5456}
+!5456 = !DITemplateTypeParameter(name: "_Tp", type: !5457)
+!5457 = !DICompositeType(tag: DW_TAG_class_type, name: "tuple<std::default_delete<float *[]> >", scope: !2, file: !676, line: 463, flags: DIFlagFwdDecl, identifier: "_ZTSSt5tupleIJSt14default_deleteIA_PfEEE")
+!5458 = !{!5459}
+!5459 = !DILocalVariable(name: "__t", arg: 1, scope: !5448, file: !676, line: 832, type: !888)
+!5460 = !{!5461, !866}
+!5461 = !DITemplateValueParameter(name: "__i", type: !208, value: i64 1)
+!5462 = !DILocation(line: 0, scope: !5448)
+!5463 = !DILocation(line: 833, column: 37, scope: !5448)
+!5464 = !DILocation(line: 833, column: 14, scope: !5448)
+!5465 = !DILocation(line: 833, column: 7, scope: !5448)
+!5466 = distinct !DISubprogram(name: "__get_helper<1, std::default_delete<float *[]>>", linkageName: "_ZSt12__get_helperILm1ESt14default_deleteIA_PfEJEERT0_RSt11_Tuple_implIXT_EJS4_DpT1_EE", scope: !2, file: !676, line: 821, type: !751, scopeLine: 822, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5469, retainedNodes: !5467)
+!5467 = !{!5468}
+!5468 = !DILocalVariable(name: "__t", arg: 1, scope: !5466, file: !676, line: 821, type: !753)
+!5469 = !{!5461, !748, !5470}
+!5470 = !DITemplateValueParameter(tag: DW_TAG_GNU_template_parameter_pack, name: "_Tail", value: !263)
+!5471 = !DILocation(line: 0, scope: !5466)
+!5472 = !DILocation(line: 822, column: 14, scope: !5466)
+!5473 = !DILocation(line: 822, column: 7, scope: !5466)
+!5474 = distinct !DISubprogram(name: "_M_head", linkageName: "_ZNSt11_Tuple_implILm1EJSt14default_deleteIA_PfEEE7_M_headERS4_", scope: !682, file: !676, line: 347, type: !751, scopeLine: 347, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !750, retainedNodes: !5475)
+!5475 = !{!5476}
+!5476 = !DILocalVariable(name: "__t", arg: 1, scope: !5474, file: !676, line: 347, type: !753)
+!5477 = !DILocation(line: 0, scope: !5474)
+!5478 = !DILocation(line: 347, column: 66, scope: !5474)
+!5479 = !DILocation(line: 347, column: 51, scope: !5474)
+!5480 = !DILocation(line: 347, column: 44, scope: !5474)
+!5481 = distinct !DISubprogram(name: "_M_head", linkageName: "_ZNSt10_Head_baseILm1ESt14default_deleteIA_PfELb1EE7_M_headERS4_", scope: !685, file: !676, line: 95, type: !739, scopeLine: 95, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !738, retainedNodes: !5482)
+!5482 = !{!5483}
+!5483 = !DILocalVariable(name: "__b", arg: 1, scope: !5481, file: !676, line: 95, type: !742)
+!5484 = !DILocation(line: 0, scope: !5481)
+!5485 = !DILocation(line: 95, column: 50, scope: !5481)
+!5486 = !DILocation(line: 95, column: 43, scope: !5481)
+!5487 = distinct !DISubprogram(name: "new_allocator", linkageName: "_ZN9__gnu_cxx13new_allocatorIcEC2Ev", scope: !5488, file: !175, line: 79, type: !5491, scopeLine: 79, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5490, retainedNodes: !5524)
+!5488 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "new_allocator<char>", scope: !24, file: !175, line: 58, size: 8, flags: DIFlagTypePassByReference | DIFlagNonTrivial, elements: !5489, templateParams: !5522, identifier: "_ZTSN9__gnu_cxx13new_allocatorIcEE")
+!5489 = !{!5490, !5494, !5499, !5500, !5507, !5513, !5516, !5519}
+!5490 = !DISubprogram(name: "new_allocator", scope: !5488, file: !175, line: 79, type: !5491, scopeLine: 79, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!5491 = !DISubroutineType(types: !5492)
+!5492 = !{null, !5493}
+!5493 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !5488, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5494 = !DISubprogram(name: "new_allocator", scope: !5488, file: !175, line: 81, type: !5495, scopeLine: 81, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!5495 = !DISubroutineType(types: !5496)
+!5496 = !{null, !5493, !5497}
+!5497 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !5498, size: 64)
+!5498 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !5488)
+!5499 = !DISubprogram(name: "~new_allocator", scope: !5488, file: !175, line: 86, type: !5491, scopeLine: 86, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!5500 = !DISubprogram(name: "address", linkageName: "_ZNK9__gnu_cxx13new_allocatorIcE7addressERc", scope: !5488, file: !175, line: 89, type: !5501, scopeLine: 89, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!5501 = !DISubroutineType(types: !5502)
+!5502 = !{!5503, !5504, !5505}
+!5503 = !DIDerivedType(tag: DW_TAG_typedef, name: "pointer", scope: !5488, file: !175, line: 63, baseType: !1556)
+!5504 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !5498, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5505 = !DIDerivedType(tag: DW_TAG_typedef, name: "reference", scope: !5488, file: !175, line: 65, baseType: !5506)
+!5506 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !623, size: 64)
+!5507 = !DISubprogram(name: "address", linkageName: "_ZNK9__gnu_cxx13new_allocatorIcE7addressERKc", scope: !5488, file: !175, line: 93, type: !5508, scopeLine: 93, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!5508 = !DISubroutineType(types: !5509)
+!5509 = !{!5510, !5504, !5511}
+!5510 = !DIDerivedType(tag: DW_TAG_typedef, name: "const_pointer", scope: !5488, file: !175, line: 64, baseType: !621)
+!5511 = !DIDerivedType(tag: DW_TAG_typedef, name: "const_reference", scope: !5488, file: !175, line: 66, baseType: !5512)
+!5512 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !622, size: 64)
+!5513 = !DISubprogram(name: "allocate", linkageName: "_ZN9__gnu_cxx13new_allocatorIcE8allocateEmPKv", scope: !5488, file: !175, line: 99, type: !5514, scopeLine: 99, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!5514 = !DISubroutineType(types: !5515)
+!5515 = !{!5503, !5493, !205, !209}
+!5516 = !DISubprogram(name: "deallocate", linkageName: "_ZN9__gnu_cxx13new_allocatorIcE10deallocateEPcm", scope: !5488, file: !175, line: 109, type: !5517, scopeLine: 109, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!5517 = !DISubroutineType(types: !5518)
+!5518 = !{null, !5493, !5503, !205}
+!5519 = !DISubprogram(name: "max_size", linkageName: "_ZNK9__gnu_cxx13new_allocatorIcE8max_sizeEv", scope: !5488, file: !175, line: 113, type: !5520, scopeLine: 113, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!5520 = !DISubroutineType(types: !5521)
+!5521 = !{!205, !5504}
 !5522 = !{!5523}
-!5523 = !DILocalVariable(name: "this", arg: 1, scope: !5485, type: !5524, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5524 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !5486, size: 64)
-!5525 = !DILocation(line: 0, scope: !5485)
-!5526 = !DILocation(line: 79, column: 47, scope: !5485)
-!5527 = distinct !DISubprogram(name: "~new_allocator", linkageName: "_ZN9__gnu_cxx13new_allocatorIcED2Ev", scope: !5486, file: !175, line: 86, type: !5489, scopeLine: 86, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5497, retainedNodes: !5528)
-!5528 = !{!5529}
-!5529 = !DILocalVariable(name: "this", arg: 1, scope: !5527, type: !5524, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5530 = !DILocation(line: 0, scope: !5527)
-!5531 = !DILocation(line: 86, column: 48, scope: !5527)
-!5532 = distinct !DISubprogram(name: "_M_dispose", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_disposeEv", scope: !1132, file: !1552, line: 177, type: !4775, scopeLine: 178, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5533, retainedNodes: !5534)
-!5533 = !DISubprogram(name: "_M_dispose", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_disposeEv", scope: !1132, file: !1552, line: 177, type: !4775, scopeLine: 177, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!5534 = !{!5535}
-!5535 = !DILocalVariable(name: "this", arg: 1, scope: !5532, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5536 = !DILocation(line: 0, scope: !5532)
-!5537 = !DILocation(line: 179, column: 7, scope: !5538)
-!5538 = distinct !DILexicalBlock(scope: !5532, file: !1552, line: 179, column: 6)
-!5539 = !DILocation(line: 179, column: 6, scope: !5532)
-!5540 = !DILocation(line: 180, column: 15, scope: !5538)
-!5541 = !{!3049, !3049, i64 0}
-!5542 = !DILocation(line: 180, column: 4, scope: !5538)
-!5543 = !DILocation(line: 181, column: 7, scope: !5532)
-!5544 = distinct !DISubprogram(name: "_M_is_local", linkageName: "_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv", scope: !1132, file: !1552, line: 169, type: !5545, scopeLine: 170, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5549, retainedNodes: !5550)
-!5545 = !DISubroutineType(types: !5546)
-!5546 = !{!13, !5547}
-!5547 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !5548, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5548 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !1132)
-!5549 = !DISubprogram(name: "_M_is_local", linkageName: "_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv", scope: !1132, file: !1552, line: 169, type: !5545, scopeLine: 169, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!5550 = !{!5551}
-!5551 = !DILocalVariable(name: "this", arg: 1, scope: !5544, type: !5552, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5552 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !5548, size: 64)
-!5553 = !DILocation(line: 0, scope: !5544)
-!5554 = !DILocation(line: 170, column: 16, scope: !5544)
-!5555 = !DILocation(line: 170, column: 29, scope: !5544)
-!5556 = !DILocation(line: 170, column: 26, scope: !5544)
-!5557 = !DILocation(line: 170, column: 9, scope: !5544)
-!5558 = distinct !DISubprogram(name: "_M_destroy", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_destroyEm", scope: !1132, file: !1552, line: 184, type: !5559, scopeLine: 185, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5561, retainedNodes: !5562)
-!5559 = !DISubroutineType(types: !5560)
-!5560 = !{null, !4757, !1628}
-!5561 = !DISubprogram(name: "_M_destroy", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_destroyEm", scope: !1132, file: !1552, line: 184, type: !5559, scopeLine: 184, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!5562 = !{!5563, !5564}
-!5563 = !DILocalVariable(name: "this", arg: 1, scope: !5558, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5564 = !DILocalVariable(name: "__size", arg: 2, scope: !5558, file: !1552, line: 184, type: !1628)
-!5565 = !DILocation(line: 0, scope: !5558)
-!5566 = !DILocation(line: 185, column: 35, scope: !5558)
-!5567 = !DILocation(line: 185, column: 55, scope: !5558)
-!5568 = !DILocation(line: 185, column: 73, scope: !5558)
-!5569 = !DILocation(line: 185, column: 9, scope: !5558)
-!5570 = !DILocation(line: 185, column: 79, scope: !5558)
-!5571 = distinct !DISubprogram(name: "_M_data", linkageName: "_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEv", scope: !1132, file: !1552, line: 134, type: !5572, scopeLine: 135, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5576, retainedNodes: !5577)
-!5572 = !DISubroutineType(types: !5573)
-!5573 = !{!5574, !5547}
-!5574 = !DIDerivedType(tag: DW_TAG_typedef, name: "pointer", scope: !1132, file: !1552, line: 86, baseType: !5575)
-!5575 = !DIDerivedType(tag: DW_TAG_typedef, name: "pointer", scope: !1630, file: !81, line: 104, baseType: !1638)
-!5576 = !DISubprogram(name: "_M_data", linkageName: "_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEv", scope: !1132, file: !1552, line: 134, type: !5572, scopeLine: 134, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!5577 = !{!5578}
-!5578 = !DILocalVariable(name: "this", arg: 1, scope: !5571, type: !5552, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5579 = !DILocation(line: 0, scope: !5571)
-!5580 = !DILocation(line: 135, column: 28, scope: !5571)
-!5581 = !{!5582, !3172, i64 0}
-!5582 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !5583, i64 0, !5034, i64 8, !3049, i64 16}
-!5583 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !3172, i64 0}
-!5584 = !DILocation(line: 135, column: 9, scope: !5571)
-!5585 = distinct !DISubprogram(name: "_M_local_data", linkageName: "_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_local_dataEv", scope: !1132, file: !1552, line: 148, type: !5586, scopeLine: 149, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5591, retainedNodes: !5592)
-!5586 = !DISubroutineType(types: !5587)
-!5587 = !{!5588, !5547}
-!5588 = !DIDerivedType(tag: DW_TAG_typedef, name: "const_pointer", scope: !1132, file: !1552, line: 87, baseType: !5589)
-!5589 = !DIDerivedType(tag: DW_TAG_typedef, name: "const_pointer", scope: !1630, file: !81, line: 105, baseType: !5590)
-!5590 = !DIDerivedType(tag: DW_TAG_typedef, name: "const_pointer", scope: !1633, file: !87, line: 453, baseType: !621)
-!5591 = !DISubprogram(name: "_M_local_data", linkageName: "_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_local_dataEv", scope: !1132, file: !1552, line: 148, type: !5586, scopeLine: 148, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!5592 = !{!5593}
-!5593 = !DILocalVariable(name: "this", arg: 1, scope: !5585, type: !5552, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5594 = !DILocation(line: 0, scope: !5585)
-!5595 = !DILocation(line: 151, column: 57, scope: !5585)
-!5596 = !DILocation(line: 151, column: 56, scope: !5585)
-!5597 = !DILocation(line: 151, column: 9, scope: !5585)
-!5598 = !DILocation(line: 151, column: 2, scope: !5585)
-!5599 = distinct !DISubprogram(name: "pointer_to", linkageName: "_ZNSt14pointer_traitsIPKcE10pointer_toERS0_", scope: !5601, file: !5600, line: 168, type: !5604, scopeLine: 169, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5603, retainedNodes: !5615)
-!5600 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/ptr_traits.h", directory: "")
-!5601 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "pointer_traits<const char *>", scope: !2, file: !5600, line: 150, size: 8, flags: DIFlagTypePassByValue, elements: !5602, templateParams: !5613, identifier: "_ZTSSt14pointer_traitsIPKcE")
-!5602 = !{!5603}
-!5603 = !DISubprogram(name: "pointer_to", linkageName: "_ZNSt14pointer_traitsIPKcE10pointer_toERS0_", scope: !5601, file: !5600, line: 168, type: !5604, scopeLine: 168, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized)
-!5604 = !DISubroutineType(types: !5605)
-!5605 = !{!5606, !5607}
-!5606 = !DIDerivedType(tag: DW_TAG_typedef, name: "pointer", scope: !5601, file: !5600, line: 153, baseType: !621)
-!5607 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !5608, size: 64)
-!5608 = !DIDerivedType(tag: DW_TAG_typedef, name: "__type", scope: !5609, file: !5600, line: 107, baseType: !622)
-!5609 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__ptrtr_not_void<const char, char>", scope: !2, file: !5600, line: 105, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !5610, identifier: "_ZTSSt16__ptrtr_not_voidIKccE")
-!5610 = !{!5611, !5612}
-!5611 = !DITemplateTypeParameter(name: "_Tp", type: !622)
-!5612 = !DITemplateTypeParameter(type: !623)
-!5613 = !{!5614}
-!5614 = !DITemplateTypeParameter(name: "_Ptr", type: !621)
+!5523 = !DITemplateTypeParameter(name: "_Tp", type: !623)
+!5524 = !{!5525}
+!5525 = !DILocalVariable(name: "this", arg: 1, scope: !5487, type: !5526, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5526 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !5488, size: 64)
+!5527 = !DILocation(line: 0, scope: !5487)
+!5528 = !DILocation(line: 79, column: 47, scope: !5487)
+!5529 = distinct !DISubprogram(name: "~new_allocator", linkageName: "_ZN9__gnu_cxx13new_allocatorIcED2Ev", scope: !5488, file: !175, line: 86, type: !5491, scopeLine: 86, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5499, retainedNodes: !5530)
+!5530 = !{!5531}
+!5531 = !DILocalVariable(name: "this", arg: 1, scope: !5529, type: !5526, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5532 = !DILocation(line: 0, scope: !5529)
+!5533 = !DILocation(line: 86, column: 48, scope: !5529)
+!5534 = distinct !DISubprogram(name: "_M_dispose", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_disposeEv", scope: !1132, file: !1552, line: 177, type: !4775, scopeLine: 178, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5535, retainedNodes: !5536)
+!5535 = !DISubprogram(name: "_M_dispose", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_disposeEv", scope: !1132, file: !1552, line: 177, type: !4775, scopeLine: 177, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!5536 = !{!5537}
+!5537 = !DILocalVariable(name: "this", arg: 1, scope: !5534, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5538 = !DILocation(line: 0, scope: !5534)
+!5539 = !DILocation(line: 179, column: 7, scope: !5540)
+!5540 = distinct !DILexicalBlock(scope: !5534, file: !1552, line: 179, column: 6)
+!5541 = !DILocation(line: 179, column: 6, scope: !5534)
+!5542 = !DILocation(line: 180, column: 15, scope: !5540)
+!5543 = !{!3049, !3049, i64 0}
+!5544 = !DILocation(line: 180, column: 4, scope: !5540)
+!5545 = !DILocation(line: 181, column: 7, scope: !5534)
+!5546 = distinct !DISubprogram(name: "_M_is_local", linkageName: "_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv", scope: !1132, file: !1552, line: 169, type: !5547, scopeLine: 170, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5551, retainedNodes: !5552)
+!5547 = !DISubroutineType(types: !5548)
+!5548 = !{!13, !5549}
+!5549 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !5550, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5550 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !1132)
+!5551 = !DISubprogram(name: "_M_is_local", linkageName: "_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv", scope: !1132, file: !1552, line: 169, type: !5547, scopeLine: 169, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!5552 = !{!5553}
+!5553 = !DILocalVariable(name: "this", arg: 1, scope: !5546, type: !5554, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5554 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !5550, size: 64)
+!5555 = !DILocation(line: 0, scope: !5546)
+!5556 = !DILocation(line: 170, column: 16, scope: !5546)
+!5557 = !DILocation(line: 170, column: 29, scope: !5546)
+!5558 = !DILocation(line: 170, column: 26, scope: !5546)
+!5559 = !DILocation(line: 170, column: 9, scope: !5546)
+!5560 = distinct !DISubprogram(name: "_M_destroy", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_destroyEm", scope: !1132, file: !1552, line: 184, type: !5561, scopeLine: 185, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5563, retainedNodes: !5564)
+!5561 = !DISubroutineType(types: !5562)
+!5562 = !{null, !4757, !1628}
+!5563 = !DISubprogram(name: "_M_destroy", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_destroyEm", scope: !1132, file: !1552, line: 184, type: !5561, scopeLine: 184, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!5564 = !{!5565, !5566}
+!5565 = !DILocalVariable(name: "this", arg: 1, scope: !5560, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5566 = !DILocalVariable(name: "__size", arg: 2, scope: !5560, file: !1552, line: 184, type: !1628)
+!5567 = !DILocation(line: 0, scope: !5560)
+!5568 = !DILocation(line: 185, column: 35, scope: !5560)
+!5569 = !DILocation(line: 185, column: 55, scope: !5560)
+!5570 = !DILocation(line: 185, column: 73, scope: !5560)
+!5571 = !DILocation(line: 185, column: 9, scope: !5560)
+!5572 = !DILocation(line: 185, column: 79, scope: !5560)
+!5573 = distinct !DISubprogram(name: "_M_data", linkageName: "_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEv", scope: !1132, file: !1552, line: 134, type: !5574, scopeLine: 135, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5578, retainedNodes: !5579)
+!5574 = !DISubroutineType(types: !5575)
+!5575 = !{!5576, !5549}
+!5576 = !DIDerivedType(tag: DW_TAG_typedef, name: "pointer", scope: !1132, file: !1552, line: 86, baseType: !5577)
+!5577 = !DIDerivedType(tag: DW_TAG_typedef, name: "pointer", scope: !1630, file: !81, line: 104, baseType: !1638)
+!5578 = !DISubprogram(name: "_M_data", linkageName: "_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEv", scope: !1132, file: !1552, line: 134, type: !5574, scopeLine: 134, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!5579 = !{!5580}
+!5580 = !DILocalVariable(name: "this", arg: 1, scope: !5573, type: !5554, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5581 = !DILocation(line: 0, scope: !5573)
+!5582 = !DILocation(line: 135, column: 28, scope: !5573)
+!5583 = !{!5584, !3172, i64 0}
+!5584 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !5585, i64 0, !5036, i64 8, !3049, i64 16}
+!5585 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !3172, i64 0}
+!5586 = !DILocation(line: 135, column: 9, scope: !5573)
+!5587 = distinct !DISubprogram(name: "_M_local_data", linkageName: "_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_local_dataEv", scope: !1132, file: !1552, line: 148, type: !5588, scopeLine: 149, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5593, retainedNodes: !5594)
+!5588 = !DISubroutineType(types: !5589)
+!5589 = !{!5590, !5549}
+!5590 = !DIDerivedType(tag: DW_TAG_typedef, name: "const_pointer", scope: !1132, file: !1552, line: 87, baseType: !5591)
+!5591 = !DIDerivedType(tag: DW_TAG_typedef, name: "const_pointer", scope: !1630, file: !81, line: 105, baseType: !5592)
+!5592 = !DIDerivedType(tag: DW_TAG_typedef, name: "const_pointer", scope: !1633, file: !87, line: 453, baseType: !621)
+!5593 = !DISubprogram(name: "_M_local_data", linkageName: "_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_local_dataEv", scope: !1132, file: !1552, line: 148, type: !5588, scopeLine: 148, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!5594 = !{!5595}
+!5595 = !DILocalVariable(name: "this", arg: 1, scope: !5587, type: !5554, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5596 = !DILocation(line: 0, scope: !5587)
+!5597 = !DILocation(line: 151, column: 57, scope: !5587)
+!5598 = !DILocation(line: 151, column: 56, scope: !5587)
+!5599 = !DILocation(line: 151, column: 9, scope: !5587)
+!5600 = !DILocation(line: 151, column: 2, scope: !5587)
+!5601 = distinct !DISubprogram(name: "pointer_to", linkageName: "_ZNSt14pointer_traitsIPKcE10pointer_toERS0_", scope: !5603, file: !5602, line: 168, type: !5606, scopeLine: 169, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5605, retainedNodes: !5617)
+!5602 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/ptr_traits.h", directory: "")
+!5603 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "pointer_traits<const char *>", scope: !2, file: !5602, line: 150, size: 8, flags: DIFlagTypePassByValue, elements: !5604, templateParams: !5615, identifier: "_ZTSSt14pointer_traitsIPKcE")
+!5604 = !{!5605}
+!5605 = !DISubprogram(name: "pointer_to", linkageName: "_ZNSt14pointer_traitsIPKcE10pointer_toERS0_", scope: !5603, file: !5602, line: 168, type: !5606, scopeLine: 168, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized)
+!5606 = !DISubroutineType(types: !5607)
+!5607 = !{!5608, !5609}
+!5608 = !DIDerivedType(tag: DW_TAG_typedef, name: "pointer", scope: !5603, file: !5602, line: 153, baseType: !621)
+!5609 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !5610, size: 64)
+!5610 = !DIDerivedType(tag: DW_TAG_typedef, name: "__type", scope: !5611, file: !5602, line: 107, baseType: !622)
+!5611 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__ptrtr_not_void<const char, char>", scope: !2, file: !5602, line: 105, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !5612, identifier: "_ZTSSt16__ptrtr_not_voidIKccE")
+!5612 = !{!5613, !5614}
+!5613 = !DITemplateTypeParameter(name: "_Tp", type: !622)
+!5614 = !DITemplateTypeParameter(type: !623)
 !5615 = !{!5616}
-!5616 = !DILocalVariable(name: "__r", arg: 1, scope: !5599, file: !5600, line: 168, type: !5607)
-!5617 = !DILocation(line: 0, scope: !5599)
-!5618 = !DILocation(line: 169, column: 16, scope: !5599)
-!5619 = !DILocation(line: 169, column: 9, scope: !5599)
-!5620 = distinct !DISubprogram(name: "addressof<const char>", linkageName: "_ZSt9addressofIKcEPT_RS1_", scope: !2, file: !5621, line: 135, type: !5622, scopeLine: 136, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5626, retainedNodes: !5624)
-!5621 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/move.h", directory: "")
-!5622 = !DISubroutineType(types: !5623)
-!5623 = !{!621, !5510}
-!5624 = !{!5625}
-!5625 = !DILocalVariable(name: "__r", arg: 1, scope: !5620, file: !5621, line: 135, type: !5510)
-!5626 = !{!5611}
-!5627 = !DILocation(line: 0, scope: !5620)
-!5628 = !DILocation(line: 136, column: 14, scope: !5620)
-!5629 = !DILocation(line: 136, column: 7, scope: !5620)
-!5630 = distinct !DISubprogram(name: "__addressof<const char>", linkageName: "_ZSt11__addressofIKcEPT_RS1_", scope: !2, file: !5621, line: 47, type: !5622, scopeLine: 48, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5626, retainedNodes: !5631)
-!5631 = !{!5632}
-!5632 = !DILocalVariable(name: "__r", arg: 1, scope: !5630, file: !5621, line: 47, type: !5510)
-!5633 = !DILocation(line: 0, scope: !5630)
-!5634 = !DILocation(line: 49, column: 7, scope: !5630)
-!5635 = distinct !DISubprogram(name: "deallocate", linkageName: "_ZNSt16allocator_traitsISaIcEE10deallocateERS0_Pcm", scope: !1633, file: !87, line: 516, type: !1646, scopeLine: 517, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1645, retainedNodes: !5636)
-!5636 = !{!5637, !5638, !5639}
-!5637 = !DILocalVariable(name: "__a", arg: 1, scope: !5635, file: !87, line: 516, type: !1639)
-!5638 = !DILocalVariable(name: "__p", arg: 2, scope: !5635, file: !87, line: 516, type: !1638)
-!5639 = !DILocalVariable(name: "__n", arg: 3, scope: !5635, file: !87, line: 516, type: !229)
-!5640 = !DILocation(line: 0, scope: !5635)
-!5641 = !DILocation(line: 517, column: 9, scope: !5635)
-!5642 = !DILocation(line: 517, column: 13, scope: !5635)
-!5643 = !DILocation(line: 517, column: 35, scope: !5635)
-!5644 = distinct !DISubprogram(name: "_M_get_allocator", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16_M_get_allocatorEv", scope: !1132, file: !1552, line: 234, type: !5645, scopeLine: 235, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5653, retainedNodes: !5654)
-!5645 = !DISubroutineType(types: !5646)
-!5646 = !{!5647, !4757}
-!5647 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !5648, size: 64)
-!5648 = !DIDerivedType(tag: DW_TAG_typedef, name: "allocator_type", scope: !1132, file: !1552, line: 81, baseType: !5649)
-!5649 = !DIDerivedType(tag: DW_TAG_typedef, name: "_Char_alloc_type", scope: !1132, file: !1552, line: 74, baseType: !5650)
-!5650 = !DIDerivedType(tag: DW_TAG_typedef, name: "other", scope: !5651, file: !81, line: 169, baseType: !5652)
-!5651 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "rebind<char>", scope: !1630, file: !81, line: 168, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !5520, identifier: "_ZTSN9__gnu_cxx14__alloc_traitsISaIcEE6rebindIcEE")
-!5652 = !DIDerivedType(tag: DW_TAG_typedef, name: "rebind_alloc<char>", scope: !1633, file: !87, line: 477, baseType: !1641)
-!5653 = !DISubprogram(name: "_M_get_allocator", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16_M_get_allocatorEv", scope: !1132, file: !1552, line: 234, type: !5645, scopeLine: 234, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!5654 = !{!5655}
-!5655 = !DILocalVariable(name: "this", arg: 1, scope: !5644, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5656 = !DILocation(line: 0, scope: !5644)
-!5657 = !DILocation(line: 235, column: 16, scope: !5644)
-!5658 = !DILocation(line: 235, column: 9, scope: !5644)
-!5659 = distinct !DISubprogram(name: "deallocate", linkageName: "_ZN9__gnu_cxx13new_allocatorIcE10deallocateEPcm", scope: !5486, file: !175, line: 109, type: !5515, scopeLine: 110, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5514, retainedNodes: !5660)
-!5660 = !{!5661, !5662, !5663}
-!5661 = !DILocalVariable(name: "this", arg: 1, scope: !5659, type: !5524, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5662 = !DILocalVariable(name: "__p", arg: 2, scope: !5659, file: !175, line: 109, type: !5501)
-!5663 = !DILocalVariable(arg: 3, scope: !5659, file: !175, line: 109, type: !205)
-!5664 = !DILocation(line: 0, scope: !5659)
-!5665 = !DILocation(line: 110, column: 9, scope: !5659)
-!5666 = !DILocation(line: 110, column: 33, scope: !5659)
-!5667 = distinct !DISubprogram(name: "_Vector_base", linkageName: "_ZNSt12_Vector_baseIfSaIfEEC2Ev", scope: !147, file: !70, line: 124, type: !302, scopeLine: 125, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !301, retainedNodes: !5668)
-!5668 = !{!5669}
-!5669 = !DILocalVariable(name: "this", arg: 1, scope: !5667, type: !5305, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5670 = !DILocation(line: 0, scope: !5667)
-!5671 = !DILocation(line: 125, column: 9, scope: !5667)
-!5672 = !DILocation(line: 125, column: 21, scope: !5667)
-!5673 = distinct !DISubprogram(name: "_Vector_impl", linkageName: "_ZNSt12_Vector_baseIfSaIfEE12_Vector_implC2Ev", scope: !150, file: !70, line: 86, type: !271, scopeLine: 88, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !270, retainedNodes: !5674)
-!5674 = !{!5675}
-!5675 = !DILocalVariable(name: "this", arg: 1, scope: !5673, type: !5676, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5676 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !150, size: 64)
-!5677 = !DILocation(line: 0, scope: !5673)
-!5678 = !DILocation(line: 88, column: 2, scope: !5673)
-!5679 = !DILocation(line: 87, column: 4, scope: !5673)
-!5680 = !DILocation(line: 88, column: 4, scope: !5673)
-!5681 = !DILocation(line: 87, column: 34, scope: !5673)
-!5682 = distinct !DISubprogram(name: "allocator", linkageName: "_ZNSaIfEC2Ev", scope: !168, file: !169, line: 113, type: !220, scopeLine: 113, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !219, retainedNodes: !5683)
-!5683 = !{!5684}
-!5684 = !DILocalVariable(name: "this", arg: 1, scope: !5682, type: !5685, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5685 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !168, size: 64)
-!5686 = !DILocation(line: 0, scope: !5682)
-!5687 = !DILocation(line: 113, column: 27, scope: !5682)
-!5688 = !DILocation(line: 113, column: 7, scope: !5682)
-!5689 = !DILocation(line: 113, column: 29, scope: !5682)
-!5690 = distinct !DISubprogram(name: "new_allocator", linkageName: "_ZN9__gnu_cxx13new_allocatorIfEC2Ev", scope: !174, file: !175, line: 79, type: !178, scopeLine: 79, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !177, retainedNodes: !5691)
-!5691 = !{!5692}
-!5692 = !DILocalVariable(name: "this", arg: 1, scope: !5690, type: !5355, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5693 = !DILocation(line: 0, scope: !5690)
-!5694 = !DILocation(line: 79, column: 47, scope: !5690)
-!5695 = distinct !DISubprogram(name: "size", linkageName: "_ZNKSt6vectorIfSaIfEE4sizeEv", scope: !144, file: !70, line: 654, type: !530, scopeLine: 655, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !529, retainedNodes: !5696)
-!5696 = !{!5697}
-!5697 = !DILocalVariable(name: "this", arg: 1, scope: !5695, type: !3294, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5698 = !DILocation(line: 0, scope: !5695)
-!5699 = !DILocation(line: 655, column: 40, scope: !5695)
-!5700 = !DILocation(line: 655, column: 66, scope: !5695)
-!5701 = !DILocation(line: 655, column: 50, scope: !5695)
-!5702 = !DILocation(line: 655, column: 9, scope: !5695)
-!5703 = distinct !DISubprogram(name: "_M_default_append", linkageName: "_ZNSt6vectorIfSaIfEE17_M_default_appendEm", scope: !144, file: !5704, line: 541, type: !534, scopeLine: 542, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !613, retainedNodes: !5705)
-!5704 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc", directory: "")
-!5705 = !{!5706, !5707, !5708, !5714, !5715, !5716}
-!5706 = !DILocalVariable(name: "this", arg: 1, scope: !5703, type: !3113, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5707 = !DILocalVariable(name: "__n", arg: 2, scope: !5703, file: !70, line: 1400, type: !347)
-!5708 = !DILocalVariable(name: "__len", scope: !5709, file: !5704, line: 554, type: !5713)
-!5709 = distinct !DILexicalBlock(scope: !5710, file: !5704, line: 553, column: 6)
-!5710 = distinct !DILexicalBlock(scope: !5711, file: !5704, line: 545, column: 8)
-!5711 = distinct !DILexicalBlock(scope: !5712, file: !5704, line: 544, column: 2)
-!5712 = distinct !DILexicalBlock(scope: !5703, file: !5704, line: 543, column: 11)
-!5713 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !347)
-!5714 = !DILocalVariable(name: "__old_size", scope: !5709, file: !5704, line: 556, type: !5713)
-!5715 = !DILocalVariable(name: "__new_start", scope: !5709, file: !5704, line: 557, type: !627)
-!5716 = !DILocalVariable(name: "__new_finish", scope: !5709, file: !5704, line: 558, type: !627)
-!5717 = !DILocation(line: 0, scope: !5703)
-!5718 = !DILocation(line: 543, column: 15, scope: !5712)
-!5719 = !DILocation(line: 543, column: 11, scope: !5703)
-!5720 = !DILocation(line: 545, column: 24, scope: !5710)
-!5721 = !DILocation(line: 545, column: 32, scope: !5710)
-!5722 = !DILocation(line: 546, column: 20, scope: !5710)
-!5723 = !DILocation(line: 546, column: 4, scope: !5710)
-!5724 = !DILocation(line: 546, column: 31, scope: !5710)
-!5725 = !DILocation(line: 545, column: 8, scope: !5711)
-!5726 = !DILocation(line: 550, column: 13, scope: !5727)
-!5727 = distinct !DILexicalBlock(scope: !5710, file: !5704, line: 547, column: 6)
-!5728 = !DILocation(line: 549, column: 3, scope: !5727)
-!5729 = !DILocation(line: 548, column: 32, scope: !5727)
-!5730 = !DILocation(line: 551, column: 6, scope: !5727)
-!5731 = !DILocation(line: 555, column: 3, scope: !5709)
-!5732 = !DILocation(line: 0, scope: !5709)
-!5733 = !DILocation(line: 556, column: 43, scope: !5709)
-!5734 = !DILocation(line: 557, column: 34, scope: !5709)
-!5735 = !DILocation(line: 563, column: 22, scope: !5736)
-!5736 = distinct !DILexicalBlock(scope: !5709, file: !5704, line: 560, column: 3)
-!5737 = !DILocation(line: 563, column: 46, scope: !5736)
-!5738 = !DILocation(line: 564, column: 21, scope: !5736)
-!5739 = !DILocation(line: 562, column: 9, scope: !5736)
-!5740 = !DILocation(line: 567, column: 12, scope: !5736)
-!5741 = !DILocation(line: 566, column: 7, scope: !5736)
-!5742 = !DILocation(line: 576, column: 36, scope: !5709)
-!5743 = !DILocation(line: 576, column: 60, scope: !5709)
-!5744 = !DILocation(line: 577, column: 8, scope: !5709)
-!5745 = !DILocation(line: 576, column: 8, scope: !5709)
-!5746 = !DILocation(line: 578, column: 36, scope: !5709)
-!5747 = !DILocation(line: 579, column: 22, scope: !5709)
-!5748 = !DILocation(line: 580, column: 8, scope: !5709)
-!5749 = !DILocation(line: 578, column: 8, scope: !5709)
-!5750 = !DILocation(line: 581, column: 31, scope: !5709)
-!5751 = !DILocation(line: 582, column: 32, scope: !5709)
-!5752 = !DILocation(line: 583, column: 54, scope: !5709)
-!5753 = !DILocation(line: 583, column: 40, scope: !5709)
-!5754 = !DILocation(line: 586, column: 5, scope: !5736)
-!5755 = !DILocation(line: 568, column: 3, scope: !5736)
-!5756 = !DILocation(line: 572, column: 5, scope: !5757)
-!5757 = distinct !DILexicalBlock(scope: !5709, file: !5704, line: 570, column: 3)
-!5758 = !DILocation(line: 571, column: 5, scope: !5757)
-!5759 = !DILocation(line: 573, column: 5, scope: !5757)
-!5760 = !DILocation(line: 574, column: 5, scope: !5757)
-!5761 = !DILocation(line: 586, column: 5, scope: !5757)
-!5762 = !DILocation(line: 575, column: 3, scope: !5757)
-!5763 = !DILocation(line: 584, column: 6, scope: !5710)
-!5764 = !DILocation(line: 586, column: 5, scope: !5703)
-!5765 = distinct !DISubprogram(name: "_M_erase_at_end", linkageName: "_ZNSt6vectorIfSaIfEE15_M_erase_at_endEPf", scope: !144, file: !70, line: 1436, type: !625, scopeLine: 1437, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !624, retainedNodes: !5766)
-!5766 = !{!5767, !5768}
-!5767 = !DILocalVariable(name: "this", arg: 1, scope: !5765, type: !3113, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5768 = !DILocalVariable(name: "__pos", arg: 2, scope: !5765, file: !70, line: 1436, type: !627)
-!5769 = !DILocation(line: 0, scope: !5765)
-!5770 = !DILocation(line: 1438, column: 29, scope: !5765)
-!5771 = !DILocation(line: 1438, column: 37, scope: !5765)
-!5772 = !DILocation(line: 1438, column: 48, scope: !5765)
-!5773 = !DILocation(line: 1438, column: 2, scope: !5765)
-!5774 = !DILocation(line: 1439, column: 26, scope: !5765)
-!5775 = !DILocation(line: 1440, column: 7, scope: !5765)
-!5776 = distinct !DISubprogram(name: "__uninitialized_default_n_a<float *, unsigned long, float>", linkageName: "_ZSt27__uninitialized_default_n_aIPfmfET_S1_T0_RSaIT1_E", scope: !2, file: !5777, line: 635, type: !5778, scopeLine: 637, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5784, retainedNodes: !5780)
-!5777 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_uninitialized.h", directory: "")
-!5778 = !DISubroutineType(types: !5779)
-!5779 = !{!165, !165, !208, !254}
-!5780 = !{!5781, !5782, !5783}
-!5781 = !DILocalVariable(name: "__first", arg: 1, scope: !5776, file: !5777, line: 635, type: !165)
-!5782 = !DILocalVariable(name: "__n", arg: 2, scope: !5776, file: !5777, line: 635, type: !208)
-!5783 = !DILocalVariable(arg: 3, scope: !5776, file: !5777, line: 636, type: !254)
-!5784 = !{!5298, !5785, !218}
-!5785 = !DITemplateTypeParameter(name: "_Size", type: !208)
-!5786 = !DILocation(line: 0, scope: !5776)
-!5787 = !DILocation(line: 637, column: 14, scope: !5776)
-!5788 = !DILocation(line: 637, column: 7, scope: !5776)
-!5789 = distinct !DISubprogram(name: "_M_check_len", linkageName: "_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc", scope: !144, file: !70, line: 1422, type: !618, scopeLine: 1423, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !617, retainedNodes: !5790)
-!5790 = !{!5791, !5792, !5793, !5794}
-!5791 = !DILocalVariable(name: "this", arg: 1, scope: !5789, type: !3294, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5792 = !DILocalVariable(name: "__n", arg: 2, scope: !5789, file: !70, line: 1422, type: !347)
-!5793 = !DILocalVariable(name: "__s", arg: 3, scope: !5789, file: !70, line: 1422, type: !621)
-!5794 = !DILocalVariable(name: "__len", scope: !5789, file: !70, line: 1427, type: !5713)
-!5795 = !DILocation(line: 0, scope: !5789)
-!5796 = !{!5034, !5034, i64 0}
-!5797 = !DILocation(line: 1424, column: 6, scope: !5798)
-!5798 = distinct !DILexicalBlock(scope: !5789, file: !70, line: 1424, column: 6)
-!5799 = !DILocation(line: 1424, column: 19, scope: !5798)
-!5800 = !DILocation(line: 1424, column: 17, scope: !5798)
-!5801 = !DILocation(line: 1424, column: 26, scope: !5798)
-!5802 = !DILocation(line: 1424, column: 6, scope: !5789)
-!5803 = !DILocation(line: 1425, column: 4, scope: !5798)
-!5804 = !DILocation(line: 1427, column: 26, scope: !5789)
-!5805 = !DILocation(line: 1427, column: 44, scope: !5789)
-!5806 = !DILocation(line: 1427, column: 35, scope: !5789)
-!5807 = !DILocation(line: 1427, column: 33, scope: !5789)
-!5808 = !DILocation(line: 1428, column: 18, scope: !5789)
-!5809 = !DILocation(line: 1428, column: 16, scope: !5789)
-!5810 = !DILocation(line: 1428, column: 25, scope: !5789)
-!5811 = !DILocation(line: 1428, column: 36, scope: !5789)
-!5812 = !DILocation(line: 1428, column: 34, scope: !5789)
-!5813 = !DILocation(line: 1428, column: 9, scope: !5789)
-!5814 = !DILocation(line: 1428, column: 50, scope: !5789)
-!5815 = !DILocation(line: 1428, column: 2, scope: !5789)
-!5816 = distinct !DISubprogram(name: "_M_allocate", linkageName: "_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm", scope: !147, file: !70, line: 167, type: !327, scopeLine: 168, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !326, retainedNodes: !5817)
-!5817 = !{!5818, !5819}
-!5818 = !DILocalVariable(name: "this", arg: 1, scope: !5816, type: !5305, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5819 = !DILocalVariable(name: "__n", arg: 2, scope: !5816, file: !70, line: 167, type: !206)
-!5820 = !DILocation(line: 0, scope: !5816)
-!5821 = !DILocation(line: 170, column: 13, scope: !5816)
-!5822 = !DILocation(line: 170, column: 9, scope: !5816)
-!5823 = !DILocation(line: 170, column: 34, scope: !5816)
-!5824 = !DILocation(line: 170, column: 20, scope: !5816)
-!5825 = !DILocation(line: 170, column: 2, scope: !5816)
-!5826 = distinct !DISubprogram(name: "__uninitialized_move_if_noexcept_a<float *, float *, std::allocator<float> >", linkageName: "_ZSt34__uninitialized_move_if_noexcept_aIPfS0_SaIfEET0_T_S3_S2_RT1_", scope: !2, file: !5777, line: 297, type: !5827, scopeLine: 301, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5834, retainedNodes: !5829)
-!5827 = !DISubroutineType(types: !5828)
-!5828 = !{!165, !165, !165, !165, !254}
-!5829 = !{!5830, !5831, !5832, !5833}
-!5830 = !DILocalVariable(name: "__first", arg: 1, scope: !5826, file: !5777, line: 297, type: !165)
-!5831 = !DILocalVariable(name: "__last", arg: 2, scope: !5826, file: !5777, line: 298, type: !165)
-!5832 = !DILocalVariable(name: "__result", arg: 3, scope: !5826, file: !5777, line: 299, type: !165)
-!5833 = !DILocalVariable(name: "__alloc", arg: 4, scope: !5826, file: !5777, line: 300, type: !254)
-!5834 = !{!5835, !5298, !5836}
-!5835 = !DITemplateTypeParameter(name: "_InputIterator", type: !165)
-!5836 = !DITemplateTypeParameter(name: "_Allocator", type: !168)
-!5837 = !DILocation(line: 0, scope: !5826)
-!5838 = !DILocation(line: 303, column: 3, scope: !5826)
-!5839 = !DILocation(line: 304, column: 3, scope: !5826)
-!5840 = !DILocation(line: 302, column: 14, scope: !5826)
-!5841 = !DILocation(line: 302, column: 7, scope: !5826)
-!5842 = distinct !DISubprogram(name: "__uninitialized_default_n<float *, unsigned long>", linkageName: "_ZSt25__uninitialized_default_nIPfmET_S1_T0_", scope: !2, file: !5777, line: 566, type: !5843, scopeLine: 567, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5849, retainedNodes: !5845)
-!5843 = !DISubroutineType(types: !5844)
-!5844 = !{!165, !165, !208}
-!5845 = !{!5846, !5847, !5848}
-!5846 = !DILocalVariable(name: "__first", arg: 1, scope: !5842, file: !5777, line: 566, type: !165)
-!5847 = !DILocalVariable(name: "__n", arg: 2, scope: !5842, file: !5777, line: 566, type: !208)
-!5848 = !DILocalVariable(name: "__assignable", scope: !5842, file: !5777, line: 571, type: !642)
-!5849 = !{!5298, !5785}
-!5850 = !DILocation(line: 0, scope: !5842)
-!5851 = !DILocation(line: 573, column: 14, scope: !5842)
-!5852 = !DILocation(line: 573, column: 7, scope: !5842)
-!5853 = distinct !DISubprogram(name: "__uninit_default_n<float *, unsigned long>", linkageName: "_ZNSt27__uninitialized_default_n_1ILb1EE18__uninit_default_nIPfmEET_S3_T0_", scope: !5854, file: !5777, line: 535, type: !5843, scopeLine: 536, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5849, declaration: !5857, retainedNodes: !5858)
-!5854 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__uninitialized_default_n_1<true>", scope: !2, file: !5777, line: 531, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !5855, identifier: "_ZTSSt27__uninitialized_default_n_1ILb1EE")
-!5855 = !{!5856}
-!5856 = !DITemplateValueParameter(name: "_TrivialValueType", type: !13, value: i8 1)
-!5857 = !DISubprogram(name: "__uninit_default_n<float *, unsigned long>", linkageName: "_ZNSt27__uninitialized_default_n_1ILb1EE18__uninit_default_nIPfmEET_S3_T0_", scope: !5854, file: !5777, line: 535, type: !5843, scopeLine: 535, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !5849)
-!5858 = !{!5859, !5860}
-!5859 = !DILocalVariable(name: "__first", arg: 1, scope: !5853, file: !5777, line: 535, type: !165)
-!5860 = !DILocalVariable(name: "__n", arg: 2, scope: !5853, file: !5777, line: 535, type: !208)
-!5861 = !DILocation(line: 0, scope: !5853)
-!5862 = !DILocation(line: 540, column: 37, scope: !5853)
-!5863 = !DILocation(line: 540, column: 11, scope: !5853)
-!5864 = !DILocation(line: 540, column: 4, scope: !5853)
-!5865 = distinct !DISubprogram(name: "fill_n<float *, unsigned long, float>", linkageName: "_ZSt6fill_nIPfmfET_S1_T0_RKT1_", scope: !2, file: !5866, line: 800, type: !5867, scopeLine: 801, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5873, retainedNodes: !5869)
-!5866 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algobase.h", directory: "")
-!5867 = !DISubroutineType(types: !5868)
-!5868 = !{!165, !165, !208, !201}
-!5869 = !{!5870, !5871, !5872}
-!5870 = !DILocalVariable(name: "__first", arg: 1, scope: !5865, file: !5866, line: 800, type: !165)
-!5871 = !DILocalVariable(name: "__n", arg: 2, scope: !5865, file: !5866, line: 800, type: !208)
-!5872 = !DILocalVariable(name: "__value", arg: 3, scope: !5865, file: !5866, line: 800, type: !201)
-!5873 = !{!5874, !5785, !218}
-!5874 = !DITemplateTypeParameter(name: "_OI", type: !165)
-!5875 = !DILocation(line: 0, scope: !5865)
-!5876 = !DILocation(line: 805, column: 34, scope: !5865)
-!5877 = !DILocation(line: 805, column: 18, scope: !5865)
-!5878 = !DILocation(line: 805, column: 7, scope: !5865)
-!5879 = distinct !DISubprogram(name: "__fill_n_a<float *, unsigned long, float>", linkageName: "_ZSt10__fill_n_aIPfmfEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT1_EE7__valueET_E6__typeES4_T0_RKS3_", scope: !2, file: !5866, line: 765, type: !5880, scopeLine: 766, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5894, retainedNodes: !5887)
-!5880 = !DISubroutineType(types: !5881)
-!5881 = !{!5882, !165, !208, !201}
-!5882 = !DIDerivedType(tag: DW_TAG_typedef, name: "__type", scope: !5884, file: !5883, line: 48, baseType: !165)
-!5883 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/ext/type_traits.h", directory: "")
-!5884 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__enable_if<true, float *>", scope: !24, file: !5883, line: 47, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !5885, identifier: "_ZTSN9__gnu_cxx11__enable_ifILb1EPfEE")
-!5885 = !{!947, !5886}
-!5886 = !DITemplateTypeParameter(type: !165)
-!5887 = !{!5888, !5889, !5890, !5891, !5892}
-!5888 = !DILocalVariable(name: "__first", arg: 1, scope: !5879, file: !5866, line: 765, type: !165)
-!5889 = !DILocalVariable(name: "__n", arg: 2, scope: !5879, file: !5866, line: 765, type: !208)
-!5890 = !DILocalVariable(name: "__value", arg: 3, scope: !5879, file: !5866, line: 765, type: !201)
-!5891 = !DILocalVariable(name: "__tmp", scope: !5879, file: !5866, line: 767, type: !199)
-!5892 = !DILocalVariable(name: "__niter", scope: !5893, file: !5866, line: 768, type: !208)
-!5893 = distinct !DILexicalBlock(scope: !5879, file: !5866, line: 768, column: 7)
-!5894 = !{!5895, !5785, !218}
-!5895 = !DITemplateTypeParameter(name: "_OutputIterator", type: !165)
-!5896 = !DILocation(line: 0, scope: !5879)
-!5897 = !DILocation(line: 767, column: 25, scope: !5879)
-!5898 = !DILocation(line: 0, scope: !5893)
-!5899 = !DILocation(line: 769, column: 13, scope: !5900)
-!5900 = distinct !DILexicalBlock(scope: !5893, file: !5866, line: 768, column: 7)
-!5901 = !DILocation(line: 768, column: 7, scope: !5893)
-!5902 = !DILocation(line: 771, column: 7, scope: !5879)
-!5903 = !DILocation(line: 770, column: 11, scope: !5900)
-!5904 = !DILocation(line: 769, column: 18, scope: !5900)
-!5905 = !DILocation(line: 769, column: 29, scope: !5900)
-!5906 = distinct !{!5906, !5901, !5907}
-!5907 = !DILocation(line: 770, column: 13, scope: !5893)
-!5908 = distinct !DISubprogram(name: "__niter_base<float *>", linkageName: "_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_", scope: !2, file: !5866, line: 282, type: !5909, scopeLine: 283, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !415, retainedNodes: !5917)
-!5909 = !DISubroutineType(types: !5910)
-!5910 = !{!5911, !165}
-!5911 = !DIDerivedType(tag: DW_TAG_typedef, name: "iterator_type", scope: !5912, file: !413, line: 214, baseType: !165)
-!5912 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "_Iter_base<float *, false>", scope: !2, file: !413, line: 212, size: 8, flags: DIFlagTypePassByValue, elements: !5913, templateParams: !5915, identifier: "_ZTSSt10_Iter_baseIPfLb0EE")
-!5913 = !{!5914}
-!5914 = !DISubprogram(name: "_S_base", linkageName: "_ZNSt10_Iter_baseIPfLb0EE7_S_baseES0_", scope: !5912, file: !413, line: 215, type: !5909, scopeLine: 215, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized)
-!5915 = !{!416, !5916}
-!5916 = !DITemplateValueParameter(name: "_HasBase", type: !13, value: i8 0)
-!5917 = !{!5918}
-!5918 = !DILocalVariable(name: "__it", arg: 1, scope: !5908, file: !5866, line: 282, type: !165)
-!5919 = !DILocation(line: 0, scope: !5908)
-!5920 = !DILocation(line: 283, column: 14, scope: !5908)
-!5921 = !DILocation(line: 283, column: 7, scope: !5908)
-!5922 = distinct !DISubprogram(name: "_S_base", linkageName: "_ZNSt10_Iter_baseIPfLb0EE7_S_baseES0_", scope: !5912, file: !413, line: 215, type: !5909, scopeLine: 216, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5914, retainedNodes: !5923)
-!5923 = !{!5924}
-!5924 = !DILocalVariable(name: "__it", arg: 1, scope: !5922, file: !413, line: 215, type: !165)
-!5925 = !DILocation(line: 0, scope: !5922)
-!5926 = !DILocation(line: 216, column: 9, scope: !5922)
-!5927 = distinct !DISubprogram(name: "max_size", linkageName: "_ZNKSt6vectorIfSaIfEE8max_sizeEv", scope: !144, file: !70, line: 659, type: !530, scopeLine: 660, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !532, retainedNodes: !5928)
-!5928 = !{!5929}
-!5929 = !DILocalVariable(name: "this", arg: 1, scope: !5927, type: !3294, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5930 = !DILocation(line: 0, scope: !5927)
-!5931 = !DILocation(line: 660, column: 40, scope: !5927)
-!5932 = !DILocation(line: 660, column: 16, scope: !5927)
-!5933 = !DILocation(line: 660, column: 9, scope: !5927)
-!5934 = distinct !DISubprogram(name: "max<unsigned long>", linkageName: "_ZSt3maxImERKT_S2_S2_", scope: !2, file: !5866, line: 219, type: !5935, scopeLine: 220, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5943, retainedNodes: !5939)
-!5935 = !DISubroutineType(types: !5936)
-!5936 = !{!5937, !5937, !5937}
-!5937 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !5938, size: 64)
-!5938 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !208)
-!5939 = !{!5940, !5942}
-!5940 = !DILocalVariable(name: "__a", arg: 1, scope: !5934, file: !5941, line: 357, type: !5937)
-!5941 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/algorithmfwd.h", directory: "")
-!5942 = !DILocalVariable(name: "__b", arg: 2, scope: !5934, file: !5941, line: 357, type: !5937)
-!5943 = !{!5944}
-!5944 = !DITemplateTypeParameter(name: "_Tp", type: !208)
-!5945 = !DILocation(line: 0, scope: !5934)
-!5946 = !DILocation(line: 224, column: 11, scope: !5947)
-!5947 = distinct !DILexicalBlock(scope: !5934, file: !5866, line: 224, column: 11)
-!5948 = !DILocation(line: 224, column: 17, scope: !5947)
-!5949 = !DILocation(line: 224, column: 15, scope: !5947)
-!5950 = !DILocation(line: 227, column: 5, scope: !5934)
-!5951 = distinct !DISubprogram(name: "max_size", linkageName: "_ZNSt16allocator_traitsISaIfEE8max_sizeERKS0_", scope: !159, file: !87, line: 550, type: !238, scopeLine: 551, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !237, retainedNodes: !5952)
-!5952 = !{!5953}
-!5953 = !DILocalVariable(name: "__a", arg: 1, scope: !5951, file: !87, line: 550, type: !241)
-!5954 = !DILocation(line: 0, scope: !5951)
-!5955 = !DILocation(line: 551, column: 16, scope: !5951)
-!5956 = !DILocation(line: 551, column: 20, scope: !5951)
-!5957 = !DILocation(line: 551, column: 9, scope: !5951)
-!5958 = distinct !DISubprogram(name: "_M_get_Tp_allocator", linkageName: "_ZNKSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv", scope: !147, file: !70, line: 117, type: !293, scopeLine: 118, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !292, retainedNodes: !5959)
-!5959 = !{!5960}
-!5960 = !DILocalVariable(name: "this", arg: 1, scope: !5958, type: !5961, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5961 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !296, size: 64)
-!5962 = !DILocation(line: 0, scope: !5958)
-!5963 = !DILocation(line: 118, column: 16, scope: !5958)
-!5964 = !DILocation(line: 118, column: 9, scope: !5958)
-!5965 = distinct !DISubprogram(name: "max_size", linkageName: "_ZNK9__gnu_cxx13new_allocatorIfE8max_sizeEv", scope: !174, file: !175, line: 113, type: !215, scopeLine: 114, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !214, retainedNodes: !5966)
-!5966 = !{!5967}
-!5967 = !DILocalVariable(name: "this", arg: 1, scope: !5965, type: !5968, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5968 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !185, size: 64)
-!5969 = !DILocation(line: 0, scope: !5965)
-!5970 = !DILocation(line: 114, column: 9, scope: !5965)
-!5971 = distinct !DISubprogram(name: "allocate", linkageName: "_ZNSt16allocator_traitsISaIfEE8allocateERS0_m", scope: !159, file: !87, line: 490, type: !162, scopeLine: 491, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !161, retainedNodes: !5972)
-!5972 = !{!5973, !5974}
-!5973 = !DILocalVariable(name: "__a", arg: 1, scope: !5971, file: !87, line: 490, type: !166)
-!5974 = !DILocalVariable(name: "__n", arg: 2, scope: !5971, file: !87, line: 490, type: !229)
-!5975 = !DILocation(line: 0, scope: !5971)
-!5976 = !DILocation(line: 491, column: 16, scope: !5971)
-!5977 = !DILocation(line: 491, column: 20, scope: !5971)
-!5978 = !DILocation(line: 491, column: 9, scope: !5971)
-!5979 = distinct !DISubprogram(name: "allocate", linkageName: "_ZN9__gnu_cxx13new_allocatorIfE8allocateEmPKv", scope: !174, file: !175, line: 99, type: !203, scopeLine: 100, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !202, retainedNodes: !5980)
-!5980 = !{!5981, !5982, !5983}
-!5981 = !DILocalVariable(name: "this", arg: 1, scope: !5979, type: !5355, flags: DIFlagArtificial | DIFlagObjectPointer)
-!5982 = !DILocalVariable(name: "__n", arg: 2, scope: !5979, file: !175, line: 99, type: !205)
-!5983 = !DILocalVariable(arg: 3, scope: !5979, file: !175, line: 99, type: !209)
-!5984 = !DILocation(line: 0, scope: !5979)
-!5985 = !DILocation(line: 101, column: 18, scope: !5986)
-!5986 = distinct !DILexicalBlock(scope: !5979, file: !175, line: 101, column: 6)
-!5987 = !DILocation(line: 101, column: 10, scope: !5986)
-!5988 = !DILocation(line: 101, column: 6, scope: !5979)
-!5989 = !DILocation(line: 102, column: 4, scope: !5986)
-!5990 = !DILocation(line: 104, column: 46, scope: !5979)
-!5991 = !DILocation(line: 104, column: 27, scope: !5979)
-!5992 = !DILocation(line: 104, column: 9, scope: !5979)
-!5993 = !DILocation(line: 104, column: 2, scope: !5979)
-!5994 = distinct !DISubprogram(name: "__uninitialized_copy_a<std::move_iterator<float *>, float *, float>", linkageName: "_ZSt22__uninitialized_copy_aISt13move_iteratorIPfES1_fET0_T_S4_S3_RSaIT1_E", scope: !2, file: !5777, line: 279, type: !5995, scopeLine: 281, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6002, retainedNodes: !5997)
-!5995 = !DISubroutineType(types: !5996)
-!5996 = !{!165, !1574, !1574, !165, !254}
-!5997 = !{!5998, !5999, !6000, !6001}
-!5998 = !DILocalVariable(name: "__first", arg: 1, scope: !5994, file: !5777, line: 279, type: !1574)
-!5999 = !DILocalVariable(name: "__last", arg: 2, scope: !5994, file: !5777, line: 279, type: !1574)
-!6000 = !DILocalVariable(name: "__result", arg: 3, scope: !5994, file: !5777, line: 280, type: !165)
-!6001 = !DILocalVariable(arg: 4, scope: !5994, file: !5777, line: 280, type: !254)
-!6002 = !{!6003, !5298, !218}
-!6003 = !DITemplateTypeParameter(name: "_InputIterator", type: !1574)
-!6004 = !DILocation(line: 0, scope: !5994)
-!6005 = !DILocation(line: 281, column: 14, scope: !5994)
-!6006 = !DILocation(line: 281, column: 7, scope: !5994)
-!6007 = distinct !DISubprogram(name: "__make_move_if_noexcept_iterator<float *, std::move_iterator<float *> >", linkageName: "_ZSt32__make_move_if_noexcept_iteratorIPfSt13move_iteratorIS0_EET0_T_", scope: !2, file: !396, line: 1166, type: !6008, scopeLine: 1167, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6012, retainedNodes: !6010)
-!6008 = !DISubroutineType(types: !6009)
-!6009 = !{!1574, !165}
-!6010 = !{!6011}
-!6011 = !DILocalVariable(name: "__i", arg: 1, scope: !6007, file: !396, line: 1166, type: !165)
-!6012 = !{!416, !6013}
-!6013 = !DITemplateTypeParameter(name: "_ReturnType", type: !1574)
-!6014 = !DILocation(line: 0, scope: !6007)
-!6015 = !DILocation(line: 1167, column: 14, scope: !6007)
-!6016 = !DILocation(line: 1167, column: 7, scope: !6007)
-!6017 = distinct !DISubprogram(name: "uninitialized_copy<std::move_iterator<float *>, float *>", linkageName: "_ZSt18uninitialized_copyISt13move_iteratorIPfES1_ET0_T_S4_S3_", scope: !2, file: !5777, line: 107, type: !6018, scopeLine: 109, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6025, retainedNodes: !6020)
-!6018 = !DISubroutineType(types: !6019)
-!6019 = !{!165, !1574, !1574, !165}
-!6020 = !{!6021, !6022, !6023, !6024}
-!6021 = !DILocalVariable(name: "__first", arg: 1, scope: !6017, file: !5777, line: 107, type: !1574)
-!6022 = !DILocalVariable(name: "__last", arg: 2, scope: !6017, file: !5777, line: 107, type: !1574)
-!6023 = !DILocalVariable(name: "__result", arg: 3, scope: !6017, file: !5777, line: 108, type: !165)
-!6024 = !DILocalVariable(name: "__assignable", scope: !6017, file: !5777, line: 120, type: !642)
-!6025 = !{!6003, !5298}
-!6026 = !DILocation(line: 0, scope: !6017)
-!6027 = !DILocation(line: 123, column: 14, scope: !6017)
-!6028 = !DILocation(line: 123, column: 7, scope: !6017)
-!6029 = distinct !DISubprogram(name: "__uninit_copy<std::move_iterator<float *>, float *>", linkageName: "_ZNSt20__uninitialized_copyILb1EE13__uninit_copyISt13move_iteratorIPfES3_EET0_T_S6_S5_", scope: !6030, file: !5777, line: 91, type: !6018, scopeLine: 93, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6025, declaration: !6033, retainedNodes: !6034)
-!6030 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__uninitialized_copy<true>", scope: !2, file: !5777, line: 87, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !6031, identifier: "_ZTSSt20__uninitialized_copyILb1EE")
-!6031 = !{!6032}
-!6032 = !DITemplateValueParameter(name: "_TrivialValueTypes", type: !13, value: i8 1)
-!6033 = !DISubprogram(name: "__uninit_copy<std::move_iterator<float *>, float *>", linkageName: "_ZNSt20__uninitialized_copyILb1EE13__uninit_copyISt13move_iteratorIPfES3_EET0_T_S6_S5_", scope: !6030, file: !5777, line: 91, type: !6018, scopeLine: 91, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !6025)
-!6034 = !{!6035, !6036, !6037}
-!6035 = !DILocalVariable(name: "__first", arg: 1, scope: !6029, file: !5777, line: 91, type: !1574)
-!6036 = !DILocalVariable(name: "__last", arg: 2, scope: !6029, file: !5777, line: 91, type: !1574)
-!6037 = !DILocalVariable(name: "__result", arg: 3, scope: !6029, file: !5777, line: 92, type: !165)
-!6038 = !DILocation(line: 0, scope: !6029)
-!6039 = !DILocation(line: 93, column: 18, scope: !6029)
-!6040 = !DILocation(line: 93, column: 11, scope: !6029)
-!6041 = distinct !DISubprogram(name: "copy<std::move_iterator<float *>, float *>", linkageName: "_ZSt4copyISt13move_iteratorIPfES1_ET0_T_S4_S3_", scope: !2, file: !5866, line: 462, type: !6018, scopeLine: 463, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6046, retainedNodes: !6042)
-!6042 = !{!6043, !6044, !6045}
-!6043 = !DILocalVariable(name: "__first", arg: 1, scope: !6041, file: !5866, line: 462, type: !1574)
-!6044 = !DILocalVariable(name: "__last", arg: 2, scope: !6041, file: !5866, line: 462, type: !1574)
-!6045 = !DILocalVariable(name: "__result", arg: 3, scope: !6041, file: !5866, line: 462, type: !165)
-!6046 = !{!6047, !5874}
-!6047 = !DITemplateTypeParameter(name: "_II", type: !1574)
-!6048 = !DILocation(line: 0, scope: !6041)
-!6049 = !DILocation(line: 471, column: 9, scope: !6041)
-!6050 = !DILocation(line: 471, column: 37, scope: !6041)
-!6051 = !DILocation(line: 470, column: 15, scope: !6041)
-!6052 = !DILocation(line: 470, column: 7, scope: !6041)
-!6053 = distinct !DISubprogram(name: "__copy_move_a2<true, float *, float *>", linkageName: "_ZSt14__copy_move_a2ILb1EPfS0_ET1_T0_S2_S1_", scope: !2, file: !5866, line: 436, type: !6054, scopeLine: 437, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6060, retainedNodes: !6056)
-!6054 = !DISubroutineType(types: !6055)
-!6055 = !{!165, !165, !165, !165}
-!6056 = !{!6057, !6058, !6059}
-!6057 = !DILocalVariable(name: "__first", arg: 1, scope: !6053, file: !5866, line: 436, type: !165)
-!6058 = !DILocalVariable(name: "__last", arg: 2, scope: !6053, file: !5866, line: 436, type: !165)
-!6059 = !DILocalVariable(name: "__result", arg: 3, scope: !6053, file: !5866, line: 436, type: !165)
-!6060 = !{!6061, !6062, !5874}
-!6061 = !DITemplateValueParameter(name: "_IsMove", type: !13, value: i8 1)
-!6062 = !DITemplateTypeParameter(name: "_II", type: !165)
-!6063 = !DILocation(line: 0, scope: !6053)
-!6064 = !DILocation(line: 438, column: 46, scope: !6053)
-!6065 = !DILocation(line: 439, column: 11, scope: !6053)
-!6066 = !DILocation(line: 440, column: 11, scope: !6053)
-!6067 = !DILocation(line: 438, column: 18, scope: !6053)
-!6068 = !DILocation(line: 438, column: 7, scope: !6053)
-!6069 = distinct !DISubprogram(name: "__miter_base<std::move_iterator<float *> >", linkageName: "_ZSt12__miter_baseISt13move_iteratorIPfEENSt11_Miter_baseIT_E13iterator_typeES4_", scope: !2, file: !5866, line: 293, type: !6070, scopeLine: 294, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6081, retainedNodes: !6079)
-!6070 = !DISubroutineType(types: !6071)
-!6071 = !{!6072, !1574}
-!6072 = !DIDerivedType(tag: DW_TAG_typedef, name: "iterator_type", scope: !6073, file: !413, line: 222, baseType: !1584)
-!6073 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "_Iter_base<std::move_iterator<float *>, true>", scope: !2, file: !413, line: 220, size: 8, flags: DIFlagTypePassByValue, elements: !6074, templateParams: !6076, identifier: "_ZTSSt10_Iter_baseISt13move_iteratorIPfELb1EE")
-!6074 = !{!6075}
-!6075 = !DISubprogram(name: "_S_base", linkageName: "_ZNSt10_Iter_baseISt13move_iteratorIPfELb1EE7_S_baseES2_", scope: !6073, file: !413, line: 223, type: !6070, scopeLine: 223, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized)
-!6076 = !{!6077, !6078}
-!6077 = !DITemplateTypeParameter(name: "_Iterator", type: !1574)
-!6078 = !DITemplateValueParameter(name: "_HasBase", type: !13, value: i8 1)
-!6079 = !{!6080}
-!6080 = !DILocalVariable(name: "__it", arg: 1, scope: !6069, file: !5866, line: 293, type: !1574)
-!6081 = !{!6077}
-!6082 = !DILocation(line: 0, scope: !6069)
-!6083 = !DILocation(line: 294, column: 14, scope: !6069)
-!6084 = !DILocation(line: 294, column: 7, scope: !6069)
-!6085 = distinct !DISubprogram(name: "__copy_move_a<true, float *, float *>", linkageName: "_ZSt13__copy_move_aILb1EPfS0_ET1_T0_S2_S1_", scope: !2, file: !5866, line: 391, type: !6054, scopeLine: 392, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6060, retainedNodes: !6086)
-!6086 = !{!6087, !6088, !6089, !6090}
-!6087 = !DILocalVariable(name: "__first", arg: 1, scope: !6085, file: !5866, line: 391, type: !165)
-!6088 = !DILocalVariable(name: "__last", arg: 2, scope: !6085, file: !5866, line: 391, type: !165)
-!6089 = !DILocalVariable(name: "__result", arg: 3, scope: !6085, file: !5866, line: 391, type: !165)
-!6090 = !DILocalVariable(name: "__simple", scope: !6085, file: !5866, line: 396, type: !642)
-!6091 = !DILocation(line: 0, scope: !6085)
-!6092 = !DILocation(line: 401, column: 14, scope: !6085)
-!6093 = !DILocation(line: 401, column: 7, scope: !6085)
-!6094 = distinct !DISubprogram(name: "__copy_m<float>", linkageName: "_ZNSt11__copy_moveILb1ELb1ESt26random_access_iterator_tagE8__copy_mIfEEPT_PKS3_S6_S4_", scope: !6095, file: !5866, line: 373, type: !6108, scopeLine: 374, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !217, declaration: !6110, retainedNodes: !6111)
-!6095 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__copy_move<true, true, std::random_access_iterator_tag>", scope: !2, file: !5866, line: 369, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !6096, identifier: "_ZTSSt11__copy_moveILb1ELb1ESt26random_access_iterator_tagE")
-!6096 = !{!947, !947, !6097}
-!6097 = !DITemplateTypeParameter(type: !6098)
-!6098 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "random_access_iterator_tag", scope: !2, file: !413, line: 103, size: 8, flags: DIFlagTypePassByValue, elements: !6099, identifier: "_ZTSSt26random_access_iterator_tag")
-!6099 = !{!6100}
-!6100 = !DIDerivedType(tag: DW_TAG_inheritance, scope: !6098, baseType: !6101, extraData: i32 0)
-!6101 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "bidirectional_iterator_tag", scope: !2, file: !413, line: 99, size: 8, flags: DIFlagTypePassByValue, elements: !6102, identifier: "_ZTSSt26bidirectional_iterator_tag")
-!6102 = !{!6103}
-!6103 = !DIDerivedType(tag: DW_TAG_inheritance, scope: !6101, baseType: !6104, extraData: i32 0)
-!6104 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "forward_iterator_tag", scope: !2, file: !413, line: 95, size: 8, flags: DIFlagTypePassByValue, elements: !6105, identifier: "_ZTSSt20forward_iterator_tag")
-!6105 = !{!6106}
-!6106 = !DIDerivedType(tag: DW_TAG_inheritance, scope: !6104, baseType: !6107, extraData: i32 0)
-!6107 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "input_iterator_tag", scope: !2, file: !413, line: 89, size: 8, flags: DIFlagTypePassByValue, elements: !263, identifier: "_ZTSSt18input_iterator_tag")
-!6108 = !DISubroutineType(types: !6109)
-!6109 = !{!165, !198, !198, !165}
-!6110 = !DISubprogram(name: "__copy_m<float>", linkageName: "_ZNSt11__copy_moveILb1ELb1ESt26random_access_iterator_tagE8__copy_mIfEEPT_PKS3_S6_S4_", scope: !6095, file: !5866, line: 373, type: !6108, scopeLine: 373, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !217)
-!6111 = !{!6112, !6113, !6114, !6115}
-!6112 = !DILocalVariable(name: "__first", arg: 1, scope: !6094, file: !5866, line: 373, type: !198)
-!6113 = !DILocalVariable(name: "__last", arg: 2, scope: !6094, file: !5866, line: 373, type: !198)
-!6114 = !DILocalVariable(name: "__result", arg: 3, scope: !6094, file: !5866, line: 373, type: !165)
-!6115 = !DILocalVariable(name: "_Num", scope: !6094, file: !5866, line: 382, type: !6116)
-!6116 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !438)
-!6117 = !DILocation(line: 0, scope: !6094)
-!6118 = !DILocation(line: 382, column: 34, scope: !6094)
-!6119 = !DILocation(line: 383, column: 8, scope: !6120)
-!6120 = distinct !DILexicalBlock(scope: !6094, file: !5866, line: 383, column: 8)
-!6121 = !DILocation(line: 383, column: 8, scope: !6094)
-!6122 = !DILocation(line: 384, column: 6, scope: !6120)
-!6123 = !DILocation(line: 385, column: 20, scope: !6094)
-!6124 = !DILocation(line: 385, column: 4, scope: !6094)
-!6125 = distinct !DISubprogram(name: "_S_base", linkageName: "_ZNSt10_Iter_baseISt13move_iteratorIPfELb1EE7_S_baseES2_", scope: !6073, file: !413, line: 223, type: !6070, scopeLine: 224, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6075, retainedNodes: !6126)
-!6126 = !{!6127}
-!6127 = !DILocalVariable(name: "__it", arg: 1, scope: !6125, file: !413, line: 223, type: !1574)
-!6128 = !DILocation(line: 0, scope: !6125)
-!6129 = !DILocation(line: 224, column: 21, scope: !6125)
-!6130 = !DILocation(line: 224, column: 9, scope: !6125)
-!6131 = distinct !DISubprogram(name: "base", linkageName: "_ZNKSt13move_iteratorIPfE4baseEv", scope: !1574, file: !396, line: 992, type: !1586, scopeLine: 993, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1585, retainedNodes: !6132)
-!6132 = !{!6133}
-!6133 = !DILocalVariable(name: "this", arg: 1, scope: !6131, type: !6134, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6134 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !1589, size: 64)
-!6135 = !DILocation(line: 0, scope: !6131)
-!6136 = !DILocation(line: 993, column: 16, scope: !6131)
-!6137 = !{!6138, !3172, i64 0}
-!6138 = !{!"_ZTSSt13move_iteratorIPfE", !3172, i64 0}
-!6139 = !DILocation(line: 993, column: 9, scope: !6131)
-!6140 = distinct !DISubprogram(name: "move_iterator", linkageName: "_ZNSt13move_iteratorIPfEC2ES0_", scope: !1574, file: !396, line: 984, type: !1582, scopeLine: 985, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1581, retainedNodes: !6141)
-!6141 = !{!6142, !6144}
-!6142 = !DILocalVariable(name: "this", arg: 1, scope: !6140, type: !6143, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6143 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !1574, size: 64)
-!6144 = !DILocalVariable(name: "__i", arg: 2, scope: !6140, file: !396, line: 984, type: !1584)
-!6145 = !DILocation(line: 0, scope: !6140)
-!6146 = !DILocation(line: 985, column: 9, scope: !6140)
-!6147 = !DILocation(line: 985, column: 27, scope: !6140)
-!6148 = distinct !DISubprogram(name: "_M_data_ptr<float>", linkageName: "_ZNKSt6vectorIfSaIfEE11_M_data_ptrIfEEPT_S4_", scope: !144, file: !70, line: 1483, type: !6149, scopeLine: 1484, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6152, declaration: !6151, retainedNodes: !6154)
-!6149 = !DISubroutineType(types: !6150)
-!6150 = !{!165, !510, !165}
-!6151 = !DISubprogram(name: "_M_data_ptr<float>", linkageName: "_ZNKSt6vectorIfSaIfEE11_M_data_ptrIfEEPT_S4_", scope: !144, file: !70, line: 1483, type: !6149, scopeLine: 1483, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized, templateParams: !6152)
-!6152 = !{!6153}
-!6153 = !DITemplateTypeParameter(name: "_Up", type: !105)
-!6154 = !{!6155, !6156}
-!6155 = !DILocalVariable(name: "this", arg: 1, scope: !6148, type: !3294, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6156 = !DILocalVariable(name: "__ptr", arg: 2, scope: !6148, file: !70, line: 1483, type: !165)
-!6157 = !DILocation(line: 0, scope: !6148)
-!6158 = !DILocation(line: 1484, column: 4, scope: !6148)
-!6159 = distinct !DISubprogram(name: "swap<float **>", linkageName: "_ZSt4swapIPPfEvRT_S3_", scope: !2, file: !5621, line: 176, type: !6160, scopeLine: 181, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6166, retainedNodes: !6162)
-!6160 = !DISubroutineType(types: !6161)
-!6161 = !{null, !814, !814}
-!6162 = !{!6163, !6164, !6165}
-!6163 = !DILocalVariable(name: "__a", arg: 1, scope: !6159, file: !5621, line: 176, type: !814)
-!6164 = !DILocalVariable(name: "__b", arg: 2, scope: !6159, file: !5621, line: 176, type: !814)
-!6165 = !DILocalVariable(name: "__tmp", scope: !6159, file: !5621, line: 185, type: !699)
-!6166 = !{!6167}
-!6167 = !DITemplateTypeParameter(name: "_Tp", type: !699)
-!6168 = !DILocation(line: 0, scope: !6159)
-!6169 = !DILocation(line: 185, column: 7, scope: !6159)
-!6170 = !DILocation(line: 185, column: 19, scope: !6159)
-!6171 = !DILocation(line: 185, column: 11, scope: !6159)
-!6172 = !DILocation(line: 186, column: 13, scope: !6159)
-!6173 = !DILocation(line: 186, column: 11, scope: !6159)
-!6174 = !DILocation(line: 187, column: 13, scope: !6159)
-!6175 = !DILocation(line: 187, column: 11, scope: !6159)
-!6176 = !DILocation(line: 188, column: 5, scope: !6159)
-!6177 = distinct !DISubprogram(name: "move<float **&>", linkageName: "_ZSt4moveIRPPfEONSt16remove_referenceIT_E4typeEOS4_", scope: !2, file: !5621, line: 101, type: !6178, scopeLine: 102, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6183, retainedNodes: !6185)
-!6178 = !DISubroutineType(types: !6179)
-!6179 = !{!6180, !814}
-!6180 = !DIDerivedType(tag: DW_TAG_rvalue_reference_type, baseType: !6181, size: 64)
-!6181 = !DIDerivedType(tag: DW_TAG_typedef, name: "type", scope: !6182, file: !638, line: 1580, baseType: !699)
-!6182 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "remove_reference<float **&>", scope: !2, file: !638, line: 1579, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !6183, identifier: "_ZTSSt16remove_referenceIRPPfE")
-!6183 = !{!6184}
-!6184 = !DITemplateTypeParameter(name: "_Tp", type: !814)
+!5616 = !DITemplateTypeParameter(name: "_Ptr", type: !621)
+!5617 = !{!5618}
+!5618 = !DILocalVariable(name: "__r", arg: 1, scope: !5601, file: !5602, line: 168, type: !5609)
+!5619 = !DILocation(line: 0, scope: !5601)
+!5620 = !DILocation(line: 169, column: 16, scope: !5601)
+!5621 = !DILocation(line: 169, column: 9, scope: !5601)
+!5622 = distinct !DISubprogram(name: "addressof<const char>", linkageName: "_ZSt9addressofIKcEPT_RS1_", scope: !2, file: !5623, line: 135, type: !5624, scopeLine: 136, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5628, retainedNodes: !5626)
+!5623 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/move.h", directory: "")
+!5624 = !DISubroutineType(types: !5625)
+!5625 = !{!621, !5512}
+!5626 = !{!5627}
+!5627 = !DILocalVariable(name: "__r", arg: 1, scope: !5622, file: !5623, line: 135, type: !5512)
+!5628 = !{!5613}
+!5629 = !DILocation(line: 0, scope: !5622)
+!5630 = !DILocation(line: 136, column: 14, scope: !5622)
+!5631 = !DILocation(line: 136, column: 7, scope: !5622)
+!5632 = distinct !DISubprogram(name: "__addressof<const char>", linkageName: "_ZSt11__addressofIKcEPT_RS1_", scope: !2, file: !5623, line: 47, type: !5624, scopeLine: 48, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5628, retainedNodes: !5633)
+!5633 = !{!5634}
+!5634 = !DILocalVariable(name: "__r", arg: 1, scope: !5632, file: !5623, line: 47, type: !5512)
+!5635 = !DILocation(line: 0, scope: !5632)
+!5636 = !DILocation(line: 49, column: 7, scope: !5632)
+!5637 = distinct !DISubprogram(name: "deallocate", linkageName: "_ZNSt16allocator_traitsISaIcEE10deallocateERS0_Pcm", scope: !1633, file: !87, line: 516, type: !1646, scopeLine: 517, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1645, retainedNodes: !5638)
+!5638 = !{!5639, !5640, !5641}
+!5639 = !DILocalVariable(name: "__a", arg: 1, scope: !5637, file: !87, line: 516, type: !1639)
+!5640 = !DILocalVariable(name: "__p", arg: 2, scope: !5637, file: !87, line: 516, type: !1638)
+!5641 = !DILocalVariable(name: "__n", arg: 3, scope: !5637, file: !87, line: 516, type: !229)
+!5642 = !DILocation(line: 0, scope: !5637)
+!5643 = !DILocation(line: 517, column: 9, scope: !5637)
+!5644 = !DILocation(line: 517, column: 13, scope: !5637)
+!5645 = !DILocation(line: 517, column: 35, scope: !5637)
+!5646 = distinct !DISubprogram(name: "_M_get_allocator", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16_M_get_allocatorEv", scope: !1132, file: !1552, line: 234, type: !5647, scopeLine: 235, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5655, retainedNodes: !5656)
+!5647 = !DISubroutineType(types: !5648)
+!5648 = !{!5649, !4757}
+!5649 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !5650, size: 64)
+!5650 = !DIDerivedType(tag: DW_TAG_typedef, name: "allocator_type", scope: !1132, file: !1552, line: 81, baseType: !5651)
+!5651 = !DIDerivedType(tag: DW_TAG_typedef, name: "_Char_alloc_type", scope: !1132, file: !1552, line: 74, baseType: !5652)
+!5652 = !DIDerivedType(tag: DW_TAG_typedef, name: "other", scope: !5653, file: !81, line: 169, baseType: !5654)
+!5653 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "rebind<char>", scope: !1630, file: !81, line: 168, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !5522, identifier: "_ZTSN9__gnu_cxx14__alloc_traitsISaIcEE6rebindIcEE")
+!5654 = !DIDerivedType(tag: DW_TAG_typedef, name: "rebind_alloc<char>", scope: !1633, file: !87, line: 477, baseType: !1641)
+!5655 = !DISubprogram(name: "_M_get_allocator", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16_M_get_allocatorEv", scope: !1132, file: !1552, line: 234, type: !5647, scopeLine: 234, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!5656 = !{!5657}
+!5657 = !DILocalVariable(name: "this", arg: 1, scope: !5646, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5658 = !DILocation(line: 0, scope: !5646)
+!5659 = !DILocation(line: 235, column: 16, scope: !5646)
+!5660 = !DILocation(line: 235, column: 9, scope: !5646)
+!5661 = distinct !DISubprogram(name: "deallocate", linkageName: "_ZN9__gnu_cxx13new_allocatorIcE10deallocateEPcm", scope: !5488, file: !175, line: 109, type: !5517, scopeLine: 110, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5516, retainedNodes: !5662)
+!5662 = !{!5663, !5664, !5665}
+!5663 = !DILocalVariable(name: "this", arg: 1, scope: !5661, type: !5526, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5664 = !DILocalVariable(name: "__p", arg: 2, scope: !5661, file: !175, line: 109, type: !5503)
+!5665 = !DILocalVariable(arg: 3, scope: !5661, file: !175, line: 109, type: !205)
+!5666 = !DILocation(line: 0, scope: !5661)
+!5667 = !DILocation(line: 110, column: 9, scope: !5661)
+!5668 = !DILocation(line: 110, column: 33, scope: !5661)
+!5669 = distinct !DISubprogram(name: "_Vector_base", linkageName: "_ZNSt12_Vector_baseIfSaIfEEC2Ev", scope: !147, file: !70, line: 124, type: !302, scopeLine: 125, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !301, retainedNodes: !5670)
+!5670 = !{!5671}
+!5671 = !DILocalVariable(name: "this", arg: 1, scope: !5669, type: !5307, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5672 = !DILocation(line: 0, scope: !5669)
+!5673 = !DILocation(line: 125, column: 9, scope: !5669)
+!5674 = !DILocation(line: 125, column: 21, scope: !5669)
+!5675 = distinct !DISubprogram(name: "_Vector_impl", linkageName: "_ZNSt12_Vector_baseIfSaIfEE12_Vector_implC2Ev", scope: !150, file: !70, line: 86, type: !271, scopeLine: 88, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !270, retainedNodes: !5676)
+!5676 = !{!5677}
+!5677 = !DILocalVariable(name: "this", arg: 1, scope: !5675, type: !5678, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5678 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !150, size: 64)
+!5679 = !DILocation(line: 0, scope: !5675)
+!5680 = !DILocation(line: 88, column: 2, scope: !5675)
+!5681 = !DILocation(line: 87, column: 4, scope: !5675)
+!5682 = !DILocation(line: 88, column: 4, scope: !5675)
+!5683 = !DILocation(line: 87, column: 34, scope: !5675)
+!5684 = distinct !DISubprogram(name: "allocator", linkageName: "_ZNSaIfEC2Ev", scope: !168, file: !169, line: 113, type: !220, scopeLine: 113, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !219, retainedNodes: !5685)
+!5685 = !{!5686}
+!5686 = !DILocalVariable(name: "this", arg: 1, scope: !5684, type: !5687, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5687 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !168, size: 64)
+!5688 = !DILocation(line: 0, scope: !5684)
+!5689 = !DILocation(line: 113, column: 27, scope: !5684)
+!5690 = !DILocation(line: 113, column: 7, scope: !5684)
+!5691 = !DILocation(line: 113, column: 29, scope: !5684)
+!5692 = distinct !DISubprogram(name: "new_allocator", linkageName: "_ZN9__gnu_cxx13new_allocatorIfEC2Ev", scope: !174, file: !175, line: 79, type: !178, scopeLine: 79, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !177, retainedNodes: !5693)
+!5693 = !{!5694}
+!5694 = !DILocalVariable(name: "this", arg: 1, scope: !5692, type: !5357, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5695 = !DILocation(line: 0, scope: !5692)
+!5696 = !DILocation(line: 79, column: 47, scope: !5692)
+!5697 = distinct !DISubprogram(name: "size", linkageName: "_ZNKSt6vectorIfSaIfEE4sizeEv", scope: !144, file: !70, line: 654, type: !530, scopeLine: 655, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !529, retainedNodes: !5698)
+!5698 = !{!5699}
+!5699 = !DILocalVariable(name: "this", arg: 1, scope: !5697, type: !3294, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5700 = !DILocation(line: 0, scope: !5697)
+!5701 = !DILocation(line: 655, column: 40, scope: !5697)
+!5702 = !DILocation(line: 655, column: 66, scope: !5697)
+!5703 = !DILocation(line: 655, column: 50, scope: !5697)
+!5704 = !DILocation(line: 655, column: 9, scope: !5697)
+!5705 = distinct !DISubprogram(name: "_M_default_append", linkageName: "_ZNSt6vectorIfSaIfEE17_M_default_appendEm", scope: !144, file: !5706, line: 541, type: !534, scopeLine: 542, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !613, retainedNodes: !5707)
+!5706 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc", directory: "")
+!5707 = !{!5708, !5709, !5710, !5716, !5717, !5718}
+!5708 = !DILocalVariable(name: "this", arg: 1, scope: !5705, type: !3113, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5709 = !DILocalVariable(name: "__n", arg: 2, scope: !5705, file: !70, line: 1400, type: !347)
+!5710 = !DILocalVariable(name: "__len", scope: !5711, file: !5706, line: 554, type: !5715)
+!5711 = distinct !DILexicalBlock(scope: !5712, file: !5706, line: 553, column: 6)
+!5712 = distinct !DILexicalBlock(scope: !5713, file: !5706, line: 545, column: 8)
+!5713 = distinct !DILexicalBlock(scope: !5714, file: !5706, line: 544, column: 2)
+!5714 = distinct !DILexicalBlock(scope: !5705, file: !5706, line: 543, column: 11)
+!5715 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !347)
+!5716 = !DILocalVariable(name: "__old_size", scope: !5711, file: !5706, line: 556, type: !5715)
+!5717 = !DILocalVariable(name: "__new_start", scope: !5711, file: !5706, line: 557, type: !627)
+!5718 = !DILocalVariable(name: "__new_finish", scope: !5711, file: !5706, line: 558, type: !627)
+!5719 = !DILocation(line: 0, scope: !5705)
+!5720 = !DILocation(line: 543, column: 15, scope: !5714)
+!5721 = !DILocation(line: 543, column: 11, scope: !5705)
+!5722 = !DILocation(line: 545, column: 24, scope: !5712)
+!5723 = !DILocation(line: 545, column: 32, scope: !5712)
+!5724 = !DILocation(line: 546, column: 20, scope: !5712)
+!5725 = !DILocation(line: 546, column: 4, scope: !5712)
+!5726 = !DILocation(line: 546, column: 31, scope: !5712)
+!5727 = !DILocation(line: 545, column: 8, scope: !5713)
+!5728 = !DILocation(line: 550, column: 13, scope: !5729)
+!5729 = distinct !DILexicalBlock(scope: !5712, file: !5706, line: 547, column: 6)
+!5730 = !DILocation(line: 549, column: 3, scope: !5729)
+!5731 = !DILocation(line: 548, column: 32, scope: !5729)
+!5732 = !DILocation(line: 551, column: 6, scope: !5729)
+!5733 = !DILocation(line: 555, column: 3, scope: !5711)
+!5734 = !DILocation(line: 0, scope: !5711)
+!5735 = !DILocation(line: 556, column: 43, scope: !5711)
+!5736 = !DILocation(line: 557, column: 34, scope: !5711)
+!5737 = !DILocation(line: 563, column: 22, scope: !5738)
+!5738 = distinct !DILexicalBlock(scope: !5711, file: !5706, line: 560, column: 3)
+!5739 = !DILocation(line: 563, column: 46, scope: !5738)
+!5740 = !DILocation(line: 564, column: 21, scope: !5738)
+!5741 = !DILocation(line: 562, column: 9, scope: !5738)
+!5742 = !DILocation(line: 567, column: 12, scope: !5738)
+!5743 = !DILocation(line: 566, column: 7, scope: !5738)
+!5744 = !DILocation(line: 576, column: 36, scope: !5711)
+!5745 = !DILocation(line: 576, column: 60, scope: !5711)
+!5746 = !DILocation(line: 577, column: 8, scope: !5711)
+!5747 = !DILocation(line: 576, column: 8, scope: !5711)
+!5748 = !DILocation(line: 578, column: 36, scope: !5711)
+!5749 = !DILocation(line: 579, column: 22, scope: !5711)
+!5750 = !DILocation(line: 580, column: 8, scope: !5711)
+!5751 = !DILocation(line: 578, column: 8, scope: !5711)
+!5752 = !DILocation(line: 581, column: 31, scope: !5711)
+!5753 = !DILocation(line: 582, column: 32, scope: !5711)
+!5754 = !DILocation(line: 583, column: 54, scope: !5711)
+!5755 = !DILocation(line: 583, column: 40, scope: !5711)
+!5756 = !DILocation(line: 586, column: 5, scope: !5738)
+!5757 = !DILocation(line: 568, column: 3, scope: !5738)
+!5758 = !DILocation(line: 572, column: 5, scope: !5759)
+!5759 = distinct !DILexicalBlock(scope: !5711, file: !5706, line: 570, column: 3)
+!5760 = !DILocation(line: 571, column: 5, scope: !5759)
+!5761 = !DILocation(line: 573, column: 5, scope: !5759)
+!5762 = !DILocation(line: 574, column: 5, scope: !5759)
+!5763 = !DILocation(line: 586, column: 5, scope: !5759)
+!5764 = !DILocation(line: 575, column: 3, scope: !5759)
+!5765 = !DILocation(line: 584, column: 6, scope: !5712)
+!5766 = !DILocation(line: 586, column: 5, scope: !5705)
+!5767 = distinct !DISubprogram(name: "_M_erase_at_end", linkageName: "_ZNSt6vectorIfSaIfEE15_M_erase_at_endEPf", scope: !144, file: !70, line: 1436, type: !625, scopeLine: 1437, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !624, retainedNodes: !5768)
+!5768 = !{!5769, !5770}
+!5769 = !DILocalVariable(name: "this", arg: 1, scope: !5767, type: !3113, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5770 = !DILocalVariable(name: "__pos", arg: 2, scope: !5767, file: !70, line: 1436, type: !627)
+!5771 = !DILocation(line: 0, scope: !5767)
+!5772 = !DILocation(line: 1438, column: 29, scope: !5767)
+!5773 = !DILocation(line: 1438, column: 37, scope: !5767)
+!5774 = !DILocation(line: 1438, column: 48, scope: !5767)
+!5775 = !DILocation(line: 1438, column: 2, scope: !5767)
+!5776 = !DILocation(line: 1439, column: 26, scope: !5767)
+!5777 = !DILocation(line: 1440, column: 7, scope: !5767)
+!5778 = distinct !DISubprogram(name: "__uninitialized_default_n_a<float *, unsigned long, float>", linkageName: "_ZSt27__uninitialized_default_n_aIPfmfET_S1_T0_RSaIT1_E", scope: !2, file: !5779, line: 635, type: !5780, scopeLine: 637, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5786, retainedNodes: !5782)
+!5779 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_uninitialized.h", directory: "")
+!5780 = !DISubroutineType(types: !5781)
+!5781 = !{!165, !165, !208, !254}
+!5782 = !{!5783, !5784, !5785}
+!5783 = !DILocalVariable(name: "__first", arg: 1, scope: !5778, file: !5779, line: 635, type: !165)
+!5784 = !DILocalVariable(name: "__n", arg: 2, scope: !5778, file: !5779, line: 635, type: !208)
+!5785 = !DILocalVariable(arg: 3, scope: !5778, file: !5779, line: 636, type: !254)
+!5786 = !{!5300, !5787, !218}
+!5787 = !DITemplateTypeParameter(name: "_Size", type: !208)
+!5788 = !DILocation(line: 0, scope: !5778)
+!5789 = !DILocation(line: 637, column: 14, scope: !5778)
+!5790 = !DILocation(line: 637, column: 7, scope: !5778)
+!5791 = distinct !DISubprogram(name: "_M_check_len", linkageName: "_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc", scope: !144, file: !70, line: 1422, type: !618, scopeLine: 1423, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !617, retainedNodes: !5792)
+!5792 = !{!5793, !5794, !5795, !5796}
+!5793 = !DILocalVariable(name: "this", arg: 1, scope: !5791, type: !3294, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5794 = !DILocalVariable(name: "__n", arg: 2, scope: !5791, file: !70, line: 1422, type: !347)
+!5795 = !DILocalVariable(name: "__s", arg: 3, scope: !5791, file: !70, line: 1422, type: !621)
+!5796 = !DILocalVariable(name: "__len", scope: !5791, file: !70, line: 1427, type: !5715)
+!5797 = !DILocation(line: 0, scope: !5791)
+!5798 = !{!5036, !5036, i64 0}
+!5799 = !DILocation(line: 1424, column: 6, scope: !5800)
+!5800 = distinct !DILexicalBlock(scope: !5791, file: !70, line: 1424, column: 6)
+!5801 = !DILocation(line: 1424, column: 19, scope: !5800)
+!5802 = !DILocation(line: 1424, column: 17, scope: !5800)
+!5803 = !DILocation(line: 1424, column: 26, scope: !5800)
+!5804 = !DILocation(line: 1424, column: 6, scope: !5791)
+!5805 = !DILocation(line: 1425, column: 4, scope: !5800)
+!5806 = !DILocation(line: 1427, column: 26, scope: !5791)
+!5807 = !DILocation(line: 1427, column: 44, scope: !5791)
+!5808 = !DILocation(line: 1427, column: 35, scope: !5791)
+!5809 = !DILocation(line: 1427, column: 33, scope: !5791)
+!5810 = !DILocation(line: 1428, column: 18, scope: !5791)
+!5811 = !DILocation(line: 1428, column: 16, scope: !5791)
+!5812 = !DILocation(line: 1428, column: 25, scope: !5791)
+!5813 = !DILocation(line: 1428, column: 36, scope: !5791)
+!5814 = !DILocation(line: 1428, column: 34, scope: !5791)
+!5815 = !DILocation(line: 1428, column: 9, scope: !5791)
+!5816 = !DILocation(line: 1428, column: 50, scope: !5791)
+!5817 = !DILocation(line: 1428, column: 2, scope: !5791)
+!5818 = distinct !DISubprogram(name: "_M_allocate", linkageName: "_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm", scope: !147, file: !70, line: 167, type: !327, scopeLine: 168, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !326, retainedNodes: !5819)
+!5819 = !{!5820, !5821}
+!5820 = !DILocalVariable(name: "this", arg: 1, scope: !5818, type: !5307, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5821 = !DILocalVariable(name: "__n", arg: 2, scope: !5818, file: !70, line: 167, type: !206)
+!5822 = !DILocation(line: 0, scope: !5818)
+!5823 = !DILocation(line: 170, column: 13, scope: !5818)
+!5824 = !DILocation(line: 170, column: 9, scope: !5818)
+!5825 = !DILocation(line: 170, column: 34, scope: !5818)
+!5826 = !DILocation(line: 170, column: 20, scope: !5818)
+!5827 = !DILocation(line: 170, column: 2, scope: !5818)
+!5828 = distinct !DISubprogram(name: "__uninitialized_move_if_noexcept_a<float *, float *, std::allocator<float> >", linkageName: "_ZSt34__uninitialized_move_if_noexcept_aIPfS0_SaIfEET0_T_S3_S2_RT1_", scope: !2, file: !5779, line: 297, type: !5829, scopeLine: 301, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5836, retainedNodes: !5831)
+!5829 = !DISubroutineType(types: !5830)
+!5830 = !{!165, !165, !165, !165, !254}
+!5831 = !{!5832, !5833, !5834, !5835}
+!5832 = !DILocalVariable(name: "__first", arg: 1, scope: !5828, file: !5779, line: 297, type: !165)
+!5833 = !DILocalVariable(name: "__last", arg: 2, scope: !5828, file: !5779, line: 298, type: !165)
+!5834 = !DILocalVariable(name: "__result", arg: 3, scope: !5828, file: !5779, line: 299, type: !165)
+!5835 = !DILocalVariable(name: "__alloc", arg: 4, scope: !5828, file: !5779, line: 300, type: !254)
+!5836 = !{!5837, !5300, !5838}
+!5837 = !DITemplateTypeParameter(name: "_InputIterator", type: !165)
+!5838 = !DITemplateTypeParameter(name: "_Allocator", type: !168)
+!5839 = !DILocation(line: 0, scope: !5828)
+!5840 = !DILocation(line: 303, column: 3, scope: !5828)
+!5841 = !DILocation(line: 304, column: 3, scope: !5828)
+!5842 = !DILocation(line: 302, column: 14, scope: !5828)
+!5843 = !DILocation(line: 302, column: 7, scope: !5828)
+!5844 = distinct !DISubprogram(name: "__uninitialized_default_n<float *, unsigned long>", linkageName: "_ZSt25__uninitialized_default_nIPfmET_S1_T0_", scope: !2, file: !5779, line: 566, type: !5845, scopeLine: 567, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5851, retainedNodes: !5847)
+!5845 = !DISubroutineType(types: !5846)
+!5846 = !{!165, !165, !208}
+!5847 = !{!5848, !5849, !5850}
+!5848 = !DILocalVariable(name: "__first", arg: 1, scope: !5844, file: !5779, line: 566, type: !165)
+!5849 = !DILocalVariable(name: "__n", arg: 2, scope: !5844, file: !5779, line: 566, type: !208)
+!5850 = !DILocalVariable(name: "__assignable", scope: !5844, file: !5779, line: 571, type: !642)
+!5851 = !{!5300, !5787}
+!5852 = !DILocation(line: 0, scope: !5844)
+!5853 = !DILocation(line: 573, column: 14, scope: !5844)
+!5854 = !DILocation(line: 573, column: 7, scope: !5844)
+!5855 = distinct !DISubprogram(name: "__uninit_default_n<float *, unsigned long>", linkageName: "_ZNSt27__uninitialized_default_n_1ILb1EE18__uninit_default_nIPfmEET_S3_T0_", scope: !5856, file: !5779, line: 535, type: !5845, scopeLine: 536, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5851, declaration: !5859, retainedNodes: !5860)
+!5856 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__uninitialized_default_n_1<true>", scope: !2, file: !5779, line: 531, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !5857, identifier: "_ZTSSt27__uninitialized_default_n_1ILb1EE")
+!5857 = !{!5858}
+!5858 = !DITemplateValueParameter(name: "_TrivialValueType", type: !13, value: i8 1)
+!5859 = !DISubprogram(name: "__uninit_default_n<float *, unsigned long>", linkageName: "_ZNSt27__uninitialized_default_n_1ILb1EE18__uninit_default_nIPfmEET_S3_T0_", scope: !5856, file: !5779, line: 535, type: !5845, scopeLine: 535, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !5851)
+!5860 = !{!5861, !5862}
+!5861 = !DILocalVariable(name: "__first", arg: 1, scope: !5855, file: !5779, line: 535, type: !165)
+!5862 = !DILocalVariable(name: "__n", arg: 2, scope: !5855, file: !5779, line: 535, type: !208)
+!5863 = !DILocation(line: 0, scope: !5855)
+!5864 = !DILocation(line: 540, column: 37, scope: !5855)
+!5865 = !DILocation(line: 540, column: 11, scope: !5855)
+!5866 = !DILocation(line: 540, column: 4, scope: !5855)
+!5867 = distinct !DISubprogram(name: "fill_n<float *, unsigned long, float>", linkageName: "_ZSt6fill_nIPfmfET_S1_T0_RKT1_", scope: !2, file: !5868, line: 800, type: !5869, scopeLine: 801, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5875, retainedNodes: !5871)
+!5868 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algobase.h", directory: "")
+!5869 = !DISubroutineType(types: !5870)
+!5870 = !{!165, !165, !208, !201}
+!5871 = !{!5872, !5873, !5874}
+!5872 = !DILocalVariable(name: "__first", arg: 1, scope: !5867, file: !5868, line: 800, type: !165)
+!5873 = !DILocalVariable(name: "__n", arg: 2, scope: !5867, file: !5868, line: 800, type: !208)
+!5874 = !DILocalVariable(name: "__value", arg: 3, scope: !5867, file: !5868, line: 800, type: !201)
+!5875 = !{!5876, !5787, !218}
+!5876 = !DITemplateTypeParameter(name: "_OI", type: !165)
+!5877 = !DILocation(line: 0, scope: !5867)
+!5878 = !DILocation(line: 805, column: 34, scope: !5867)
+!5879 = !DILocation(line: 805, column: 18, scope: !5867)
+!5880 = !DILocation(line: 805, column: 7, scope: !5867)
+!5881 = distinct !DISubprogram(name: "__fill_n_a<float *, unsigned long, float>", linkageName: "_ZSt10__fill_n_aIPfmfEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT1_EE7__valueET_E6__typeES4_T0_RKS3_", scope: !2, file: !5868, line: 765, type: !5882, scopeLine: 766, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5896, retainedNodes: !5889)
+!5882 = !DISubroutineType(types: !5883)
+!5883 = !{!5884, !165, !208, !201}
+!5884 = !DIDerivedType(tag: DW_TAG_typedef, name: "__type", scope: !5886, file: !5885, line: 48, baseType: !165)
+!5885 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/ext/type_traits.h", directory: "")
+!5886 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__enable_if<true, float *>", scope: !24, file: !5885, line: 47, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !5887, identifier: "_ZTSN9__gnu_cxx11__enable_ifILb1EPfEE")
+!5887 = !{!947, !5888}
+!5888 = !DITemplateTypeParameter(type: !165)
+!5889 = !{!5890, !5891, !5892, !5893, !5894}
+!5890 = !DILocalVariable(name: "__first", arg: 1, scope: !5881, file: !5868, line: 765, type: !165)
+!5891 = !DILocalVariable(name: "__n", arg: 2, scope: !5881, file: !5868, line: 765, type: !208)
+!5892 = !DILocalVariable(name: "__value", arg: 3, scope: !5881, file: !5868, line: 765, type: !201)
+!5893 = !DILocalVariable(name: "__tmp", scope: !5881, file: !5868, line: 767, type: !199)
+!5894 = !DILocalVariable(name: "__niter", scope: !5895, file: !5868, line: 768, type: !208)
+!5895 = distinct !DILexicalBlock(scope: !5881, file: !5868, line: 768, column: 7)
+!5896 = !{!5897, !5787, !218}
+!5897 = !DITemplateTypeParameter(name: "_OutputIterator", type: !165)
+!5898 = !DILocation(line: 0, scope: !5881)
+!5899 = !DILocation(line: 767, column: 25, scope: !5881)
+!5900 = !DILocation(line: 0, scope: !5895)
+!5901 = !DILocation(line: 769, column: 13, scope: !5902)
+!5902 = distinct !DILexicalBlock(scope: !5895, file: !5868, line: 768, column: 7)
+!5903 = !DILocation(line: 768, column: 7, scope: !5895)
+!5904 = !DILocation(line: 771, column: 7, scope: !5881)
+!5905 = !DILocation(line: 770, column: 11, scope: !5902)
+!5906 = !DILocation(line: 769, column: 18, scope: !5902)
+!5907 = !DILocation(line: 769, column: 29, scope: !5902)
+!5908 = distinct !{!5908, !5903, !5909}
+!5909 = !DILocation(line: 770, column: 13, scope: !5895)
+!5910 = distinct !DISubprogram(name: "__niter_base<float *>", linkageName: "_ZSt12__niter_baseIPfENSt11_Niter_baseIT_E13iterator_typeES2_", scope: !2, file: !5868, line: 282, type: !5911, scopeLine: 283, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !415, retainedNodes: !5919)
+!5911 = !DISubroutineType(types: !5912)
+!5912 = !{!5913, !165}
+!5913 = !DIDerivedType(tag: DW_TAG_typedef, name: "iterator_type", scope: !5914, file: !413, line: 214, baseType: !165)
+!5914 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "_Iter_base<float *, false>", scope: !2, file: !413, line: 212, size: 8, flags: DIFlagTypePassByValue, elements: !5915, templateParams: !5917, identifier: "_ZTSSt10_Iter_baseIPfLb0EE")
+!5915 = !{!5916}
+!5916 = !DISubprogram(name: "_S_base", linkageName: "_ZNSt10_Iter_baseIPfLb0EE7_S_baseES0_", scope: !5914, file: !413, line: 215, type: !5911, scopeLine: 215, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized)
+!5917 = !{!416, !5918}
+!5918 = !DITemplateValueParameter(name: "_HasBase", type: !13, value: i8 0)
+!5919 = !{!5920}
+!5920 = !DILocalVariable(name: "__it", arg: 1, scope: !5910, file: !5868, line: 282, type: !165)
+!5921 = !DILocation(line: 0, scope: !5910)
+!5922 = !DILocation(line: 283, column: 14, scope: !5910)
+!5923 = !DILocation(line: 283, column: 7, scope: !5910)
+!5924 = distinct !DISubprogram(name: "_S_base", linkageName: "_ZNSt10_Iter_baseIPfLb0EE7_S_baseES0_", scope: !5914, file: !413, line: 215, type: !5911, scopeLine: 216, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5916, retainedNodes: !5925)
+!5925 = !{!5926}
+!5926 = !DILocalVariable(name: "__it", arg: 1, scope: !5924, file: !413, line: 215, type: !165)
+!5927 = !DILocation(line: 0, scope: !5924)
+!5928 = !DILocation(line: 216, column: 9, scope: !5924)
+!5929 = distinct !DISubprogram(name: "max_size", linkageName: "_ZNKSt6vectorIfSaIfEE8max_sizeEv", scope: !144, file: !70, line: 659, type: !530, scopeLine: 660, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !532, retainedNodes: !5930)
+!5930 = !{!5931}
+!5931 = !DILocalVariable(name: "this", arg: 1, scope: !5929, type: !3294, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5932 = !DILocation(line: 0, scope: !5929)
+!5933 = !DILocation(line: 660, column: 40, scope: !5929)
+!5934 = !DILocation(line: 660, column: 16, scope: !5929)
+!5935 = !DILocation(line: 660, column: 9, scope: !5929)
+!5936 = distinct !DISubprogram(name: "max<unsigned long>", linkageName: "_ZSt3maxImERKT_S2_S2_", scope: !2, file: !5868, line: 219, type: !5937, scopeLine: 220, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5945, retainedNodes: !5941)
+!5937 = !DISubroutineType(types: !5938)
+!5938 = !{!5939, !5939, !5939}
+!5939 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !5940, size: 64)
+!5940 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !208)
+!5941 = !{!5942, !5944}
+!5942 = !DILocalVariable(name: "__a", arg: 1, scope: !5936, file: !5943, line: 357, type: !5939)
+!5943 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/algorithmfwd.h", directory: "")
+!5944 = !DILocalVariable(name: "__b", arg: 2, scope: !5936, file: !5943, line: 357, type: !5939)
+!5945 = !{!5946}
+!5946 = !DITemplateTypeParameter(name: "_Tp", type: !208)
+!5947 = !DILocation(line: 0, scope: !5936)
+!5948 = !DILocation(line: 224, column: 11, scope: !5949)
+!5949 = distinct !DILexicalBlock(scope: !5936, file: !5868, line: 224, column: 11)
+!5950 = !DILocation(line: 224, column: 17, scope: !5949)
+!5951 = !DILocation(line: 224, column: 15, scope: !5949)
+!5952 = !DILocation(line: 227, column: 5, scope: !5936)
+!5953 = distinct !DISubprogram(name: "max_size", linkageName: "_ZNSt16allocator_traitsISaIfEE8max_sizeERKS0_", scope: !159, file: !87, line: 550, type: !238, scopeLine: 551, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !237, retainedNodes: !5954)
+!5954 = !{!5955}
+!5955 = !DILocalVariable(name: "__a", arg: 1, scope: !5953, file: !87, line: 550, type: !241)
+!5956 = !DILocation(line: 0, scope: !5953)
+!5957 = !DILocation(line: 551, column: 16, scope: !5953)
+!5958 = !DILocation(line: 551, column: 20, scope: !5953)
+!5959 = !DILocation(line: 551, column: 9, scope: !5953)
+!5960 = distinct !DISubprogram(name: "_M_get_Tp_allocator", linkageName: "_ZNKSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv", scope: !147, file: !70, line: 117, type: !293, scopeLine: 118, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !292, retainedNodes: !5961)
+!5961 = !{!5962}
+!5962 = !DILocalVariable(name: "this", arg: 1, scope: !5960, type: !5963, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5963 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !296, size: 64)
+!5964 = !DILocation(line: 0, scope: !5960)
+!5965 = !DILocation(line: 118, column: 16, scope: !5960)
+!5966 = !DILocation(line: 118, column: 9, scope: !5960)
+!5967 = distinct !DISubprogram(name: "max_size", linkageName: "_ZNK9__gnu_cxx13new_allocatorIfE8max_sizeEv", scope: !174, file: !175, line: 113, type: !215, scopeLine: 114, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !214, retainedNodes: !5968)
+!5968 = !{!5969}
+!5969 = !DILocalVariable(name: "this", arg: 1, scope: !5967, type: !5970, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5970 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !185, size: 64)
+!5971 = !DILocation(line: 0, scope: !5967)
+!5972 = !DILocation(line: 114, column: 9, scope: !5967)
+!5973 = distinct !DISubprogram(name: "allocate", linkageName: "_ZNSt16allocator_traitsISaIfEE8allocateERS0_m", scope: !159, file: !87, line: 490, type: !162, scopeLine: 491, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !161, retainedNodes: !5974)
+!5974 = !{!5975, !5976}
+!5975 = !DILocalVariable(name: "__a", arg: 1, scope: !5973, file: !87, line: 490, type: !166)
+!5976 = !DILocalVariable(name: "__n", arg: 2, scope: !5973, file: !87, line: 490, type: !229)
+!5977 = !DILocation(line: 0, scope: !5973)
+!5978 = !DILocation(line: 491, column: 16, scope: !5973)
+!5979 = !DILocation(line: 491, column: 20, scope: !5973)
+!5980 = !DILocation(line: 491, column: 9, scope: !5973)
+!5981 = distinct !DISubprogram(name: "allocate", linkageName: "_ZN9__gnu_cxx13new_allocatorIfE8allocateEmPKv", scope: !174, file: !175, line: 99, type: !203, scopeLine: 100, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !202, retainedNodes: !5982)
+!5982 = !{!5983, !5984, !5985}
+!5983 = !DILocalVariable(name: "this", arg: 1, scope: !5981, type: !5357, flags: DIFlagArtificial | DIFlagObjectPointer)
+!5984 = !DILocalVariable(name: "__n", arg: 2, scope: !5981, file: !175, line: 99, type: !205)
+!5985 = !DILocalVariable(arg: 3, scope: !5981, file: !175, line: 99, type: !209)
+!5986 = !DILocation(line: 0, scope: !5981)
+!5987 = !DILocation(line: 101, column: 18, scope: !5988)
+!5988 = distinct !DILexicalBlock(scope: !5981, file: !175, line: 101, column: 6)
+!5989 = !DILocation(line: 101, column: 10, scope: !5988)
+!5990 = !DILocation(line: 101, column: 6, scope: !5981)
+!5991 = !DILocation(line: 102, column: 4, scope: !5988)
+!5992 = !DILocation(line: 104, column: 46, scope: !5981)
+!5993 = !DILocation(line: 104, column: 27, scope: !5981)
+!5994 = !DILocation(line: 104, column: 9, scope: !5981)
+!5995 = !DILocation(line: 104, column: 2, scope: !5981)
+!5996 = distinct !DISubprogram(name: "__uninitialized_copy_a<std::move_iterator<float *>, float *, float>", linkageName: "_ZSt22__uninitialized_copy_aISt13move_iteratorIPfES1_fET0_T_S4_S3_RSaIT1_E", scope: !2, file: !5779, line: 279, type: !5997, scopeLine: 281, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6004, retainedNodes: !5999)
+!5997 = !DISubroutineType(types: !5998)
+!5998 = !{!165, !1574, !1574, !165, !254}
+!5999 = !{!6000, !6001, !6002, !6003}
+!6000 = !DILocalVariable(name: "__first", arg: 1, scope: !5996, file: !5779, line: 279, type: !1574)
+!6001 = !DILocalVariable(name: "__last", arg: 2, scope: !5996, file: !5779, line: 279, type: !1574)
+!6002 = !DILocalVariable(name: "__result", arg: 3, scope: !5996, file: !5779, line: 280, type: !165)
+!6003 = !DILocalVariable(arg: 4, scope: !5996, file: !5779, line: 280, type: !254)
+!6004 = !{!6005, !5300, !218}
+!6005 = !DITemplateTypeParameter(name: "_InputIterator", type: !1574)
+!6006 = !DILocation(line: 0, scope: !5996)
+!6007 = !DILocation(line: 281, column: 14, scope: !5996)
+!6008 = !DILocation(line: 281, column: 7, scope: !5996)
+!6009 = distinct !DISubprogram(name: "__make_move_if_noexcept_iterator<float *, std::move_iterator<float *> >", linkageName: "_ZSt32__make_move_if_noexcept_iteratorIPfSt13move_iteratorIS0_EET0_T_", scope: !2, file: !396, line: 1166, type: !6010, scopeLine: 1167, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6014, retainedNodes: !6012)
+!6010 = !DISubroutineType(types: !6011)
+!6011 = !{!1574, !165}
+!6012 = !{!6013}
+!6013 = !DILocalVariable(name: "__i", arg: 1, scope: !6009, file: !396, line: 1166, type: !165)
+!6014 = !{!416, !6015}
+!6015 = !DITemplateTypeParameter(name: "_ReturnType", type: !1574)
+!6016 = !DILocation(line: 0, scope: !6009)
+!6017 = !DILocation(line: 1167, column: 14, scope: !6009)
+!6018 = !DILocation(line: 1167, column: 7, scope: !6009)
+!6019 = distinct !DISubprogram(name: "uninitialized_copy<std::move_iterator<float *>, float *>", linkageName: "_ZSt18uninitialized_copyISt13move_iteratorIPfES1_ET0_T_S4_S3_", scope: !2, file: !5779, line: 107, type: !6020, scopeLine: 109, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6027, retainedNodes: !6022)
+!6020 = !DISubroutineType(types: !6021)
+!6021 = !{!165, !1574, !1574, !165}
+!6022 = !{!6023, !6024, !6025, !6026}
+!6023 = !DILocalVariable(name: "__first", arg: 1, scope: !6019, file: !5779, line: 107, type: !1574)
+!6024 = !DILocalVariable(name: "__last", arg: 2, scope: !6019, file: !5779, line: 107, type: !1574)
+!6025 = !DILocalVariable(name: "__result", arg: 3, scope: !6019, file: !5779, line: 108, type: !165)
+!6026 = !DILocalVariable(name: "__assignable", scope: !6019, file: !5779, line: 120, type: !642)
+!6027 = !{!6005, !5300}
+!6028 = !DILocation(line: 0, scope: !6019)
+!6029 = !DILocation(line: 123, column: 14, scope: !6019)
+!6030 = !DILocation(line: 123, column: 7, scope: !6019)
+!6031 = distinct !DISubprogram(name: "__uninit_copy<std::move_iterator<float *>, float *>", linkageName: "_ZNSt20__uninitialized_copyILb1EE13__uninit_copyISt13move_iteratorIPfES3_EET0_T_S6_S5_", scope: !6032, file: !5779, line: 91, type: !6020, scopeLine: 93, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6027, declaration: !6035, retainedNodes: !6036)
+!6032 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__uninitialized_copy<true>", scope: !2, file: !5779, line: 87, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !6033, identifier: "_ZTSSt20__uninitialized_copyILb1EE")
+!6033 = !{!6034}
+!6034 = !DITemplateValueParameter(name: "_TrivialValueTypes", type: !13, value: i8 1)
+!6035 = !DISubprogram(name: "__uninit_copy<std::move_iterator<float *>, float *>", linkageName: "_ZNSt20__uninitialized_copyILb1EE13__uninit_copyISt13move_iteratorIPfES3_EET0_T_S6_S5_", scope: !6032, file: !5779, line: 91, type: !6020, scopeLine: 91, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !6027)
+!6036 = !{!6037, !6038, !6039}
+!6037 = !DILocalVariable(name: "__first", arg: 1, scope: !6031, file: !5779, line: 91, type: !1574)
+!6038 = !DILocalVariable(name: "__last", arg: 2, scope: !6031, file: !5779, line: 91, type: !1574)
+!6039 = !DILocalVariable(name: "__result", arg: 3, scope: !6031, file: !5779, line: 92, type: !165)
+!6040 = !DILocation(line: 0, scope: !6031)
+!6041 = !DILocation(line: 93, column: 18, scope: !6031)
+!6042 = !DILocation(line: 93, column: 11, scope: !6031)
+!6043 = distinct !DISubprogram(name: "copy<std::move_iterator<float *>, float *>", linkageName: "_ZSt4copyISt13move_iteratorIPfES1_ET0_T_S4_S3_", scope: !2, file: !5868, line: 462, type: !6020, scopeLine: 463, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6048, retainedNodes: !6044)
+!6044 = !{!6045, !6046, !6047}
+!6045 = !DILocalVariable(name: "__first", arg: 1, scope: !6043, file: !5868, line: 462, type: !1574)
+!6046 = !DILocalVariable(name: "__last", arg: 2, scope: !6043, file: !5868, line: 462, type: !1574)
+!6047 = !DILocalVariable(name: "__result", arg: 3, scope: !6043, file: !5868, line: 462, type: !165)
+!6048 = !{!6049, !5876}
+!6049 = !DITemplateTypeParameter(name: "_II", type: !1574)
+!6050 = !DILocation(line: 0, scope: !6043)
+!6051 = !DILocation(line: 471, column: 9, scope: !6043)
+!6052 = !DILocation(line: 471, column: 37, scope: !6043)
+!6053 = !DILocation(line: 470, column: 15, scope: !6043)
+!6054 = !DILocation(line: 470, column: 7, scope: !6043)
+!6055 = distinct !DISubprogram(name: "__copy_move_a2<true, float *, float *>", linkageName: "_ZSt14__copy_move_a2ILb1EPfS0_ET1_T0_S2_S1_", scope: !2, file: !5868, line: 436, type: !6056, scopeLine: 437, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6062, retainedNodes: !6058)
+!6056 = !DISubroutineType(types: !6057)
+!6057 = !{!165, !165, !165, !165}
+!6058 = !{!6059, !6060, !6061}
+!6059 = !DILocalVariable(name: "__first", arg: 1, scope: !6055, file: !5868, line: 436, type: !165)
+!6060 = !DILocalVariable(name: "__last", arg: 2, scope: !6055, file: !5868, line: 436, type: !165)
+!6061 = !DILocalVariable(name: "__result", arg: 3, scope: !6055, file: !5868, line: 436, type: !165)
+!6062 = !{!6063, !6064, !5876}
+!6063 = !DITemplateValueParameter(name: "_IsMove", type: !13, value: i8 1)
+!6064 = !DITemplateTypeParameter(name: "_II", type: !165)
+!6065 = !DILocation(line: 0, scope: !6055)
+!6066 = !DILocation(line: 438, column: 46, scope: !6055)
+!6067 = !DILocation(line: 439, column: 11, scope: !6055)
+!6068 = !DILocation(line: 440, column: 11, scope: !6055)
+!6069 = !DILocation(line: 438, column: 18, scope: !6055)
+!6070 = !DILocation(line: 438, column: 7, scope: !6055)
+!6071 = distinct !DISubprogram(name: "__miter_base<std::move_iterator<float *> >", linkageName: "_ZSt12__miter_baseISt13move_iteratorIPfEENSt11_Miter_baseIT_E13iterator_typeES4_", scope: !2, file: !5868, line: 293, type: !6072, scopeLine: 294, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6083, retainedNodes: !6081)
+!6072 = !DISubroutineType(types: !6073)
+!6073 = !{!6074, !1574}
+!6074 = !DIDerivedType(tag: DW_TAG_typedef, name: "iterator_type", scope: !6075, file: !413, line: 222, baseType: !1584)
+!6075 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "_Iter_base<std::move_iterator<float *>, true>", scope: !2, file: !413, line: 220, size: 8, flags: DIFlagTypePassByValue, elements: !6076, templateParams: !6078, identifier: "_ZTSSt10_Iter_baseISt13move_iteratorIPfELb1EE")
+!6076 = !{!6077}
+!6077 = !DISubprogram(name: "_S_base", linkageName: "_ZNSt10_Iter_baseISt13move_iteratorIPfELb1EE7_S_baseES2_", scope: !6075, file: !413, line: 223, type: !6072, scopeLine: 223, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized)
+!6078 = !{!6079, !6080}
+!6079 = !DITemplateTypeParameter(name: "_Iterator", type: !1574)
+!6080 = !DITemplateValueParameter(name: "_HasBase", type: !13, value: i8 1)
+!6081 = !{!6082}
+!6082 = !DILocalVariable(name: "__it", arg: 1, scope: !6071, file: !5868, line: 293, type: !1574)
+!6083 = !{!6079}
+!6084 = !DILocation(line: 0, scope: !6071)
+!6085 = !DILocation(line: 294, column: 14, scope: !6071)
+!6086 = !DILocation(line: 294, column: 7, scope: !6071)
+!6087 = distinct !DISubprogram(name: "__copy_move_a<true, float *, float *>", linkageName: "_ZSt13__copy_move_aILb1EPfS0_ET1_T0_S2_S1_", scope: !2, file: !5868, line: 391, type: !6056, scopeLine: 392, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6062, retainedNodes: !6088)
+!6088 = !{!6089, !6090, !6091, !6092}
+!6089 = !DILocalVariable(name: "__first", arg: 1, scope: !6087, file: !5868, line: 391, type: !165)
+!6090 = !DILocalVariable(name: "__last", arg: 2, scope: !6087, file: !5868, line: 391, type: !165)
+!6091 = !DILocalVariable(name: "__result", arg: 3, scope: !6087, file: !5868, line: 391, type: !165)
+!6092 = !DILocalVariable(name: "__simple", scope: !6087, file: !5868, line: 396, type: !642)
+!6093 = !DILocation(line: 0, scope: !6087)
+!6094 = !DILocation(line: 401, column: 14, scope: !6087)
+!6095 = !DILocation(line: 401, column: 7, scope: !6087)
+!6096 = distinct !DISubprogram(name: "__copy_m<float>", linkageName: "_ZNSt11__copy_moveILb1ELb1ESt26random_access_iterator_tagE8__copy_mIfEEPT_PKS3_S6_S4_", scope: !6097, file: !5868, line: 373, type: !6110, scopeLine: 374, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !217, declaration: !6112, retainedNodes: !6113)
+!6097 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__copy_move<true, true, std::random_access_iterator_tag>", scope: !2, file: !5868, line: 369, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !6098, identifier: "_ZTSSt11__copy_moveILb1ELb1ESt26random_access_iterator_tagE")
+!6098 = !{!947, !947, !6099}
+!6099 = !DITemplateTypeParameter(type: !6100)
+!6100 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "random_access_iterator_tag", scope: !2, file: !413, line: 103, size: 8, flags: DIFlagTypePassByValue, elements: !6101, identifier: "_ZTSSt26random_access_iterator_tag")
+!6101 = !{!6102}
+!6102 = !DIDerivedType(tag: DW_TAG_inheritance, scope: !6100, baseType: !6103, extraData: i32 0)
+!6103 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "bidirectional_iterator_tag", scope: !2, file: !413, line: 99, size: 8, flags: DIFlagTypePassByValue, elements: !6104, identifier: "_ZTSSt26bidirectional_iterator_tag")
+!6104 = !{!6105}
+!6105 = !DIDerivedType(tag: DW_TAG_inheritance, scope: !6103, baseType: !6106, extraData: i32 0)
+!6106 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "forward_iterator_tag", scope: !2, file: !413, line: 95, size: 8, flags: DIFlagTypePassByValue, elements: !6107, identifier: "_ZTSSt20forward_iterator_tag")
+!6107 = !{!6108}
+!6108 = !DIDerivedType(tag: DW_TAG_inheritance, scope: !6106, baseType: !6109, extraData: i32 0)
+!6109 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "input_iterator_tag", scope: !2, file: !413, line: 89, size: 8, flags: DIFlagTypePassByValue, elements: !263, identifier: "_ZTSSt18input_iterator_tag")
+!6110 = !DISubroutineType(types: !6111)
+!6111 = !{!165, !198, !198, !165}
+!6112 = !DISubprogram(name: "__copy_m<float>", linkageName: "_ZNSt11__copy_moveILb1ELb1ESt26random_access_iterator_tagE8__copy_mIfEEPT_PKS3_S6_S4_", scope: !6097, file: !5868, line: 373, type: !6110, scopeLine: 373, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !217)
+!6113 = !{!6114, !6115, !6116, !6117}
+!6114 = !DILocalVariable(name: "__first", arg: 1, scope: !6096, file: !5868, line: 373, type: !198)
+!6115 = !DILocalVariable(name: "__last", arg: 2, scope: !6096, file: !5868, line: 373, type: !198)
+!6116 = !DILocalVariable(name: "__result", arg: 3, scope: !6096, file: !5868, line: 373, type: !165)
+!6117 = !DILocalVariable(name: "_Num", scope: !6096, file: !5868, line: 382, type: !6118)
+!6118 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !438)
+!6119 = !DILocation(line: 0, scope: !6096)
+!6120 = !DILocation(line: 382, column: 34, scope: !6096)
+!6121 = !DILocation(line: 383, column: 8, scope: !6122)
+!6122 = distinct !DILexicalBlock(scope: !6096, file: !5868, line: 383, column: 8)
+!6123 = !DILocation(line: 383, column: 8, scope: !6096)
+!6124 = !DILocation(line: 384, column: 6, scope: !6122)
+!6125 = !DILocation(line: 385, column: 20, scope: !6096)
+!6126 = !DILocation(line: 385, column: 4, scope: !6096)
+!6127 = distinct !DISubprogram(name: "_S_base", linkageName: "_ZNSt10_Iter_baseISt13move_iteratorIPfELb1EE7_S_baseES2_", scope: !6075, file: !413, line: 223, type: !6072, scopeLine: 224, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6077, retainedNodes: !6128)
+!6128 = !{!6129}
+!6129 = !DILocalVariable(name: "__it", arg: 1, scope: !6127, file: !413, line: 223, type: !1574)
+!6130 = !DILocation(line: 0, scope: !6127)
+!6131 = !DILocation(line: 224, column: 21, scope: !6127)
+!6132 = !DILocation(line: 224, column: 9, scope: !6127)
+!6133 = distinct !DISubprogram(name: "base", linkageName: "_ZNKSt13move_iteratorIPfE4baseEv", scope: !1574, file: !396, line: 992, type: !1586, scopeLine: 993, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1585, retainedNodes: !6134)
+!6134 = !{!6135}
+!6135 = !DILocalVariable(name: "this", arg: 1, scope: !6133, type: !6136, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6136 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !1589, size: 64)
+!6137 = !DILocation(line: 0, scope: !6133)
+!6138 = !DILocation(line: 993, column: 16, scope: !6133)
+!6139 = !{!6140, !3172, i64 0}
+!6140 = !{!"_ZTSSt13move_iteratorIPfE", !3172, i64 0}
+!6141 = !DILocation(line: 993, column: 9, scope: !6133)
+!6142 = distinct !DISubprogram(name: "move_iterator", linkageName: "_ZNSt13move_iteratorIPfEC2ES0_", scope: !1574, file: !396, line: 984, type: !1582, scopeLine: 985, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1581, retainedNodes: !6143)
+!6143 = !{!6144, !6146}
+!6144 = !DILocalVariable(name: "this", arg: 1, scope: !6142, type: !6145, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6145 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !1574, size: 64)
+!6146 = !DILocalVariable(name: "__i", arg: 2, scope: !6142, file: !396, line: 984, type: !1584)
+!6147 = !DILocation(line: 0, scope: !6142)
+!6148 = !DILocation(line: 985, column: 9, scope: !6142)
+!6149 = !DILocation(line: 985, column: 27, scope: !6142)
+!6150 = distinct !DISubprogram(name: "_M_data_ptr<float>", linkageName: "_ZNKSt6vectorIfSaIfEE11_M_data_ptrIfEEPT_S4_", scope: !144, file: !70, line: 1483, type: !6151, scopeLine: 1484, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6154, declaration: !6153, retainedNodes: !6156)
+!6151 = !DISubroutineType(types: !6152)
+!6152 = !{!165, !510, !165}
+!6153 = !DISubprogram(name: "_M_data_ptr<float>", linkageName: "_ZNKSt6vectorIfSaIfEE11_M_data_ptrIfEEPT_S4_", scope: !144, file: !70, line: 1483, type: !6151, scopeLine: 1483, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized, templateParams: !6154)
+!6154 = !{!6155}
+!6155 = !DITemplateTypeParameter(name: "_Up", type: !105)
+!6156 = !{!6157, !6158}
+!6157 = !DILocalVariable(name: "this", arg: 1, scope: !6150, type: !3294, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6158 = !DILocalVariable(name: "__ptr", arg: 2, scope: !6150, file: !70, line: 1483, type: !165)
+!6159 = !DILocation(line: 0, scope: !6150)
+!6160 = !DILocation(line: 1484, column: 4, scope: !6150)
+!6161 = distinct !DISubprogram(name: "swap<float **>", linkageName: "_ZSt4swapIPPfEvRT_S3_", scope: !2, file: !5623, line: 176, type: !6162, scopeLine: 181, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6168, retainedNodes: !6164)
+!6162 = !DISubroutineType(types: !6163)
+!6163 = !{null, !814, !814}
+!6164 = !{!6165, !6166, !6167}
+!6165 = !DILocalVariable(name: "__a", arg: 1, scope: !6161, file: !5623, line: 176, type: !814)
+!6166 = !DILocalVariable(name: "__b", arg: 2, scope: !6161, file: !5623, line: 176, type: !814)
+!6167 = !DILocalVariable(name: "__tmp", scope: !6161, file: !5623, line: 185, type: !699)
+!6168 = !{!6169}
+!6169 = !DITemplateTypeParameter(name: "_Tp", type: !699)
+!6170 = !DILocation(line: 0, scope: !6161)
+!6171 = !DILocation(line: 185, column: 7, scope: !6161)
+!6172 = !DILocation(line: 185, column: 19, scope: !6161)
+!6173 = !DILocation(line: 185, column: 11, scope: !6161)
+!6174 = !DILocation(line: 186, column: 13, scope: !6161)
+!6175 = !DILocation(line: 186, column: 11, scope: !6161)
+!6176 = !DILocation(line: 187, column: 13, scope: !6161)
+!6177 = !DILocation(line: 187, column: 11, scope: !6161)
+!6178 = !DILocation(line: 188, column: 5, scope: !6161)
+!6179 = distinct !DISubprogram(name: "move<float **&>", linkageName: "_ZSt4moveIRPPfEONSt16remove_referenceIT_E4typeEOS4_", scope: !2, file: !5623, line: 101, type: !6180, scopeLine: 102, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6185, retainedNodes: !6187)
+!6180 = !DISubroutineType(types: !6181)
+!6181 = !{!6182, !814}
+!6182 = !DIDerivedType(tag: DW_TAG_rvalue_reference_type, baseType: !6183, size: 64)
+!6183 = !DIDerivedType(tag: DW_TAG_typedef, name: "type", scope: !6184, file: !638, line: 1580, baseType: !699)
+!6184 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "remove_reference<float **&>", scope: !2, file: !638, line: 1579, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !6185, identifier: "_ZTSSt16remove_referenceIRPPfE")
 !6185 = !{!6186}
-!6186 = !DILocalVariable(name: "__t", arg: 1, scope: !6177, file: !5621, line: 101, type: !814)
-!6187 = !DILocation(line: 0, scope: !6177)
-!6188 = !DILocation(line: 102, column: 7, scope: !6177)
-!6189 = distinct !DISubprogram(name: "get", linkageName: "_ZNKSt10unique_ptrIA_PfSt14default_deleteIS1_EE3getEv", scope: !670, file: !671, line: 541, type: !952, scopeLine: 542, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !951, retainedNodes: !6190)
-!6190 = !{!6191}
-!6191 = !DILocalVariable(name: "this", arg: 1, scope: !6189, type: !3232, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6192 = !DILocation(line: 0, scope: !6189)
-!6193 = !DILocation(line: 542, column: 28, scope: !6189)
-!6194 = !DILocation(line: 542, column: 16, scope: !6189)
-!6195 = !DILocation(line: 542, column: 9, scope: !6189)
-!6196 = distinct !DISubprogram(name: "get<0, float **, std::default_delete<float *[]> >", linkageName: "_ZSt3getILm0EJPPfSt14default_deleteIA_S0_EEERKNSt13tuple_elementIXT_ESt5tupleIJDpT0_EEE4typeERKS9_", scope: !2, file: !676, line: 838, type: !6197, scopeLine: 839, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5405, retainedNodes: !6201)
-!6197 = !DISubroutineType(types: !6198)
-!6198 = !{!6199, !879}
-!6199 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !6200, size: 64)
-!6200 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !5397)
-!6201 = !{!6202}
-!6202 = !DILocalVariable(name: "__t", arg: 1, scope: !6196, file: !676, line: 838, type: !879)
-!6203 = !DILocation(line: 0, scope: !6196)
-!6204 = !DILocation(line: 839, column: 37, scope: !6196)
-!6205 = !DILocation(line: 839, column: 14, scope: !6196)
-!6206 = !DILocation(line: 839, column: 7, scope: !6196)
-!6207 = distinct !DISubprogram(name: "__get_helper<0, float **, std::default_delete<float *[]> >", linkageName: "_ZSt12__get_helperILm0EPPfJSt14default_deleteIA_S0_EEERKT0_RKSt11_Tuple_implIXT_EJS5_DpT1_EE", scope: !2, file: !676, line: 826, type: !828, scopeLine: 827, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5428, retainedNodes: !6208)
-!6208 = !{!6209}
-!6209 = !DILocalVariable(name: "__t", arg: 1, scope: !6207, file: !676, line: 826, type: !830)
-!6210 = !DILocation(line: 0, scope: !6207)
-!6211 = !DILocation(line: 827, column: 14, scope: !6207)
-!6212 = !DILocation(line: 827, column: 7, scope: !6207)
-!6213 = distinct !DISubprogram(name: "_M_head", linkageName: "_ZNSt11_Tuple_implILm0EJPPfSt14default_deleteIA_S0_EEE7_M_headERKS5_", scope: !679, file: !676, line: 193, type: !828, scopeLine: 193, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !827, retainedNodes: !6214)
-!6214 = !{!6215}
-!6215 = !DILocalVariable(name: "__t", arg: 1, scope: !6213, file: !676, line: 193, type: !830)
-!6216 = !DILocation(line: 0, scope: !6213)
-!6217 = !DILocation(line: 193, column: 72, scope: !6213)
-!6218 = !DILocation(line: 193, column: 57, scope: !6213)
-!6219 = !DILocation(line: 193, column: 50, scope: !6213)
-!6220 = distinct !DISubprogram(name: "_M_head", linkageName: "_ZNSt10_Head_baseILm0EPPfLb0EE7_M_headERKS2_", scope: !787, file: !676, line: 145, type: !817, scopeLine: 145, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !816, retainedNodes: !6221)
-!6221 = !{!6222}
-!6222 = !DILocalVariable(name: "__b", arg: 1, scope: !6220, file: !676, line: 145, type: !802)
-!6223 = !DILocation(line: 0, scope: !6220)
-!6224 = !DILocation(line: 145, column: 60, scope: !6220)
-!6225 = !DILocation(line: 145, column: 49, scope: !6220)
-!6226 = distinct !DISubprogram(name: "insert", linkageName: "_ZNSt6vectorIfSaIfEE6insertEN9__gnu_cxx17__normal_iteratorIPKfS1_EEmRS4_", scope: !144, file: !70, line: 1051, type: !595, scopeLine: 1052, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !594, retainedNodes: !6227)
-!6227 = !{!6228, !6229, !6230, !6231, !6232}
-!6228 = !DILocalVariable(name: "this", arg: 1, scope: !6226, type: !3113, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6229 = !DILocalVariable(name: "__position", arg: 2, scope: !6226, file: !70, line: 1051, type: !456)
-!6230 = !DILocalVariable(name: "__n", arg: 3, scope: !6226, file: !70, line: 1051, type: !347)
-!6231 = !DILocalVariable(name: "__x", arg: 4, scope: !6226, file: !70, line: 1051, type: !351)
-!6232 = !DILocalVariable(name: "__offset", scope: !6226, file: !70, line: 1053, type: !6233)
-!6233 = !DIDerivedType(tag: DW_TAG_typedef, name: "difference_type", file: !70, line: 237, baseType: !438)
-!6234 = !DILocation(line: 0, scope: !6226)
-!6235 = !DILocation(line: 1053, column: 42, scope: !6226)
-!6236 = !DILocation(line: 1053, column: 40, scope: !6226)
-!6237 = !DILocation(line: 1053, column: 29, scope: !6226)
-!6238 = !DILocation(line: 1054, column: 17, scope: !6226)
-!6239 = !DILocation(line: 1054, column: 25, scope: !6226)
-!6240 = !DILocation(line: 1054, column: 2, scope: !6226)
-!6241 = !DILocation(line: 1055, column: 9, scope: !6226)
-!6242 = !DILocation(line: 1055, column: 17, scope: !6226)
-!6243 = !DILocation(line: 1055, column: 2, scope: !6226)
-!6244 = !DILocation(line: 1056, column: 7, scope: !6226)
-!6245 = distinct !DISubprogram(name: "end", linkageName: "_ZNSt6vectorIfSaIfEE3endEv", scope: !144, file: !70, line: 565, type: !392, scopeLine: 566, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !511, retainedNodes: !6246)
-!6246 = !{!6247}
-!6247 = !DILocalVariable(name: "this", arg: 1, scope: !6245, type: !3113, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6248 = !DILocation(line: 0, scope: !6245)
-!6249 = !DILocation(line: 566, column: 39, scope: !6245)
-!6250 = !DILocation(line: 566, column: 16, scope: !6245)
-!6251 = !DILocation(line: 566, column: 9, scope: !6245)
-!6252 = distinct !DISubprogram(name: "__normal_iterator<float *>", linkageName: "_ZN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEC2IPfEERKNS0_IT_NS_11__enable_ifIXsr3std10__are_sameIS9_S8_EE7__valueES5_E6__typeEEE", scope: !457, file: !396, line: 745, type: !6253, scopeLine: 749, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6257, declaration: !6256, retainedNodes: !6259)
-!6253 = !DISubroutineType(types: !6254)
-!6254 = !{null, !463, !6255}
-!6255 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !418, size: 64)
-!6256 = !DISubprogram(name: "__normal_iterator<float *>", scope: !457, file: !396, line: 745, type: !6253, scopeLine: 745, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized, templateParams: !6257)
-!6257 = !{!6258}
-!6258 = !DITemplateTypeParameter(name: "_Iter", type: !165)
-!6259 = !{!6260, !6262}
-!6260 = !DILocalVariable(name: "this", arg: 1, scope: !6252, type: !6261, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6261 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !457, size: 64)
-!6262 = !DILocalVariable(name: "__i", arg: 2, scope: !6252, file: !396, line: 748, type: !6255)
-!6263 = !DILocation(line: 0, scope: !6252)
-!6264 = !DILocation(line: 749, column: 26, scope: !6252)
-!6265 = !DILocation(line: 749, column: 11, scope: !6252)
-!6266 = !{!6267, !3172, i64 0}
-!6267 = !{!"_ZTSN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEE", !3172, i64 0}
-!6268 = !DILocation(line: 749, column: 36, scope: !6252)
-!6269 = distinct !DISubprogram(name: "operator-<const float *, std::vector<float, std::allocator<float> > >", linkageName: "_ZN9__gnu_cxxmiIPKfSt6vectorIfSaIfEEEENS_17__normal_iteratorIT_T0_E15difference_typeERKS9_SC_", scope: !24, file: !396, line: 923, type: !6270, scopeLine: 926, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !509, retainedNodes: !6273)
-!6270 = !DISubroutineType(types: !6271)
-!6271 = !{!496, !6272, !6272}
-!6272 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !478, size: 64)
-!6273 = !{!6274, !6275}
-!6274 = !DILocalVariable(name: "__lhs", arg: 1, scope: !6269, file: !396, line: 923, type: !6272)
-!6275 = !DILocalVariable(name: "__rhs", arg: 2, scope: !6269, file: !396, line: 924, type: !6272)
-!6276 = !DILocation(line: 0, scope: !6269)
-!6277 = !DILocation(line: 926, column: 20, scope: !6269)
-!6278 = !DILocation(line: 926, column: 35, scope: !6269)
-!6279 = !DILocation(line: 926, column: 27, scope: !6269)
-!6280 = !DILocation(line: 926, column: 7, scope: !6269)
-!6281 = distinct !DISubprogram(name: "cbegin", linkageName: "_ZNKSt6vectorIfSaIfEE6cbeginEv", scope: !144, file: !70, line: 620, type: !454, scopeLine: 621, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !525, retainedNodes: !6282)
-!6282 = !{!6283}
-!6283 = !DILocalVariable(name: "this", arg: 1, scope: !6281, type: !3294, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6284 = !DILocation(line: 0, scope: !6281)
-!6285 = !DILocation(line: 621, column: 31, scope: !6281)
-!6286 = !DILocation(line: 621, column: 45, scope: !6281)
-!6287 = !DILocation(line: 621, column: 16, scope: !6281)
-!6288 = !DILocation(line: 621, column: 9, scope: !6281)
-!6289 = distinct !DISubprogram(name: "_M_fill_insert", linkageName: "_ZNSt6vectorIfSaIfEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPfS1_EEmRKf", scope: !144, file: !5704, line: 450, type: !611, scopeLine: 451, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !610, retainedNodes: !6290)
-!6290 = !{!6291, !6292, !6293, !6294, !6295, !6300, !6301, !6302, !6304, !6305, !6306}
-!6291 = !DILocalVariable(name: "this", arg: 1, scope: !6289, type: !3113, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6292 = !DILocalVariable(name: "__position", arg: 2, scope: !6289, file: !70, line: 1395, type: !394)
-!6293 = !DILocalVariable(name: "__n", arg: 3, scope: !6289, file: !70, line: 1395, type: !347)
-!6294 = !DILocalVariable(name: "__x", arg: 4, scope: !6289, file: !70, line: 1395, type: !351)
-!6295 = !DILocalVariable(name: "__x_copy", scope: !6296, file: !5704, line: 457, type: !353)
-!6296 = distinct !DILexicalBlock(scope: !6297, file: !5704, line: 456, column: 6)
-!6297 = distinct !DILexicalBlock(scope: !6298, file: !5704, line: 454, column: 8)
-!6298 = distinct !DILexicalBlock(scope: !6299, file: !5704, line: 453, column: 2)
-!6299 = distinct !DILexicalBlock(scope: !6289, file: !5704, line: 452, column: 11)
-!6300 = !DILocalVariable(name: "__elems_after", scope: !6296, file: !5704, line: 458, type: !5713)
-!6301 = !DILocalVariable(name: "__old_finish", scope: !6296, file: !5704, line: 459, type: !627)
-!6302 = !DILocalVariable(name: "__len", scope: !6303, file: !5704, line: 488, type: !5713)
-!6303 = distinct !DILexicalBlock(scope: !6297, file: !5704, line: 487, column: 6)
-!6304 = !DILocalVariable(name: "__elems_before", scope: !6303, file: !5704, line: 490, type: !5713)
-!6305 = !DILocalVariable(name: "__new_start", scope: !6303, file: !5704, line: 491, type: !627)
-!6306 = !DILocalVariable(name: "__new_finish", scope: !6303, file: !5704, line: 492, type: !627)
-!6307 = !DILocation(line: 0, scope: !6289)
-!6308 = !DILocation(line: 452, column: 15, scope: !6299)
-!6309 = !DILocation(line: 452, column: 11, scope: !6289)
-!6310 = !DILocation(line: 454, column: 24, scope: !6297)
-!6311 = !DILocation(line: 454, column: 32, scope: !6297)
-!6312 = !DILocation(line: 455, column: 20, scope: !6297)
-!6313 = !DILocation(line: 455, column: 4, scope: !6297)
-!6314 = !DILocation(line: 455, column: 31, scope: !6297)
-!6315 = !DILocation(line: 454, column: 8, scope: !6298)
-!6316 = !DILocation(line: 457, column: 8, scope: !6296)
-!6317 = !DILocation(line: 457, column: 30, scope: !6296)
-!6318 = !DILocation(line: 457, column: 19, scope: !6296)
-!6319 = !DILocation(line: 458, column: 40, scope: !6296)
-!6320 = !DILocation(line: 458, column: 46, scope: !6296)
-!6321 = !DILocation(line: 0, scope: !6296)
-!6322 = !DILocation(line: 459, column: 43, scope: !6296)
-!6323 = !DILocation(line: 460, column: 26, scope: !6324)
-!6324 = distinct !DILexicalBlock(scope: !6296, file: !5704, line: 460, column: 12)
-!6325 = !DILocation(line: 460, column: 12, scope: !6296)
-!6326 = !DILocation(line: 462, column: 57, scope: !6327)
-!6327 = distinct !DILexicalBlock(scope: !6324, file: !5704, line: 461, column: 3)
-!6328 = !DILocation(line: 465, column: 12, scope: !6327)
-!6329 = !DILocation(line: 462, column: 5, scope: !6327)
-!6330 = !DILocation(line: 466, column: 29, scope: !6327)
-!6331 = !DILocation(line: 467, column: 5, scope: !6327)
-!6332 = !DILocation(line: 469, column: 26, scope: !6327)
-!6333 = !DILocation(line: 469, column: 45, scope: !6327)
-!6334 = !DILocation(line: 469, column: 52, scope: !6327)
-!6335 = !DILocation(line: 469, column: 5, scope: !6327)
-!6336 = !DILocation(line: 471, column: 3, scope: !6327)
-!6337 = !DILocation(line: 476, column: 13, scope: !6338)
-!6338 = distinct !DILexicalBlock(scope: !6324, file: !5704, line: 473, column: 3)
-!6339 = !DILocation(line: 478, column: 9, scope: !6338)
-!6340 = !DILocation(line: 475, column: 7, scope: !6338)
-!6341 = !DILocation(line: 474, column: 29, scope: !6338)
-!6342 = !DILocation(line: 479, column: 44, scope: !6338)
-!6343 = !DILocation(line: 480, column: 26, scope: !6338)
-!6344 = !DILocation(line: 481, column: 12, scope: !6338)
-!6345 = !DILocation(line: 479, column: 5, scope: !6338)
-!6346 = !DILocation(line: 482, column: 29, scope: !6338)
-!6347 = !DILocation(line: 483, column: 26, scope: !6338)
-!6348 = !DILocation(line: 483, column: 5, scope: !6338)
-!6349 = !DILocation(line: 485, column: 6, scope: !6297)
-!6350 = !DILocation(line: 485, column: 6, scope: !6296)
-!6351 = !DILocation(line: 489, column: 3, scope: !6303)
-!6352 = !DILocation(line: 0, scope: !6303)
-!6353 = !DILocation(line: 490, column: 54, scope: !6303)
-!6354 = !DILocation(line: 490, column: 52, scope: !6303)
-!6355 = !DILocation(line: 490, column: 41, scope: !6303)
-!6356 = !DILocation(line: 491, column: 34, scope: !6303)
-!6357 = !DILocation(line: 496, column: 47, scope: !6358)
-!6358 = distinct !DILexicalBlock(scope: !6303, file: !5704, line: 494, column: 3)
-!6359 = !DILocation(line: 498, column: 7, scope: !6358)
-!6360 = !DILocation(line: 496, column: 5, scope: !6358)
-!6361 = !DILocation(line: 503, column: 22, scope: !6358)
-!6362 = !DILocation(line: 503, column: 43, scope: !6358)
-!6363 = !DILocation(line: 504, column: 21, scope: !6358)
-!6364 = !DILocation(line: 502, column: 9, scope: !6358)
-!6365 = !DILocation(line: 506, column: 18, scope: !6358)
-!6366 = !DILocation(line: 510, column: 19, scope: !6358)
-!6367 = !DILocation(line: 510, column: 41, scope: !6358)
-!6368 = !DILocation(line: 511, column: 22, scope: !6358)
-!6369 = !DILocation(line: 509, column: 9, scope: !6358)
-!6370 = !DILocation(line: 525, column: 36, scope: !6303)
-!6371 = !DILocation(line: 525, column: 60, scope: !6303)
-!6372 = !DILocation(line: 526, column: 8, scope: !6303)
-!6373 = !DILocation(line: 525, column: 8, scope: !6303)
-!6374 = !DILocation(line: 527, column: 36, scope: !6303)
-!6375 = !DILocation(line: 528, column: 22, scope: !6303)
-!6376 = !DILocation(line: 529, column: 8, scope: !6303)
-!6377 = !DILocation(line: 527, column: 8, scope: !6303)
-!6378 = !DILocation(line: 530, column: 31, scope: !6303)
-!6379 = !DILocation(line: 531, column: 32, scope: !6303)
-!6380 = !DILocation(line: 532, column: 54, scope: !6303)
-!6381 = !DILocation(line: 532, column: 40, scope: !6303)
-!6382 = !DILocation(line: 535, column: 5, scope: !6358)
-!6383 = !DILocation(line: 512, column: 3, scope: !6358)
-!6384 = !DILocation(line: 515, column: 10, scope: !6385)
-!6385 = distinct !DILexicalBlock(scope: !6386, file: !5704, line: 515, column: 9)
-!6386 = distinct !DILexicalBlock(scope: !6303, file: !5704, line: 514, column: 3)
-!6387 = !DILocation(line: 515, column: 9, scope: !6386)
-!6388 = !DILocation(line: 517, column: 36, scope: !6385)
-!6389 = !DILocation(line: 518, column: 7, scope: !6385)
-!6390 = !DILocation(line: 516, column: 7, scope: !6385)
-!6391 = !DILocation(line: 535, column: 5, scope: !6385)
-!6392 = !DILocation(line: 524, column: 3, scope: !6386)
-!6393 = !DILocation(line: 521, column: 7, scope: !6385)
-!6394 = !DILocation(line: 520, column: 7, scope: !6385)
-!6395 = !DILocation(line: 522, column: 5, scope: !6386)
-!6396 = !DILocation(line: 523, column: 5, scope: !6386)
-!6397 = !DILocation(line: 533, column: 6, scope: !6297)
-!6398 = !DILocation(line: 535, column: 5, scope: !6289)
-!6399 = distinct !DISubprogram(name: "begin", linkageName: "_ZNSt6vectorIfSaIfEE5beginEv", scope: !144, file: !70, line: 547, type: !392, scopeLine: 548, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !391, retainedNodes: !6400)
-!6400 = !{!6401}
-!6401 = !DILocalVariable(name: "this", arg: 1, scope: !6399, type: !3113, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6402 = !DILocation(line: 0, scope: !6399)
-!6403 = !DILocation(line: 548, column: 39, scope: !6399)
-!6404 = !DILocation(line: 548, column: 16, scope: !6399)
-!6405 = !DILocation(line: 548, column: 9, scope: !6399)
-!6406 = distinct !DISubprogram(name: "operator+", linkageName: "_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEplEl", scope: !395, file: !396, line: 793, type: !444, scopeLine: 794, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !443, retainedNodes: !6407)
-!6407 = !{!6408, !6410}
-!6408 = !DILocalVariable(name: "this", arg: 1, scope: !6406, type: !6409, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6409 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !418, size: 64)
-!6410 = !DILocalVariable(name: "__n", arg: 2, scope: !6406, file: !396, line: 793, type: !436)
-!6411 = !DILocation(line: 0, scope: !6406)
-!6412 = !DILocation(line: 794, column: 34, scope: !6406)
-!6413 = !{!6414, !3172, i64 0}
-!6414 = !{!"_ZTSN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEE", !3172, i64 0}
-!6415 = !DILocation(line: 794, column: 45, scope: !6406)
-!6416 = !DILocation(line: 794, column: 16, scope: !6406)
-!6417 = !DILocation(line: 794, column: 9, scope: !6406)
-!6418 = distinct !DISubprogram(name: "base", linkageName: "_ZNK9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEE4baseEv", scope: !457, file: !396, line: 805, type: !507, scopeLine: 806, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !506, retainedNodes: !6419)
-!6419 = !{!6420}
-!6420 = !DILocalVariable(name: "this", arg: 1, scope: !6418, type: !6421, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6421 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !478, size: 64)
-!6422 = !DILocation(line: 0, scope: !6418)
-!6423 = !DILocation(line: 806, column: 16, scope: !6418)
-!6424 = !DILocation(line: 806, column: 9, scope: !6418)
-!6425 = distinct !DISubprogram(name: "__normal_iterator", linkageName: "_ZN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEC2ERKS2_", scope: !457, file: !396, line: 740, type: !465, scopeLine: 741, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !464, retainedNodes: !6426)
-!6426 = !{!6427, !6428}
-!6427 = !DILocalVariable(name: "this", arg: 1, scope: !6425, type: !6261, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6428 = !DILocalVariable(name: "__i", arg: 2, scope: !6425, file: !396, line: 740, type: !467)
-!6429 = !DILocation(line: 0, scope: !6425)
-!6430 = !DILocation(line: 741, column: 20, scope: !6425)
-!6431 = !DILocation(line: 741, column: 9, scope: !6425)
-!6432 = !DILocation(line: 741, column: 27, scope: !6425)
-!6433 = distinct !DISubprogram(name: "operator-<float *, std::vector<float, std::allocator<float> > >", linkageName: "_ZN9__gnu_cxxmiIPfSt6vectorIfSaIfEEEENS_17__normal_iteratorIT_T0_E15difference_typeERKS8_SB_", scope: !24, file: !396, line: 923, type: !6434, scopeLine: 926, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !451, retainedNodes: !6436)
-!6434 = !DISubroutineType(types: !6435)
-!6435 = !{!436, !6255, !6255}
-!6436 = !{!6437, !6438}
-!6437 = !DILocalVariable(name: "__lhs", arg: 1, scope: !6433, file: !396, line: 923, type: !6255)
-!6438 = !DILocalVariable(name: "__rhs", arg: 2, scope: !6433, file: !396, line: 924, type: !6255)
-!6439 = !DILocation(line: 0, scope: !6433)
-!6440 = !DILocation(line: 926, column: 20, scope: !6433)
-!6441 = !DILocation(line: 926, column: 35, scope: !6433)
-!6442 = !DILocation(line: 926, column: 27, scope: !6433)
-!6443 = !DILocation(line: 926, column: 7, scope: !6433)
-!6444 = distinct !DISubprogram(name: "__uninitialized_move_a<float *, float *, std::allocator<float> >", linkageName: "_ZSt22__uninitialized_move_aIPfS0_SaIfEET0_T_S3_S2_RT1_", scope: !2, file: !5777, line: 286, type: !5827, scopeLine: 288, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5834, retainedNodes: !6445)
-!6445 = !{!6446, !6447, !6448, !6449}
-!6446 = !DILocalVariable(name: "__first", arg: 1, scope: !6444, file: !5777, line: 286, type: !165)
-!6447 = !DILocalVariable(name: "__last", arg: 2, scope: !6444, file: !5777, line: 286, type: !165)
-!6448 = !DILocalVariable(name: "__result", arg: 3, scope: !6444, file: !5777, line: 287, type: !165)
-!6449 = !DILocalVariable(name: "__alloc", arg: 4, scope: !6444, file: !5777, line: 287, type: !254)
-!6450 = !DILocation(line: 0, scope: !6444)
-!6451 = !DILocation(line: 289, column: 42, scope: !6444)
-!6452 = !DILocation(line: 290, column: 7, scope: !6444)
-!6453 = !DILocation(line: 289, column: 14, scope: !6444)
-!6454 = !DILocation(line: 289, column: 7, scope: !6444)
-!6455 = distinct !DISubprogram(name: "move_backward<float *, float *>", linkageName: "_ZSt13move_backwardIPfS0_ET0_T_S2_S1_", scope: !2, file: !5866, line: 674, type: !6054, scopeLine: 675, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6460, retainedNodes: !6456)
-!6456 = !{!6457, !6458, !6459}
-!6457 = !DILocalVariable(name: "__first", arg: 1, scope: !6455, file: !5866, line: 674, type: !165)
-!6458 = !DILocalVariable(name: "__last", arg: 2, scope: !6455, file: !5866, line: 674, type: !165)
-!6459 = !DILocalVariable(name: "__result", arg: 3, scope: !6455, file: !5866, line: 674, type: !165)
-!6460 = !{!6461, !6462}
-!6461 = !DITemplateTypeParameter(name: "_BI1", type: !165)
-!6462 = !DITemplateTypeParameter(name: "_BI2", type: !165)
-!6463 = !DILocation(line: 0, scope: !6455)
-!6464 = !DILocation(line: 684, column: 49, scope: !6455)
-!6465 = !DILocation(line: 685, column: 7, scope: !6455)
-!6466 = !DILocation(line: 684, column: 14, scope: !6455)
-!6467 = !DILocation(line: 684, column: 7, scope: !6455)
-!6468 = distinct !DISubprogram(name: "base", linkageName: "_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv", scope: !395, file: !396, line: 805, type: !449, scopeLine: 806, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !448, retainedNodes: !6469)
-!6469 = !{!6470}
-!6470 = !DILocalVariable(name: "this", arg: 1, scope: !6468, type: !6409, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6471 = !DILocation(line: 0, scope: !6468)
-!6472 = !DILocation(line: 806, column: 16, scope: !6468)
-!6473 = !DILocation(line: 806, column: 9, scope: !6468)
-!6474 = distinct !DISubprogram(name: "fill<float *, float>", linkageName: "_ZSt4fillIPffEvT_S1_RKT0_", scope: !2, file: !5866, line: 740, type: !6475, scopeLine: 741, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5297, retainedNodes: !6477)
-!6475 = !DISubroutineType(types: !6476)
-!6476 = !{null, !165, !165, !201}
-!6477 = !{!6478, !6479, !6480}
-!6478 = !DILocalVariable(name: "__first", arg: 1, scope: !6474, file: !5866, line: 740, type: !165)
-!6479 = !DILocalVariable(name: "__last", arg: 2, scope: !6474, file: !5866, line: 740, type: !165)
-!6480 = !DILocalVariable(name: "__value", arg: 3, scope: !6474, file: !5866, line: 740, type: !201)
-!6481 = !DILocation(line: 0, scope: !6474)
-!6482 = !DILocation(line: 747, column: 21, scope: !6474)
-!6483 = !DILocation(line: 747, column: 49, scope: !6474)
-!6484 = !DILocation(line: 747, column: 7, scope: !6474)
-!6485 = !DILocation(line: 749, column: 5, scope: !6474)
-!6486 = distinct !DISubprogram(name: "__uninitialized_fill_n_a<float *, unsigned long, float, float>", linkageName: "_ZSt24__uninitialized_fill_n_aIPfmffET_S1_T0_RKT1_RSaIT2_E", scope: !2, file: !5777, line: 356, type: !6487, scopeLine: 358, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6494, retainedNodes: !6489)
-!6487 = !DISubroutineType(types: !6488)
-!6488 = !{!165, !165, !208, !201, !254}
-!6489 = !{!6490, !6491, !6492, !6493}
-!6490 = !DILocalVariable(name: "__first", arg: 1, scope: !6486, file: !5777, line: 356, type: !165)
-!6491 = !DILocalVariable(name: "__n", arg: 2, scope: !6486, file: !5777, line: 356, type: !208)
-!6492 = !DILocalVariable(name: "__x", arg: 3, scope: !6486, file: !5777, line: 357, type: !201)
-!6493 = !DILocalVariable(arg: 4, scope: !6486, file: !5777, line: 357, type: !254)
-!6494 = !{!5298, !5785, !218, !6495}
-!6495 = !DITemplateTypeParameter(name: "_Tp2", type: !105)
-!6496 = !DILocation(line: 0, scope: !6486)
-!6497 = !DILocation(line: 358, column: 14, scope: !6486)
-!6498 = !DILocation(line: 358, column: 7, scope: !6486)
-!6499 = distinct !DISubprogram(name: "make_move_iterator<float *>", linkageName: "_ZSt18make_move_iteratorIPfESt13move_iteratorIT_ES2_", scope: !2, file: !396, line: 1158, type: !6008, scopeLine: 1159, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !415, retainedNodes: !6500)
-!6500 = !{!6501}
-!6501 = !DILocalVariable(name: "__i", arg: 1, scope: !6499, file: !396, line: 1158, type: !165)
-!6502 = !DILocation(line: 0, scope: !6499)
-!6503 = !DILocation(line: 1159, column: 14, scope: !6499)
-!6504 = !DILocation(line: 1159, column: 7, scope: !6499)
-!6505 = distinct !DISubprogram(name: "__copy_move_backward_a2<true, float *, float *>", linkageName: "_ZSt23__copy_move_backward_a2ILb1EPfS0_ET1_T0_S2_S1_", scope: !2, file: !5866, line: 611, type: !6054, scopeLine: 612, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6510, retainedNodes: !6506)
-!6506 = !{!6507, !6508, !6509}
-!6507 = !DILocalVariable(name: "__first", arg: 1, scope: !6505, file: !5866, line: 611, type: !165)
-!6508 = !DILocalVariable(name: "__last", arg: 2, scope: !6505, file: !5866, line: 611, type: !165)
-!6509 = !DILocalVariable(name: "__result", arg: 3, scope: !6505, file: !5866, line: 611, type: !165)
-!6510 = !{!6061, !6461, !6462}
-!6511 = !DILocation(line: 0, scope: !6505)
-!6512 = !DILocation(line: 614, column: 6, scope: !6505)
-!6513 = !DILocation(line: 614, column: 34, scope: !6505)
-!6514 = !DILocation(line: 615, column: 6, scope: !6505)
-!6515 = !DILocation(line: 613, column: 19, scope: !6505)
-!6516 = !DILocation(line: 613, column: 7, scope: !6505)
-!6517 = distinct !DISubprogram(name: "__miter_base<float *>", linkageName: "_ZSt12__miter_baseIPfENSt11_Miter_baseIT_E13iterator_typeES2_", scope: !2, file: !5866, line: 293, type: !5909, scopeLine: 294, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !415, retainedNodes: !6518)
-!6518 = !{!6519}
-!6519 = !DILocalVariable(name: "__it", arg: 1, scope: !6517, file: !5866, line: 293, type: !165)
-!6520 = !DILocation(line: 0, scope: !6517)
-!6521 = !DILocation(line: 294, column: 14, scope: !6517)
-!6522 = !DILocation(line: 294, column: 7, scope: !6517)
-!6523 = distinct !DISubprogram(name: "__copy_move_backward_a<true, float *, float *>", linkageName: "_ZSt22__copy_move_backward_aILb1EPfS0_ET1_T0_S2_S1_", scope: !2, file: !5866, line: 593, type: !6054, scopeLine: 594, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6510, retainedNodes: !6524)
-!6524 = !{!6525, !6526, !6527, !6528}
-!6525 = !DILocalVariable(name: "__first", arg: 1, scope: !6523, file: !5866, line: 593, type: !165)
-!6526 = !DILocalVariable(name: "__last", arg: 2, scope: !6523, file: !5866, line: 593, type: !165)
-!6527 = !DILocalVariable(name: "__result", arg: 3, scope: !6523, file: !5866, line: 593, type: !165)
-!6528 = !DILocalVariable(name: "__simple", scope: !6523, file: !5866, line: 598, type: !642)
-!6529 = !DILocation(line: 0, scope: !6523)
-!6530 = !DILocation(line: 603, column: 14, scope: !6523)
-!6531 = !DILocation(line: 603, column: 7, scope: !6523)
-!6532 = distinct !DISubprogram(name: "__copy_move_b<float>", linkageName: "_ZNSt20__copy_move_backwardILb1ELb1ESt26random_access_iterator_tagE13__copy_move_bIfEEPT_PKS3_S6_S4_", scope: !6533, file: !5866, line: 575, type: !6108, scopeLine: 576, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !217, declaration: !6534, retainedNodes: !6535)
-!6533 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__copy_move_backward<true, true, std::random_access_iterator_tag>", scope: !2, file: !5866, line: 571, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !6096, identifier: "_ZTSSt20__copy_move_backwardILb1ELb1ESt26random_access_iterator_tagE")
-!6534 = !DISubprogram(name: "__copy_move_b<float>", linkageName: "_ZNSt20__copy_move_backwardILb1ELb1ESt26random_access_iterator_tagE13__copy_move_bIfEEPT_PKS3_S6_S4_", scope: !6533, file: !5866, line: 575, type: !6108, scopeLine: 575, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !217)
-!6535 = !{!6536, !6537, !6538, !6539}
-!6536 = !DILocalVariable(name: "__first", arg: 1, scope: !6532, file: !5866, line: 575, type: !198)
-!6537 = !DILocalVariable(name: "__last", arg: 2, scope: !6532, file: !5866, line: 575, type: !198)
-!6538 = !DILocalVariable(name: "__result", arg: 3, scope: !6532, file: !5866, line: 575, type: !165)
-!6539 = !DILocalVariable(name: "_Num", scope: !6532, file: !5866, line: 584, type: !6116)
-!6540 = !DILocation(line: 0, scope: !6532)
-!6541 = !DILocation(line: 584, column: 34, scope: !6532)
-!6542 = !DILocation(line: 585, column: 8, scope: !6543)
-!6543 = distinct !DILexicalBlock(scope: !6532, file: !5866, line: 585, column: 8)
-!6544 = !DILocation(line: 585, column: 8, scope: !6532)
-!6545 = !DILocation(line: 586, column: 33, scope: !6543)
-!6546 = !DILocation(line: 586, column: 6, scope: !6543)
-!6547 = !DILocation(line: 587, column: 20, scope: !6532)
-!6548 = !DILocation(line: 587, column: 4, scope: !6532)
-!6549 = distinct !DISubprogram(name: "__fill_a<float *, float>", linkageName: "_ZSt8__fill_aIPffEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__typeET_S6_RKS3_", scope: !2, file: !5866, line: 707, type: !6550, scopeLine: 709, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5297, retainedNodes: !6556)
-!6550 = !DISubroutineType(types: !6551)
-!6551 = !{!6552, !165, !165, !201}
-!6552 = !DIDerivedType(tag: DW_TAG_typedef, name: "__type", scope: !6553, file: !5883, line: 48, baseType: null)
-!6553 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__enable_if<true, void>", scope: !24, file: !5883, line: 47, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !6554, identifier: "_ZTSN9__gnu_cxx11__enable_ifILb1EvEE")
-!6554 = !{!947, !6555}
-!6555 = !DITemplateTypeParameter(type: null)
-!6556 = !{!6557, !6558, !6559, !6560}
-!6557 = !DILocalVariable(name: "__first", arg: 1, scope: !6549, file: !5866, line: 707, type: !165)
-!6558 = !DILocalVariable(name: "__last", arg: 2, scope: !6549, file: !5866, line: 707, type: !165)
-!6559 = !DILocalVariable(name: "__value", arg: 3, scope: !6549, file: !5866, line: 708, type: !201)
-!6560 = !DILocalVariable(name: "__tmp", scope: !6549, file: !5866, line: 710, type: !199)
-!6561 = !DILocation(line: 0, scope: !6549)
-!6562 = !DILocation(line: 710, column: 25, scope: !6549)
-!6563 = !DILocation(line: 711, column: 22, scope: !6564)
-!6564 = distinct !DILexicalBlock(scope: !6565, file: !5866, line: 711, column: 7)
-!6565 = distinct !DILexicalBlock(scope: !6549, file: !5866, line: 711, column: 7)
-!6566 = !DILocation(line: 711, column: 7, scope: !6565)
-!6567 = !DILocation(line: 712, column: 11, scope: !6564)
-!6568 = !DILocation(line: 711, column: 33, scope: !6564)
-!6569 = distinct !{!6569, !6566, !6570}
-!6570 = !DILocation(line: 712, column: 13, scope: !6565)
-!6571 = !DILocation(line: 713, column: 5, scope: !6549)
-!6572 = distinct !DISubprogram(name: "uninitialized_fill_n<float *, unsigned long, float>", linkageName: "_ZSt20uninitialized_fill_nIPfmfET_S1_T0_RKT1_", scope: !2, file: !5777, line: 236, type: !5867, scopeLine: 237, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5784, retainedNodes: !6573)
-!6573 = !{!6574, !6575, !6576, !6577}
-!6574 = !DILocalVariable(name: "__first", arg: 1, scope: !6572, file: !5777, line: 236, type: !165)
-!6575 = !DILocalVariable(name: "__n", arg: 2, scope: !6572, file: !5777, line: 236, type: !208)
-!6576 = !DILocalVariable(name: "__x", arg: 3, scope: !6572, file: !5777, line: 236, type: !201)
-!6577 = !DILocalVariable(name: "__assignable", scope: !6572, file: !5777, line: 244, type: !642)
-!6578 = !DILocation(line: 0, scope: !6572)
-!6579 = !DILocation(line: 246, column: 14, scope: !6572)
-!6580 = !DILocation(line: 246, column: 7, scope: !6572)
-!6581 = distinct !DISubprogram(name: "__uninit_fill_n<float *, unsigned long, float>", linkageName: "_ZNSt22__uninitialized_fill_nILb1EE15__uninit_fill_nIPfmfEET_S3_T0_RKT1_", scope: !6582, file: !5777, line: 218, type: !5867, scopeLine: 220, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5784, declaration: !6583, retainedNodes: !6584)
-!6582 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__uninitialized_fill_n<true>", scope: !2, file: !5777, line: 214, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !5855, identifier: "_ZTSSt22__uninitialized_fill_nILb1EE")
-!6583 = !DISubprogram(name: "__uninit_fill_n<float *, unsigned long, float>", linkageName: "_ZNSt22__uninitialized_fill_nILb1EE15__uninit_fill_nIPfmfEET_S3_T0_RKT1_", scope: !6582, file: !5777, line: 218, type: !5867, scopeLine: 218, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !5784)
-!6584 = !{!6585, !6586, !6587}
-!6585 = !DILocalVariable(name: "__first", arg: 1, scope: !6581, file: !5777, line: 218, type: !165)
-!6586 = !DILocalVariable(name: "__n", arg: 2, scope: !6581, file: !5777, line: 218, type: !208)
-!6587 = !DILocalVariable(name: "__x", arg: 3, scope: !6581, file: !5777, line: 219, type: !201)
-!6588 = !DILocation(line: 0, scope: !6581)
-!6589 = !DILocation(line: 220, column: 18, scope: !6581)
-!6590 = !DILocation(line: 220, column: 11, scope: !6581)
-!6591 = distinct !DISubprogram(name: "__normal_iterator", linkageName: "_ZN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEC2ERKS1_", scope: !395, file: !396, line: 740, type: !404, scopeLine: 741, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !403, retainedNodes: !6592)
-!6592 = !{!6593, !6595}
-!6593 = !DILocalVariable(name: "this", arg: 1, scope: !6591, type: !6594, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6594 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !395, size: 64)
-!6595 = !DILocalVariable(name: "__i", arg: 2, scope: !6591, file: !396, line: 740, type: !406)
-!6596 = !DILocation(line: 0, scope: !6591)
-!6597 = !DILocation(line: 741, column: 20, scope: !6591)
-!6598 = !DILocation(line: 741, column: 9, scope: !6591)
-!6599 = !DILocation(line: 741, column: 27, scope: !6591)
-!6600 = distinct !DISubprogram(name: "basic_ios", linkageName: "_ZNSt9basic_iosIcSt11char_traitsIcEEC2Ev", scope: !6602, file: !6601, line: 460, type: !6604, scopeLine: 463, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6607, retainedNodes: !6608)
-!6601 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/basic_ios.h", directory: "")
-!6602 = !DICompositeType(tag: DW_TAG_class_type, name: "basic_ios<char, std::char_traits<char> >", scope: !2, file: !6603, line: 178, flags: DIFlagFwdDecl)
-!6603 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/basic_ios.tcc", directory: "")
-!6604 = !DISubroutineType(types: !6605)
-!6605 = !{null, !6606}
-!6606 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6602, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6607 = !DISubprogram(name: "basic_ios", scope: !6602, file: !6601, line: 460, type: !6604, scopeLine: 460, flags: DIFlagProtected | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!6608 = !{!6609}
-!6609 = !DILocalVariable(name: "this", arg: 1, scope: !6600, type: !6610, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6610 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6602, size: 64)
-!6611 = !DILocation(line: 0, scope: !6600)
-!6612 = !DILocation(line: 463, column: 7, scope: !6600)
-!6613 = !DILocation(line: 461, column: 9, scope: !6600)
-!6614 = !DILocation(line: 461, column: 21, scope: !6600)
-!6615 = !{!6616, !3172, i64 216}
-!6616 = !{!"_ZTSSt9basic_iosIcSt11char_traitsIcEE", !3172, i64 216, !3049, i64 224, !3050, i64 225, !3172, i64 232, !3172, i64 240, !3172, i64 248, !3172, i64 256}
-!6617 = !DILocation(line: 461, column: 32, scope: !6600)
-!6618 = !{!6616, !3049, i64 224}
-!6619 = !DILocation(line: 461, column: 54, scope: !6600)
-!6620 = !{!6616, !3050, i64 225}
-!6621 = !DILocation(line: 462, column: 2, scope: !6600)
-!6622 = !DILocation(line: 463, column: 9, scope: !6600)
-!6623 = distinct !DISubprogram(name: "basic_iostream", linkageName: "_ZNSdC2EPSt15basic_streambufIcSt11char_traitsIcEE", scope: !6625, file: !6624, line: 849, type: !6627, scopeLine: 850, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6633, retainedNodes: !6634)
-!6624 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/istream", directory: "")
-!6625 = !DICompositeType(tag: DW_TAG_class_type, name: "basic_iostream<char, std::char_traits<char> >", scope: !2, file: !6626, line: 1063, flags: DIFlagFwdDecl)
-!6626 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/istream.tcc", directory: "")
-!6627 = !DISubroutineType(types: !6628)
-!6628 = !{null, !6629, !6630}
-!6629 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6625, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6630 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6631, size: 64)
-!6631 = !DICompositeType(tag: DW_TAG_class_type, name: "basic_streambuf<char, std::char_traits<char> >", scope: !2, file: !6632, line: 149, flags: DIFlagFwdDecl)
-!6632 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/streambuf.tcc", directory: "")
-!6633 = !DISubprogram(name: "basic_iostream", scope: !6625, file: !6624, line: 849, type: !6627, scopeLine: 849, flags: DIFlagPublic | DIFlagExplicit | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!6634 = !{!6635, !6637, !6639}
-!6635 = !DILocalVariable(name: "this", arg: 1, scope: !6623, type: !6636, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6636 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6625, size: 64)
-!6637 = !DILocalVariable(name: "vtt", arg: 2, scope: !6623, type: !6638, flags: DIFlagArtificial)
-!6638 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !1568, size: 64)
-!6639 = !DILocalVariable(name: "__sb", arg: 3, scope: !6623, file: !6624, line: 849, type: !6630)
-!6640 = !DILocation(line: 0, scope: !6623)
-!6641 = !DILocation(line: 850, column: 52, scope: !6623)
-!6642 = !DILocation(line: 850, column: 9, scope: !6623)
-!6643 = !DILocation(line: 850, column: 31, scope: !6623)
-!6644 = !DILocation(line: 850, column: 54, scope: !6623)
-!6645 = !DILocation(line: 850, column: 54, scope: !6646)
-!6646 = distinct !DILexicalBlock(scope: !6623, file: !6624, line: 850, column: 52)
-!6647 = distinct !DISubprogram(name: "open", linkageName: "_ZNSt13basic_fstreamIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode", scope: !101, file: !4350, line: 1022, type: !4351, scopeLine: 1024, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6648, retainedNodes: !6649)
-!6648 = !DISubprogram(name: "open", linkageName: "_ZNSt13basic_fstreamIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode", scope: !101, file: !4350, line: 1022, type: !4351, scopeLine: 1022, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!6649 = !{!6650, !6651, !6652}
-!6650 = !DILocalVariable(name: "this", arg: 1, scope: !6647, type: !4360, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6651 = !DILocalVariable(name: "__s", arg: 2, scope: !6647, file: !4350, line: 1022, type: !4354)
-!6652 = !DILocalVariable(name: "__mode", arg: 3, scope: !6647, file: !4350, line: 1023, type: !4356)
-!6653 = !DILocation(line: 0, scope: !6647)
-!6654 = !DILocation(line: 1025, column: 7, scope: !6655)
-!6655 = distinct !DILexicalBlock(scope: !6647, file: !4350, line: 1025, column: 6)
-!6656 = !DILocation(line: 1025, column: 18, scope: !6655)
-!6657 = !DILocation(line: 0, scope: !6655)
-!6658 = !DILocation(line: 1025, column: 6, scope: !6647)
-!6659 = !DILocation(line: 1026, column: 10, scope: !6655)
-!6660 = !DILocation(line: 1026, column: 4, scope: !6655)
-!6661 = !DILocation(line: 1030, column: 10, scope: !6655)
-!6662 = !DILocation(line: 1031, column: 7, scope: !6647)
-!6663 = distinct !DISubprogram(name: "~basic_filebuf", linkageName: "_ZNSt13basic_filebufIcSt11char_traitsIcEED2Ev", scope: !6664, file: !4350, line: 238, type: !6665, scopeLine: 239, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6668, retainedNodes: !6669)
-!6664 = !DICompositeType(tag: DW_TAG_class_type, name: "basic_filebuf<char, std::char_traits<char> >", scope: !2, file: !102, line: 1053, flags: DIFlagFwdDecl)
-!6665 = !DISubroutineType(types: !6666)
-!6666 = !{null, !6667}
-!6667 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6664, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6668 = !DISubprogram(name: "~basic_filebuf", scope: !6664, file: !4350, line: 238, type: !6665, scopeLine: 238, containingType: !6664, virtualIndex: 0, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
-!6669 = !{!6670}
-!6670 = !DILocalVariable(name: "this", arg: 1, scope: !6663, type: !6671, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6671 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6664, size: 64)
-!6672 = !DILocation(line: 0, scope: !6663)
-!6673 = !DILocation(line: 239, column: 7, scope: !6663)
-!6674 = !DILocation(line: 239, column: 15, scope: !6675)
-!6675 = distinct !DILexicalBlock(scope: !6663, file: !4350, line: 239, column: 7)
-!6676 = !DILocation(line: 239, column: 24, scope: !6675)
-!6677 = !DILocation(line: 239, column: 24, scope: !6663)
-!6678 = distinct !DISubprogram(name: "~basic_iostream", linkageName: "_ZNSdD2Ev", scope: !6625, file: !6624, line: 856, type: !6679, scopeLine: 856, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6681, retainedNodes: !6682)
-!6679 = !DISubroutineType(types: !6680)
-!6680 = !{null, !6629}
-!6681 = !DISubprogram(name: "~basic_iostream", scope: !6625, file: !6624, line: 856, type: !6679, scopeLine: 856, containingType: !6625, virtualIndex: 0, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
-!6682 = !{!6683, !6684}
-!6683 = !DILocalVariable(name: "this", arg: 1, scope: !6678, type: !6636, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6684 = !DILocalVariable(name: "vtt", arg: 2, scope: !6678, type: !6638, flags: DIFlagArtificial)
-!6685 = !DILocation(line: 0, scope: !6678)
-!6686 = !DILocation(line: 856, column: 27, scope: !6687)
-!6687 = distinct !DILexicalBlock(scope: !6678, file: !6624, line: 856, column: 25)
-!6688 = !DILocation(line: 856, column: 27, scope: !6678)
-!6689 = distinct !DISubprogram(name: "~basic_ios", linkageName: "_ZNSt9basic_iosIcSt11char_traitsIcEED2Ev", scope: !6602, file: !6601, line: 282, type: !6604, scopeLine: 282, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6690, retainedNodes: !6691)
-!6690 = !DISubprogram(name: "~basic_ios", scope: !6602, file: !6601, line: 282, type: !6604, scopeLine: 282, containingType: !6602, virtualIndex: 0, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
-!6691 = !{!6692}
-!6692 = !DILocalVariable(name: "this", arg: 1, scope: !6689, type: !6610, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6693 = !DILocation(line: 0, scope: !6689)
-!6694 = !DILocation(line: 282, column: 22, scope: !6695)
-!6695 = distinct !DILexicalBlock(scope: !6689, file: !6601, line: 282, column: 20)
-!6696 = !DILocation(line: 282, column: 22, scope: !6689)
-!6697 = distinct !DISubprogram(name: "basic_istream", linkageName: "_ZNSiC2EPSt15basic_streambufIcSt11char_traitsIcEE", scope: !6698, file: !6624, line: 93, type: !6699, scopeLine: 95, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6704, retainedNodes: !6705)
-!6698 = !DICompositeType(tag: DW_TAG_class_type, name: "basic_istream<char, std::char_traits<char> >", scope: !2, file: !6626, line: 1040, flags: DIFlagFwdDecl)
-!6699 = !DISubroutineType(types: !6700)
-!6700 = !{null, !6701, !6702}
-!6701 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6698, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6702 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6703, size: 64)
-!6703 = !DIDerivedType(tag: DW_TAG_typedef, name: "__streambuf_type", scope: !6698, file: !6624, line: 69, baseType: !6631)
-!6704 = !DISubprogram(name: "basic_istream", scope: !6698, file: !6624, line: 93, type: !6699, scopeLine: 93, flags: DIFlagPublic | DIFlagExplicit | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!6705 = !{!6706, !6708, !6709}
-!6706 = !DILocalVariable(name: "this", arg: 1, scope: !6697, type: !6707, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6707 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6698, size: 64)
-!6708 = !DILocalVariable(name: "vtt", arg: 2, scope: !6697, type: !6638, flags: DIFlagArtificial)
-!6709 = !DILocalVariable(name: "__sb", arg: 3, scope: !6697, file: !6624, line: 93, type: !6702)
-!6710 = !DILocation(line: 0, scope: !6697)
-!6711 = !DILocation(line: 95, column: 7, scope: !6697)
-!6712 = !DILocation(line: 94, column: 9, scope: !6697)
-!6713 = !{!6714, !5034, i64 8}
-!6714 = !{!"_ZTSSi", !5034, i64 8}
-!6715 = !DILocation(line: 95, column: 15, scope: !6716)
-!6716 = distinct !DILexicalBlock(scope: !6697, file: !6624, line: 95, column: 7)
-!6717 = !DILocation(line: 95, column: 27, scope: !6697)
-!6718 = distinct !DISubprogram(name: "basic_ostream", linkageName: "_ZNSoC2EPSt15basic_streambufIcSt11char_traitsIcEE", scope: !5189, file: !5185, line: 84, type: !6719, scopeLine: 85, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6724, retainedNodes: !6725)
-!6719 = !DISubroutineType(types: !6720)
-!6720 = !{null, !6721, !6722}
-!6721 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !5189, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6722 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6723, size: 64)
-!6723 = !DIDerivedType(tag: DW_TAG_typedef, name: "__streambuf_type", scope: !5189, file: !5185, line: 69, baseType: !6631)
-!6724 = !DISubprogram(name: "basic_ostream", scope: !5189, file: !5185, line: 84, type: !6719, scopeLine: 84, flags: DIFlagPublic | DIFlagExplicit | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!6725 = !{!6726, !6728, !6729}
-!6726 = !DILocalVariable(name: "this", arg: 1, scope: !6718, type: !6727, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6727 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !5189, size: 64)
-!6728 = !DILocalVariable(name: "vtt", arg: 2, scope: !6718, type: !6638, flags: DIFlagArtificial)
-!6729 = !DILocalVariable(name: "__sb", arg: 3, scope: !6718, file: !5185, line: 84, type: !6722)
-!6730 = !DILocation(line: 0, scope: !6718)
-!6731 = !DILocation(line: 85, column: 7, scope: !6718)
-!6732 = !DILocation(line: 85, column: 15, scope: !6733)
-!6733 = distinct !DILexicalBlock(scope: !6718, file: !5185, line: 85, column: 7)
-!6734 = !DILocation(line: 85, column: 27, scope: !6718)
-!6735 = distinct !DISubprogram(name: "~basic_istream", linkageName: "_ZNSiD2Ev", scope: !6698, file: !6624, line: 103, type: !6736, scopeLine: 104, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6738, retainedNodes: !6739)
-!6736 = !DISubroutineType(types: !6737)
-!6737 = !{null, !6701}
-!6738 = !DISubprogram(name: "~basic_istream", scope: !6698, file: !6624, line: 103, type: !6736, scopeLine: 103, containingType: !6698, virtualIndex: 0, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
-!6739 = !{!6740, !6741}
-!6740 = !DILocalVariable(name: "this", arg: 1, scope: !6735, type: !6707, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6741 = !DILocalVariable(name: "vtt", arg: 2, scope: !6735, type: !6638, flags: DIFlagArtificial)
-!6742 = !DILocation(line: 0, scope: !6735)
-!6743 = !DILocation(line: 104, column: 7, scope: !6735)
-!6744 = !DILocation(line: 104, column: 9, scope: !6745)
-!6745 = distinct !DILexicalBlock(scope: !6735, file: !6624, line: 104, column: 7)
-!6746 = !DILocation(line: 104, column: 19, scope: !6745)
-!6747 = !DILocation(line: 104, column: 36, scope: !6735)
-!6748 = distinct !DISubprogram(name: "open", linkageName: "_ZNSt13basic_filebufIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode", scope: !6664, file: !4350, line: 307, type: !6749, scopeLine: 308, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6753, retainedNodes: !6754)
-!6749 = !DISubroutineType(types: !6750)
-!6750 = !{!6751, !6667, !4354, !4356}
-!6751 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6752, size: 64)
-!6752 = !DIDerivedType(tag: DW_TAG_typedef, name: "__filebuf_type", scope: !6664, file: !4350, line: 97, baseType: !6664)
-!6753 = !DISubprogram(name: "open", linkageName: "_ZNSt13basic_filebufIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode", scope: !6664, file: !4350, line: 307, type: !6749, scopeLine: 307, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!6754 = !{!6755, !6756, !6757}
-!6755 = !DILocalVariable(name: "this", arg: 1, scope: !6748, type: !6671, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6756 = !DILocalVariable(name: "__s", arg: 2, scope: !6748, file: !4350, line: 307, type: !4354)
-!6757 = !DILocalVariable(name: "__mode", arg: 3, scope: !6748, file: !4350, line: 307, type: !4356)
-!6758 = !DILocation(line: 0, scope: !6748)
-!6759 = !DILocation(line: 308, column: 25, scope: !6748)
-!6760 = !DILocation(line: 308, column: 16, scope: !6748)
-!6761 = !DILocation(line: 308, column: 9, scope: !6748)
-!6762 = distinct !DISubprogram(name: "setstate", linkageName: "_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate", scope: !6602, file: !6601, line: 157, type: !6763, scopeLine: 158, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6766, retainedNodes: !6767)
-!6763 = !DISubroutineType(types: !6764)
-!6764 = !{null, !6606, !6765}
-!6765 = !DIDerivedType(tag: DW_TAG_typedef, name: "iostate", scope: !6, file: !5, line: 398, baseType: !1542)
-!6766 = !DISubprogram(name: "setstate", linkageName: "_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate", scope: !6602, file: !6601, line: 157, type: !6763, scopeLine: 157, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!6767 = !{!6768, !6769}
-!6768 = !DILocalVariable(name: "this", arg: 1, scope: !6762, type: !6610, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6769 = !DILocalVariable(name: "__state", arg: 2, scope: !6762, file: !6601, line: 157, type: !6765)
-!6770 = !DILocation(line: 0, scope: !6762)
-!6771 = !DILocation(line: 158, column: 27, scope: !6762)
-!6772 = !DILocation(line: 158, column: 37, scope: !6762)
-!6773 = !DILocation(line: 158, column: 15, scope: !6762)
-!6774 = !DILocation(line: 158, column: 49, scope: !6762)
-!6775 = distinct !DISubprogram(name: "c_str", linkageName: "_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5c_strEv", scope: !1132, file: !1552, line: 1887, type: !6776, scopeLine: 1888, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6778, retainedNodes: !6779)
-!6776 = !DISubroutineType(types: !6777)
-!6777 = !{!621, !5547}
-!6778 = !DISubprogram(name: "c_str", linkageName: "_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5c_strEv", scope: !1132, file: !1552, line: 1887, type: !6776, scopeLine: 1887, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!6779 = !{!6780}
-!6780 = !DILocalVariable(name: "this", arg: 1, scope: !6775, type: !5552, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6781 = !DILocation(line: 0, scope: !6775)
-!6782 = !DILocation(line: 1888, column: 16, scope: !6775)
-!6783 = !DILocation(line: 1888, column: 9, scope: !6775)
-!6784 = distinct !DISubprogram(name: "operator|", linkageName: "_ZStorSt12_Ios_IostateS_", scope: !2, file: !5, line: 169, type: !6785, scopeLine: 170, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, retainedNodes: !6787)
-!6785 = !DISubroutineType(types: !6786)
-!6786 = !{!1542, !1542, !1542}
-!6787 = !{!6788, !6789}
-!6788 = !DILocalVariable(name: "__a", arg: 1, scope: !6784, file: !5, line: 169, type: !1542)
-!6789 = !DILocalVariable(name: "__b", arg: 2, scope: !6784, file: !5, line: 169, type: !1542)
-!6790 = !DILocation(line: 0, scope: !6784)
-!6791 = !DILocation(line: 170, column: 47, scope: !6784)
-!6792 = !DILocation(line: 170, column: 5, scope: !6784)
-!6793 = distinct !DISubprogram(name: "rdstate", linkageName: "_ZNKSt9basic_iosIcSt11char_traitsIcEE7rdstateEv", scope: !6602, file: !6601, line: 137, type: !6794, scopeLine: 138, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6798, retainedNodes: !6799)
-!6794 = !DISubroutineType(types: !6795)
-!6795 = !{!6765, !6796}
-!6796 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6797, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6797 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !6602)
-!6798 = !DISubprogram(name: "rdstate", linkageName: "_ZNKSt9basic_iosIcSt11char_traitsIcEE7rdstateEv", scope: !6602, file: !6601, line: 137, type: !6794, scopeLine: 137, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!6799 = !{!6800}
-!6800 = !DILocalVariable(name: "this", arg: 1, scope: !6793, type: !6801, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6801 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6797, size: 64)
-!6802 = !DILocation(line: 0, scope: !6793)
-!6803 = !DILocation(line: 138, column: 16, scope: !6793)
-!6804 = !{!6805, !6807, i64 32}
-!6805 = !{!"_ZTSSt8ios_base", !5034, i64 8, !5034, i64 16, !6806, i64 24, !6807, i64 28, !6807, i64 32, !3172, i64 40, !6808, i64 48, !3049, i64 64, !3048, i64 192, !3172, i64 200, !6809, i64 208}
-!6806 = !{!"_ZTSSt13_Ios_Fmtflags", !3049, i64 0}
-!6807 = !{!"_ZTSSt12_Ios_Iostate", !3049, i64 0}
-!6808 = !{!"_ZTSNSt8ios_base6_WordsE", !3172, i64 0, !5034, i64 8}
-!6809 = !{!"_ZTSSt6locale", !3172, i64 0}
-!6810 = !DILocation(line: 138, column: 9, scope: !6793)
-!6811 = distinct !DISubprogram(name: "~basic_streambuf", linkageName: "_ZNSt15basic_streambufIcSt11char_traitsIcEED2Ev", scope: !6631, file: !6812, line: 197, type: !6813, scopeLine: 198, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6816, retainedNodes: !6817)
-!6812 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/streambuf", directory: "")
-!6813 = !DISubroutineType(types: !6814)
-!6814 = !{null, !6815}
-!6815 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6631, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6816 = !DISubprogram(name: "~basic_streambuf", scope: !6631, file: !6812, line: 197, type: !6813, scopeLine: 197, containingType: !6631, virtualIndex: 0, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
-!6817 = !{!6818}
-!6818 = !DILocalVariable(name: "this", arg: 1, scope: !6811, type: !6630, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6819 = !DILocation(line: 0, scope: !6811)
-!6820 = !DILocation(line: 198, column: 7, scope: !6811)
-!6821 = !DILocation(line: 198, column: 9, scope: !6822)
-!6822 = distinct !DILexicalBlock(scope: !6811, file: !6812, line: 198, column: 7)
-!6823 = !DILocation(line: 198, column: 9, scope: !6811)
-!6824 = distinct !DISubprogram(name: "~basic_ostream", linkageName: "_ZNSoD2Ev", scope: !5189, file: !5185, line: 93, type: !6825, scopeLine: 93, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6827, retainedNodes: !6828)
-!6825 = !DISubroutineType(types: !6826)
-!6826 = !{null, !6721}
-!6827 = !DISubprogram(name: "~basic_ostream", scope: !5189, file: !5185, line: 93, type: !6825, scopeLine: 93, containingType: !5189, virtualIndex: 0, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
-!6828 = !{!6829, !6830}
-!6829 = !DILocalVariable(name: "this", arg: 1, scope: !6824, type: !6727, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6830 = !DILocalVariable(name: "vtt", arg: 2, scope: !6824, type: !6638, flags: DIFlagArtificial)
-!6831 = !DILocation(line: 0, scope: !6824)
-!6832 = !DILocation(line: 93, column: 26, scope: !6824)
-!6833 = distinct !DISubprogram(name: "basic_ostream", linkageName: "_ZNSoC2Ev", scope: !5189, file: !5185, line: 384, type: !6825, scopeLine: 385, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6834, retainedNodes: !6835)
-!6834 = !DISubprogram(name: "basic_ostream", scope: !5189, file: !5185, line: 384, type: !6825, scopeLine: 384, flags: DIFlagProtected | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!6835 = !{!6836, !6837}
-!6836 = !DILocalVariable(name: "this", arg: 1, scope: !6833, type: !6727, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6837 = !DILocalVariable(name: "vtt", arg: 2, scope: !6833, type: !6638, flags: DIFlagArtificial)
-!6838 = !DILocation(line: 0, scope: !6833)
-!6839 = !DILocation(line: 385, column: 7, scope: !6833)
-!6840 = !DILocation(line: 385, column: 15, scope: !6841)
-!6841 = distinct !DILexicalBlock(scope: !6833, file: !5185, line: 385, column: 7)
-!6842 = !DILocation(line: 385, column: 24, scope: !6833)
-!6843 = distinct !DISubprogram(name: "open", linkageName: "_ZNSt14basic_ofstreamIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode", scope: !1499, file: !4350, line: 820, type: !4561, scopeLine: 822, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6844, retainedNodes: !6845)
-!6844 = !DISubprogram(name: "open", linkageName: "_ZNSt14basic_ofstreamIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode", scope: !1499, file: !4350, line: 820, type: !4561, scopeLine: 820, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!6845 = !{!6846, !6847, !6848}
-!6846 = !DILocalVariable(name: "this", arg: 1, scope: !6843, type: !4567, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6847 = !DILocalVariable(name: "__s", arg: 2, scope: !6843, file: !4350, line: 820, type: !4354)
-!6848 = !DILocalVariable(name: "__mode", arg: 3, scope: !6843, file: !4350, line: 821, type: !4356)
-!6849 = !DILocation(line: 0, scope: !6843)
-!6850 = !DILocation(line: 823, column: 7, scope: !6851)
-!6851 = distinct !DILexicalBlock(scope: !6843, file: !4350, line: 823, column: 6)
-!6852 = !DILocation(line: 823, column: 35, scope: !6851)
-!6853 = !DILocation(line: 823, column: 18, scope: !6851)
-!6854 = !DILocation(line: 0, scope: !6851)
-!6855 = !DILocation(line: 823, column: 6, scope: !6843)
-!6856 = !DILocation(line: 824, column: 10, scope: !6851)
-!6857 = !DILocation(line: 824, column: 4, scope: !6851)
-!6858 = !DILocation(line: 828, column: 10, scope: !6851)
-!6859 = !DILocation(line: 829, column: 7, scope: !6843)
-!6860 = distinct !DISubprogram(name: "_Vector_base", linkageName: "_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EEC2Ev", scope: !73, file: !70, line: 124, type: !1272, scopeLine: 125, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1271, retainedNodes: !6861)
-!6861 = !{!6862}
-!6862 = !DILocalVariable(name: "this", arg: 1, scope: !6860, type: !6863, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6863 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !73, size: 64)
-!6864 = !DILocation(line: 0, scope: !6860)
-!6865 = !DILocation(line: 125, column: 9, scope: !6860)
-!6866 = !DILocation(line: 125, column: 21, scope: !6860)
-!6867 = distinct !DISubprogram(name: "_Vector_impl", linkageName: "_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE12_Vector_implC2Ev", scope: !76, file: !70, line: 86, type: !1241, scopeLine: 88, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1240, retainedNodes: !6868)
-!6868 = !{!6869}
-!6869 = !DILocalVariable(name: "this", arg: 1, scope: !6867, type: !6870, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6870 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !76, size: 64)
-!6871 = !DILocation(line: 0, scope: !6867)
-!6872 = !DILocation(line: 88, column: 2, scope: !6867)
-!6873 = !DILocation(line: 87, column: 4, scope: !6867)
-!6874 = !DILocation(line: 88, column: 4, scope: !6867)
-!6875 = !DILocation(line: 87, column: 34, scope: !6867)
-!6876 = distinct !DISubprogram(name: "allocator", linkageName: "_ZNSaIPN12ILLIXR_AUDIO5SoundEEC2Ev", scope: !1152, file: !169, line: 113, type: !1195, scopeLine: 113, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1194, retainedNodes: !6877)
-!6877 = !{!6878}
-!6878 = !DILocalVariable(name: "this", arg: 1, scope: !6876, type: !6879, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6879 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !1152, size: 64)
-!6880 = !DILocation(line: 0, scope: !6876)
-!6881 = !DILocation(line: 113, column: 27, scope: !6876)
-!6882 = !DILocation(line: 113, column: 7, scope: !6876)
-!6883 = !DILocation(line: 113, column: 29, scope: !6876)
-!6884 = distinct !DISubprogram(name: "new_allocator", linkageName: "_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEEC2Ev", scope: !1156, file: !175, line: 79, type: !1159, scopeLine: 79, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1158, retainedNodes: !6885)
-!6885 = !{!6886}
-!6886 = !DILocalVariable(name: "this", arg: 1, scope: !6884, type: !6887, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6887 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !1156, size: 64)
-!6888 = !DILocation(line: 0, scope: !6884)
-!6889 = !DILocation(line: 79, column: 47, scope: !6884)
-!6890 = distinct !DISubprogram(name: "_M_local_data", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_local_dataEv", scope: !1132, file: !1552, line: 138, type: !6891, scopeLine: 139, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6893, retainedNodes: !6894)
-!6891 = !DISubroutineType(types: !6892)
-!6892 = !{!5574, !4757}
-!6893 = !DISubprogram(name: "_M_local_data", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_local_dataEv", scope: !1132, file: !1552, line: 138, type: !6891, scopeLine: 138, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!6894 = !{!6895}
-!6895 = !DILocalVariable(name: "this", arg: 1, scope: !6890, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6896 = !DILocation(line: 0, scope: !6890)
-!6897 = !DILocation(line: 141, column: 51, scope: !6890)
-!6898 = !DILocation(line: 141, column: 50, scope: !6890)
-!6899 = !DILocation(line: 141, column: 9, scope: !6890)
-!6900 = !DILocation(line: 141, column: 2, scope: !6890)
-!6901 = distinct !DISubprogram(name: "_Alloc_hider", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderC2EPcRKS3_", scope: !6902, file: !1552, line: 108, type: !6907, scopeLine: 109, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6906, retainedNodes: !6910)
-!6902 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "_Alloc_hider", scope: !1132, file: !1552, line: 106, size: 64, flags: DIFlagTypePassByReference | DIFlagNonTrivial, elements: !6903, identifier: "_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE")
-!6903 = !{!6904, !6905, !6906}
-!6904 = !DIDerivedType(tag: DW_TAG_inheritance, scope: !6902, baseType: !5648, extraData: i32 0)
-!6905 = !DIDerivedType(tag: DW_TAG_member, name: "_M_p", scope: !6902, file: !1552, line: 111, baseType: !5574, size: 64)
-!6906 = !DISubprogram(name: "_Alloc_hider", scope: !6902, file: !1552, line: 108, type: !6907, scopeLine: 108, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!6907 = !DISubroutineType(types: !6908)
-!6908 = !{null, !6909, !5574, !1662}
-!6909 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6902, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6910 = !{!6911, !6913, !6914}
-!6911 = !DILocalVariable(name: "this", arg: 1, scope: !6901, type: !6912, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6912 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6902, size: 64)
-!6913 = !DILocalVariable(name: "__dat", arg: 2, scope: !6901, file: !1552, line: 108, type: !5574)
-!6914 = !DILocalVariable(name: "__a", arg: 3, scope: !6901, file: !1552, line: 108, type: !1662)
-!6915 = !DILocation(line: 0, scope: !6901)
-!6916 = !DILocation(line: 109, column: 37, scope: !6901)
-!6917 = !DILocation(line: 109, column: 4, scope: !6901)
-!6918 = !DILocation(line: 109, column: 25, scope: !6901)
-!6919 = !{!5583, !3172, i64 0}
-!6920 = !DILocation(line: 109, column: 39, scope: !6901)
-!6921 = distinct !DISubprogram(name: "_M_construct<const char *>", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_", scope: !1132, file: !1552, line: 211, type: !6922, scopeLine: 212, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6925, declaration: !6924, retainedNodes: !6927)
-!6922 = !DISubroutineType(types: !6923)
-!6923 = !{null, !4757, !621, !621}
-!6924 = !DISubprogram(name: "_M_construct<const char *>", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_", scope: !1132, file: !1552, line: 211, type: !6922, scopeLine: 211, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized, templateParams: !6925)
-!6925 = !{!6926}
-!6926 = !DITemplateTypeParameter(name: "_InIterator", type: !621)
-!6927 = !{!6928, !6929, !6930}
-!6928 = !DILocalVariable(name: "this", arg: 1, scope: !6921, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6929 = !DILocalVariable(name: "__beg", arg: 2, scope: !6921, file: !1552, line: 211, type: !621)
-!6930 = !DILocalVariable(name: "__end", arg: 3, scope: !6921, file: !1552, line: 211, type: !621)
-!6931 = !DILocation(line: 0, scope: !6921)
-!6932 = !DILocation(line: 214, column: 4, scope: !6921)
-!6933 = !DILocation(line: 215, column: 9, scope: !6921)
-!6934 = distinct !DISubprogram(name: "length", linkageName: "_ZNSt11char_traitsIcE6lengthEPKc", scope: !1677, file: !1676, line: 266, type: !1694, scopeLine: 267, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1693, retainedNodes: !6935)
-!6935 = !{!6936}
-!6936 = !DILocalVariable(name: "__s", arg: 1, scope: !6934, file: !1676, line: 266, type: !1692)
-!6937 = !DILocation(line: 0, scope: !6934)
-!6938 = !DILocation(line: 267, column: 16, scope: !6934)
-!6939 = !DILocation(line: 267, column: 9, scope: !6934)
-!6940 = distinct !DISubprogram(name: "pointer_to", linkageName: "_ZNSt14pointer_traitsIPcE10pointer_toERc", scope: !6941, file: !5600, line: 168, type: !6944, scopeLine: 169, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6943, retainedNodes: !6953)
-!6941 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "pointer_traits<char *>", scope: !2, file: !5600, line: 150, size: 8, flags: DIFlagTypePassByValue, elements: !6942, templateParams: !6951, identifier: "_ZTSSt14pointer_traitsIPcE")
-!6942 = !{!6943}
-!6943 = !DISubprogram(name: "pointer_to", linkageName: "_ZNSt14pointer_traitsIPcE10pointer_toERc", scope: !6941, file: !5600, line: 168, type: !6944, scopeLine: 168, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized)
-!6944 = !DISubroutineType(types: !6945)
-!6945 = !{!6946, !6947}
-!6946 = !DIDerivedType(tag: DW_TAG_typedef, name: "pointer", scope: !6941, file: !5600, line: 153, baseType: !1556)
-!6947 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !6948, size: 64)
-!6948 = !DIDerivedType(tag: DW_TAG_typedef, name: "__type", scope: !6949, file: !5600, line: 107, baseType: !623)
-!6949 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__ptrtr_not_void<char, char>", scope: !2, file: !5600, line: 105, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !6950, identifier: "_ZTSSt16__ptrtr_not_voidIccE")
-!6950 = !{!5521, !5612}
-!6951 = !{!6952}
-!6952 = !DITemplateTypeParameter(name: "_Ptr", type: !1556)
+!6186 = !DITemplateTypeParameter(name: "_Tp", type: !814)
+!6187 = !{!6188}
+!6188 = !DILocalVariable(name: "__t", arg: 1, scope: !6179, file: !5623, line: 101, type: !814)
+!6189 = !DILocation(line: 0, scope: !6179)
+!6190 = !DILocation(line: 102, column: 7, scope: !6179)
+!6191 = distinct !DISubprogram(name: "get", linkageName: "_ZNKSt10unique_ptrIA_PfSt14default_deleteIS1_EE3getEv", scope: !670, file: !671, line: 541, type: !952, scopeLine: 542, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !951, retainedNodes: !6192)
+!6192 = !{!6193}
+!6193 = !DILocalVariable(name: "this", arg: 1, scope: !6191, type: !3232, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6194 = !DILocation(line: 0, scope: !6191)
+!6195 = !DILocation(line: 542, column: 28, scope: !6191)
+!6196 = !DILocation(line: 542, column: 16, scope: !6191)
+!6197 = !DILocation(line: 542, column: 9, scope: !6191)
+!6198 = distinct !DISubprogram(name: "get<0, float **, std::default_delete<float *[]> >", linkageName: "_ZSt3getILm0EJPPfSt14default_deleteIA_S0_EEERKNSt13tuple_elementIXT_ESt5tupleIJDpT0_EEE4typeERKS9_", scope: !2, file: !676, line: 838, type: !6199, scopeLine: 839, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5407, retainedNodes: !6203)
+!6199 = !DISubroutineType(types: !6200)
+!6200 = !{!6201, !879}
+!6201 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !6202, size: 64)
+!6202 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !5399)
+!6203 = !{!6204}
+!6204 = !DILocalVariable(name: "__t", arg: 1, scope: !6198, file: !676, line: 838, type: !879)
+!6205 = !DILocation(line: 0, scope: !6198)
+!6206 = !DILocation(line: 839, column: 37, scope: !6198)
+!6207 = !DILocation(line: 839, column: 14, scope: !6198)
+!6208 = !DILocation(line: 839, column: 7, scope: !6198)
+!6209 = distinct !DISubprogram(name: "__get_helper<0, float **, std::default_delete<float *[]> >", linkageName: "_ZSt12__get_helperILm0EPPfJSt14default_deleteIA_S0_EEERKT0_RKSt11_Tuple_implIXT_EJS5_DpT1_EE", scope: !2, file: !676, line: 826, type: !828, scopeLine: 827, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5430, retainedNodes: !6210)
+!6210 = !{!6211}
+!6211 = !DILocalVariable(name: "__t", arg: 1, scope: !6209, file: !676, line: 826, type: !830)
+!6212 = !DILocation(line: 0, scope: !6209)
+!6213 = !DILocation(line: 827, column: 14, scope: !6209)
+!6214 = !DILocation(line: 827, column: 7, scope: !6209)
+!6215 = distinct !DISubprogram(name: "_M_head", linkageName: "_ZNSt11_Tuple_implILm0EJPPfSt14default_deleteIA_S0_EEE7_M_headERKS5_", scope: !679, file: !676, line: 193, type: !828, scopeLine: 193, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !827, retainedNodes: !6216)
+!6216 = !{!6217}
+!6217 = !DILocalVariable(name: "__t", arg: 1, scope: !6215, file: !676, line: 193, type: !830)
+!6218 = !DILocation(line: 0, scope: !6215)
+!6219 = !DILocation(line: 193, column: 72, scope: !6215)
+!6220 = !DILocation(line: 193, column: 57, scope: !6215)
+!6221 = !DILocation(line: 193, column: 50, scope: !6215)
+!6222 = distinct !DISubprogram(name: "_M_head", linkageName: "_ZNSt10_Head_baseILm0EPPfLb0EE7_M_headERKS2_", scope: !787, file: !676, line: 145, type: !817, scopeLine: 145, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !816, retainedNodes: !6223)
+!6223 = !{!6224}
+!6224 = !DILocalVariable(name: "__b", arg: 1, scope: !6222, file: !676, line: 145, type: !802)
+!6225 = !DILocation(line: 0, scope: !6222)
+!6226 = !DILocation(line: 145, column: 60, scope: !6222)
+!6227 = !DILocation(line: 145, column: 49, scope: !6222)
+!6228 = distinct !DISubprogram(name: "insert", linkageName: "_ZNSt6vectorIfSaIfEE6insertEN9__gnu_cxx17__normal_iteratorIPKfS1_EEmRS4_", scope: !144, file: !70, line: 1051, type: !595, scopeLine: 1052, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !594, retainedNodes: !6229)
+!6229 = !{!6230, !6231, !6232, !6233, !6234}
+!6230 = !DILocalVariable(name: "this", arg: 1, scope: !6228, type: !3113, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6231 = !DILocalVariable(name: "__position", arg: 2, scope: !6228, file: !70, line: 1051, type: !456)
+!6232 = !DILocalVariable(name: "__n", arg: 3, scope: !6228, file: !70, line: 1051, type: !347)
+!6233 = !DILocalVariable(name: "__x", arg: 4, scope: !6228, file: !70, line: 1051, type: !351)
+!6234 = !DILocalVariable(name: "__offset", scope: !6228, file: !70, line: 1053, type: !6235)
+!6235 = !DIDerivedType(tag: DW_TAG_typedef, name: "difference_type", file: !70, line: 237, baseType: !438)
+!6236 = !DILocation(line: 0, scope: !6228)
+!6237 = !DILocation(line: 1053, column: 42, scope: !6228)
+!6238 = !DILocation(line: 1053, column: 40, scope: !6228)
+!6239 = !DILocation(line: 1053, column: 29, scope: !6228)
+!6240 = !DILocation(line: 1054, column: 17, scope: !6228)
+!6241 = !DILocation(line: 1054, column: 25, scope: !6228)
+!6242 = !DILocation(line: 1054, column: 2, scope: !6228)
+!6243 = !DILocation(line: 1055, column: 9, scope: !6228)
+!6244 = !DILocation(line: 1055, column: 17, scope: !6228)
+!6245 = !DILocation(line: 1055, column: 2, scope: !6228)
+!6246 = !DILocation(line: 1056, column: 7, scope: !6228)
+!6247 = distinct !DISubprogram(name: "end", linkageName: "_ZNSt6vectorIfSaIfEE3endEv", scope: !144, file: !70, line: 565, type: !392, scopeLine: 566, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !511, retainedNodes: !6248)
+!6248 = !{!6249}
+!6249 = !DILocalVariable(name: "this", arg: 1, scope: !6247, type: !3113, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6250 = !DILocation(line: 0, scope: !6247)
+!6251 = !DILocation(line: 566, column: 39, scope: !6247)
+!6252 = !DILocation(line: 566, column: 16, scope: !6247)
+!6253 = !DILocation(line: 566, column: 9, scope: !6247)
+!6254 = distinct !DISubprogram(name: "__normal_iterator<float *>", linkageName: "_ZN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEC2IPfEERKNS0_IT_NS_11__enable_ifIXsr3std10__are_sameIS9_S8_EE7__valueES5_E6__typeEEE", scope: !457, file: !396, line: 745, type: !6255, scopeLine: 749, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6259, declaration: !6258, retainedNodes: !6261)
+!6255 = !DISubroutineType(types: !6256)
+!6256 = !{null, !463, !6257}
+!6257 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !418, size: 64)
+!6258 = !DISubprogram(name: "__normal_iterator<float *>", scope: !457, file: !396, line: 745, type: !6255, scopeLine: 745, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized, templateParams: !6259)
+!6259 = !{!6260}
+!6260 = !DITemplateTypeParameter(name: "_Iter", type: !165)
+!6261 = !{!6262, !6264}
+!6262 = !DILocalVariable(name: "this", arg: 1, scope: !6254, type: !6263, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6263 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !457, size: 64)
+!6264 = !DILocalVariable(name: "__i", arg: 2, scope: !6254, file: !396, line: 748, type: !6257)
+!6265 = !DILocation(line: 0, scope: !6254)
+!6266 = !DILocation(line: 749, column: 26, scope: !6254)
+!6267 = !DILocation(line: 749, column: 11, scope: !6254)
+!6268 = !{!6269, !3172, i64 0}
+!6269 = !{!"_ZTSN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEE", !3172, i64 0}
+!6270 = !DILocation(line: 749, column: 36, scope: !6254)
+!6271 = distinct !DISubprogram(name: "operator-<const float *, std::vector<float, std::allocator<float> > >", linkageName: "_ZN9__gnu_cxxmiIPKfSt6vectorIfSaIfEEEENS_17__normal_iteratorIT_T0_E15difference_typeERKS9_SC_", scope: !24, file: !396, line: 923, type: !6272, scopeLine: 926, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !509, retainedNodes: !6275)
+!6272 = !DISubroutineType(types: !6273)
+!6273 = !{!496, !6274, !6274}
+!6274 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !478, size: 64)
+!6275 = !{!6276, !6277}
+!6276 = !DILocalVariable(name: "__lhs", arg: 1, scope: !6271, file: !396, line: 923, type: !6274)
+!6277 = !DILocalVariable(name: "__rhs", arg: 2, scope: !6271, file: !396, line: 924, type: !6274)
+!6278 = !DILocation(line: 0, scope: !6271)
+!6279 = !DILocation(line: 926, column: 20, scope: !6271)
+!6280 = !DILocation(line: 926, column: 35, scope: !6271)
+!6281 = !DILocation(line: 926, column: 27, scope: !6271)
+!6282 = !DILocation(line: 926, column: 7, scope: !6271)
+!6283 = distinct !DISubprogram(name: "cbegin", linkageName: "_ZNKSt6vectorIfSaIfEE6cbeginEv", scope: !144, file: !70, line: 620, type: !454, scopeLine: 621, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !525, retainedNodes: !6284)
+!6284 = !{!6285}
+!6285 = !DILocalVariable(name: "this", arg: 1, scope: !6283, type: !3294, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6286 = !DILocation(line: 0, scope: !6283)
+!6287 = !DILocation(line: 621, column: 31, scope: !6283)
+!6288 = !DILocation(line: 621, column: 45, scope: !6283)
+!6289 = !DILocation(line: 621, column: 16, scope: !6283)
+!6290 = !DILocation(line: 621, column: 9, scope: !6283)
+!6291 = distinct !DISubprogram(name: "_M_fill_insert", linkageName: "_ZNSt6vectorIfSaIfEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPfS1_EEmRKf", scope: !144, file: !5706, line: 450, type: !611, scopeLine: 451, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !610, retainedNodes: !6292)
+!6292 = !{!6293, !6294, !6295, !6296, !6297, !6302, !6303, !6304, !6306, !6307, !6308}
+!6293 = !DILocalVariable(name: "this", arg: 1, scope: !6291, type: !3113, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6294 = !DILocalVariable(name: "__position", arg: 2, scope: !6291, file: !70, line: 1395, type: !394)
+!6295 = !DILocalVariable(name: "__n", arg: 3, scope: !6291, file: !70, line: 1395, type: !347)
+!6296 = !DILocalVariable(name: "__x", arg: 4, scope: !6291, file: !70, line: 1395, type: !351)
+!6297 = !DILocalVariable(name: "__x_copy", scope: !6298, file: !5706, line: 457, type: !353)
+!6298 = distinct !DILexicalBlock(scope: !6299, file: !5706, line: 456, column: 6)
+!6299 = distinct !DILexicalBlock(scope: !6300, file: !5706, line: 454, column: 8)
+!6300 = distinct !DILexicalBlock(scope: !6301, file: !5706, line: 453, column: 2)
+!6301 = distinct !DILexicalBlock(scope: !6291, file: !5706, line: 452, column: 11)
+!6302 = !DILocalVariable(name: "__elems_after", scope: !6298, file: !5706, line: 458, type: !5715)
+!6303 = !DILocalVariable(name: "__old_finish", scope: !6298, file: !5706, line: 459, type: !627)
+!6304 = !DILocalVariable(name: "__len", scope: !6305, file: !5706, line: 488, type: !5715)
+!6305 = distinct !DILexicalBlock(scope: !6299, file: !5706, line: 487, column: 6)
+!6306 = !DILocalVariable(name: "__elems_before", scope: !6305, file: !5706, line: 490, type: !5715)
+!6307 = !DILocalVariable(name: "__new_start", scope: !6305, file: !5706, line: 491, type: !627)
+!6308 = !DILocalVariable(name: "__new_finish", scope: !6305, file: !5706, line: 492, type: !627)
+!6309 = !DILocation(line: 0, scope: !6291)
+!6310 = !DILocation(line: 452, column: 15, scope: !6301)
+!6311 = !DILocation(line: 452, column: 11, scope: !6291)
+!6312 = !DILocation(line: 454, column: 24, scope: !6299)
+!6313 = !DILocation(line: 454, column: 32, scope: !6299)
+!6314 = !DILocation(line: 455, column: 20, scope: !6299)
+!6315 = !DILocation(line: 455, column: 4, scope: !6299)
+!6316 = !DILocation(line: 455, column: 31, scope: !6299)
+!6317 = !DILocation(line: 454, column: 8, scope: !6300)
+!6318 = !DILocation(line: 457, column: 8, scope: !6298)
+!6319 = !DILocation(line: 457, column: 30, scope: !6298)
+!6320 = !DILocation(line: 457, column: 19, scope: !6298)
+!6321 = !DILocation(line: 458, column: 40, scope: !6298)
+!6322 = !DILocation(line: 458, column: 46, scope: !6298)
+!6323 = !DILocation(line: 0, scope: !6298)
+!6324 = !DILocation(line: 459, column: 43, scope: !6298)
+!6325 = !DILocation(line: 460, column: 26, scope: !6326)
+!6326 = distinct !DILexicalBlock(scope: !6298, file: !5706, line: 460, column: 12)
+!6327 = !DILocation(line: 460, column: 12, scope: !6298)
+!6328 = !DILocation(line: 462, column: 57, scope: !6329)
+!6329 = distinct !DILexicalBlock(scope: !6326, file: !5706, line: 461, column: 3)
+!6330 = !DILocation(line: 465, column: 12, scope: !6329)
+!6331 = !DILocation(line: 462, column: 5, scope: !6329)
+!6332 = !DILocation(line: 466, column: 29, scope: !6329)
+!6333 = !DILocation(line: 467, column: 5, scope: !6329)
+!6334 = !DILocation(line: 469, column: 26, scope: !6329)
+!6335 = !DILocation(line: 469, column: 45, scope: !6329)
+!6336 = !DILocation(line: 469, column: 52, scope: !6329)
+!6337 = !DILocation(line: 469, column: 5, scope: !6329)
+!6338 = !DILocation(line: 471, column: 3, scope: !6329)
+!6339 = !DILocation(line: 476, column: 13, scope: !6340)
+!6340 = distinct !DILexicalBlock(scope: !6326, file: !5706, line: 473, column: 3)
+!6341 = !DILocation(line: 478, column: 9, scope: !6340)
+!6342 = !DILocation(line: 475, column: 7, scope: !6340)
+!6343 = !DILocation(line: 474, column: 29, scope: !6340)
+!6344 = !DILocation(line: 479, column: 44, scope: !6340)
+!6345 = !DILocation(line: 480, column: 26, scope: !6340)
+!6346 = !DILocation(line: 481, column: 12, scope: !6340)
+!6347 = !DILocation(line: 479, column: 5, scope: !6340)
+!6348 = !DILocation(line: 482, column: 29, scope: !6340)
+!6349 = !DILocation(line: 483, column: 26, scope: !6340)
+!6350 = !DILocation(line: 483, column: 5, scope: !6340)
+!6351 = !DILocation(line: 485, column: 6, scope: !6299)
+!6352 = !DILocation(line: 485, column: 6, scope: !6298)
+!6353 = !DILocation(line: 489, column: 3, scope: !6305)
+!6354 = !DILocation(line: 0, scope: !6305)
+!6355 = !DILocation(line: 490, column: 54, scope: !6305)
+!6356 = !DILocation(line: 490, column: 52, scope: !6305)
+!6357 = !DILocation(line: 490, column: 41, scope: !6305)
+!6358 = !DILocation(line: 491, column: 34, scope: !6305)
+!6359 = !DILocation(line: 496, column: 47, scope: !6360)
+!6360 = distinct !DILexicalBlock(scope: !6305, file: !5706, line: 494, column: 3)
+!6361 = !DILocation(line: 498, column: 7, scope: !6360)
+!6362 = !DILocation(line: 496, column: 5, scope: !6360)
+!6363 = !DILocation(line: 503, column: 22, scope: !6360)
+!6364 = !DILocation(line: 503, column: 43, scope: !6360)
+!6365 = !DILocation(line: 504, column: 21, scope: !6360)
+!6366 = !DILocation(line: 502, column: 9, scope: !6360)
+!6367 = !DILocation(line: 506, column: 18, scope: !6360)
+!6368 = !DILocation(line: 510, column: 19, scope: !6360)
+!6369 = !DILocation(line: 510, column: 41, scope: !6360)
+!6370 = !DILocation(line: 511, column: 22, scope: !6360)
+!6371 = !DILocation(line: 509, column: 9, scope: !6360)
+!6372 = !DILocation(line: 525, column: 36, scope: !6305)
+!6373 = !DILocation(line: 525, column: 60, scope: !6305)
+!6374 = !DILocation(line: 526, column: 8, scope: !6305)
+!6375 = !DILocation(line: 525, column: 8, scope: !6305)
+!6376 = !DILocation(line: 527, column: 36, scope: !6305)
+!6377 = !DILocation(line: 528, column: 22, scope: !6305)
+!6378 = !DILocation(line: 529, column: 8, scope: !6305)
+!6379 = !DILocation(line: 527, column: 8, scope: !6305)
+!6380 = !DILocation(line: 530, column: 31, scope: !6305)
+!6381 = !DILocation(line: 531, column: 32, scope: !6305)
+!6382 = !DILocation(line: 532, column: 54, scope: !6305)
+!6383 = !DILocation(line: 532, column: 40, scope: !6305)
+!6384 = !DILocation(line: 535, column: 5, scope: !6360)
+!6385 = !DILocation(line: 512, column: 3, scope: !6360)
+!6386 = !DILocation(line: 515, column: 10, scope: !6387)
+!6387 = distinct !DILexicalBlock(scope: !6388, file: !5706, line: 515, column: 9)
+!6388 = distinct !DILexicalBlock(scope: !6305, file: !5706, line: 514, column: 3)
+!6389 = !DILocation(line: 515, column: 9, scope: !6388)
+!6390 = !DILocation(line: 517, column: 36, scope: !6387)
+!6391 = !DILocation(line: 518, column: 7, scope: !6387)
+!6392 = !DILocation(line: 516, column: 7, scope: !6387)
+!6393 = !DILocation(line: 535, column: 5, scope: !6387)
+!6394 = !DILocation(line: 524, column: 3, scope: !6388)
+!6395 = !DILocation(line: 521, column: 7, scope: !6387)
+!6396 = !DILocation(line: 520, column: 7, scope: !6387)
+!6397 = !DILocation(line: 522, column: 5, scope: !6388)
+!6398 = !DILocation(line: 523, column: 5, scope: !6388)
+!6399 = !DILocation(line: 533, column: 6, scope: !6299)
+!6400 = !DILocation(line: 535, column: 5, scope: !6291)
+!6401 = distinct !DISubprogram(name: "begin", linkageName: "_ZNSt6vectorIfSaIfEE5beginEv", scope: !144, file: !70, line: 547, type: !392, scopeLine: 548, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !391, retainedNodes: !6402)
+!6402 = !{!6403}
+!6403 = !DILocalVariable(name: "this", arg: 1, scope: !6401, type: !3113, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6404 = !DILocation(line: 0, scope: !6401)
+!6405 = !DILocation(line: 548, column: 39, scope: !6401)
+!6406 = !DILocation(line: 548, column: 16, scope: !6401)
+!6407 = !DILocation(line: 548, column: 9, scope: !6401)
+!6408 = distinct !DISubprogram(name: "operator+", linkageName: "_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEplEl", scope: !395, file: !396, line: 793, type: !444, scopeLine: 794, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !443, retainedNodes: !6409)
+!6409 = !{!6410, !6412}
+!6410 = !DILocalVariable(name: "this", arg: 1, scope: !6408, type: !6411, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6411 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !418, size: 64)
+!6412 = !DILocalVariable(name: "__n", arg: 2, scope: !6408, file: !396, line: 793, type: !436)
+!6413 = !DILocation(line: 0, scope: !6408)
+!6414 = !DILocation(line: 794, column: 34, scope: !6408)
+!6415 = !{!6416, !3172, i64 0}
+!6416 = !{!"_ZTSN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEE", !3172, i64 0}
+!6417 = !DILocation(line: 794, column: 45, scope: !6408)
+!6418 = !DILocation(line: 794, column: 16, scope: !6408)
+!6419 = !DILocation(line: 794, column: 9, scope: !6408)
+!6420 = distinct !DISubprogram(name: "base", linkageName: "_ZNK9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEE4baseEv", scope: !457, file: !396, line: 805, type: !507, scopeLine: 806, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !506, retainedNodes: !6421)
+!6421 = !{!6422}
+!6422 = !DILocalVariable(name: "this", arg: 1, scope: !6420, type: !6423, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6423 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !478, size: 64)
+!6424 = !DILocation(line: 0, scope: !6420)
+!6425 = !DILocation(line: 806, column: 16, scope: !6420)
+!6426 = !DILocation(line: 806, column: 9, scope: !6420)
+!6427 = distinct !DISubprogram(name: "__normal_iterator", linkageName: "_ZN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEC2ERKS2_", scope: !457, file: !396, line: 740, type: !465, scopeLine: 741, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !464, retainedNodes: !6428)
+!6428 = !{!6429, !6430}
+!6429 = !DILocalVariable(name: "this", arg: 1, scope: !6427, type: !6263, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6430 = !DILocalVariable(name: "__i", arg: 2, scope: !6427, file: !396, line: 740, type: !467)
+!6431 = !DILocation(line: 0, scope: !6427)
+!6432 = !DILocation(line: 741, column: 20, scope: !6427)
+!6433 = !DILocation(line: 741, column: 9, scope: !6427)
+!6434 = !DILocation(line: 741, column: 27, scope: !6427)
+!6435 = distinct !DISubprogram(name: "operator-<float *, std::vector<float, std::allocator<float> > >", linkageName: "_ZN9__gnu_cxxmiIPfSt6vectorIfSaIfEEEENS_17__normal_iteratorIT_T0_E15difference_typeERKS8_SB_", scope: !24, file: !396, line: 923, type: !6436, scopeLine: 926, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !451, retainedNodes: !6438)
+!6436 = !DISubroutineType(types: !6437)
+!6437 = !{!436, !6257, !6257}
+!6438 = !{!6439, !6440}
+!6439 = !DILocalVariable(name: "__lhs", arg: 1, scope: !6435, file: !396, line: 923, type: !6257)
+!6440 = !DILocalVariable(name: "__rhs", arg: 2, scope: !6435, file: !396, line: 924, type: !6257)
+!6441 = !DILocation(line: 0, scope: !6435)
+!6442 = !DILocation(line: 926, column: 20, scope: !6435)
+!6443 = !DILocation(line: 926, column: 35, scope: !6435)
+!6444 = !DILocation(line: 926, column: 27, scope: !6435)
+!6445 = !DILocation(line: 926, column: 7, scope: !6435)
+!6446 = distinct !DISubprogram(name: "__uninitialized_move_a<float *, float *, std::allocator<float> >", linkageName: "_ZSt22__uninitialized_move_aIPfS0_SaIfEET0_T_S3_S2_RT1_", scope: !2, file: !5779, line: 286, type: !5829, scopeLine: 288, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5836, retainedNodes: !6447)
+!6447 = !{!6448, !6449, !6450, !6451}
+!6448 = !DILocalVariable(name: "__first", arg: 1, scope: !6446, file: !5779, line: 286, type: !165)
+!6449 = !DILocalVariable(name: "__last", arg: 2, scope: !6446, file: !5779, line: 286, type: !165)
+!6450 = !DILocalVariable(name: "__result", arg: 3, scope: !6446, file: !5779, line: 287, type: !165)
+!6451 = !DILocalVariable(name: "__alloc", arg: 4, scope: !6446, file: !5779, line: 287, type: !254)
+!6452 = !DILocation(line: 0, scope: !6446)
+!6453 = !DILocation(line: 289, column: 42, scope: !6446)
+!6454 = !DILocation(line: 290, column: 7, scope: !6446)
+!6455 = !DILocation(line: 289, column: 14, scope: !6446)
+!6456 = !DILocation(line: 289, column: 7, scope: !6446)
+!6457 = distinct !DISubprogram(name: "move_backward<float *, float *>", linkageName: "_ZSt13move_backwardIPfS0_ET0_T_S2_S1_", scope: !2, file: !5868, line: 674, type: !6056, scopeLine: 675, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6462, retainedNodes: !6458)
+!6458 = !{!6459, !6460, !6461}
+!6459 = !DILocalVariable(name: "__first", arg: 1, scope: !6457, file: !5868, line: 674, type: !165)
+!6460 = !DILocalVariable(name: "__last", arg: 2, scope: !6457, file: !5868, line: 674, type: !165)
+!6461 = !DILocalVariable(name: "__result", arg: 3, scope: !6457, file: !5868, line: 674, type: !165)
+!6462 = !{!6463, !6464}
+!6463 = !DITemplateTypeParameter(name: "_BI1", type: !165)
+!6464 = !DITemplateTypeParameter(name: "_BI2", type: !165)
+!6465 = !DILocation(line: 0, scope: !6457)
+!6466 = !DILocation(line: 684, column: 49, scope: !6457)
+!6467 = !DILocation(line: 685, column: 7, scope: !6457)
+!6468 = !DILocation(line: 684, column: 14, scope: !6457)
+!6469 = !DILocation(line: 684, column: 7, scope: !6457)
+!6470 = distinct !DISubprogram(name: "base", linkageName: "_ZNK9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEE4baseEv", scope: !395, file: !396, line: 805, type: !449, scopeLine: 806, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !448, retainedNodes: !6471)
+!6471 = !{!6472}
+!6472 = !DILocalVariable(name: "this", arg: 1, scope: !6470, type: !6411, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6473 = !DILocation(line: 0, scope: !6470)
+!6474 = !DILocation(line: 806, column: 16, scope: !6470)
+!6475 = !DILocation(line: 806, column: 9, scope: !6470)
+!6476 = distinct !DISubprogram(name: "fill<float *, float>", linkageName: "_ZSt4fillIPffEvT_S1_RKT0_", scope: !2, file: !5868, line: 740, type: !6477, scopeLine: 741, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5299, retainedNodes: !6479)
+!6477 = !DISubroutineType(types: !6478)
+!6478 = !{null, !165, !165, !201}
+!6479 = !{!6480, !6481, !6482}
+!6480 = !DILocalVariable(name: "__first", arg: 1, scope: !6476, file: !5868, line: 740, type: !165)
+!6481 = !DILocalVariable(name: "__last", arg: 2, scope: !6476, file: !5868, line: 740, type: !165)
+!6482 = !DILocalVariable(name: "__value", arg: 3, scope: !6476, file: !5868, line: 740, type: !201)
+!6483 = !DILocation(line: 0, scope: !6476)
+!6484 = !DILocation(line: 747, column: 21, scope: !6476)
+!6485 = !DILocation(line: 747, column: 49, scope: !6476)
+!6486 = !DILocation(line: 747, column: 7, scope: !6476)
+!6487 = !DILocation(line: 749, column: 5, scope: !6476)
+!6488 = distinct !DISubprogram(name: "__uninitialized_fill_n_a<float *, unsigned long, float, float>", linkageName: "_ZSt24__uninitialized_fill_n_aIPfmffET_S1_T0_RKT1_RSaIT2_E", scope: !2, file: !5779, line: 356, type: !6489, scopeLine: 358, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6496, retainedNodes: !6491)
+!6489 = !DISubroutineType(types: !6490)
+!6490 = !{!165, !165, !208, !201, !254}
+!6491 = !{!6492, !6493, !6494, !6495}
+!6492 = !DILocalVariable(name: "__first", arg: 1, scope: !6488, file: !5779, line: 356, type: !165)
+!6493 = !DILocalVariable(name: "__n", arg: 2, scope: !6488, file: !5779, line: 356, type: !208)
+!6494 = !DILocalVariable(name: "__x", arg: 3, scope: !6488, file: !5779, line: 357, type: !201)
+!6495 = !DILocalVariable(arg: 4, scope: !6488, file: !5779, line: 357, type: !254)
+!6496 = !{!5300, !5787, !218, !6497}
+!6497 = !DITemplateTypeParameter(name: "_Tp2", type: !105)
+!6498 = !DILocation(line: 0, scope: !6488)
+!6499 = !DILocation(line: 358, column: 14, scope: !6488)
+!6500 = !DILocation(line: 358, column: 7, scope: !6488)
+!6501 = distinct !DISubprogram(name: "make_move_iterator<float *>", linkageName: "_ZSt18make_move_iteratorIPfESt13move_iteratorIT_ES2_", scope: !2, file: !396, line: 1158, type: !6010, scopeLine: 1159, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !415, retainedNodes: !6502)
+!6502 = !{!6503}
+!6503 = !DILocalVariable(name: "__i", arg: 1, scope: !6501, file: !396, line: 1158, type: !165)
+!6504 = !DILocation(line: 0, scope: !6501)
+!6505 = !DILocation(line: 1159, column: 14, scope: !6501)
+!6506 = !DILocation(line: 1159, column: 7, scope: !6501)
+!6507 = distinct !DISubprogram(name: "__copy_move_backward_a2<true, float *, float *>", linkageName: "_ZSt23__copy_move_backward_a2ILb1EPfS0_ET1_T0_S2_S1_", scope: !2, file: !5868, line: 611, type: !6056, scopeLine: 612, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6512, retainedNodes: !6508)
+!6508 = !{!6509, !6510, !6511}
+!6509 = !DILocalVariable(name: "__first", arg: 1, scope: !6507, file: !5868, line: 611, type: !165)
+!6510 = !DILocalVariable(name: "__last", arg: 2, scope: !6507, file: !5868, line: 611, type: !165)
+!6511 = !DILocalVariable(name: "__result", arg: 3, scope: !6507, file: !5868, line: 611, type: !165)
+!6512 = !{!6063, !6463, !6464}
+!6513 = !DILocation(line: 0, scope: !6507)
+!6514 = !DILocation(line: 614, column: 6, scope: !6507)
+!6515 = !DILocation(line: 614, column: 34, scope: !6507)
+!6516 = !DILocation(line: 615, column: 6, scope: !6507)
+!6517 = !DILocation(line: 613, column: 19, scope: !6507)
+!6518 = !DILocation(line: 613, column: 7, scope: !6507)
+!6519 = distinct !DISubprogram(name: "__miter_base<float *>", linkageName: "_ZSt12__miter_baseIPfENSt11_Miter_baseIT_E13iterator_typeES2_", scope: !2, file: !5868, line: 293, type: !5911, scopeLine: 294, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !415, retainedNodes: !6520)
+!6520 = !{!6521}
+!6521 = !DILocalVariable(name: "__it", arg: 1, scope: !6519, file: !5868, line: 293, type: !165)
+!6522 = !DILocation(line: 0, scope: !6519)
+!6523 = !DILocation(line: 294, column: 14, scope: !6519)
+!6524 = !DILocation(line: 294, column: 7, scope: !6519)
+!6525 = distinct !DISubprogram(name: "__copy_move_backward_a<true, float *, float *>", linkageName: "_ZSt22__copy_move_backward_aILb1EPfS0_ET1_T0_S2_S1_", scope: !2, file: !5868, line: 593, type: !6056, scopeLine: 594, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6512, retainedNodes: !6526)
+!6526 = !{!6527, !6528, !6529, !6530}
+!6527 = !DILocalVariable(name: "__first", arg: 1, scope: !6525, file: !5868, line: 593, type: !165)
+!6528 = !DILocalVariable(name: "__last", arg: 2, scope: !6525, file: !5868, line: 593, type: !165)
+!6529 = !DILocalVariable(name: "__result", arg: 3, scope: !6525, file: !5868, line: 593, type: !165)
+!6530 = !DILocalVariable(name: "__simple", scope: !6525, file: !5868, line: 598, type: !642)
+!6531 = !DILocation(line: 0, scope: !6525)
+!6532 = !DILocation(line: 603, column: 14, scope: !6525)
+!6533 = !DILocation(line: 603, column: 7, scope: !6525)
+!6534 = distinct !DISubprogram(name: "__copy_move_b<float>", linkageName: "_ZNSt20__copy_move_backwardILb1ELb1ESt26random_access_iterator_tagE13__copy_move_bIfEEPT_PKS3_S6_S4_", scope: !6535, file: !5868, line: 575, type: !6110, scopeLine: 576, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !217, declaration: !6536, retainedNodes: !6537)
+!6535 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__copy_move_backward<true, true, std::random_access_iterator_tag>", scope: !2, file: !5868, line: 571, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !6098, identifier: "_ZTSSt20__copy_move_backwardILb1ELb1ESt26random_access_iterator_tagE")
+!6536 = !DISubprogram(name: "__copy_move_b<float>", linkageName: "_ZNSt20__copy_move_backwardILb1ELb1ESt26random_access_iterator_tagE13__copy_move_bIfEEPT_PKS3_S6_S4_", scope: !6535, file: !5868, line: 575, type: !6110, scopeLine: 575, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !217)
+!6537 = !{!6538, !6539, !6540, !6541}
+!6538 = !DILocalVariable(name: "__first", arg: 1, scope: !6534, file: !5868, line: 575, type: !198)
+!6539 = !DILocalVariable(name: "__last", arg: 2, scope: !6534, file: !5868, line: 575, type: !198)
+!6540 = !DILocalVariable(name: "__result", arg: 3, scope: !6534, file: !5868, line: 575, type: !165)
+!6541 = !DILocalVariable(name: "_Num", scope: !6534, file: !5868, line: 584, type: !6118)
+!6542 = !DILocation(line: 0, scope: !6534)
+!6543 = !DILocation(line: 584, column: 34, scope: !6534)
+!6544 = !DILocation(line: 585, column: 8, scope: !6545)
+!6545 = distinct !DILexicalBlock(scope: !6534, file: !5868, line: 585, column: 8)
+!6546 = !DILocation(line: 585, column: 8, scope: !6534)
+!6547 = !DILocation(line: 586, column: 33, scope: !6545)
+!6548 = !DILocation(line: 586, column: 6, scope: !6545)
+!6549 = !DILocation(line: 587, column: 20, scope: !6534)
+!6550 = !DILocation(line: 587, column: 4, scope: !6534)
+!6551 = distinct !DISubprogram(name: "__fill_a<float *, float>", linkageName: "_ZSt8__fill_aIPffEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__typeET_S6_RKS3_", scope: !2, file: !5868, line: 707, type: !6552, scopeLine: 709, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5299, retainedNodes: !6558)
+!6552 = !DISubroutineType(types: !6553)
+!6553 = !{!6554, !165, !165, !201}
+!6554 = !DIDerivedType(tag: DW_TAG_typedef, name: "__type", scope: !6555, file: !5885, line: 48, baseType: null)
+!6555 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__enable_if<true, void>", scope: !24, file: !5885, line: 47, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !6556, identifier: "_ZTSN9__gnu_cxx11__enable_ifILb1EvEE")
+!6556 = !{!947, !6557}
+!6557 = !DITemplateTypeParameter(type: null)
+!6558 = !{!6559, !6560, !6561, !6562}
+!6559 = !DILocalVariable(name: "__first", arg: 1, scope: !6551, file: !5868, line: 707, type: !165)
+!6560 = !DILocalVariable(name: "__last", arg: 2, scope: !6551, file: !5868, line: 707, type: !165)
+!6561 = !DILocalVariable(name: "__value", arg: 3, scope: !6551, file: !5868, line: 708, type: !201)
+!6562 = !DILocalVariable(name: "__tmp", scope: !6551, file: !5868, line: 710, type: !199)
+!6563 = !DILocation(line: 0, scope: !6551)
+!6564 = !DILocation(line: 710, column: 25, scope: !6551)
+!6565 = !DILocation(line: 711, column: 22, scope: !6566)
+!6566 = distinct !DILexicalBlock(scope: !6567, file: !5868, line: 711, column: 7)
+!6567 = distinct !DILexicalBlock(scope: !6551, file: !5868, line: 711, column: 7)
+!6568 = !DILocation(line: 711, column: 7, scope: !6567)
+!6569 = !DILocation(line: 712, column: 11, scope: !6566)
+!6570 = !DILocation(line: 711, column: 33, scope: !6566)
+!6571 = distinct !{!6571, !6568, !6572}
+!6572 = !DILocation(line: 712, column: 13, scope: !6567)
+!6573 = !DILocation(line: 713, column: 5, scope: !6551)
+!6574 = distinct !DISubprogram(name: "uninitialized_fill_n<float *, unsigned long, float>", linkageName: "_ZSt20uninitialized_fill_nIPfmfET_S1_T0_RKT1_", scope: !2, file: !5779, line: 236, type: !5869, scopeLine: 237, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5786, retainedNodes: !6575)
+!6575 = !{!6576, !6577, !6578, !6579}
+!6576 = !DILocalVariable(name: "__first", arg: 1, scope: !6574, file: !5779, line: 236, type: !165)
+!6577 = !DILocalVariable(name: "__n", arg: 2, scope: !6574, file: !5779, line: 236, type: !208)
+!6578 = !DILocalVariable(name: "__x", arg: 3, scope: !6574, file: !5779, line: 236, type: !201)
+!6579 = !DILocalVariable(name: "__assignable", scope: !6574, file: !5779, line: 244, type: !642)
+!6580 = !DILocation(line: 0, scope: !6574)
+!6581 = !DILocation(line: 246, column: 14, scope: !6574)
+!6582 = !DILocation(line: 246, column: 7, scope: !6574)
+!6583 = distinct !DISubprogram(name: "__uninit_fill_n<float *, unsigned long, float>", linkageName: "_ZNSt22__uninitialized_fill_nILb1EE15__uninit_fill_nIPfmfEET_S3_T0_RKT1_", scope: !6584, file: !5779, line: 218, type: !5869, scopeLine: 220, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5786, declaration: !6585, retainedNodes: !6586)
+!6584 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__uninitialized_fill_n<true>", scope: !2, file: !5779, line: 214, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !5857, identifier: "_ZTSSt22__uninitialized_fill_nILb1EE")
+!6585 = !DISubprogram(name: "__uninit_fill_n<float *, unsigned long, float>", linkageName: "_ZNSt22__uninitialized_fill_nILb1EE15__uninit_fill_nIPfmfEET_S3_T0_RKT1_", scope: !6584, file: !5779, line: 218, type: !5869, scopeLine: 218, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !5786)
+!6586 = !{!6587, !6588, !6589}
+!6587 = !DILocalVariable(name: "__first", arg: 1, scope: !6583, file: !5779, line: 218, type: !165)
+!6588 = !DILocalVariable(name: "__n", arg: 2, scope: !6583, file: !5779, line: 218, type: !208)
+!6589 = !DILocalVariable(name: "__x", arg: 3, scope: !6583, file: !5779, line: 219, type: !201)
+!6590 = !DILocation(line: 0, scope: !6583)
+!6591 = !DILocation(line: 220, column: 18, scope: !6583)
+!6592 = !DILocation(line: 220, column: 11, scope: !6583)
+!6593 = distinct !DISubprogram(name: "__normal_iterator", linkageName: "_ZN9__gnu_cxx17__normal_iteratorIPfSt6vectorIfSaIfEEEC2ERKS1_", scope: !395, file: !396, line: 740, type: !404, scopeLine: 741, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !403, retainedNodes: !6594)
+!6594 = !{!6595, !6597}
+!6595 = !DILocalVariable(name: "this", arg: 1, scope: !6593, type: !6596, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6596 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !395, size: 64)
+!6597 = !DILocalVariable(name: "__i", arg: 2, scope: !6593, file: !396, line: 740, type: !406)
+!6598 = !DILocation(line: 0, scope: !6593)
+!6599 = !DILocation(line: 741, column: 20, scope: !6593)
+!6600 = !DILocation(line: 741, column: 9, scope: !6593)
+!6601 = !DILocation(line: 741, column: 27, scope: !6593)
+!6602 = distinct !DISubprogram(name: "basic_ios", linkageName: "_ZNSt9basic_iosIcSt11char_traitsIcEEC2Ev", scope: !6604, file: !6603, line: 460, type: !6606, scopeLine: 463, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6609, retainedNodes: !6610)
+!6603 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/basic_ios.h", directory: "")
+!6604 = !DICompositeType(tag: DW_TAG_class_type, name: "basic_ios<char, std::char_traits<char> >", scope: !2, file: !6605, line: 178, flags: DIFlagFwdDecl)
+!6605 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/basic_ios.tcc", directory: "")
+!6606 = !DISubroutineType(types: !6607)
+!6607 = !{null, !6608}
+!6608 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6604, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6609 = !DISubprogram(name: "basic_ios", scope: !6604, file: !6603, line: 460, type: !6606, scopeLine: 460, flags: DIFlagProtected | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!6610 = !{!6611}
+!6611 = !DILocalVariable(name: "this", arg: 1, scope: !6602, type: !6612, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6612 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6604, size: 64)
+!6613 = !DILocation(line: 0, scope: !6602)
+!6614 = !DILocation(line: 463, column: 7, scope: !6602)
+!6615 = !DILocation(line: 461, column: 9, scope: !6602)
+!6616 = !DILocation(line: 461, column: 21, scope: !6602)
+!6617 = !{!6618, !3172, i64 216}
+!6618 = !{!"_ZTSSt9basic_iosIcSt11char_traitsIcEE", !3172, i64 216, !3049, i64 224, !3050, i64 225, !3172, i64 232, !3172, i64 240, !3172, i64 248, !3172, i64 256}
+!6619 = !DILocation(line: 461, column: 32, scope: !6602)
+!6620 = !{!6618, !3049, i64 224}
+!6621 = !DILocation(line: 461, column: 54, scope: !6602)
+!6622 = !{!6618, !3050, i64 225}
+!6623 = !DILocation(line: 462, column: 2, scope: !6602)
+!6624 = !DILocation(line: 463, column: 9, scope: !6602)
+!6625 = distinct !DISubprogram(name: "basic_iostream", linkageName: "_ZNSdC2EPSt15basic_streambufIcSt11char_traitsIcEE", scope: !6627, file: !6626, line: 849, type: !6629, scopeLine: 850, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6635, retainedNodes: !6636)
+!6626 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/istream", directory: "")
+!6627 = !DICompositeType(tag: DW_TAG_class_type, name: "basic_iostream<char, std::char_traits<char> >", scope: !2, file: !6628, line: 1063, flags: DIFlagFwdDecl)
+!6628 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/istream.tcc", directory: "")
+!6629 = !DISubroutineType(types: !6630)
+!6630 = !{null, !6631, !6632}
+!6631 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6627, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6632 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6633, size: 64)
+!6633 = !DICompositeType(tag: DW_TAG_class_type, name: "basic_streambuf<char, std::char_traits<char> >", scope: !2, file: !6634, line: 149, flags: DIFlagFwdDecl)
+!6634 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/streambuf.tcc", directory: "")
+!6635 = !DISubprogram(name: "basic_iostream", scope: !6627, file: !6626, line: 849, type: !6629, scopeLine: 849, flags: DIFlagPublic | DIFlagExplicit | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!6636 = !{!6637, !6639, !6641}
+!6637 = !DILocalVariable(name: "this", arg: 1, scope: !6625, type: !6638, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6638 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6627, size: 64)
+!6639 = !DILocalVariable(name: "vtt", arg: 2, scope: !6625, type: !6640, flags: DIFlagArtificial)
+!6640 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !1568, size: 64)
+!6641 = !DILocalVariable(name: "__sb", arg: 3, scope: !6625, file: !6626, line: 849, type: !6632)
+!6642 = !DILocation(line: 0, scope: !6625)
+!6643 = !DILocation(line: 850, column: 52, scope: !6625)
+!6644 = !DILocation(line: 850, column: 9, scope: !6625)
+!6645 = !DILocation(line: 850, column: 31, scope: !6625)
+!6646 = !DILocation(line: 850, column: 54, scope: !6625)
+!6647 = !DILocation(line: 850, column: 54, scope: !6648)
+!6648 = distinct !DILexicalBlock(scope: !6625, file: !6626, line: 850, column: 52)
+!6649 = distinct !DISubprogram(name: "open", linkageName: "_ZNSt13basic_fstreamIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode", scope: !101, file: !4350, line: 1022, type: !4351, scopeLine: 1024, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6650, retainedNodes: !6651)
+!6650 = !DISubprogram(name: "open", linkageName: "_ZNSt13basic_fstreamIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode", scope: !101, file: !4350, line: 1022, type: !4351, scopeLine: 1022, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!6651 = !{!6652, !6653, !6654}
+!6652 = !DILocalVariable(name: "this", arg: 1, scope: !6649, type: !4360, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6653 = !DILocalVariable(name: "__s", arg: 2, scope: !6649, file: !4350, line: 1022, type: !4354)
+!6654 = !DILocalVariable(name: "__mode", arg: 3, scope: !6649, file: !4350, line: 1023, type: !4356)
+!6655 = !DILocation(line: 0, scope: !6649)
+!6656 = !DILocation(line: 1025, column: 7, scope: !6657)
+!6657 = distinct !DILexicalBlock(scope: !6649, file: !4350, line: 1025, column: 6)
+!6658 = !DILocation(line: 1025, column: 18, scope: !6657)
+!6659 = !DILocation(line: 0, scope: !6657)
+!6660 = !DILocation(line: 1025, column: 6, scope: !6649)
+!6661 = !DILocation(line: 1026, column: 10, scope: !6657)
+!6662 = !DILocation(line: 1026, column: 4, scope: !6657)
+!6663 = !DILocation(line: 1030, column: 10, scope: !6657)
+!6664 = !DILocation(line: 1031, column: 7, scope: !6649)
+!6665 = distinct !DISubprogram(name: "~basic_filebuf", linkageName: "_ZNSt13basic_filebufIcSt11char_traitsIcEED2Ev", scope: !6666, file: !4350, line: 238, type: !6667, scopeLine: 239, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6670, retainedNodes: !6671)
+!6666 = !DICompositeType(tag: DW_TAG_class_type, name: "basic_filebuf<char, std::char_traits<char> >", scope: !2, file: !102, line: 1053, flags: DIFlagFwdDecl)
+!6667 = !DISubroutineType(types: !6668)
+!6668 = !{null, !6669}
+!6669 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6666, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6670 = !DISubprogram(name: "~basic_filebuf", scope: !6666, file: !4350, line: 238, type: !6667, scopeLine: 238, containingType: !6666, virtualIndex: 0, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!6671 = !{!6672}
+!6672 = !DILocalVariable(name: "this", arg: 1, scope: !6665, type: !6673, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6673 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6666, size: 64)
+!6674 = !DILocation(line: 0, scope: !6665)
+!6675 = !DILocation(line: 239, column: 7, scope: !6665)
+!6676 = !DILocation(line: 239, column: 15, scope: !6677)
+!6677 = distinct !DILexicalBlock(scope: !6665, file: !4350, line: 239, column: 7)
+!6678 = !DILocation(line: 239, column: 24, scope: !6677)
+!6679 = !DILocation(line: 239, column: 24, scope: !6665)
+!6680 = distinct !DISubprogram(name: "~basic_iostream", linkageName: "_ZNSdD2Ev", scope: !6627, file: !6626, line: 856, type: !6681, scopeLine: 856, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6683, retainedNodes: !6684)
+!6681 = !DISubroutineType(types: !6682)
+!6682 = !{null, !6631}
+!6683 = !DISubprogram(name: "~basic_iostream", scope: !6627, file: !6626, line: 856, type: !6681, scopeLine: 856, containingType: !6627, virtualIndex: 0, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!6684 = !{!6685, !6686}
+!6685 = !DILocalVariable(name: "this", arg: 1, scope: !6680, type: !6638, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6686 = !DILocalVariable(name: "vtt", arg: 2, scope: !6680, type: !6640, flags: DIFlagArtificial)
+!6687 = !DILocation(line: 0, scope: !6680)
+!6688 = !DILocation(line: 856, column: 27, scope: !6689)
+!6689 = distinct !DILexicalBlock(scope: !6680, file: !6626, line: 856, column: 25)
+!6690 = !DILocation(line: 856, column: 27, scope: !6680)
+!6691 = distinct !DISubprogram(name: "~basic_ios", linkageName: "_ZNSt9basic_iosIcSt11char_traitsIcEED2Ev", scope: !6604, file: !6603, line: 282, type: !6606, scopeLine: 282, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6692, retainedNodes: !6693)
+!6692 = !DISubprogram(name: "~basic_ios", scope: !6604, file: !6603, line: 282, type: !6606, scopeLine: 282, containingType: !6604, virtualIndex: 0, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!6693 = !{!6694}
+!6694 = !DILocalVariable(name: "this", arg: 1, scope: !6691, type: !6612, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6695 = !DILocation(line: 0, scope: !6691)
+!6696 = !DILocation(line: 282, column: 22, scope: !6697)
+!6697 = distinct !DILexicalBlock(scope: !6691, file: !6603, line: 282, column: 20)
+!6698 = !DILocation(line: 282, column: 22, scope: !6691)
+!6699 = distinct !DISubprogram(name: "basic_istream", linkageName: "_ZNSiC2EPSt15basic_streambufIcSt11char_traitsIcEE", scope: !6700, file: !6626, line: 93, type: !6701, scopeLine: 95, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6706, retainedNodes: !6707)
+!6700 = !DICompositeType(tag: DW_TAG_class_type, name: "basic_istream<char, std::char_traits<char> >", scope: !2, file: !6628, line: 1040, flags: DIFlagFwdDecl)
+!6701 = !DISubroutineType(types: !6702)
+!6702 = !{null, !6703, !6704}
+!6703 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6700, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6704 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6705, size: 64)
+!6705 = !DIDerivedType(tag: DW_TAG_typedef, name: "__streambuf_type", scope: !6700, file: !6626, line: 69, baseType: !6633)
+!6706 = !DISubprogram(name: "basic_istream", scope: !6700, file: !6626, line: 93, type: !6701, scopeLine: 93, flags: DIFlagPublic | DIFlagExplicit | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!6707 = !{!6708, !6710, !6711}
+!6708 = !DILocalVariable(name: "this", arg: 1, scope: !6699, type: !6709, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6709 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6700, size: 64)
+!6710 = !DILocalVariable(name: "vtt", arg: 2, scope: !6699, type: !6640, flags: DIFlagArtificial)
+!6711 = !DILocalVariable(name: "__sb", arg: 3, scope: !6699, file: !6626, line: 93, type: !6704)
+!6712 = !DILocation(line: 0, scope: !6699)
+!6713 = !DILocation(line: 95, column: 7, scope: !6699)
+!6714 = !DILocation(line: 94, column: 9, scope: !6699)
+!6715 = !{!6716, !5036, i64 8}
+!6716 = !{!"_ZTSSi", !5036, i64 8}
+!6717 = !DILocation(line: 95, column: 15, scope: !6718)
+!6718 = distinct !DILexicalBlock(scope: !6699, file: !6626, line: 95, column: 7)
+!6719 = !DILocation(line: 95, column: 27, scope: !6699)
+!6720 = distinct !DISubprogram(name: "basic_ostream", linkageName: "_ZNSoC2EPSt15basic_streambufIcSt11char_traitsIcEE", scope: !5191, file: !5187, line: 84, type: !6721, scopeLine: 85, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6726, retainedNodes: !6727)
+!6721 = !DISubroutineType(types: !6722)
+!6722 = !{null, !6723, !6724}
+!6723 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !5191, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6724 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6725, size: 64)
+!6725 = !DIDerivedType(tag: DW_TAG_typedef, name: "__streambuf_type", scope: !5191, file: !5187, line: 69, baseType: !6633)
+!6726 = !DISubprogram(name: "basic_ostream", scope: !5191, file: !5187, line: 84, type: !6721, scopeLine: 84, flags: DIFlagPublic | DIFlagExplicit | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!6727 = !{!6728, !6730, !6731}
+!6728 = !DILocalVariable(name: "this", arg: 1, scope: !6720, type: !6729, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6729 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !5191, size: 64)
+!6730 = !DILocalVariable(name: "vtt", arg: 2, scope: !6720, type: !6640, flags: DIFlagArtificial)
+!6731 = !DILocalVariable(name: "__sb", arg: 3, scope: !6720, file: !5187, line: 84, type: !6724)
+!6732 = !DILocation(line: 0, scope: !6720)
+!6733 = !DILocation(line: 85, column: 7, scope: !6720)
+!6734 = !DILocation(line: 85, column: 15, scope: !6735)
+!6735 = distinct !DILexicalBlock(scope: !6720, file: !5187, line: 85, column: 7)
+!6736 = !DILocation(line: 85, column: 27, scope: !6720)
+!6737 = distinct !DISubprogram(name: "~basic_istream", linkageName: "_ZNSiD2Ev", scope: !6700, file: !6626, line: 103, type: !6738, scopeLine: 104, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6740, retainedNodes: !6741)
+!6738 = !DISubroutineType(types: !6739)
+!6739 = !{null, !6703}
+!6740 = !DISubprogram(name: "~basic_istream", scope: !6700, file: !6626, line: 103, type: !6738, scopeLine: 103, containingType: !6700, virtualIndex: 0, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!6741 = !{!6742, !6743}
+!6742 = !DILocalVariable(name: "this", arg: 1, scope: !6737, type: !6709, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6743 = !DILocalVariable(name: "vtt", arg: 2, scope: !6737, type: !6640, flags: DIFlagArtificial)
+!6744 = !DILocation(line: 0, scope: !6737)
+!6745 = !DILocation(line: 104, column: 7, scope: !6737)
+!6746 = !DILocation(line: 104, column: 9, scope: !6747)
+!6747 = distinct !DILexicalBlock(scope: !6737, file: !6626, line: 104, column: 7)
+!6748 = !DILocation(line: 104, column: 19, scope: !6747)
+!6749 = !DILocation(line: 104, column: 36, scope: !6737)
+!6750 = distinct !DISubprogram(name: "open", linkageName: "_ZNSt13basic_filebufIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode", scope: !6666, file: !4350, line: 307, type: !6751, scopeLine: 308, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6755, retainedNodes: !6756)
+!6751 = !DISubroutineType(types: !6752)
+!6752 = !{!6753, !6669, !4354, !4356}
+!6753 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6754, size: 64)
+!6754 = !DIDerivedType(tag: DW_TAG_typedef, name: "__filebuf_type", scope: !6666, file: !4350, line: 97, baseType: !6666)
+!6755 = !DISubprogram(name: "open", linkageName: "_ZNSt13basic_filebufIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode", scope: !6666, file: !4350, line: 307, type: !6751, scopeLine: 307, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!6756 = !{!6757, !6758, !6759}
+!6757 = !DILocalVariable(name: "this", arg: 1, scope: !6750, type: !6673, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6758 = !DILocalVariable(name: "__s", arg: 2, scope: !6750, file: !4350, line: 307, type: !4354)
+!6759 = !DILocalVariable(name: "__mode", arg: 3, scope: !6750, file: !4350, line: 307, type: !4356)
+!6760 = !DILocation(line: 0, scope: !6750)
+!6761 = !DILocation(line: 308, column: 25, scope: !6750)
+!6762 = !DILocation(line: 308, column: 16, scope: !6750)
+!6763 = !DILocation(line: 308, column: 9, scope: !6750)
+!6764 = distinct !DISubprogram(name: "setstate", linkageName: "_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate", scope: !6604, file: !6603, line: 157, type: !6765, scopeLine: 158, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6768, retainedNodes: !6769)
+!6765 = !DISubroutineType(types: !6766)
+!6766 = !{null, !6608, !6767}
+!6767 = !DIDerivedType(tag: DW_TAG_typedef, name: "iostate", scope: !6, file: !5, line: 398, baseType: !1542)
+!6768 = !DISubprogram(name: "setstate", linkageName: "_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate", scope: !6604, file: !6603, line: 157, type: !6765, scopeLine: 157, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!6769 = !{!6770, !6771}
+!6770 = !DILocalVariable(name: "this", arg: 1, scope: !6764, type: !6612, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6771 = !DILocalVariable(name: "__state", arg: 2, scope: !6764, file: !6603, line: 157, type: !6767)
+!6772 = !DILocation(line: 0, scope: !6764)
+!6773 = !DILocation(line: 158, column: 27, scope: !6764)
+!6774 = !DILocation(line: 158, column: 37, scope: !6764)
+!6775 = !DILocation(line: 158, column: 15, scope: !6764)
+!6776 = !DILocation(line: 158, column: 49, scope: !6764)
+!6777 = distinct !DISubprogram(name: "c_str", linkageName: "_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5c_strEv", scope: !1132, file: !1552, line: 1887, type: !6778, scopeLine: 1888, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6780, retainedNodes: !6781)
+!6778 = !DISubroutineType(types: !6779)
+!6779 = !{!621, !5549}
+!6780 = !DISubprogram(name: "c_str", linkageName: "_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5c_strEv", scope: !1132, file: !1552, line: 1887, type: !6778, scopeLine: 1887, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!6781 = !{!6782}
+!6782 = !DILocalVariable(name: "this", arg: 1, scope: !6777, type: !5554, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6783 = !DILocation(line: 0, scope: !6777)
+!6784 = !DILocation(line: 1888, column: 16, scope: !6777)
+!6785 = !DILocation(line: 1888, column: 9, scope: !6777)
+!6786 = distinct !DISubprogram(name: "operator|", linkageName: "_ZStorSt12_Ios_IostateS_", scope: !2, file: !5, line: 169, type: !6787, scopeLine: 170, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, retainedNodes: !6789)
+!6787 = !DISubroutineType(types: !6788)
+!6788 = !{!1542, !1542, !1542}
+!6789 = !{!6790, !6791}
+!6790 = !DILocalVariable(name: "__a", arg: 1, scope: !6786, file: !5, line: 169, type: !1542)
+!6791 = !DILocalVariable(name: "__b", arg: 2, scope: !6786, file: !5, line: 169, type: !1542)
+!6792 = !DILocation(line: 0, scope: !6786)
+!6793 = !DILocation(line: 170, column: 47, scope: !6786)
+!6794 = !DILocation(line: 170, column: 5, scope: !6786)
+!6795 = distinct !DISubprogram(name: "rdstate", linkageName: "_ZNKSt9basic_iosIcSt11char_traitsIcEE7rdstateEv", scope: !6604, file: !6603, line: 137, type: !6796, scopeLine: 138, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6800, retainedNodes: !6801)
+!6796 = !DISubroutineType(types: !6797)
+!6797 = !{!6767, !6798}
+!6798 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6799, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6799 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !6604)
+!6800 = !DISubprogram(name: "rdstate", linkageName: "_ZNKSt9basic_iosIcSt11char_traitsIcEE7rdstateEv", scope: !6604, file: !6603, line: 137, type: !6796, scopeLine: 137, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!6801 = !{!6802}
+!6802 = !DILocalVariable(name: "this", arg: 1, scope: !6795, type: !6803, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6803 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6799, size: 64)
+!6804 = !DILocation(line: 0, scope: !6795)
+!6805 = !DILocation(line: 138, column: 16, scope: !6795)
+!6806 = !{!6807, !6809, i64 32}
+!6807 = !{!"_ZTSSt8ios_base", !5036, i64 8, !5036, i64 16, !6808, i64 24, !6809, i64 28, !6809, i64 32, !3172, i64 40, !6810, i64 48, !3049, i64 64, !3048, i64 192, !3172, i64 200, !6811, i64 208}
+!6808 = !{!"_ZTSSt13_Ios_Fmtflags", !3049, i64 0}
+!6809 = !{!"_ZTSSt12_Ios_Iostate", !3049, i64 0}
+!6810 = !{!"_ZTSNSt8ios_base6_WordsE", !3172, i64 0, !5036, i64 8}
+!6811 = !{!"_ZTSSt6locale", !3172, i64 0}
+!6812 = !DILocation(line: 138, column: 9, scope: !6795)
+!6813 = distinct !DISubprogram(name: "~basic_streambuf", linkageName: "_ZNSt15basic_streambufIcSt11char_traitsIcEED2Ev", scope: !6633, file: !6814, line: 197, type: !6815, scopeLine: 198, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6818, retainedNodes: !6819)
+!6814 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/streambuf", directory: "")
+!6815 = !DISubroutineType(types: !6816)
+!6816 = !{null, !6817}
+!6817 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6633, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6818 = !DISubprogram(name: "~basic_streambuf", scope: !6633, file: !6814, line: 197, type: !6815, scopeLine: 197, containingType: !6633, virtualIndex: 0, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!6819 = !{!6820}
+!6820 = !DILocalVariable(name: "this", arg: 1, scope: !6813, type: !6632, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6821 = !DILocation(line: 0, scope: !6813)
+!6822 = !DILocation(line: 198, column: 7, scope: !6813)
+!6823 = !DILocation(line: 198, column: 9, scope: !6824)
+!6824 = distinct !DILexicalBlock(scope: !6813, file: !6814, line: 198, column: 7)
+!6825 = !DILocation(line: 198, column: 9, scope: !6813)
+!6826 = distinct !DISubprogram(name: "~basic_ostream", linkageName: "_ZNSoD2Ev", scope: !5191, file: !5187, line: 93, type: !6827, scopeLine: 93, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6829, retainedNodes: !6830)
+!6827 = !DISubroutineType(types: !6828)
+!6828 = !{null, !6723}
+!6829 = !DISubprogram(name: "~basic_ostream", scope: !5191, file: !5187, line: 93, type: !6827, scopeLine: 93, containingType: !5191, virtualIndex: 0, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!6830 = !{!6831, !6832}
+!6831 = !DILocalVariable(name: "this", arg: 1, scope: !6826, type: !6729, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6832 = !DILocalVariable(name: "vtt", arg: 2, scope: !6826, type: !6640, flags: DIFlagArtificial)
+!6833 = !DILocation(line: 0, scope: !6826)
+!6834 = !DILocation(line: 93, column: 26, scope: !6826)
+!6835 = distinct !DISubprogram(name: "basic_ostream", linkageName: "_ZNSoC2Ev", scope: !5191, file: !5187, line: 384, type: !6827, scopeLine: 385, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6836, retainedNodes: !6837)
+!6836 = !DISubprogram(name: "basic_ostream", scope: !5191, file: !5187, line: 384, type: !6827, scopeLine: 384, flags: DIFlagProtected | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!6837 = !{!6838, !6839}
+!6838 = !DILocalVariable(name: "this", arg: 1, scope: !6835, type: !6729, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6839 = !DILocalVariable(name: "vtt", arg: 2, scope: !6835, type: !6640, flags: DIFlagArtificial)
+!6840 = !DILocation(line: 0, scope: !6835)
+!6841 = !DILocation(line: 385, column: 7, scope: !6835)
+!6842 = !DILocation(line: 385, column: 15, scope: !6843)
+!6843 = distinct !DILexicalBlock(scope: !6835, file: !5187, line: 385, column: 7)
+!6844 = !DILocation(line: 385, column: 24, scope: !6835)
+!6845 = distinct !DISubprogram(name: "open", linkageName: "_ZNSt14basic_ofstreamIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode", scope: !1499, file: !4350, line: 820, type: !4561, scopeLine: 822, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6846, retainedNodes: !6847)
+!6846 = !DISubprogram(name: "open", linkageName: "_ZNSt14basic_ofstreamIcSt11char_traitsIcEE4openERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode", scope: !1499, file: !4350, line: 820, type: !4561, scopeLine: 820, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!6847 = !{!6848, !6849, !6850}
+!6848 = !DILocalVariable(name: "this", arg: 1, scope: !6845, type: !4567, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6849 = !DILocalVariable(name: "__s", arg: 2, scope: !6845, file: !4350, line: 820, type: !4354)
+!6850 = !DILocalVariable(name: "__mode", arg: 3, scope: !6845, file: !4350, line: 821, type: !4356)
+!6851 = !DILocation(line: 0, scope: !6845)
+!6852 = !DILocation(line: 823, column: 7, scope: !6853)
+!6853 = distinct !DILexicalBlock(scope: !6845, file: !4350, line: 823, column: 6)
+!6854 = !DILocation(line: 823, column: 35, scope: !6853)
+!6855 = !DILocation(line: 823, column: 18, scope: !6853)
+!6856 = !DILocation(line: 0, scope: !6853)
+!6857 = !DILocation(line: 823, column: 6, scope: !6845)
+!6858 = !DILocation(line: 824, column: 10, scope: !6853)
+!6859 = !DILocation(line: 824, column: 4, scope: !6853)
+!6860 = !DILocation(line: 828, column: 10, scope: !6853)
+!6861 = !DILocation(line: 829, column: 7, scope: !6845)
+!6862 = distinct !DISubprogram(name: "_Vector_base", linkageName: "_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EEC2Ev", scope: !73, file: !70, line: 124, type: !1272, scopeLine: 125, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1271, retainedNodes: !6863)
+!6863 = !{!6864}
+!6864 = !DILocalVariable(name: "this", arg: 1, scope: !6862, type: !6865, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6865 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !73, size: 64)
+!6866 = !DILocation(line: 0, scope: !6862)
+!6867 = !DILocation(line: 125, column: 9, scope: !6862)
+!6868 = !DILocation(line: 125, column: 21, scope: !6862)
+!6869 = distinct !DISubprogram(name: "_Vector_impl", linkageName: "_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE12_Vector_implC2Ev", scope: !76, file: !70, line: 86, type: !1241, scopeLine: 88, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1240, retainedNodes: !6870)
+!6870 = !{!6871}
+!6871 = !DILocalVariable(name: "this", arg: 1, scope: !6869, type: !6872, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6872 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !76, size: 64)
+!6873 = !DILocation(line: 0, scope: !6869)
+!6874 = !DILocation(line: 88, column: 2, scope: !6869)
+!6875 = !DILocation(line: 87, column: 4, scope: !6869)
+!6876 = !DILocation(line: 88, column: 4, scope: !6869)
+!6877 = !DILocation(line: 87, column: 34, scope: !6869)
+!6878 = distinct !DISubprogram(name: "allocator", linkageName: "_ZNSaIPN12ILLIXR_AUDIO5SoundEEC2Ev", scope: !1152, file: !169, line: 113, type: !1195, scopeLine: 113, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1194, retainedNodes: !6879)
+!6879 = !{!6880}
+!6880 = !DILocalVariable(name: "this", arg: 1, scope: !6878, type: !6881, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6881 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !1152, size: 64)
+!6882 = !DILocation(line: 0, scope: !6878)
+!6883 = !DILocation(line: 113, column: 27, scope: !6878)
+!6884 = !DILocation(line: 113, column: 7, scope: !6878)
+!6885 = !DILocation(line: 113, column: 29, scope: !6878)
+!6886 = distinct !DISubprogram(name: "new_allocator", linkageName: "_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEEC2Ev", scope: !1156, file: !175, line: 79, type: !1159, scopeLine: 79, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1158, retainedNodes: !6887)
+!6887 = !{!6888}
+!6888 = !DILocalVariable(name: "this", arg: 1, scope: !6886, type: !6889, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6889 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !1156, size: 64)
+!6890 = !DILocation(line: 0, scope: !6886)
+!6891 = !DILocation(line: 79, column: 47, scope: !6886)
+!6892 = distinct !DISubprogram(name: "_M_local_data", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_local_dataEv", scope: !1132, file: !1552, line: 138, type: !6893, scopeLine: 139, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6895, retainedNodes: !6896)
+!6893 = !DISubroutineType(types: !6894)
+!6894 = !{!5576, !4757}
+!6895 = !DISubprogram(name: "_M_local_data", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_local_dataEv", scope: !1132, file: !1552, line: 138, type: !6893, scopeLine: 138, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!6896 = !{!6897}
+!6897 = !DILocalVariable(name: "this", arg: 1, scope: !6892, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6898 = !DILocation(line: 0, scope: !6892)
+!6899 = !DILocation(line: 141, column: 51, scope: !6892)
+!6900 = !DILocation(line: 141, column: 50, scope: !6892)
+!6901 = !DILocation(line: 141, column: 9, scope: !6892)
+!6902 = !DILocation(line: 141, column: 2, scope: !6892)
+!6903 = distinct !DISubprogram(name: "_Alloc_hider", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderC2EPcRKS3_", scope: !6904, file: !1552, line: 108, type: !6909, scopeLine: 109, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6908, retainedNodes: !6912)
+!6904 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "_Alloc_hider", scope: !1132, file: !1552, line: 106, size: 64, flags: DIFlagTypePassByReference | DIFlagNonTrivial, elements: !6905, identifier: "_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE")
+!6905 = !{!6906, !6907, !6908}
+!6906 = !DIDerivedType(tag: DW_TAG_inheritance, scope: !6904, baseType: !5650, extraData: i32 0)
+!6907 = !DIDerivedType(tag: DW_TAG_member, name: "_M_p", scope: !6904, file: !1552, line: 111, baseType: !5576, size: 64)
+!6908 = !DISubprogram(name: "_Alloc_hider", scope: !6904, file: !1552, line: 108, type: !6909, scopeLine: 108, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!6909 = !DISubroutineType(types: !6910)
+!6910 = !{null, !6911, !5576, !1662}
+!6911 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6904, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6912 = !{!6913, !6915, !6916}
+!6913 = !DILocalVariable(name: "this", arg: 1, scope: !6903, type: !6914, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6914 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !6904, size: 64)
+!6915 = !DILocalVariable(name: "__dat", arg: 2, scope: !6903, file: !1552, line: 108, type: !5576)
+!6916 = !DILocalVariable(name: "__a", arg: 3, scope: !6903, file: !1552, line: 108, type: !1662)
+!6917 = !DILocation(line: 0, scope: !6903)
+!6918 = !DILocation(line: 109, column: 37, scope: !6903)
+!6919 = !DILocation(line: 109, column: 4, scope: !6903)
+!6920 = !DILocation(line: 109, column: 25, scope: !6903)
+!6921 = !{!5585, !3172, i64 0}
+!6922 = !DILocation(line: 109, column: 39, scope: !6903)
+!6923 = distinct !DISubprogram(name: "_M_construct<const char *>", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_", scope: !1132, file: !1552, line: 211, type: !6924, scopeLine: 212, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6927, declaration: !6926, retainedNodes: !6929)
+!6924 = !DISubroutineType(types: !6925)
+!6925 = !{null, !4757, !621, !621}
+!6926 = !DISubprogram(name: "_M_construct<const char *>", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_", scope: !1132, file: !1552, line: 211, type: !6924, scopeLine: 211, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized, templateParams: !6927)
+!6927 = !{!6928}
+!6928 = !DITemplateTypeParameter(name: "_InIterator", type: !621)
+!6929 = !{!6930, !6931, !6932}
+!6930 = !DILocalVariable(name: "this", arg: 1, scope: !6923, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6931 = !DILocalVariable(name: "__beg", arg: 2, scope: !6923, file: !1552, line: 211, type: !621)
+!6932 = !DILocalVariable(name: "__end", arg: 3, scope: !6923, file: !1552, line: 211, type: !621)
+!6933 = !DILocation(line: 0, scope: !6923)
+!6934 = !DILocation(line: 214, column: 4, scope: !6923)
+!6935 = !DILocation(line: 215, column: 9, scope: !6923)
+!6936 = distinct !DISubprogram(name: "length", linkageName: "_ZNSt11char_traitsIcE6lengthEPKc", scope: !1677, file: !1676, line: 266, type: !1694, scopeLine: 267, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1693, retainedNodes: !6937)
+!6937 = !{!6938}
+!6938 = !DILocalVariable(name: "__s", arg: 1, scope: !6936, file: !1676, line: 266, type: !1692)
+!6939 = !DILocation(line: 0, scope: !6936)
+!6940 = !DILocation(line: 267, column: 16, scope: !6936)
+!6941 = !DILocation(line: 267, column: 9, scope: !6936)
+!6942 = distinct !DISubprogram(name: "pointer_to", linkageName: "_ZNSt14pointer_traitsIPcE10pointer_toERc", scope: !6943, file: !5602, line: 168, type: !6946, scopeLine: 169, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6945, retainedNodes: !6955)
+!6943 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "pointer_traits<char *>", scope: !2, file: !5602, line: 150, size: 8, flags: DIFlagTypePassByValue, elements: !6944, templateParams: !6953, identifier: "_ZTSSt14pointer_traitsIPcE")
+!6944 = !{!6945}
+!6945 = !DISubprogram(name: "pointer_to", linkageName: "_ZNSt14pointer_traitsIPcE10pointer_toERc", scope: !6943, file: !5602, line: 168, type: !6946, scopeLine: 168, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized)
+!6946 = !DISubroutineType(types: !6947)
+!6947 = !{!6948, !6949}
+!6948 = !DIDerivedType(tag: DW_TAG_typedef, name: "pointer", scope: !6943, file: !5602, line: 153, baseType: !1556)
+!6949 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !6950, size: 64)
+!6950 = !DIDerivedType(tag: DW_TAG_typedef, name: "__type", scope: !6951, file: !5602, line: 107, baseType: !623)
+!6951 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__ptrtr_not_void<char, char>", scope: !2, file: !5602, line: 105, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !6952, identifier: "_ZTSSt16__ptrtr_not_voidIccE")
+!6952 = !{!5523, !5614}
 !6953 = !{!6954}
-!6954 = !DILocalVariable(name: "__r", arg: 1, scope: !6940, file: !5600, line: 168, type: !6947)
-!6955 = !DILocation(line: 0, scope: !6940)
-!6956 = !DILocation(line: 169, column: 16, scope: !6940)
-!6957 = !DILocation(line: 169, column: 9, scope: !6940)
-!6958 = distinct !DISubprogram(name: "addressof<char>", linkageName: "_ZSt9addressofIcEPT_RS0_", scope: !2, file: !5621, line: 135, type: !6959, scopeLine: 136, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5520, retainedNodes: !6961)
-!6959 = !DISubroutineType(types: !6960)
-!6960 = !{!1556, !5504}
-!6961 = !{!6962}
-!6962 = !DILocalVariable(name: "__r", arg: 1, scope: !6958, file: !5621, line: 135, type: !5504)
-!6963 = !DILocation(line: 0, scope: !6958)
-!6964 = !DILocation(line: 136, column: 14, scope: !6958)
-!6965 = !DILocation(line: 136, column: 7, scope: !6958)
-!6966 = distinct !DISubprogram(name: "__addressof<char>", linkageName: "_ZSt11__addressofIcEPT_RS0_", scope: !2, file: !5621, line: 47, type: !6959, scopeLine: 48, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5520, retainedNodes: !6967)
-!6967 = !{!6968}
-!6968 = !DILocalVariable(name: "__r", arg: 1, scope: !6966, file: !5621, line: 47, type: !5504)
-!6969 = !DILocation(line: 0, scope: !6966)
-!6970 = !DILocation(line: 49, column: 7, scope: !6966)
-!6971 = distinct !DISubprogram(name: "allocator", linkageName: "_ZNSaIcEC2ERKS_", scope: !1641, file: !169, line: 115, type: !6972, scopeLine: 116, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6974, retainedNodes: !6975)
-!6972 = !DISubroutineType(types: !6973)
-!6973 = !{null, !4745, !1662}
-!6974 = !DISubprogram(name: "allocator", scope: !1641, file: !169, line: 115, type: !6972, scopeLine: 115, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!6975 = !{!6976, !6977}
-!6976 = !DILocalVariable(name: "this", arg: 1, scope: !6971, type: !4749, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6977 = !DILocalVariable(name: "__a", arg: 2, scope: !6971, file: !169, line: 115, type: !1662)
-!6978 = !DILocation(line: 0, scope: !6971)
-!6979 = !DILocation(line: 116, column: 36, scope: !6971)
-!6980 = !DILocation(line: 116, column: 31, scope: !6971)
-!6981 = !DILocation(line: 116, column: 9, scope: !6971)
-!6982 = !DILocation(line: 116, column: 38, scope: !6971)
-!6983 = distinct !DISubprogram(name: "new_allocator", linkageName: "_ZN9__gnu_cxx13new_allocatorIcEC2ERKS1_", scope: !5486, file: !175, line: 81, type: !5493, scopeLine: 81, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5492, retainedNodes: !6984)
-!6984 = !{!6985, !6986}
-!6985 = !DILocalVariable(name: "this", arg: 1, scope: !6983, type: !5524, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6986 = !DILocalVariable(arg: 2, scope: !6983, file: !175, line: 81, type: !5495)
-!6987 = !DILocation(line: 0, scope: !6983)
-!6988 = !DILocation(line: 81, column: 67, scope: !6983)
-!6989 = distinct !DISubprogram(name: "_M_construct_aux<const char *>", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16_M_construct_auxIPKcEEvT_S8_St12__false_type", scope: !1132, file: !1552, line: 191, type: !6990, scopeLine: 193, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6925, declaration: !6994, retainedNodes: !6995)
-!6990 = !DISubroutineType(types: !6991)
-!6991 = !{null, !4757, !621, !621, !6992}
-!6992 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__false_type", scope: !2, file: !6993, line: 83, size: 8, flags: DIFlagTypePassByValue, elements: !263, identifier: "_ZTSSt12__false_type")
-!6993 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/cpp_type_traits.h", directory: "")
-!6994 = !DISubprogram(name: "_M_construct_aux<const char *>", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16_M_construct_auxIPKcEEvT_S8_St12__false_type", scope: !1132, file: !1552, line: 191, type: !6990, scopeLine: 191, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized, templateParams: !6925)
-!6995 = !{!6996, !6997, !6998, !6999}
-!6996 = !DILocalVariable(name: "this", arg: 1, scope: !6989, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
-!6997 = !DILocalVariable(name: "__beg", arg: 2, scope: !6989, file: !1552, line: 191, type: !621)
-!6998 = !DILocalVariable(name: "__end", arg: 3, scope: !6989, file: !1552, line: 191, type: !621)
-!6999 = !DILocalVariable(arg: 4, scope: !6989, file: !1552, line: 192, type: !6992)
-!7000 = !DILocation(line: 0, scope: !6989)
-!7001 = !DILocation(line: 195, column: 11, scope: !6989)
-!7002 = !DILocation(line: 196, column: 2, scope: !6989)
-!7003 = distinct !DISubprogram(name: "_M_construct<const char *>", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag", scope: !1132, file: !1133, line: 211, type: !7004, scopeLine: 213, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7007, declaration: !7006, retainedNodes: !7009)
-!7004 = !DISubroutineType(types: !7005)
-!7005 = !{null, !4757, !621, !621, !6104}
-!7006 = !DISubprogram(name: "_M_construct<const char *>", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag", scope: !1132, file: !1552, line: 227, type: !7004, scopeLine: 227, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized, templateParams: !7007)
-!7007 = !{!7008}
-!7008 = !DITemplateTypeParameter(name: "_FwdIterator", type: !621)
-!7009 = !{!7010, !7011, !7012, !7013, !7014}
-!7010 = !DILocalVariable(name: "this", arg: 1, scope: !7003, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7011 = !DILocalVariable(name: "__beg", arg: 2, scope: !7003, file: !1552, line: 227, type: !621)
-!7012 = !DILocalVariable(name: "__end", arg: 3, scope: !7003, file: !1552, line: 227, type: !621)
-!7013 = !DILocalVariable(arg: 4, scope: !7003, file: !1552, line: 228, type: !6104)
-!7014 = !DILocalVariable(name: "__dnew", scope: !7003, file: !1133, line: 219, type: !1628)
-!7015 = !DILocation(line: 0, scope: !7003)
-!7016 = !DILocation(line: 215, column: 6, scope: !7017)
-!7017 = distinct !DILexicalBlock(scope: !7003, file: !1133, line: 215, column: 6)
-!7018 = !DILocation(line: 215, column: 42, scope: !7017)
-!7019 = !DILocation(line: 215, column: 51, scope: !7017)
-!7020 = !DILocation(line: 216, column: 4, scope: !7017)
-!7021 = !DILocation(line: 219, column: 2, scope: !7003)
-!7022 = !DILocation(line: 219, column: 44, scope: !7003)
-!7023 = !DILocation(line: 219, column: 12, scope: !7003)
-!7024 = !DILocation(line: 221, column: 13, scope: !7025)
-!7025 = distinct !DILexicalBlock(scope: !7003, file: !1133, line: 221, column: 6)
-!7026 = !DILocation(line: 221, column: 6, scope: !7003)
-!7027 = !DILocation(line: 223, column: 14, scope: !7028)
-!7028 = distinct !DILexicalBlock(scope: !7025, file: !1133, line: 222, column: 4)
-!7029 = !DILocation(line: 223, column: 6, scope: !7028)
-!7030 = !DILocation(line: 224, column: 18, scope: !7028)
-!7031 = !DILocation(line: 224, column: 6, scope: !7028)
-!7032 = !DILocation(line: 225, column: 4, scope: !7028)
-!7033 = !DILocation(line: 229, column: 26, scope: !7034)
-!7034 = distinct !DILexicalBlock(scope: !7003, file: !1133, line: 229, column: 4)
-!7035 = !DILocation(line: 229, column: 6, scope: !7034)
-!7036 = !DILocation(line: 236, column: 16, scope: !7003)
-!7037 = !DILocation(line: 236, column: 2, scope: !7003)
-!7038 = !DILocation(line: 237, column: 7, scope: !7003)
-!7039 = distinct !DISubprogram(name: "__is_null_pointer<const char>", linkageName: "_ZN9__gnu_cxx17__is_null_pointerIKcEEbPT_", scope: !24, file: !5883, line: 150, type: !7040, scopeLine: 151, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7044, retainedNodes: !7042)
-!7040 = !DISubroutineType(types: !7041)
-!7041 = !{!13, !621}
-!7042 = !{!7043}
-!7043 = !DILocalVariable(name: "__ptr", arg: 1, scope: !7039, file: !5883, line: 150, type: !621)
+!6954 = !DITemplateTypeParameter(name: "_Ptr", type: !1556)
+!6955 = !{!6956}
+!6956 = !DILocalVariable(name: "__r", arg: 1, scope: !6942, file: !5602, line: 168, type: !6949)
+!6957 = !DILocation(line: 0, scope: !6942)
+!6958 = !DILocation(line: 169, column: 16, scope: !6942)
+!6959 = !DILocation(line: 169, column: 9, scope: !6942)
+!6960 = distinct !DISubprogram(name: "addressof<char>", linkageName: "_ZSt9addressofIcEPT_RS0_", scope: !2, file: !5623, line: 135, type: !6961, scopeLine: 136, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5522, retainedNodes: !6963)
+!6961 = !DISubroutineType(types: !6962)
+!6962 = !{!1556, !5506}
+!6963 = !{!6964}
+!6964 = !DILocalVariable(name: "__r", arg: 1, scope: !6960, file: !5623, line: 135, type: !5506)
+!6965 = !DILocation(line: 0, scope: !6960)
+!6966 = !DILocation(line: 136, column: 14, scope: !6960)
+!6967 = !DILocation(line: 136, column: 7, scope: !6960)
+!6968 = distinct !DISubprogram(name: "__addressof<char>", linkageName: "_ZSt11__addressofIcEPT_RS0_", scope: !2, file: !5623, line: 47, type: !6961, scopeLine: 48, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !5522, retainedNodes: !6969)
+!6969 = !{!6970}
+!6970 = !DILocalVariable(name: "__r", arg: 1, scope: !6968, file: !5623, line: 47, type: !5506)
+!6971 = !DILocation(line: 0, scope: !6968)
+!6972 = !DILocation(line: 49, column: 7, scope: !6968)
+!6973 = distinct !DISubprogram(name: "allocator", linkageName: "_ZNSaIcEC2ERKS_", scope: !1641, file: !169, line: 115, type: !6974, scopeLine: 116, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !6976, retainedNodes: !6977)
+!6974 = !DISubroutineType(types: !6975)
+!6975 = !{null, !4745, !1662}
+!6976 = !DISubprogram(name: "allocator", scope: !1641, file: !169, line: 115, type: !6974, scopeLine: 115, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!6977 = !{!6978, !6979}
+!6978 = !DILocalVariable(name: "this", arg: 1, scope: !6973, type: !4749, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6979 = !DILocalVariable(name: "__a", arg: 2, scope: !6973, file: !169, line: 115, type: !1662)
+!6980 = !DILocation(line: 0, scope: !6973)
+!6981 = !DILocation(line: 116, column: 36, scope: !6973)
+!6982 = !DILocation(line: 116, column: 31, scope: !6973)
+!6983 = !DILocation(line: 116, column: 9, scope: !6973)
+!6984 = !DILocation(line: 116, column: 38, scope: !6973)
+!6985 = distinct !DISubprogram(name: "new_allocator", linkageName: "_ZN9__gnu_cxx13new_allocatorIcEC2ERKS1_", scope: !5488, file: !175, line: 81, type: !5495, scopeLine: 81, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !5494, retainedNodes: !6986)
+!6986 = !{!6987, !6988}
+!6987 = !DILocalVariable(name: "this", arg: 1, scope: !6985, type: !5526, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6988 = !DILocalVariable(arg: 2, scope: !6985, file: !175, line: 81, type: !5497)
+!6989 = !DILocation(line: 0, scope: !6985)
+!6990 = !DILocation(line: 81, column: 67, scope: !6985)
+!6991 = distinct !DISubprogram(name: "_M_construct_aux<const char *>", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16_M_construct_auxIPKcEEvT_S8_St12__false_type", scope: !1132, file: !1552, line: 191, type: !6992, scopeLine: 193, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !6927, declaration: !6996, retainedNodes: !6997)
+!6992 = !DISubroutineType(types: !6993)
+!6993 = !{null, !4757, !621, !621, !6994}
+!6994 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "__false_type", scope: !2, file: !6995, line: 83, size: 8, flags: DIFlagTypePassByValue, elements: !263, identifier: "_ZTSSt12__false_type")
+!6995 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/cpp_type_traits.h", directory: "")
+!6996 = !DISubprogram(name: "_M_construct_aux<const char *>", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE16_M_construct_auxIPKcEEvT_S8_St12__false_type", scope: !1132, file: !1552, line: 191, type: !6992, scopeLine: 191, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized, templateParams: !6927)
+!6997 = !{!6998, !6999, !7000, !7001}
+!6998 = !DILocalVariable(name: "this", arg: 1, scope: !6991, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
+!6999 = !DILocalVariable(name: "__beg", arg: 2, scope: !6991, file: !1552, line: 191, type: !621)
+!7000 = !DILocalVariable(name: "__end", arg: 3, scope: !6991, file: !1552, line: 191, type: !621)
+!7001 = !DILocalVariable(arg: 4, scope: !6991, file: !1552, line: 192, type: !6994)
+!7002 = !DILocation(line: 0, scope: !6991)
+!7003 = !DILocation(line: 195, column: 11, scope: !6991)
+!7004 = !DILocation(line: 196, column: 2, scope: !6991)
+!7005 = distinct !DISubprogram(name: "_M_construct<const char *>", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag", scope: !1132, file: !1133, line: 211, type: !7006, scopeLine: 213, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7009, declaration: !7008, retainedNodes: !7011)
+!7006 = !DISubroutineType(types: !7007)
+!7007 = !{null, !4757, !621, !621, !6106}
+!7008 = !DISubprogram(name: "_M_construct<const char *>", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag", scope: !1132, file: !1552, line: 227, type: !7006, scopeLine: 227, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized, templateParams: !7009)
+!7009 = !{!7010}
+!7010 = !DITemplateTypeParameter(name: "_FwdIterator", type: !621)
+!7011 = !{!7012, !7013, !7014, !7015, !7016}
+!7012 = !DILocalVariable(name: "this", arg: 1, scope: !7005, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7013 = !DILocalVariable(name: "__beg", arg: 2, scope: !7005, file: !1552, line: 227, type: !621)
+!7014 = !DILocalVariable(name: "__end", arg: 3, scope: !7005, file: !1552, line: 227, type: !621)
+!7015 = !DILocalVariable(arg: 4, scope: !7005, file: !1552, line: 228, type: !6106)
+!7016 = !DILocalVariable(name: "__dnew", scope: !7005, file: !1133, line: 219, type: !1628)
+!7017 = !DILocation(line: 0, scope: !7005)
+!7018 = !DILocation(line: 215, column: 6, scope: !7019)
+!7019 = distinct !DILexicalBlock(scope: !7005, file: !1133, line: 215, column: 6)
+!7020 = !DILocation(line: 215, column: 42, scope: !7019)
+!7021 = !DILocation(line: 215, column: 51, scope: !7019)
+!7022 = !DILocation(line: 216, column: 4, scope: !7019)
+!7023 = !DILocation(line: 219, column: 2, scope: !7005)
+!7024 = !DILocation(line: 219, column: 44, scope: !7005)
+!7025 = !DILocation(line: 219, column: 12, scope: !7005)
+!7026 = !DILocation(line: 221, column: 13, scope: !7027)
+!7027 = distinct !DILexicalBlock(scope: !7005, file: !1133, line: 221, column: 6)
+!7028 = !DILocation(line: 221, column: 6, scope: !7005)
+!7029 = !DILocation(line: 223, column: 14, scope: !7030)
+!7030 = distinct !DILexicalBlock(scope: !7027, file: !1133, line: 222, column: 4)
+!7031 = !DILocation(line: 223, column: 6, scope: !7030)
+!7032 = !DILocation(line: 224, column: 18, scope: !7030)
+!7033 = !DILocation(line: 224, column: 6, scope: !7030)
+!7034 = !DILocation(line: 225, column: 4, scope: !7030)
+!7035 = !DILocation(line: 229, column: 26, scope: !7036)
+!7036 = distinct !DILexicalBlock(scope: !7005, file: !1133, line: 229, column: 4)
+!7037 = !DILocation(line: 229, column: 6, scope: !7036)
+!7038 = !DILocation(line: 236, column: 16, scope: !7005)
+!7039 = !DILocation(line: 236, column: 2, scope: !7005)
+!7040 = !DILocation(line: 237, column: 7, scope: !7005)
+!7041 = distinct !DISubprogram(name: "__is_null_pointer<const char>", linkageName: "_ZN9__gnu_cxx17__is_null_pointerIKcEEbPT_", scope: !24, file: !5885, line: 150, type: !7042, scopeLine: 151, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7046, retainedNodes: !7044)
+!7042 = !DISubroutineType(types: !7043)
+!7043 = !{!13, !621}
 !7044 = !{!7045}
-!7045 = !DITemplateTypeParameter(name: "_Type", type: !622)
-!7046 = !DILocation(line: 0, scope: !7039)
-!7047 = !DILocation(line: 151, column: 20, scope: !7039)
-!7048 = !DILocation(line: 151, column: 7, scope: !7039)
-!7049 = distinct !DISubprogram(name: "distance<const char *>", linkageName: "_ZSt8distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_", scope: !2, file: !7050, line: 114, type: !7051, scopeLine: 115, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7060, retainedNodes: !7057)
-!7050 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_iterator_base_funcs.h", directory: "")
-!7051 = !DISubroutineType(types: !7052)
-!7052 = !{!7053, !621, !621}
-!7053 = !DIDerivedType(tag: DW_TAG_typedef, name: "difference_type", scope: !7054, file: !413, line: 193, baseType: !438)
-!7054 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "iterator_traits<const char *>", scope: !2, file: !413, line: 189, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !7055, identifier: "_ZTSSt15iterator_traitsIPKcE")
-!7055 = !{!7056}
-!7056 = !DITemplateTypeParameter(name: "_Iterator", type: !621)
-!7057 = !{!7058, !7059}
-!7058 = !DILocalVariable(name: "__first", arg: 1, scope: !7049, file: !7050, line: 114, type: !621)
-!7059 = !DILocalVariable(name: "__last", arg: 2, scope: !7049, file: !7050, line: 114, type: !621)
-!7060 = !{!7061}
-!7061 = !DITemplateTypeParameter(name: "_InputIterator", type: !621)
-!7062 = !DILocation(line: 0, scope: !7049)
-!7063 = !DILocation(line: 118, column: 9, scope: !7049)
-!7064 = !DILocation(line: 117, column: 14, scope: !7049)
-!7065 = !DILocation(line: 117, column: 7, scope: !7049)
-!7066 = distinct !DISubprogram(name: "_M_data", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEPc", scope: !1132, file: !1552, line: 126, type: !7067, scopeLine: 127, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !7069, retainedNodes: !7070)
-!7067 = !DISubroutineType(types: !7068)
-!7068 = !{null, !4757, !5574}
-!7069 = !DISubprogram(name: "_M_data", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEPc", scope: !1132, file: !1552, line: 126, type: !7067, scopeLine: 126, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7070 = !{!7071, !7072}
-!7071 = !DILocalVariable(name: "this", arg: 1, scope: !7066, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7072 = !DILocalVariable(name: "__p", arg: 2, scope: !7066, file: !1552, line: 126, type: !5574)
-!7073 = !DILocation(line: 0, scope: !7066)
-!7074 = !DILocation(line: 127, column: 21, scope: !7066)
-!7075 = !DILocation(line: 127, column: 26, scope: !7066)
-!7076 = !DILocation(line: 127, column: 33, scope: !7066)
-!7077 = distinct !DISubprogram(name: "_M_capacity", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_capacityEm", scope: !1132, file: !1552, line: 158, type: !5559, scopeLine: 159, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !7078, retainedNodes: !7079)
-!7078 = !DISubprogram(name: "_M_capacity", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_capacityEm", scope: !1132, file: !1552, line: 158, type: !5559, scopeLine: 158, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7079 = !{!7080, !7081}
-!7080 = !DILocalVariable(name: "this", arg: 1, scope: !7077, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7081 = !DILocalVariable(name: "__capacity", arg: 2, scope: !7077, file: !1552, line: 158, type: !1628)
-!7082 = !DILocation(line: 0, scope: !7077)
-!7083 = !DILocation(line: 159, column: 9, scope: !7077)
-!7084 = !DILocation(line: 159, column: 31, scope: !7077)
-!7085 = !DILocation(line: 159, column: 45, scope: !7077)
-!7086 = distinct !DISubprogram(name: "_S_copy_chars", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_S_copy_charsEPcPKcS7_", scope: !1132, file: !1552, line: 344, type: !7087, scopeLine: 346, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !7089, retainedNodes: !7090)
-!7087 = !DISubroutineType(types: !7088)
-!7088 = !{null, !1556, !621, !621}
-!7089 = !DISubprogram(name: "_S_copy_chars", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_S_copy_charsEPcPKcS7_", scope: !1132, file: !1552, line: 344, type: !7087, scopeLine: 344, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized)
-!7090 = !{!7091, !7092, !7093}
-!7091 = !DILocalVariable(name: "__p", arg: 1, scope: !7086, file: !1552, line: 344, type: !1556)
-!7092 = !DILocalVariable(name: "__k1", arg: 2, scope: !7086, file: !1552, line: 344, type: !621)
-!7093 = !DILocalVariable(name: "__k2", arg: 3, scope: !7086, file: !1552, line: 344, type: !621)
-!7094 = !DILocation(line: 0, scope: !7086)
-!7095 = !DILocation(line: 346, column: 33, scope: !7086)
-!7096 = !DILocation(line: 346, column: 9, scope: !7086)
-!7097 = !DILocation(line: 346, column: 42, scope: !7086)
-!7098 = distinct !DISubprogram(name: "_M_set_length", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_set_lengthEm", scope: !1132, file: !1552, line: 162, type: !5559, scopeLine: 163, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !7099, retainedNodes: !7100)
-!7099 = !DISubprogram(name: "_M_set_length", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_set_lengthEm", scope: !1132, file: !1552, line: 162, type: !5559, scopeLine: 162, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7100 = !{!7101, !7102}
-!7101 = !DILocalVariable(name: "this", arg: 1, scope: !7098, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7102 = !DILocalVariable(name: "__n", arg: 2, scope: !7098, file: !1552, line: 162, type: !1628)
-!7103 = !DILocation(line: 0, scope: !7098)
-!7104 = !DILocation(line: 164, column: 2, scope: !7098)
-!7105 = !DILocation(line: 165, column: 22, scope: !7098)
-!7106 = !DILocation(line: 165, column: 38, scope: !7098)
-!7107 = !DILocation(line: 165, column: 2, scope: !7098)
-!7108 = !DILocation(line: 166, column: 7, scope: !7098)
-!7109 = distinct !DISubprogram(name: "__distance<const char *>", linkageName: "_ZSt10__distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_St26random_access_iterator_tag", scope: !2, file: !7050, line: 90, type: !7110, scopeLine: 92, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7116, retainedNodes: !7112)
-!7110 = !DISubroutineType(types: !7111)
-!7111 = !{!7053, !621, !621, !6098}
-!7112 = !{!7113, !7114, !7115}
-!7113 = !DILocalVariable(name: "__first", arg: 1, scope: !7109, file: !7050, line: 90, type: !621)
-!7114 = !DILocalVariable(name: "__last", arg: 2, scope: !7109, file: !7050, line: 90, type: !621)
-!7115 = !DILocalVariable(arg: 3, scope: !7109, file: !7050, line: 91, type: !6098)
-!7116 = !{!7117}
-!7117 = !DITemplateTypeParameter(name: "_RandomAccessIterator", type: !621)
-!7118 = !DILocation(line: 0, scope: !7109)
-!7119 = !DILocation(line: 96, column: 21, scope: !7109)
-!7120 = !DILocation(line: 96, column: 7, scope: !7109)
-!7121 = distinct !DISubprogram(name: "__iterator_category<const char *>", linkageName: "_ZSt19__iterator_categoryIPKcENSt15iterator_traitsIT_E17iterator_categoryERKS3_", scope: !2, file: !413, line: 204, type: !7122, scopeLine: 205, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7129, retainedNodes: !7127)
-!7122 = !DISubroutineType(types: !7123)
-!7123 = !{!7124, !7125}
-!7124 = !DIDerivedType(tag: DW_TAG_typedef, name: "iterator_category", scope: !7054, file: !413, line: 191, baseType: !6098)
-!7125 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !7126, size: 64)
-!7126 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !621)
-!7127 = !{!7128}
-!7128 = !DILocalVariable(arg: 1, scope: !7121, file: !413, line: 204, type: !7125)
+!7045 = !DILocalVariable(name: "__ptr", arg: 1, scope: !7041, file: !5885, line: 150, type: !621)
+!7046 = !{!7047}
+!7047 = !DITemplateTypeParameter(name: "_Type", type: !622)
+!7048 = !DILocation(line: 0, scope: !7041)
+!7049 = !DILocation(line: 151, column: 20, scope: !7041)
+!7050 = !DILocation(line: 151, column: 7, scope: !7041)
+!7051 = distinct !DISubprogram(name: "distance<const char *>", linkageName: "_ZSt8distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_", scope: !2, file: !7052, line: 114, type: !7053, scopeLine: 115, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7062, retainedNodes: !7059)
+!7052 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_iterator_base_funcs.h", directory: "")
+!7053 = !DISubroutineType(types: !7054)
+!7054 = !{!7055, !621, !621}
+!7055 = !DIDerivedType(tag: DW_TAG_typedef, name: "difference_type", scope: !7056, file: !413, line: 193, baseType: !438)
+!7056 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "iterator_traits<const char *>", scope: !2, file: !413, line: 189, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !7057, identifier: "_ZTSSt15iterator_traitsIPKcE")
+!7057 = !{!7058}
+!7058 = !DITemplateTypeParameter(name: "_Iterator", type: !621)
+!7059 = !{!7060, !7061}
+!7060 = !DILocalVariable(name: "__first", arg: 1, scope: !7051, file: !7052, line: 114, type: !621)
+!7061 = !DILocalVariable(name: "__last", arg: 2, scope: !7051, file: !7052, line: 114, type: !621)
+!7062 = !{!7063}
+!7063 = !DITemplateTypeParameter(name: "_InputIterator", type: !621)
+!7064 = !DILocation(line: 0, scope: !7051)
+!7065 = !DILocation(line: 118, column: 9, scope: !7051)
+!7066 = !DILocation(line: 117, column: 14, scope: !7051)
+!7067 = !DILocation(line: 117, column: 7, scope: !7051)
+!7068 = distinct !DISubprogram(name: "_M_data", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEPc", scope: !1132, file: !1552, line: 126, type: !7069, scopeLine: 127, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !7071, retainedNodes: !7072)
+!7069 = !DISubroutineType(types: !7070)
+!7070 = !{null, !4757, !5576}
+!7071 = !DISubprogram(name: "_M_data", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEPc", scope: !1132, file: !1552, line: 126, type: !7069, scopeLine: 126, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7072 = !{!7073, !7074}
+!7073 = !DILocalVariable(name: "this", arg: 1, scope: !7068, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7074 = !DILocalVariable(name: "__p", arg: 2, scope: !7068, file: !1552, line: 126, type: !5576)
+!7075 = !DILocation(line: 0, scope: !7068)
+!7076 = !DILocation(line: 127, column: 21, scope: !7068)
+!7077 = !DILocation(line: 127, column: 26, scope: !7068)
+!7078 = !DILocation(line: 127, column: 33, scope: !7068)
+!7079 = distinct !DISubprogram(name: "_M_capacity", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_capacityEm", scope: !1132, file: !1552, line: 158, type: !5561, scopeLine: 159, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !7080, retainedNodes: !7081)
+!7080 = !DISubprogram(name: "_M_capacity", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_capacityEm", scope: !1132, file: !1552, line: 158, type: !5561, scopeLine: 158, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7081 = !{!7082, !7083}
+!7082 = !DILocalVariable(name: "this", arg: 1, scope: !7079, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7083 = !DILocalVariable(name: "__capacity", arg: 2, scope: !7079, file: !1552, line: 158, type: !1628)
+!7084 = !DILocation(line: 0, scope: !7079)
+!7085 = !DILocation(line: 159, column: 9, scope: !7079)
+!7086 = !DILocation(line: 159, column: 31, scope: !7079)
+!7087 = !DILocation(line: 159, column: 45, scope: !7079)
+!7088 = distinct !DISubprogram(name: "_S_copy_chars", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_S_copy_charsEPcPKcS7_", scope: !1132, file: !1552, line: 344, type: !7089, scopeLine: 346, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !7091, retainedNodes: !7092)
+!7089 = !DISubroutineType(types: !7090)
+!7090 = !{null, !1556, !621, !621}
+!7091 = !DISubprogram(name: "_S_copy_chars", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_S_copy_charsEPcPKcS7_", scope: !1132, file: !1552, line: 344, type: !7089, scopeLine: 344, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized)
+!7092 = !{!7093, !7094, !7095}
+!7093 = !DILocalVariable(name: "__p", arg: 1, scope: !7088, file: !1552, line: 344, type: !1556)
+!7094 = !DILocalVariable(name: "__k1", arg: 2, scope: !7088, file: !1552, line: 344, type: !621)
+!7095 = !DILocalVariable(name: "__k2", arg: 3, scope: !7088, file: !1552, line: 344, type: !621)
+!7096 = !DILocation(line: 0, scope: !7088)
+!7097 = !DILocation(line: 346, column: 33, scope: !7088)
+!7098 = !DILocation(line: 346, column: 9, scope: !7088)
+!7099 = !DILocation(line: 346, column: 42, scope: !7088)
+!7100 = distinct !DISubprogram(name: "_M_set_length", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_set_lengthEm", scope: !1132, file: !1552, line: 162, type: !5561, scopeLine: 163, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !7101, retainedNodes: !7102)
+!7101 = !DISubprogram(name: "_M_set_length", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_set_lengthEm", scope: !1132, file: !1552, line: 162, type: !5561, scopeLine: 162, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7102 = !{!7103, !7104}
+!7103 = !DILocalVariable(name: "this", arg: 1, scope: !7100, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7104 = !DILocalVariable(name: "__n", arg: 2, scope: !7100, file: !1552, line: 162, type: !1628)
+!7105 = !DILocation(line: 0, scope: !7100)
+!7106 = !DILocation(line: 164, column: 2, scope: !7100)
+!7107 = !DILocation(line: 165, column: 22, scope: !7100)
+!7108 = !DILocation(line: 165, column: 38, scope: !7100)
+!7109 = !DILocation(line: 165, column: 2, scope: !7100)
+!7110 = !DILocation(line: 166, column: 7, scope: !7100)
+!7111 = distinct !DISubprogram(name: "__distance<const char *>", linkageName: "_ZSt10__distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_St26random_access_iterator_tag", scope: !2, file: !7052, line: 90, type: !7112, scopeLine: 92, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7118, retainedNodes: !7114)
+!7112 = !DISubroutineType(types: !7113)
+!7113 = !{!7055, !621, !621, !6100}
+!7114 = !{!7115, !7116, !7117}
+!7115 = !DILocalVariable(name: "__first", arg: 1, scope: !7111, file: !7052, line: 90, type: !621)
+!7116 = !DILocalVariable(name: "__last", arg: 2, scope: !7111, file: !7052, line: 90, type: !621)
+!7117 = !DILocalVariable(arg: 3, scope: !7111, file: !7052, line: 91, type: !6100)
+!7118 = !{!7119}
+!7119 = !DITemplateTypeParameter(name: "_RandomAccessIterator", type: !621)
+!7120 = !DILocation(line: 0, scope: !7111)
+!7121 = !DILocation(line: 96, column: 21, scope: !7111)
+!7122 = !DILocation(line: 96, column: 7, scope: !7111)
+!7123 = distinct !DISubprogram(name: "__iterator_category<const char *>", linkageName: "_ZSt19__iterator_categoryIPKcENSt15iterator_traitsIT_E17iterator_categoryERKS3_", scope: !2, file: !413, line: 204, type: !7124, scopeLine: 205, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7131, retainedNodes: !7129)
+!7124 = !DISubroutineType(types: !7125)
+!7125 = !{!7126, !7127}
+!7126 = !DIDerivedType(tag: DW_TAG_typedef, name: "iterator_category", scope: !7056, file: !413, line: 191, baseType: !6100)
+!7127 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !7128, size: 64)
+!7128 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !621)
 !7129 = !{!7130}
-!7130 = !DITemplateTypeParameter(name: "_Iter", type: !621)
-!7131 = !DILocation(line: 0, scope: !7121)
-!7132 = !DILocation(line: 205, column: 7, scope: !7121)
-!7133 = distinct !DISubprogram(name: "_S_copy", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm", scope: !1132, file: !1552, line: 294, type: !7134, scopeLine: 295, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !7136, retainedNodes: !7137)
-!7134 = !DISubroutineType(types: !7135)
-!7135 = !{null, !1556, !621, !1628}
-!7136 = !DISubprogram(name: "_S_copy", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm", scope: !1132, file: !1552, line: 294, type: !7134, scopeLine: 294, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized)
-!7137 = !{!7138, !7139, !7140}
-!7138 = !DILocalVariable(name: "__d", arg: 1, scope: !7133, file: !1552, line: 294, type: !1556)
-!7139 = !DILocalVariable(name: "__s", arg: 2, scope: !7133, file: !1552, line: 294, type: !621)
-!7140 = !DILocalVariable(name: "__n", arg: 3, scope: !7133, file: !1552, line: 294, type: !1628)
-!7141 = !DILocation(line: 0, scope: !7133)
-!7142 = !DILocation(line: 296, column: 10, scope: !7143)
-!7143 = distinct !DILexicalBlock(scope: !7133, file: !1552, line: 296, column: 6)
-!7144 = !DILocation(line: 296, column: 6, scope: !7133)
-!7145 = !DILocation(line: 297, column: 4, scope: !7143)
-!7146 = !DILocation(line: 299, column: 4, scope: !7143)
-!7147 = !DILocation(line: 300, column: 7, scope: !7133)
-!7148 = distinct !DISubprogram(name: "assign", linkageName: "_ZNSt11char_traitsIcE6assignERcRKc", scope: !1677, file: !1676, line: 242, type: !1680, scopeLine: 243, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1679, retainedNodes: !7149)
-!7149 = !{!7150, !7151}
-!7150 = !DILocalVariable(name: "__c1", arg: 1, scope: !7148, file: !1676, line: 242, type: !1682)
-!7151 = !DILocalVariable(name: "__c2", arg: 2, scope: !7148, file: !1676, line: 242, type: !1683)
-!7152 = !DILocation(line: 0, scope: !7148)
-!7153 = !DILocation(line: 243, column: 16, scope: !7148)
-!7154 = !DILocation(line: 243, column: 14, scope: !7148)
-!7155 = !DILocation(line: 243, column: 22, scope: !7148)
-!7156 = distinct !DISubprogram(name: "copy", linkageName: "_ZNSt11char_traitsIcE4copyEPcPKcm", scope: !1677, file: !1676, line: 286, type: !1700, scopeLine: 287, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1702, retainedNodes: !7157)
-!7157 = !{!7158, !7159, !7160}
-!7158 = !DILocalVariable(name: "__s1", arg: 1, scope: !7156, file: !1676, line: 286, type: !1674)
-!7159 = !DILocalVariable(name: "__s2", arg: 2, scope: !7156, file: !1676, line: 286, type: !1692)
-!7160 = !DILocalVariable(name: "__n", arg: 3, scope: !7156, file: !1676, line: 286, type: !206)
-!7161 = !DILocation(line: 0, scope: !7156)
-!7162 = !DILocation(line: 288, column: 10, scope: !7163)
-!7163 = distinct !DILexicalBlock(scope: !7156, file: !1676, line: 288, column: 6)
-!7164 = !DILocation(line: 288, column: 6, scope: !7156)
-!7165 = !DILocation(line: 290, column: 33, scope: !7156)
-!7166 = !DILocation(line: 290, column: 2, scope: !7156)
-!7167 = !DILocation(line: 291, column: 7, scope: !7156)
-!7168 = distinct !DISubprogram(name: "_M_length", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_lengthEm", scope: !1132, file: !1552, line: 130, type: !5559, scopeLine: 131, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !7169, retainedNodes: !7170)
-!7169 = !DISubprogram(name: "_M_length", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_lengthEm", scope: !1132, file: !1552, line: 130, type: !5559, scopeLine: 130, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7170 = !{!7171, !7172}
-!7171 = !DILocalVariable(name: "this", arg: 1, scope: !7168, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7172 = !DILocalVariable(name: "__length", arg: 2, scope: !7168, file: !1552, line: 130, type: !1628)
-!7173 = !DILocation(line: 0, scope: !7168)
-!7174 = !DILocation(line: 131, column: 9, scope: !7168)
-!7175 = !DILocation(line: 131, column: 26, scope: !7168)
-!7176 = !{!5582, !5034, i64 8}
-!7177 = !DILocation(line: 131, column: 38, scope: !7168)
-!7178 = distinct !DISubprogram(name: "construct<ILLIXR_AUDIO::Sound *, ILLIXR_AUDIO::Sound *const &>", linkageName: "_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE9constructIS2_JRKS2_EEEvRS3_PT_DpOT0_", scope: !86, file: !87, line: 529, type: !7179, scopeLine: 530, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7182, declaration: !7181, retainedNodes: !7187)
-!7179 = !DISubroutineType(types: !7180)
-!7180 = !{null, !1150, !93, !1182}
-!7181 = !DISubprogram(name: "construct<ILLIXR_AUDIO::Sound *, ILLIXR_AUDIO::Sound *const &>", linkageName: "_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE9constructIS2_JRKS2_EEEvRS3_PT_DpOT0_", scope: !86, file: !87, line: 529, type: !7179, scopeLine: 529, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !7182)
-!7182 = !{!7183, !7184}
-!7183 = !DITemplateTypeParameter(name: "_Up", type: !94)
-!7184 = !DITemplateValueParameter(tag: DW_TAG_GNU_template_parameter_pack, name: "_Args", value: !7185)
-!7185 = !{!7186}
-!7186 = !DITemplateTypeParameter(type: !1182)
-!7187 = !{!7188, !7189, !7190}
-!7188 = !DILocalVariable(name: "__a", arg: 1, scope: !7178, file: !87, line: 529, type: !1150)
-!7189 = !DILocalVariable(name: "__p", arg: 2, scope: !7178, file: !87, line: 529, type: !93)
-!7190 = !DILocalVariable(name: "__args", arg: 3, scope: !7178, file: !87, line: 529, type: !1182)
-!7191 = !DILocation(line: 0, scope: !7178)
-!7192 = !DILocation(line: 530, column: 4, scope: !7178)
-!7193 = !DILocation(line: 530, column: 23, scope: !7178)
-!7194 = !DILocation(line: 530, column: 8, scope: !7178)
-!7195 = !DILocation(line: 530, column: 56, scope: !7178)
-!7196 = distinct !DISubprogram(name: "_M_emplace_back_aux<ILLIXR_AUDIO::Sound *const &>", linkageName: "_ZNSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_", scope: !69, file: !5704, line: 408, type: !7197, scopeLine: 409, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7200, declaration: !7199, retainedNodes: !7201)
-!7197 = !DISubroutineType(types: !7198)
-!7198 = !{null, !1307, !1182}
-!7199 = !DISubprogram(name: "_M_emplace_back_aux<ILLIXR_AUDIO::Sound *const &>", linkageName: "_ZNSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_", scope: !69, file: !70, line: 1417, type: !7197, scopeLine: 1417, flags: DIFlagProtected | DIFlagPrototyped, spFlags: DISPFlagOptimized, templateParams: !7200)
-!7200 = !{!7184}
-!7201 = !{!7202, !7203, !7204, !7205, !7206}
-!7202 = !DILocalVariable(name: "this", arg: 1, scope: !7196, type: !68, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7203 = !DILocalVariable(name: "__args", arg: 2, scope: !7196, file: !70, line: 1417, type: !1182)
-!7204 = !DILocalVariable(name: "__len", scope: !7196, file: !5704, line: 410, type: !5713)
-!7205 = !DILocalVariable(name: "__new_start", scope: !7196, file: !5704, line: 412, type: !1483)
-!7206 = !DILocalVariable(name: "__new_finish", scope: !7196, file: !5704, line: 413, type: !1483)
-!7207 = !DILocation(line: 0, scope: !7196)
-!7208 = !DILocation(line: 411, column: 4, scope: !7196)
-!7209 = !DILocation(line: 412, column: 28, scope: !7196)
-!7210 = !DILocation(line: 416, column: 31, scope: !7211)
-!7211 = distinct !DILexicalBlock(scope: !7196, file: !5704, line: 415, column: 4)
-!7212 = !DILocation(line: 416, column: 60, scope: !7211)
-!7213 = !DILocation(line: 416, column: 58, scope: !7211)
-!7214 = !DILocation(line: 417, column: 10, scope: !7211)
-!7215 = !DILocation(line: 416, column: 6, scope: !7211)
-!7216 = !DILocation(line: 422, column: 23, scope: !7211)
-!7217 = !DILocation(line: 422, column: 47, scope: !7211)
-!7218 = !DILocation(line: 423, column: 22, scope: !7211)
-!7219 = !DILocation(line: 421, column: 10, scope: !7211)
-!7220 = !DILocation(line: 425, column: 6, scope: !7211)
-!7221 = !DILocation(line: 436, column: 30, scope: !7196)
-!7222 = !DILocation(line: 436, column: 54, scope: !7196)
-!7223 = !DILocation(line: 437, column: 9, scope: !7196)
-!7224 = !DILocation(line: 436, column: 2, scope: !7196)
-!7225 = !DILocation(line: 438, column: 30, scope: !7196)
-!7226 = !DILocation(line: 439, column: 23, scope: !7196)
-!7227 = !DILocation(line: 440, column: 9, scope: !7196)
-!7228 = !DILocation(line: 438, column: 2, scope: !7196)
-!7229 = !DILocation(line: 441, column: 25, scope: !7196)
-!7230 = !DILocation(line: 442, column: 26, scope: !7196)
-!7231 = !DILocation(line: 443, column: 48, scope: !7196)
-!7232 = !DILocation(line: 443, column: 34, scope: !7196)
-!7233 = !DILocation(line: 444, column: 7, scope: !7196)
-!7234 = !DILocation(line: 444, column: 7, scope: !7211)
-!7235 = !DILocation(line: 426, column: 4, scope: !7211)
-!7236 = !DILocation(line: 429, column: 11, scope: !7237)
-!7237 = distinct !DILexicalBlock(scope: !7238, file: !5704, line: 429, column: 10)
-!7238 = distinct !DILexicalBlock(scope: !7196, file: !5704, line: 428, column: 4)
-!7239 = !DILocation(line: 429, column: 10, scope: !7238)
-!7240 = !DILocation(line: 430, column: 60, scope: !7237)
-!7241 = !DILocation(line: 430, column: 58, scope: !7237)
-!7242 = !DILocation(line: 430, column: 8, scope: !7237)
-!7243 = !DILocation(line: 444, column: 7, scope: !7237)
-!7244 = !DILocation(line: 435, column: 4, scope: !7238)
-!7245 = !DILocation(line: 432, column: 49, scope: !7237)
-!7246 = !DILocation(line: 432, column: 8, scope: !7237)
-!7247 = !DILocation(line: 433, column: 6, scope: !7238)
-!7248 = !DILocation(line: 434, column: 6, scope: !7238)
-!7249 = distinct !DISubprogram(name: "construct<ILLIXR_AUDIO::Sound *, ILLIXR_AUDIO::Sound *const &>", linkageName: "_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE9constructIS3_JRKS3_EEEvPT_DpOT0_", scope: !1156, file: !175, line: 119, type: !7250, scopeLine: 120, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7182, declaration: !7252, retainedNodes: !7253)
-!7250 = !DISubroutineType(types: !7251)
-!7251 = !{null, !1161, !93, !1182}
-!7252 = !DISubprogram(name: "construct<ILLIXR_AUDIO::Sound *, ILLIXR_AUDIO::Sound *const &>", linkageName: "_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE9constructIS3_JRKS3_EEEvPT_DpOT0_", scope: !1156, file: !175, line: 119, type: !7250, scopeLine: 119, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized, templateParams: !7182)
-!7253 = !{!7254, !7255, !7256}
-!7254 = !DILocalVariable(name: "this", arg: 1, scope: !7249, type: !6887, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7255 = !DILocalVariable(name: "__p", arg: 2, scope: !7249, file: !175, line: 119, type: !93)
-!7256 = !DILocalVariable(name: "__args", arg: 3, scope: !7249, file: !175, line: 119, type: !1182)
-!7257 = !DILocation(line: 0, scope: !7249)
-!7258 = !DILocation(line: 120, column: 27, scope: !7249)
-!7259 = !DILocation(line: 120, column: 4, scope: !7249)
-!7260 = !DILocation(line: 120, column: 60, scope: !7249)
-!7261 = distinct !DISubprogram(name: "forward<ILLIXR_AUDIO::Sound *const &>", linkageName: "_ZSt7forwardIRKPN12ILLIXR_AUDIO5SoundEEOT_RNSt16remove_referenceIS5_E4typeE", scope: !2, file: !5621, line: 76, type: !7262, scopeLine: 77, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7267, retainedNodes: !7269)
-!7262 = !DISubroutineType(types: !7263)
-!7263 = !{!1182, !7264}
-!7264 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !7265, size: 64)
-!7265 = !DIDerivedType(tag: DW_TAG_typedef, name: "type", scope: !7266, file: !638, line: 1580, baseType: !1180)
-!7266 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "remove_reference<ILLIXR_AUDIO::Sound *const &>", scope: !2, file: !638, line: 1579, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !7267, identifier: "_ZTSSt16remove_referenceIRKPN12ILLIXR_AUDIO5SoundEE")
-!7267 = !{!7268}
-!7268 = !DITemplateTypeParameter(name: "_Tp", type: !1182)
+!7130 = !DILocalVariable(arg: 1, scope: !7123, file: !413, line: 204, type: !7127)
+!7131 = !{!7132}
+!7132 = !DITemplateTypeParameter(name: "_Iter", type: !621)
+!7133 = !DILocation(line: 0, scope: !7123)
+!7134 = !DILocation(line: 205, column: 7, scope: !7123)
+!7135 = distinct !DISubprogram(name: "_S_copy", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm", scope: !1132, file: !1552, line: 294, type: !7136, scopeLine: 295, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !7138, retainedNodes: !7139)
+!7136 = !DISubroutineType(types: !7137)
+!7137 = !{null, !1556, !621, !1628}
+!7138 = !DISubprogram(name: "_S_copy", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm", scope: !1132, file: !1552, line: 294, type: !7136, scopeLine: 294, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized)
+!7139 = !{!7140, !7141, !7142}
+!7140 = !DILocalVariable(name: "__d", arg: 1, scope: !7135, file: !1552, line: 294, type: !1556)
+!7141 = !DILocalVariable(name: "__s", arg: 2, scope: !7135, file: !1552, line: 294, type: !621)
+!7142 = !DILocalVariable(name: "__n", arg: 3, scope: !7135, file: !1552, line: 294, type: !1628)
+!7143 = !DILocation(line: 0, scope: !7135)
+!7144 = !DILocation(line: 296, column: 10, scope: !7145)
+!7145 = distinct !DILexicalBlock(scope: !7135, file: !1552, line: 296, column: 6)
+!7146 = !DILocation(line: 296, column: 6, scope: !7135)
+!7147 = !DILocation(line: 297, column: 4, scope: !7145)
+!7148 = !DILocation(line: 299, column: 4, scope: !7145)
+!7149 = !DILocation(line: 300, column: 7, scope: !7135)
+!7150 = distinct !DISubprogram(name: "assign", linkageName: "_ZNSt11char_traitsIcE6assignERcRKc", scope: !1677, file: !1676, line: 242, type: !1680, scopeLine: 243, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1679, retainedNodes: !7151)
+!7151 = !{!7152, !7153}
+!7152 = !DILocalVariable(name: "__c1", arg: 1, scope: !7150, file: !1676, line: 242, type: !1682)
+!7153 = !DILocalVariable(name: "__c2", arg: 2, scope: !7150, file: !1676, line: 242, type: !1683)
+!7154 = !DILocation(line: 0, scope: !7150)
+!7155 = !DILocation(line: 243, column: 16, scope: !7150)
+!7156 = !DILocation(line: 243, column: 14, scope: !7150)
+!7157 = !DILocation(line: 243, column: 22, scope: !7150)
+!7158 = distinct !DISubprogram(name: "copy", linkageName: "_ZNSt11char_traitsIcE4copyEPcPKcm", scope: !1677, file: !1676, line: 286, type: !1700, scopeLine: 287, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1702, retainedNodes: !7159)
+!7159 = !{!7160, !7161, !7162}
+!7160 = !DILocalVariable(name: "__s1", arg: 1, scope: !7158, file: !1676, line: 286, type: !1674)
+!7161 = !DILocalVariable(name: "__s2", arg: 2, scope: !7158, file: !1676, line: 286, type: !1692)
+!7162 = !DILocalVariable(name: "__n", arg: 3, scope: !7158, file: !1676, line: 286, type: !206)
+!7163 = !DILocation(line: 0, scope: !7158)
+!7164 = !DILocation(line: 288, column: 10, scope: !7165)
+!7165 = distinct !DILexicalBlock(scope: !7158, file: !1676, line: 288, column: 6)
+!7166 = !DILocation(line: 288, column: 6, scope: !7158)
+!7167 = !DILocation(line: 290, column: 33, scope: !7158)
+!7168 = !DILocation(line: 290, column: 2, scope: !7158)
+!7169 = !DILocation(line: 291, column: 7, scope: !7158)
+!7170 = distinct !DISubprogram(name: "_M_length", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_lengthEm", scope: !1132, file: !1552, line: 130, type: !5561, scopeLine: 131, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !7171, retainedNodes: !7172)
+!7171 = !DISubprogram(name: "_M_length", linkageName: "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_lengthEm", scope: !1132, file: !1552, line: 130, type: !5561, scopeLine: 130, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7172 = !{!7173, !7174}
+!7173 = !DILocalVariable(name: "this", arg: 1, scope: !7170, type: !4761, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7174 = !DILocalVariable(name: "__length", arg: 2, scope: !7170, file: !1552, line: 130, type: !1628)
+!7175 = !DILocation(line: 0, scope: !7170)
+!7176 = !DILocation(line: 131, column: 9, scope: !7170)
+!7177 = !DILocation(line: 131, column: 26, scope: !7170)
+!7178 = !{!5584, !5036, i64 8}
+!7179 = !DILocation(line: 131, column: 38, scope: !7170)
+!7180 = distinct !DISubprogram(name: "construct<ILLIXR_AUDIO::Sound *, ILLIXR_AUDIO::Sound *const &>", linkageName: "_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE9constructIS2_JRKS2_EEEvRS3_PT_DpOT0_", scope: !86, file: !87, line: 529, type: !7181, scopeLine: 530, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7184, declaration: !7183, retainedNodes: !7189)
+!7181 = !DISubroutineType(types: !7182)
+!7182 = !{null, !1150, !93, !1182}
+!7183 = !DISubprogram(name: "construct<ILLIXR_AUDIO::Sound *, ILLIXR_AUDIO::Sound *const &>", linkageName: "_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE9constructIS2_JRKS2_EEEvRS3_PT_DpOT0_", scope: !86, file: !87, line: 529, type: !7181, scopeLine: 529, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !7184)
+!7184 = !{!7185, !7186}
+!7185 = !DITemplateTypeParameter(name: "_Up", type: !94)
+!7186 = !DITemplateValueParameter(tag: DW_TAG_GNU_template_parameter_pack, name: "_Args", value: !7187)
+!7187 = !{!7188}
+!7188 = !DITemplateTypeParameter(type: !1182)
+!7189 = !{!7190, !7191, !7192}
+!7190 = !DILocalVariable(name: "__a", arg: 1, scope: !7180, file: !87, line: 529, type: !1150)
+!7191 = !DILocalVariable(name: "__p", arg: 2, scope: !7180, file: !87, line: 529, type: !93)
+!7192 = !DILocalVariable(name: "__args", arg: 3, scope: !7180, file: !87, line: 529, type: !1182)
+!7193 = !DILocation(line: 0, scope: !7180)
+!7194 = !DILocation(line: 530, column: 4, scope: !7180)
+!7195 = !DILocation(line: 530, column: 23, scope: !7180)
+!7196 = !DILocation(line: 530, column: 8, scope: !7180)
+!7197 = !DILocation(line: 530, column: 56, scope: !7180)
+!7198 = distinct !DISubprogram(name: "_M_emplace_back_aux<ILLIXR_AUDIO::Sound *const &>", linkageName: "_ZNSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_", scope: !69, file: !5706, line: 408, type: !7199, scopeLine: 409, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7202, declaration: !7201, retainedNodes: !7203)
+!7199 = !DISubroutineType(types: !7200)
+!7200 = !{null, !1307, !1182}
+!7201 = !DISubprogram(name: "_M_emplace_back_aux<ILLIXR_AUDIO::Sound *const &>", linkageName: "_ZNSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_", scope: !69, file: !70, line: 1417, type: !7199, scopeLine: 1417, flags: DIFlagProtected | DIFlagPrototyped, spFlags: DISPFlagOptimized, templateParams: !7202)
+!7202 = !{!7186}
+!7203 = !{!7204, !7205, !7206, !7207, !7208}
+!7204 = !DILocalVariable(name: "this", arg: 1, scope: !7198, type: !68, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7205 = !DILocalVariable(name: "__args", arg: 2, scope: !7198, file: !70, line: 1417, type: !1182)
+!7206 = !DILocalVariable(name: "__len", scope: !7198, file: !5706, line: 410, type: !5715)
+!7207 = !DILocalVariable(name: "__new_start", scope: !7198, file: !5706, line: 412, type: !1483)
+!7208 = !DILocalVariable(name: "__new_finish", scope: !7198, file: !5706, line: 413, type: !1483)
+!7209 = !DILocation(line: 0, scope: !7198)
+!7210 = !DILocation(line: 411, column: 4, scope: !7198)
+!7211 = !DILocation(line: 412, column: 28, scope: !7198)
+!7212 = !DILocation(line: 416, column: 31, scope: !7213)
+!7213 = distinct !DILexicalBlock(scope: !7198, file: !5706, line: 415, column: 4)
+!7214 = !DILocation(line: 416, column: 60, scope: !7213)
+!7215 = !DILocation(line: 416, column: 58, scope: !7213)
+!7216 = !DILocation(line: 417, column: 10, scope: !7213)
+!7217 = !DILocation(line: 416, column: 6, scope: !7213)
+!7218 = !DILocation(line: 422, column: 23, scope: !7213)
+!7219 = !DILocation(line: 422, column: 47, scope: !7213)
+!7220 = !DILocation(line: 423, column: 22, scope: !7213)
+!7221 = !DILocation(line: 421, column: 10, scope: !7213)
+!7222 = !DILocation(line: 425, column: 6, scope: !7213)
+!7223 = !DILocation(line: 436, column: 30, scope: !7198)
+!7224 = !DILocation(line: 436, column: 54, scope: !7198)
+!7225 = !DILocation(line: 437, column: 9, scope: !7198)
+!7226 = !DILocation(line: 436, column: 2, scope: !7198)
+!7227 = !DILocation(line: 438, column: 30, scope: !7198)
+!7228 = !DILocation(line: 439, column: 23, scope: !7198)
+!7229 = !DILocation(line: 440, column: 9, scope: !7198)
+!7230 = !DILocation(line: 438, column: 2, scope: !7198)
+!7231 = !DILocation(line: 441, column: 25, scope: !7198)
+!7232 = !DILocation(line: 442, column: 26, scope: !7198)
+!7233 = !DILocation(line: 443, column: 48, scope: !7198)
+!7234 = !DILocation(line: 443, column: 34, scope: !7198)
+!7235 = !DILocation(line: 444, column: 7, scope: !7198)
+!7236 = !DILocation(line: 444, column: 7, scope: !7213)
+!7237 = !DILocation(line: 426, column: 4, scope: !7213)
+!7238 = !DILocation(line: 429, column: 11, scope: !7239)
+!7239 = distinct !DILexicalBlock(scope: !7240, file: !5706, line: 429, column: 10)
+!7240 = distinct !DILexicalBlock(scope: !7198, file: !5706, line: 428, column: 4)
+!7241 = !DILocation(line: 429, column: 10, scope: !7240)
+!7242 = !DILocation(line: 430, column: 60, scope: !7239)
+!7243 = !DILocation(line: 430, column: 58, scope: !7239)
+!7244 = !DILocation(line: 430, column: 8, scope: !7239)
+!7245 = !DILocation(line: 444, column: 7, scope: !7239)
+!7246 = !DILocation(line: 435, column: 4, scope: !7240)
+!7247 = !DILocation(line: 432, column: 49, scope: !7239)
+!7248 = !DILocation(line: 432, column: 8, scope: !7239)
+!7249 = !DILocation(line: 433, column: 6, scope: !7240)
+!7250 = !DILocation(line: 434, column: 6, scope: !7240)
+!7251 = distinct !DISubprogram(name: "construct<ILLIXR_AUDIO::Sound *, ILLIXR_AUDIO::Sound *const &>", linkageName: "_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE9constructIS3_JRKS3_EEEvPT_DpOT0_", scope: !1156, file: !175, line: 119, type: !7252, scopeLine: 120, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7184, declaration: !7254, retainedNodes: !7255)
+!7252 = !DISubroutineType(types: !7253)
+!7253 = !{null, !1161, !93, !1182}
+!7254 = !DISubprogram(name: "construct<ILLIXR_AUDIO::Sound *, ILLIXR_AUDIO::Sound *const &>", linkageName: "_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE9constructIS3_JRKS3_EEEvPT_DpOT0_", scope: !1156, file: !175, line: 119, type: !7252, scopeLine: 119, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized, templateParams: !7184)
+!7255 = !{!7256, !7257, !7258}
+!7256 = !DILocalVariable(name: "this", arg: 1, scope: !7251, type: !6889, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7257 = !DILocalVariable(name: "__p", arg: 2, scope: !7251, file: !175, line: 119, type: !93)
+!7258 = !DILocalVariable(name: "__args", arg: 3, scope: !7251, file: !175, line: 119, type: !1182)
+!7259 = !DILocation(line: 0, scope: !7251)
+!7260 = !DILocation(line: 120, column: 27, scope: !7251)
+!7261 = !DILocation(line: 120, column: 4, scope: !7251)
+!7262 = !DILocation(line: 120, column: 60, scope: !7251)
+!7263 = distinct !DISubprogram(name: "forward<ILLIXR_AUDIO::Sound *const &>", linkageName: "_ZSt7forwardIRKPN12ILLIXR_AUDIO5SoundEEOT_RNSt16remove_referenceIS5_E4typeE", scope: !2, file: !5623, line: 76, type: !7264, scopeLine: 77, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7269, retainedNodes: !7271)
+!7264 = !DISubroutineType(types: !7265)
+!7265 = !{!1182, !7266}
+!7266 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !7267, size: 64)
+!7267 = !DIDerivedType(tag: DW_TAG_typedef, name: "type", scope: !7268, file: !638, line: 1580, baseType: !1180)
+!7268 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "remove_reference<ILLIXR_AUDIO::Sound *const &>", scope: !2, file: !638, line: 1579, size: 8, flags: DIFlagTypePassByValue, elements: !263, templateParams: !7269, identifier: "_ZTSSt16remove_referenceIRKPN12ILLIXR_AUDIO5SoundEE")
 !7269 = !{!7270}
-!7270 = !DILocalVariable(name: "__t", arg: 1, scope: !7261, file: !5621, line: 76, type: !7264)
-!7271 = !DILocation(line: 0, scope: !7261)
-!7272 = !DILocation(line: 77, column: 7, scope: !7261)
-!7273 = distinct !DISubprogram(name: "_M_check_len", linkageName: "_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE12_M_check_lenEmPKc", scope: !69, file: !70, line: 1422, type: !1477, scopeLine: 1423, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1476, retainedNodes: !7274)
-!7274 = !{!7275, !7276, !7277, !7278}
-!7275 = !DILocalVariable(name: "this", arg: 1, scope: !7273, type: !4649, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7276 = !DILocalVariable(name: "__n", arg: 2, scope: !7273, file: !70, line: 1422, type: !347)
-!7277 = !DILocalVariable(name: "__s", arg: 3, scope: !7273, file: !70, line: 1422, type: !621)
-!7278 = !DILocalVariable(name: "__len", scope: !7273, file: !70, line: 1427, type: !5713)
-!7279 = !DILocation(line: 0, scope: !7273)
-!7280 = !DILocation(line: 1424, column: 6, scope: !7281)
-!7281 = distinct !DILexicalBlock(scope: !7273, file: !70, line: 1424, column: 6)
-!7282 = !DILocation(line: 1424, column: 19, scope: !7281)
-!7283 = !DILocation(line: 1424, column: 17, scope: !7281)
-!7284 = !DILocation(line: 1424, column: 26, scope: !7281)
-!7285 = !DILocation(line: 1424, column: 6, scope: !7273)
-!7286 = !DILocation(line: 1425, column: 4, scope: !7281)
-!7287 = !DILocation(line: 1427, column: 26, scope: !7273)
-!7288 = !DILocation(line: 1427, column: 44, scope: !7273)
-!7289 = !DILocation(line: 1427, column: 35, scope: !7273)
-!7290 = !DILocation(line: 1427, column: 33, scope: !7273)
-!7291 = !DILocation(line: 1428, column: 18, scope: !7273)
-!7292 = !DILocation(line: 1428, column: 16, scope: !7273)
-!7293 = !DILocation(line: 1428, column: 25, scope: !7273)
-!7294 = !DILocation(line: 1428, column: 36, scope: !7273)
-!7295 = !DILocation(line: 1428, column: 34, scope: !7273)
-!7296 = !DILocation(line: 1428, column: 9, scope: !7273)
-!7297 = !DILocation(line: 1428, column: 50, scope: !7273)
-!7298 = !DILocation(line: 1428, column: 2, scope: !7273)
-!7299 = distinct !DISubprogram(name: "_M_allocate", linkageName: "_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE11_M_allocateEm", scope: !73, file: !70, line: 167, type: !1297, scopeLine: 168, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1296, retainedNodes: !7300)
-!7300 = !{!7301, !7302}
-!7301 = !DILocalVariable(name: "this", arg: 1, scope: !7299, type: !6863, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7302 = !DILocalVariable(name: "__n", arg: 2, scope: !7299, file: !70, line: 167, type: !206)
-!7303 = !DILocation(line: 0, scope: !7299)
-!7304 = !DILocation(line: 170, column: 13, scope: !7299)
-!7305 = !DILocation(line: 170, column: 9, scope: !7299)
-!7306 = !DILocation(line: 170, column: 34, scope: !7299)
-!7307 = !DILocation(line: 170, column: 20, scope: !7299)
-!7308 = !DILocation(line: 170, column: 2, scope: !7299)
-!7309 = distinct !DISubprogram(name: "__uninitialized_move_if_noexcept_a<ILLIXR_AUDIO::Sound **, ILLIXR_AUDIO::Sound **, std::allocator<ILLIXR_AUDIO::Sound *> >", linkageName: "_ZSt34__uninitialized_move_if_noexcept_aIPPN12ILLIXR_AUDIO5SoundES3_SaIS2_EET0_T_S6_S5_RT1_", scope: !2, file: !5777, line: 297, type: !7310, scopeLine: 301, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7317, retainedNodes: !7312)
-!7310 = !DISubroutineType(types: !7311)
-!7311 = !{!93, !93, !93, !93, !1227}
-!7312 = !{!7313, !7314, !7315, !7316}
-!7313 = !DILocalVariable(name: "__first", arg: 1, scope: !7309, file: !5777, line: 297, type: !93)
-!7314 = !DILocalVariable(name: "__last", arg: 2, scope: !7309, file: !5777, line: 298, type: !93)
-!7315 = !DILocalVariable(name: "__result", arg: 3, scope: !7309, file: !5777, line: 299, type: !93)
-!7316 = !DILocalVariable(name: "__alloc", arg: 4, scope: !7309, file: !5777, line: 300, type: !1227)
-!7317 = !{!7318, !7319, !7320}
-!7318 = !DITemplateTypeParameter(name: "_InputIterator", type: !93)
-!7319 = !DITemplateTypeParameter(name: "_ForwardIterator", type: !93)
-!7320 = !DITemplateTypeParameter(name: "_Allocator", type: !1152)
-!7321 = !DILocation(line: 0, scope: !7309)
-!7322 = !DILocation(line: 303, column: 3, scope: !7309)
-!7323 = !DILocation(line: 304, column: 3, scope: !7309)
-!7324 = !DILocation(line: 302, column: 14, scope: !7309)
-!7325 = !DILocation(line: 302, column: 7, scope: !7309)
-!7326 = distinct !DISubprogram(name: "_M_get_Tp_allocator", linkageName: "_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_get_Tp_allocatorEv", scope: !73, file: !70, line: 113, type: !1258, scopeLine: 114, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1257, retainedNodes: !7327)
-!7327 = !{!7328}
-!7328 = !DILocalVariable(name: "this", arg: 1, scope: !7326, type: !6863, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7329 = !DILocation(line: 0, scope: !7326)
-!7330 = !DILocation(line: 114, column: 16, scope: !7326)
-!7331 = !DILocation(line: 114, column: 9, scope: !7326)
-!7332 = distinct !DISubprogram(name: "destroy<ILLIXR_AUDIO::Sound *>", linkageName: "_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE7destroyIS2_EEvRS3_PT_", scope: !86, file: !87, line: 541, type: !7333, scopeLine: 542, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7336, declaration: !7335, retainedNodes: !7337)
-!7333 = !DISubroutineType(types: !7334)
-!7334 = !{null, !1150, !93}
-!7335 = !DISubprogram(name: "destroy<ILLIXR_AUDIO::Sound *>", linkageName: "_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE7destroyIS2_EEvRS3_PT_", scope: !86, file: !87, line: 541, type: !7333, scopeLine: 541, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !7336)
-!7336 = !{!7183}
-!7337 = !{!7338, !7339}
-!7338 = !DILocalVariable(name: "__a", arg: 1, scope: !7332, file: !87, line: 541, type: !1150)
-!7339 = !DILocalVariable(name: "__p", arg: 2, scope: !7332, file: !87, line: 541, type: !93)
-!7340 = !DILocation(line: 0, scope: !7332)
-!7341 = !DILocation(line: 542, column: 4, scope: !7332)
-!7342 = !DILocation(line: 542, column: 8, scope: !7332)
-!7343 = !DILocation(line: 542, column: 22, scope: !7332)
-!7344 = distinct !DISubprogram(name: "_Destroy<ILLIXR_AUDIO::Sound **, ILLIXR_AUDIO::Sound *>", linkageName: "_ZSt8_DestroyIPPN12ILLIXR_AUDIO5SoundES2_EvT_S4_RSaIT0_E", scope: !2, file: !5290, line: 148, type: !7345, scopeLine: 150, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7351, retainedNodes: !7347)
-!7345 = !DISubroutineType(types: !7346)
-!7346 = !{null, !93, !93, !1227}
-!7347 = !{!7348, !7349, !7350}
-!7348 = !DILocalVariable(name: "__first", arg: 1, scope: !7344, file: !5290, line: 148, type: !93)
-!7349 = !DILocalVariable(name: "__last", arg: 2, scope: !7344, file: !5290, line: 148, type: !93)
-!7350 = !DILocalVariable(arg: 3, scope: !7344, file: !5290, line: 149, type: !1227)
-!7351 = !{!7319, !1193}
-!7352 = !DILocation(line: 0, scope: !7344)
-!7353 = !DILocation(line: 151, column: 7, scope: !7344)
-!7354 = !DILocation(line: 152, column: 5, scope: !7344)
-!7355 = distinct !DISubprogram(name: "_M_deallocate", linkageName: "_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE13_M_deallocateEPS2_m", scope: !73, file: !70, line: 174, type: !1300, scopeLine: 175, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1299, retainedNodes: !7356)
-!7356 = !{!7357, !7358, !7359}
-!7357 = !DILocalVariable(name: "this", arg: 1, scope: !7355, type: !6863, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7358 = !DILocalVariable(name: "__p", arg: 2, scope: !7355, file: !70, line: 174, type: !1236)
-!7359 = !DILocalVariable(name: "__n", arg: 3, scope: !7355, file: !70, line: 174, type: !206)
-!7360 = !DILocation(line: 0, scope: !7355)
-!7361 = !DILocation(line: 177, column: 6, scope: !7362)
-!7362 = distinct !DILexicalBlock(scope: !7355, file: !70, line: 177, column: 6)
-!7363 = !DILocation(line: 177, column: 6, scope: !7355)
-!7364 = !DILocation(line: 178, column: 20, scope: !7362)
-!7365 = !DILocation(line: 178, column: 4, scope: !7362)
-!7366 = !DILocation(line: 179, column: 7, scope: !7355)
-!7367 = distinct !DISubprogram(name: "max_size", linkageName: "_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE8max_sizeEv", scope: !69, file: !70, line: 659, type: !1389, scopeLine: 660, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1391, retainedNodes: !7368)
-!7368 = !{!7369}
-!7369 = !DILocalVariable(name: "this", arg: 1, scope: !7367, type: !4649, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7370 = !DILocation(line: 0, scope: !7367)
-!7371 = !DILocation(line: 660, column: 40, scope: !7367)
-!7372 = !DILocation(line: 660, column: 16, scope: !7367)
-!7373 = !DILocation(line: 660, column: 9, scope: !7367)
-!7374 = distinct !DISubprogram(name: "max_size", linkageName: "_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE8max_sizeERKS3_", scope: !86, file: !87, line: 550, type: !1211, scopeLine: 551, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1210, retainedNodes: !7375)
-!7375 = !{!7376}
-!7376 = !DILocalVariable(name: "__a", arg: 1, scope: !7374, file: !87, line: 550, type: !1214)
-!7377 = !DILocation(line: 0, scope: !7374)
-!7378 = !DILocation(line: 551, column: 16, scope: !7374)
-!7379 = !DILocation(line: 551, column: 20, scope: !7374)
-!7380 = !DILocation(line: 551, column: 9, scope: !7374)
-!7381 = distinct !DISubprogram(name: "_M_get_Tp_allocator", linkageName: "_ZNKSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_get_Tp_allocatorEv", scope: !73, file: !70, line: 117, type: !1263, scopeLine: 118, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1262, retainedNodes: !7382)
-!7382 = !{!7383}
-!7383 = !DILocalVariable(name: "this", arg: 1, scope: !7381, type: !7384, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7384 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !1266, size: 64)
-!7385 = !DILocation(line: 0, scope: !7381)
-!7386 = !DILocation(line: 118, column: 16, scope: !7381)
-!7387 = !DILocation(line: 118, column: 9, scope: !7381)
-!7388 = distinct !DISubprogram(name: "max_size", linkageName: "_ZNK9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE8max_sizeEv", scope: !1156, file: !175, line: 113, type: !1190, scopeLine: 114, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1189, retainedNodes: !7389)
-!7389 = !{!7390}
-!7390 = !DILocalVariable(name: "this", arg: 1, scope: !7388, type: !7391, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7391 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !1166, size: 64)
-!7392 = !DILocation(line: 0, scope: !7388)
-!7393 = !DILocation(line: 114, column: 9, scope: !7388)
-!7394 = distinct !DISubprogram(name: "allocate", linkageName: "_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE8allocateERS3_m", scope: !86, file: !87, line: 490, type: !90, scopeLine: 491, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !89, retainedNodes: !7395)
-!7395 = !{!7396, !7397}
-!7396 = !DILocalVariable(name: "__a", arg: 1, scope: !7394, file: !87, line: 490, type: !1150)
-!7397 = !DILocalVariable(name: "__n", arg: 2, scope: !7394, file: !87, line: 490, type: !229)
-!7398 = !DILocation(line: 0, scope: !7394)
-!7399 = !DILocation(line: 491, column: 16, scope: !7394)
-!7400 = !DILocation(line: 491, column: 20, scope: !7394)
-!7401 = !DILocation(line: 491, column: 9, scope: !7394)
-!7402 = distinct !DISubprogram(name: "allocate", linkageName: "_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE8allocateEmPKv", scope: !1156, file: !175, line: 99, type: !1184, scopeLine: 100, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1183, retainedNodes: !7403)
-!7403 = !{!7404, !7405, !7406}
-!7404 = !DILocalVariable(name: "this", arg: 1, scope: !7402, type: !6887, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7405 = !DILocalVariable(name: "__n", arg: 2, scope: !7402, file: !175, line: 99, type: !205)
-!7406 = !DILocalVariable(arg: 3, scope: !7402, file: !175, line: 99, type: !209)
-!7407 = !DILocation(line: 0, scope: !7402)
-!7408 = !DILocation(line: 101, column: 18, scope: !7409)
-!7409 = distinct !DILexicalBlock(scope: !7402, file: !175, line: 101, column: 6)
-!7410 = !DILocation(line: 101, column: 10, scope: !7409)
-!7411 = !DILocation(line: 101, column: 6, scope: !7402)
-!7412 = !DILocation(line: 102, column: 4, scope: !7409)
-!7413 = !DILocation(line: 104, column: 46, scope: !7402)
-!7414 = !DILocation(line: 104, column: 27, scope: !7402)
-!7415 = !DILocation(line: 104, column: 9, scope: !7402)
-!7416 = !DILocation(line: 104, column: 2, scope: !7402)
-!7417 = distinct !DISubprogram(name: "__uninitialized_copy_a<std::move_iterator<ILLIXR_AUDIO::Sound **>, ILLIXR_AUDIO::Sound **, ILLIXR_AUDIO::Sound *>", linkageName: "_ZSt22__uninitialized_copy_aISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES4_S3_ET0_T_S7_S6_RSaIT1_E", scope: !2, file: !5777, line: 279, type: !7418, scopeLine: 281, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7425, retainedNodes: !7420)
-!7418 = !DISubroutineType(types: !7419)
-!7419 = !{!93, !1727, !1727, !93, !1227}
-!7420 = !{!7421, !7422, !7423, !7424}
-!7421 = !DILocalVariable(name: "__first", arg: 1, scope: !7417, file: !5777, line: 279, type: !1727)
-!7422 = !DILocalVariable(name: "__last", arg: 2, scope: !7417, file: !5777, line: 279, type: !1727)
-!7423 = !DILocalVariable(name: "__result", arg: 3, scope: !7417, file: !5777, line: 280, type: !93)
-!7424 = !DILocalVariable(arg: 4, scope: !7417, file: !5777, line: 280, type: !1227)
-!7425 = !{!7426, !7319, !1193}
-!7426 = !DITemplateTypeParameter(name: "_InputIterator", type: !1727)
-!7427 = !DILocation(line: 0, scope: !7417)
-!7428 = !DILocation(line: 281, column: 14, scope: !7417)
-!7429 = !DILocation(line: 281, column: 7, scope: !7417)
-!7430 = distinct !DISubprogram(name: "__make_move_if_noexcept_iterator<ILLIXR_AUDIO::Sound **, std::move_iterator<ILLIXR_AUDIO::Sound **> >", linkageName: "_ZSt32__make_move_if_noexcept_iteratorIPPN12ILLIXR_AUDIO5SoundESt13move_iteratorIS3_EET0_T_", scope: !2, file: !396, line: 1166, type: !7431, scopeLine: 1167, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7435, retainedNodes: !7433)
-!7431 = !DISubroutineType(types: !7432)
-!7432 = !{!1727, !93}
-!7433 = !{!7434}
-!7434 = !DILocalVariable(name: "__i", arg: 1, scope: !7430, file: !396, line: 1166, type: !93)
-!7435 = !{!1773, !7436}
-!7436 = !DITemplateTypeParameter(name: "_ReturnType", type: !1727)
-!7437 = !DILocation(line: 0, scope: !7430)
-!7438 = !DILocation(line: 1167, column: 14, scope: !7430)
-!7439 = !DILocation(line: 1167, column: 7, scope: !7430)
-!7440 = distinct !DISubprogram(name: "uninitialized_copy<std::move_iterator<ILLIXR_AUDIO::Sound **>, ILLIXR_AUDIO::Sound **>", linkageName: "_ZSt18uninitialized_copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES4_ET0_T_S7_S6_", scope: !2, file: !5777, line: 107, type: !7441, scopeLine: 109, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7448, retainedNodes: !7443)
-!7441 = !DISubroutineType(types: !7442)
-!7442 = !{!93, !1727, !1727, !93}
-!7443 = !{!7444, !7445, !7446, !7447}
-!7444 = !DILocalVariable(name: "__first", arg: 1, scope: !7440, file: !5777, line: 107, type: !1727)
-!7445 = !DILocalVariable(name: "__last", arg: 2, scope: !7440, file: !5777, line: 107, type: !1727)
-!7446 = !DILocalVariable(name: "__result", arg: 3, scope: !7440, file: !5777, line: 108, type: !93)
-!7447 = !DILocalVariable(name: "__assignable", scope: !7440, file: !5777, line: 120, type: !642)
-!7448 = !{!7426, !7319}
-!7449 = !DILocation(line: 0, scope: !7440)
-!7450 = !DILocation(line: 123, column: 14, scope: !7440)
-!7451 = !DILocation(line: 123, column: 7, scope: !7440)
-!7452 = distinct !DISubprogram(name: "__uninit_copy<std::move_iterator<ILLIXR_AUDIO::Sound **>, ILLIXR_AUDIO::Sound **>", linkageName: "_ZNSt20__uninitialized_copyILb1EE13__uninit_copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES6_EET0_T_S9_S8_", scope: !6030, file: !5777, line: 91, type: !7441, scopeLine: 93, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7448, declaration: !7453, retainedNodes: !7454)
-!7453 = !DISubprogram(name: "__uninit_copy<std::move_iterator<ILLIXR_AUDIO::Sound **>, ILLIXR_AUDIO::Sound **>", linkageName: "_ZNSt20__uninitialized_copyILb1EE13__uninit_copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES6_EET0_T_S9_S8_", scope: !6030, file: !5777, line: 91, type: !7441, scopeLine: 91, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !7448)
-!7454 = !{!7455, !7456, !7457}
-!7455 = !DILocalVariable(name: "__first", arg: 1, scope: !7452, file: !5777, line: 91, type: !1727)
-!7456 = !DILocalVariable(name: "__last", arg: 2, scope: !7452, file: !5777, line: 91, type: !1727)
-!7457 = !DILocalVariable(name: "__result", arg: 3, scope: !7452, file: !5777, line: 92, type: !93)
-!7458 = !DILocation(line: 0, scope: !7452)
-!7459 = !DILocation(line: 93, column: 18, scope: !7452)
-!7460 = !DILocation(line: 93, column: 11, scope: !7452)
-!7461 = distinct !DISubprogram(name: "copy<std::move_iterator<ILLIXR_AUDIO::Sound **>, ILLIXR_AUDIO::Sound **>", linkageName: "_ZSt4copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES4_ET0_T_S7_S6_", scope: !2, file: !5866, line: 462, type: !7441, scopeLine: 463, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7466, retainedNodes: !7462)
-!7462 = !{!7463, !7464, !7465}
-!7463 = !DILocalVariable(name: "__first", arg: 1, scope: !7461, file: !5866, line: 462, type: !1727)
-!7464 = !DILocalVariable(name: "__last", arg: 2, scope: !7461, file: !5866, line: 462, type: !1727)
-!7465 = !DILocalVariable(name: "__result", arg: 3, scope: !7461, file: !5866, line: 462, type: !93)
-!7466 = !{!7467, !7468}
-!7467 = !DITemplateTypeParameter(name: "_II", type: !1727)
-!7468 = !DITemplateTypeParameter(name: "_OI", type: !93)
-!7469 = !DILocation(line: 0, scope: !7461)
-!7470 = !DILocation(line: 471, column: 9, scope: !7461)
-!7471 = !DILocation(line: 471, column: 37, scope: !7461)
-!7472 = !DILocation(line: 470, column: 15, scope: !7461)
-!7473 = !DILocation(line: 470, column: 7, scope: !7461)
-!7474 = distinct !DISubprogram(name: "__copy_move_a2<true, ILLIXR_AUDIO::Sound **, ILLIXR_AUDIO::Sound **>", linkageName: "_ZSt14__copy_move_a2ILb1EPPN12ILLIXR_AUDIO5SoundES3_ET1_T0_S5_S4_", scope: !2, file: !5866, line: 436, type: !7475, scopeLine: 437, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7481, retainedNodes: !7477)
-!7475 = !DISubroutineType(types: !7476)
-!7476 = !{!93, !93, !93, !93}
-!7477 = !{!7478, !7479, !7480}
-!7478 = !DILocalVariable(name: "__first", arg: 1, scope: !7474, file: !5866, line: 436, type: !93)
-!7479 = !DILocalVariable(name: "__last", arg: 2, scope: !7474, file: !5866, line: 436, type: !93)
-!7480 = !DILocalVariable(name: "__result", arg: 3, scope: !7474, file: !5866, line: 436, type: !93)
-!7481 = !{!6061, !7482, !7468}
-!7482 = !DITemplateTypeParameter(name: "_II", type: !93)
-!7483 = !DILocation(line: 0, scope: !7474)
-!7484 = !DILocation(line: 438, column: 46, scope: !7474)
-!7485 = !DILocation(line: 439, column: 11, scope: !7474)
-!7486 = !DILocation(line: 440, column: 11, scope: !7474)
-!7487 = !DILocation(line: 438, column: 18, scope: !7474)
-!7488 = !DILocation(line: 438, column: 7, scope: !7474)
-!7489 = distinct !DISubprogram(name: "__miter_base<std::move_iterator<ILLIXR_AUDIO::Sound **> >", linkageName: "_ZSt12__miter_baseISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEEENSt11_Miter_baseIT_E13iterator_typeES7_", scope: !2, file: !5866, line: 293, type: !7490, scopeLine: 294, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7500, retainedNodes: !7498)
-!7490 = !DISubroutineType(types: !7491)
-!7491 = !{!7492, !1727}
-!7492 = !DIDerivedType(tag: DW_TAG_typedef, name: "iterator_type", scope: !7493, file: !413, line: 222, baseType: !1737)
-!7493 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "_Iter_base<std::move_iterator<ILLIXR_AUDIO::Sound **>, true>", scope: !2, file: !413, line: 220, size: 8, flags: DIFlagTypePassByValue, elements: !7494, templateParams: !7496, identifier: "_ZTSSt10_Iter_baseISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEELb1EE")
-!7494 = !{!7495}
-!7495 = !DISubprogram(name: "_S_base", linkageName: "_ZNSt10_Iter_baseISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEELb1EE7_S_baseES5_", scope: !7493, file: !413, line: 223, type: !7490, scopeLine: 223, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized)
-!7496 = !{!7497, !6078}
-!7497 = !DITemplateTypeParameter(name: "_Iterator", type: !1727)
-!7498 = !{!7499}
-!7499 = !DILocalVariable(name: "__it", arg: 1, scope: !7489, file: !5866, line: 293, type: !1727)
-!7500 = !{!7497}
-!7501 = !DILocation(line: 0, scope: !7489)
-!7502 = !DILocation(line: 294, column: 14, scope: !7489)
-!7503 = !DILocation(line: 294, column: 7, scope: !7489)
-!7504 = distinct !DISubprogram(name: "__copy_move_a<true, ILLIXR_AUDIO::Sound **, ILLIXR_AUDIO::Sound **>", linkageName: "_ZSt13__copy_move_aILb1EPPN12ILLIXR_AUDIO5SoundES3_ET1_T0_S5_S4_", scope: !2, file: !5866, line: 391, type: !7475, scopeLine: 392, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7481, retainedNodes: !7505)
-!7505 = !{!7506, !7507, !7508, !7509}
-!7506 = !DILocalVariable(name: "__first", arg: 1, scope: !7504, file: !5866, line: 391, type: !93)
-!7507 = !DILocalVariable(name: "__last", arg: 2, scope: !7504, file: !5866, line: 391, type: !93)
-!7508 = !DILocalVariable(name: "__result", arg: 3, scope: !7504, file: !5866, line: 391, type: !93)
-!7509 = !DILocalVariable(name: "__simple", scope: !7504, file: !5866, line: 396, type: !642)
-!7510 = !DILocation(line: 0, scope: !7504)
-!7511 = !DILocation(line: 401, column: 14, scope: !7504)
-!7512 = !DILocation(line: 401, column: 7, scope: !7504)
-!7513 = distinct !DISubprogram(name: "__niter_base<ILLIXR_AUDIO::Sound **>", linkageName: "_ZSt12__niter_baseIPPN12ILLIXR_AUDIO5SoundEENSt11_Niter_baseIT_E13iterator_typeES5_", scope: !2, file: !5866, line: 282, type: !7514, scopeLine: 283, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !1772, retainedNodes: !7521)
-!7514 = !DISubroutineType(types: !7515)
-!7515 = !{!7516, !93}
-!7516 = !DIDerivedType(tag: DW_TAG_typedef, name: "iterator_type", scope: !7517, file: !413, line: 214, baseType: !93)
-!7517 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "_Iter_base<ILLIXR_AUDIO::Sound **, false>", scope: !2, file: !413, line: 212, size: 8, flags: DIFlagTypePassByValue, elements: !7518, templateParams: !7520, identifier: "_ZTSSt10_Iter_baseIPPN12ILLIXR_AUDIO5SoundELb0EE")
-!7518 = !{!7519}
-!7519 = !DISubprogram(name: "_S_base", linkageName: "_ZNSt10_Iter_baseIPPN12ILLIXR_AUDIO5SoundELb0EE7_S_baseES3_", scope: !7517, file: !413, line: 215, type: !7514, scopeLine: 215, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized)
-!7520 = !{!1773, !5916}
-!7521 = !{!7522}
-!7522 = !DILocalVariable(name: "__it", arg: 1, scope: !7513, file: !5866, line: 282, type: !93)
-!7523 = !DILocation(line: 0, scope: !7513)
-!7524 = !DILocation(line: 283, column: 14, scope: !7513)
-!7525 = !DILocation(line: 283, column: 7, scope: !7513)
-!7526 = distinct !DISubprogram(name: "__copy_m<ILLIXR_AUDIO::Sound *>", linkageName: "_ZNSt11__copy_moveILb1ELb1ESt26random_access_iterator_tagE8__copy_mIPN12ILLIXR_AUDIO5SoundEEEPT_PKS6_S9_S7_", scope: !6095, file: !5866, line: 373, type: !7527, scopeLine: 374, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !1192, declaration: !7529, retainedNodes: !7530)
-!7527 = !DISubroutineType(types: !7528)
-!7528 = !{!93, !1179, !1179, !93}
-!7529 = !DISubprogram(name: "__copy_m<ILLIXR_AUDIO::Sound *>", linkageName: "_ZNSt11__copy_moveILb1ELb1ESt26random_access_iterator_tagE8__copy_mIPN12ILLIXR_AUDIO5SoundEEEPT_PKS6_S9_S7_", scope: !6095, file: !5866, line: 373, type: !7527, scopeLine: 373, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !1192)
-!7530 = !{!7531, !7532, !7533, !7534}
-!7531 = !DILocalVariable(name: "__first", arg: 1, scope: !7526, file: !5866, line: 373, type: !1179)
-!7532 = !DILocalVariable(name: "__last", arg: 2, scope: !7526, file: !5866, line: 373, type: !1179)
-!7533 = !DILocalVariable(name: "__result", arg: 3, scope: !7526, file: !5866, line: 373, type: !93)
-!7534 = !DILocalVariable(name: "_Num", scope: !7526, file: !5866, line: 382, type: !6116)
-!7535 = !DILocation(line: 0, scope: !7526)
-!7536 = !DILocation(line: 382, column: 34, scope: !7526)
-!7537 = !DILocation(line: 383, column: 8, scope: !7538)
-!7538 = distinct !DILexicalBlock(scope: !7526, file: !5866, line: 383, column: 8)
-!7539 = !DILocation(line: 383, column: 8, scope: !7526)
-!7540 = !DILocation(line: 384, column: 6, scope: !7538)
-!7541 = !DILocation(line: 385, column: 20, scope: !7526)
-!7542 = !DILocation(line: 385, column: 4, scope: !7526)
-!7543 = distinct !DISubprogram(name: "_S_base", linkageName: "_ZNSt10_Iter_baseIPPN12ILLIXR_AUDIO5SoundELb0EE7_S_baseES3_", scope: !7517, file: !413, line: 215, type: !7514, scopeLine: 216, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !7519, retainedNodes: !7544)
-!7544 = !{!7545}
-!7545 = !DILocalVariable(name: "__it", arg: 1, scope: !7543, file: !413, line: 215, type: !93)
-!7546 = !DILocation(line: 0, scope: !7543)
-!7547 = !DILocation(line: 216, column: 9, scope: !7543)
-!7548 = distinct !DISubprogram(name: "_S_base", linkageName: "_ZNSt10_Iter_baseISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEELb1EE7_S_baseES5_", scope: !7493, file: !413, line: 223, type: !7490, scopeLine: 224, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !7495, retainedNodes: !7549)
-!7549 = !{!7550}
-!7550 = !DILocalVariable(name: "__it", arg: 1, scope: !7548, file: !413, line: 223, type: !1727)
-!7551 = !DILocation(line: 0, scope: !7548)
-!7552 = !DILocation(line: 224, column: 21, scope: !7548)
-!7553 = !DILocation(line: 224, column: 9, scope: !7548)
-!7554 = distinct !DISubprogram(name: "base", linkageName: "_ZNKSt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEE4baseEv", scope: !1727, file: !396, line: 992, type: !1739, scopeLine: 993, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1738, retainedNodes: !7555)
-!7555 = !{!7556}
-!7556 = !DILocalVariable(name: "this", arg: 1, scope: !7554, type: !7557, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7557 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !1742, size: 64)
-!7558 = !DILocation(line: 0, scope: !7554)
-!7559 = !DILocation(line: 993, column: 16, scope: !7554)
-!7560 = !{!7561, !3172, i64 0}
-!7561 = !{!"_ZTSSt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEE", !3172, i64 0}
-!7562 = !DILocation(line: 993, column: 9, scope: !7554)
-!7563 = distinct !DISubprogram(name: "move_iterator", linkageName: "_ZNSt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEEC2ES3_", scope: !1727, file: !396, line: 984, type: !1735, scopeLine: 985, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1734, retainedNodes: !7564)
-!7564 = !{!7565, !7567}
-!7565 = !DILocalVariable(name: "this", arg: 1, scope: !7563, type: !7566, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7566 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !1727, size: 64)
-!7567 = !DILocalVariable(name: "__i", arg: 2, scope: !7563, file: !396, line: 984, type: !1737)
-!7568 = !DILocation(line: 0, scope: !7563)
-!7569 = !DILocation(line: 985, column: 9, scope: !7563)
-!7570 = !DILocation(line: 985, column: 27, scope: !7563)
-!7571 = distinct !DISubprogram(name: "destroy<ILLIXR_AUDIO::Sound *>", linkageName: "_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE7destroyIS3_EEvPT_", scope: !1156, file: !175, line: 124, type: !7572, scopeLine: 124, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7336, declaration: !7574, retainedNodes: !7575)
-!7572 = !DISubroutineType(types: !7573)
-!7573 = !{null, !1161, !93}
-!7574 = !DISubprogram(name: "destroy<ILLIXR_AUDIO::Sound *>", linkageName: "_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE7destroyIS3_EEvPT_", scope: !1156, file: !175, line: 124, type: !7572, scopeLine: 124, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized, templateParams: !7336)
-!7575 = !{!7576, !7577}
-!7576 = !DILocalVariable(name: "this", arg: 1, scope: !7571, type: !6887, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7577 = !DILocalVariable(name: "__p", arg: 2, scope: !7571, file: !175, line: 124, type: !93)
-!7578 = !DILocation(line: 0, scope: !7571)
-!7579 = !DILocation(line: 124, column: 42, scope: !7571)
-!7580 = distinct !DISubprogram(name: "_Destroy<ILLIXR_AUDIO::Sound **>", linkageName: "_ZSt8_DestroyIPPN12ILLIXR_AUDIO5SoundEEvT_S4_", scope: !2, file: !5290, line: 122, type: !7581, scopeLine: 123, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7586, retainedNodes: !7583)
-!7581 = !DISubroutineType(types: !7582)
-!7582 = !{null, !93, !93}
-!7583 = !{!7584, !7585}
-!7584 = !DILocalVariable(name: "__first", arg: 1, scope: !7580, file: !5290, line: 122, type: !93)
-!7585 = !DILocalVariable(name: "__last", arg: 2, scope: !7580, file: !5290, line: 122, type: !93)
-!7586 = !{!7319}
-!7587 = !DILocation(line: 0, scope: !7580)
-!7588 = !DILocation(line: 126, column: 7, scope: !7580)
-!7589 = !DILocation(line: 128, column: 5, scope: !7580)
-!7590 = distinct !DISubprogram(name: "__destroy<ILLIXR_AUDIO::Sound **>", linkageName: "_ZNSt12_Destroy_auxILb1EE9__destroyIPPN12ILLIXR_AUDIO5SoundEEEvT_S6_", scope: !5332, file: !5290, line: 112, type: !7581, scopeLine: 112, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7586, declaration: !7591, retainedNodes: !7592)
-!7591 = !DISubprogram(name: "__destroy<ILLIXR_AUDIO::Sound **>", linkageName: "_ZNSt12_Destroy_auxILb1EE9__destroyIPPN12ILLIXR_AUDIO5SoundEEEvT_S6_", scope: !5332, file: !5290, line: 112, type: !7581, scopeLine: 112, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !7586)
-!7592 = !{!7593, !7594}
-!7593 = !DILocalVariable(arg: 1, scope: !7590, file: !5290, line: 112, type: !93)
-!7594 = !DILocalVariable(arg: 2, scope: !7590, file: !5290, line: 112, type: !93)
-!7595 = !DILocation(line: 0, scope: !7590)
-!7596 = !DILocation(line: 112, column: 57, scope: !7590)
-!7597 = distinct !DISubprogram(name: "deallocate", linkageName: "_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE10deallocateERS3_PS2_m", scope: !86, file: !87, line: 516, type: !1208, scopeLine: 517, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1207, retainedNodes: !7598)
-!7598 = !{!7599, !7600, !7601}
-!7599 = !DILocalVariable(name: "__a", arg: 1, scope: !7597, file: !87, line: 516, type: !1150)
-!7600 = !DILocalVariable(name: "__p", arg: 2, scope: !7597, file: !87, line: 516, type: !92)
-!7601 = !DILocalVariable(name: "__n", arg: 3, scope: !7597, file: !87, line: 516, type: !229)
-!7602 = !DILocation(line: 0, scope: !7597)
-!7603 = !DILocation(line: 517, column: 9, scope: !7597)
-!7604 = !DILocation(line: 517, column: 13, scope: !7597)
-!7605 = !DILocation(line: 517, column: 35, scope: !7597)
-!7606 = distinct !DISubprogram(name: "deallocate", linkageName: "_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE10deallocateEPS3_m", scope: !1156, file: !175, line: 109, type: !1187, scopeLine: 110, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1186, retainedNodes: !7607)
-!7607 = !{!7608, !7609, !7610}
-!7608 = !DILocalVariable(name: "this", arg: 1, scope: !7606, type: !6887, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7609 = !DILocalVariable(name: "__p", arg: 2, scope: !7606, file: !175, line: 109, type: !1171)
-!7610 = !DILocalVariable(arg: 3, scope: !7606, file: !175, line: 109, type: !205)
-!7611 = !DILocation(line: 0, scope: !7606)
-!7612 = !DILocation(line: 110, column: 27, scope: !7606)
-!7613 = !DILocation(line: 110, column: 9, scope: !7606)
-!7614 = !DILocation(line: 110, column: 33, scope: !7606)
-!7615 = distinct !DISubprogram(linkageName: "_GLOBAL__sub_I_main.cpp", scope: !20, file: !20, type: !7616, flags: DIFlagArtificial, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !19, retainedNodes: !263)
-!7616 = !DISubroutineType(types: !263)
-!7617 = !DILocation(line: 0, scope: !7615)
+!7270 = !DITemplateTypeParameter(name: "_Tp", type: !1182)
+!7271 = !{!7272}
+!7272 = !DILocalVariable(name: "__t", arg: 1, scope: !7263, file: !5623, line: 76, type: !7266)
+!7273 = !DILocation(line: 0, scope: !7263)
+!7274 = !DILocation(line: 77, column: 7, scope: !7263)
+!7275 = distinct !DISubprogram(name: "_M_check_len", linkageName: "_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE12_M_check_lenEmPKc", scope: !69, file: !70, line: 1422, type: !1477, scopeLine: 1423, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1476, retainedNodes: !7276)
+!7276 = !{!7277, !7278, !7279, !7280}
+!7277 = !DILocalVariable(name: "this", arg: 1, scope: !7275, type: !4649, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7278 = !DILocalVariable(name: "__n", arg: 2, scope: !7275, file: !70, line: 1422, type: !347)
+!7279 = !DILocalVariable(name: "__s", arg: 3, scope: !7275, file: !70, line: 1422, type: !621)
+!7280 = !DILocalVariable(name: "__len", scope: !7275, file: !70, line: 1427, type: !5715)
+!7281 = !DILocation(line: 0, scope: !7275)
+!7282 = !DILocation(line: 1424, column: 6, scope: !7283)
+!7283 = distinct !DILexicalBlock(scope: !7275, file: !70, line: 1424, column: 6)
+!7284 = !DILocation(line: 1424, column: 19, scope: !7283)
+!7285 = !DILocation(line: 1424, column: 17, scope: !7283)
+!7286 = !DILocation(line: 1424, column: 26, scope: !7283)
+!7287 = !DILocation(line: 1424, column: 6, scope: !7275)
+!7288 = !DILocation(line: 1425, column: 4, scope: !7283)
+!7289 = !DILocation(line: 1427, column: 26, scope: !7275)
+!7290 = !DILocation(line: 1427, column: 44, scope: !7275)
+!7291 = !DILocation(line: 1427, column: 35, scope: !7275)
+!7292 = !DILocation(line: 1427, column: 33, scope: !7275)
+!7293 = !DILocation(line: 1428, column: 18, scope: !7275)
+!7294 = !DILocation(line: 1428, column: 16, scope: !7275)
+!7295 = !DILocation(line: 1428, column: 25, scope: !7275)
+!7296 = !DILocation(line: 1428, column: 36, scope: !7275)
+!7297 = !DILocation(line: 1428, column: 34, scope: !7275)
+!7298 = !DILocation(line: 1428, column: 9, scope: !7275)
+!7299 = !DILocation(line: 1428, column: 50, scope: !7275)
+!7300 = !DILocation(line: 1428, column: 2, scope: !7275)
+!7301 = distinct !DISubprogram(name: "_M_allocate", linkageName: "_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE11_M_allocateEm", scope: !73, file: !70, line: 167, type: !1297, scopeLine: 168, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1296, retainedNodes: !7302)
+!7302 = !{!7303, !7304}
+!7303 = !DILocalVariable(name: "this", arg: 1, scope: !7301, type: !6865, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7304 = !DILocalVariable(name: "__n", arg: 2, scope: !7301, file: !70, line: 167, type: !206)
+!7305 = !DILocation(line: 0, scope: !7301)
+!7306 = !DILocation(line: 170, column: 13, scope: !7301)
+!7307 = !DILocation(line: 170, column: 9, scope: !7301)
+!7308 = !DILocation(line: 170, column: 34, scope: !7301)
+!7309 = !DILocation(line: 170, column: 20, scope: !7301)
+!7310 = !DILocation(line: 170, column: 2, scope: !7301)
+!7311 = distinct !DISubprogram(name: "__uninitialized_move_if_noexcept_a<ILLIXR_AUDIO::Sound **, ILLIXR_AUDIO::Sound **, std::allocator<ILLIXR_AUDIO::Sound *> >", linkageName: "_ZSt34__uninitialized_move_if_noexcept_aIPPN12ILLIXR_AUDIO5SoundES3_SaIS2_EET0_T_S6_S5_RT1_", scope: !2, file: !5779, line: 297, type: !7312, scopeLine: 301, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7319, retainedNodes: !7314)
+!7312 = !DISubroutineType(types: !7313)
+!7313 = !{!93, !93, !93, !93, !1227}
+!7314 = !{!7315, !7316, !7317, !7318}
+!7315 = !DILocalVariable(name: "__first", arg: 1, scope: !7311, file: !5779, line: 297, type: !93)
+!7316 = !DILocalVariable(name: "__last", arg: 2, scope: !7311, file: !5779, line: 298, type: !93)
+!7317 = !DILocalVariable(name: "__result", arg: 3, scope: !7311, file: !5779, line: 299, type: !93)
+!7318 = !DILocalVariable(name: "__alloc", arg: 4, scope: !7311, file: !5779, line: 300, type: !1227)
+!7319 = !{!7320, !7321, !7322}
+!7320 = !DITemplateTypeParameter(name: "_InputIterator", type: !93)
+!7321 = !DITemplateTypeParameter(name: "_ForwardIterator", type: !93)
+!7322 = !DITemplateTypeParameter(name: "_Allocator", type: !1152)
+!7323 = !DILocation(line: 0, scope: !7311)
+!7324 = !DILocation(line: 303, column: 3, scope: !7311)
+!7325 = !DILocation(line: 304, column: 3, scope: !7311)
+!7326 = !DILocation(line: 302, column: 14, scope: !7311)
+!7327 = !DILocation(line: 302, column: 7, scope: !7311)
+!7328 = distinct !DISubprogram(name: "_M_get_Tp_allocator", linkageName: "_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_get_Tp_allocatorEv", scope: !73, file: !70, line: 113, type: !1258, scopeLine: 114, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1257, retainedNodes: !7329)
+!7329 = !{!7330}
+!7330 = !DILocalVariable(name: "this", arg: 1, scope: !7328, type: !6865, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7331 = !DILocation(line: 0, scope: !7328)
+!7332 = !DILocation(line: 114, column: 16, scope: !7328)
+!7333 = !DILocation(line: 114, column: 9, scope: !7328)
+!7334 = distinct !DISubprogram(name: "destroy<ILLIXR_AUDIO::Sound *>", linkageName: "_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE7destroyIS2_EEvRS3_PT_", scope: !86, file: !87, line: 541, type: !7335, scopeLine: 542, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7338, declaration: !7337, retainedNodes: !7339)
+!7335 = !DISubroutineType(types: !7336)
+!7336 = !{null, !1150, !93}
+!7337 = !DISubprogram(name: "destroy<ILLIXR_AUDIO::Sound *>", linkageName: "_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE7destroyIS2_EEvRS3_PT_", scope: !86, file: !87, line: 541, type: !7335, scopeLine: 541, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !7338)
+!7338 = !{!7185}
+!7339 = !{!7340, !7341}
+!7340 = !DILocalVariable(name: "__a", arg: 1, scope: !7334, file: !87, line: 541, type: !1150)
+!7341 = !DILocalVariable(name: "__p", arg: 2, scope: !7334, file: !87, line: 541, type: !93)
+!7342 = !DILocation(line: 0, scope: !7334)
+!7343 = !DILocation(line: 542, column: 4, scope: !7334)
+!7344 = !DILocation(line: 542, column: 8, scope: !7334)
+!7345 = !DILocation(line: 542, column: 22, scope: !7334)
+!7346 = distinct !DISubprogram(name: "_Destroy<ILLIXR_AUDIO::Sound **, ILLIXR_AUDIO::Sound *>", linkageName: "_ZSt8_DestroyIPPN12ILLIXR_AUDIO5SoundES2_EvT_S4_RSaIT0_E", scope: !2, file: !5292, line: 148, type: !7347, scopeLine: 150, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7353, retainedNodes: !7349)
+!7347 = !DISubroutineType(types: !7348)
+!7348 = !{null, !93, !93, !1227}
+!7349 = !{!7350, !7351, !7352}
+!7350 = !DILocalVariable(name: "__first", arg: 1, scope: !7346, file: !5292, line: 148, type: !93)
+!7351 = !DILocalVariable(name: "__last", arg: 2, scope: !7346, file: !5292, line: 148, type: !93)
+!7352 = !DILocalVariable(arg: 3, scope: !7346, file: !5292, line: 149, type: !1227)
+!7353 = !{!7321, !1193}
+!7354 = !DILocation(line: 0, scope: !7346)
+!7355 = !DILocation(line: 151, column: 7, scope: !7346)
+!7356 = !DILocation(line: 152, column: 5, scope: !7346)
+!7357 = distinct !DISubprogram(name: "_M_deallocate", linkageName: "_ZNSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE13_M_deallocateEPS2_m", scope: !73, file: !70, line: 174, type: !1300, scopeLine: 175, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1299, retainedNodes: !7358)
+!7358 = !{!7359, !7360, !7361}
+!7359 = !DILocalVariable(name: "this", arg: 1, scope: !7357, type: !6865, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7360 = !DILocalVariable(name: "__p", arg: 2, scope: !7357, file: !70, line: 174, type: !1236)
+!7361 = !DILocalVariable(name: "__n", arg: 3, scope: !7357, file: !70, line: 174, type: !206)
+!7362 = !DILocation(line: 0, scope: !7357)
+!7363 = !DILocation(line: 177, column: 6, scope: !7364)
+!7364 = distinct !DILexicalBlock(scope: !7357, file: !70, line: 177, column: 6)
+!7365 = !DILocation(line: 177, column: 6, scope: !7357)
+!7366 = !DILocation(line: 178, column: 20, scope: !7364)
+!7367 = !DILocation(line: 178, column: 4, scope: !7364)
+!7368 = !DILocation(line: 179, column: 7, scope: !7357)
+!7369 = distinct !DISubprogram(name: "max_size", linkageName: "_ZNKSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE8max_sizeEv", scope: !69, file: !70, line: 659, type: !1389, scopeLine: 660, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1391, retainedNodes: !7370)
+!7370 = !{!7371}
+!7371 = !DILocalVariable(name: "this", arg: 1, scope: !7369, type: !4649, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7372 = !DILocation(line: 0, scope: !7369)
+!7373 = !DILocation(line: 660, column: 40, scope: !7369)
+!7374 = !DILocation(line: 660, column: 16, scope: !7369)
+!7375 = !DILocation(line: 660, column: 9, scope: !7369)
+!7376 = distinct !DISubprogram(name: "max_size", linkageName: "_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE8max_sizeERKS3_", scope: !86, file: !87, line: 550, type: !1211, scopeLine: 551, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1210, retainedNodes: !7377)
+!7377 = !{!7378}
+!7378 = !DILocalVariable(name: "__a", arg: 1, scope: !7376, file: !87, line: 550, type: !1214)
+!7379 = !DILocation(line: 0, scope: !7376)
+!7380 = !DILocation(line: 551, column: 16, scope: !7376)
+!7381 = !DILocation(line: 551, column: 20, scope: !7376)
+!7382 = !DILocation(line: 551, column: 9, scope: !7376)
+!7383 = distinct !DISubprogram(name: "_M_get_Tp_allocator", linkageName: "_ZNKSt12_Vector_baseIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_get_Tp_allocatorEv", scope: !73, file: !70, line: 117, type: !1263, scopeLine: 118, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1262, retainedNodes: !7384)
+!7384 = !{!7385}
+!7385 = !DILocalVariable(name: "this", arg: 1, scope: !7383, type: !7386, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7386 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !1266, size: 64)
+!7387 = !DILocation(line: 0, scope: !7383)
+!7388 = !DILocation(line: 118, column: 16, scope: !7383)
+!7389 = !DILocation(line: 118, column: 9, scope: !7383)
+!7390 = distinct !DISubprogram(name: "max_size", linkageName: "_ZNK9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE8max_sizeEv", scope: !1156, file: !175, line: 113, type: !1190, scopeLine: 114, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1189, retainedNodes: !7391)
+!7391 = !{!7392}
+!7392 = !DILocalVariable(name: "this", arg: 1, scope: !7390, type: !7393, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7393 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !1166, size: 64)
+!7394 = !DILocation(line: 0, scope: !7390)
+!7395 = !DILocation(line: 114, column: 9, scope: !7390)
+!7396 = distinct !DISubprogram(name: "allocate", linkageName: "_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE8allocateERS3_m", scope: !86, file: !87, line: 490, type: !90, scopeLine: 491, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !89, retainedNodes: !7397)
+!7397 = !{!7398, !7399}
+!7398 = !DILocalVariable(name: "__a", arg: 1, scope: !7396, file: !87, line: 490, type: !1150)
+!7399 = !DILocalVariable(name: "__n", arg: 2, scope: !7396, file: !87, line: 490, type: !229)
+!7400 = !DILocation(line: 0, scope: !7396)
+!7401 = !DILocation(line: 491, column: 16, scope: !7396)
+!7402 = !DILocation(line: 491, column: 20, scope: !7396)
+!7403 = !DILocation(line: 491, column: 9, scope: !7396)
+!7404 = distinct !DISubprogram(name: "allocate", linkageName: "_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE8allocateEmPKv", scope: !1156, file: !175, line: 99, type: !1184, scopeLine: 100, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1183, retainedNodes: !7405)
+!7405 = !{!7406, !7407, !7408}
+!7406 = !DILocalVariable(name: "this", arg: 1, scope: !7404, type: !6889, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7407 = !DILocalVariable(name: "__n", arg: 2, scope: !7404, file: !175, line: 99, type: !205)
+!7408 = !DILocalVariable(arg: 3, scope: !7404, file: !175, line: 99, type: !209)
+!7409 = !DILocation(line: 0, scope: !7404)
+!7410 = !DILocation(line: 101, column: 18, scope: !7411)
+!7411 = distinct !DILexicalBlock(scope: !7404, file: !175, line: 101, column: 6)
+!7412 = !DILocation(line: 101, column: 10, scope: !7411)
+!7413 = !DILocation(line: 101, column: 6, scope: !7404)
+!7414 = !DILocation(line: 102, column: 4, scope: !7411)
+!7415 = !DILocation(line: 104, column: 46, scope: !7404)
+!7416 = !DILocation(line: 104, column: 27, scope: !7404)
+!7417 = !DILocation(line: 104, column: 9, scope: !7404)
+!7418 = !DILocation(line: 104, column: 2, scope: !7404)
+!7419 = distinct !DISubprogram(name: "__uninitialized_copy_a<std::move_iterator<ILLIXR_AUDIO::Sound **>, ILLIXR_AUDIO::Sound **, ILLIXR_AUDIO::Sound *>", linkageName: "_ZSt22__uninitialized_copy_aISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES4_S3_ET0_T_S7_S6_RSaIT1_E", scope: !2, file: !5779, line: 279, type: !7420, scopeLine: 281, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7427, retainedNodes: !7422)
+!7420 = !DISubroutineType(types: !7421)
+!7421 = !{!93, !1727, !1727, !93, !1227}
+!7422 = !{!7423, !7424, !7425, !7426}
+!7423 = !DILocalVariable(name: "__first", arg: 1, scope: !7419, file: !5779, line: 279, type: !1727)
+!7424 = !DILocalVariable(name: "__last", arg: 2, scope: !7419, file: !5779, line: 279, type: !1727)
+!7425 = !DILocalVariable(name: "__result", arg: 3, scope: !7419, file: !5779, line: 280, type: !93)
+!7426 = !DILocalVariable(arg: 4, scope: !7419, file: !5779, line: 280, type: !1227)
+!7427 = !{!7428, !7321, !1193}
+!7428 = !DITemplateTypeParameter(name: "_InputIterator", type: !1727)
+!7429 = !DILocation(line: 0, scope: !7419)
+!7430 = !DILocation(line: 281, column: 14, scope: !7419)
+!7431 = !DILocation(line: 281, column: 7, scope: !7419)
+!7432 = distinct !DISubprogram(name: "__make_move_if_noexcept_iterator<ILLIXR_AUDIO::Sound **, std::move_iterator<ILLIXR_AUDIO::Sound **> >", linkageName: "_ZSt32__make_move_if_noexcept_iteratorIPPN12ILLIXR_AUDIO5SoundESt13move_iteratorIS3_EET0_T_", scope: !2, file: !396, line: 1166, type: !7433, scopeLine: 1167, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7437, retainedNodes: !7435)
+!7433 = !DISubroutineType(types: !7434)
+!7434 = !{!1727, !93}
+!7435 = !{!7436}
+!7436 = !DILocalVariable(name: "__i", arg: 1, scope: !7432, file: !396, line: 1166, type: !93)
+!7437 = !{!1773, !7438}
+!7438 = !DITemplateTypeParameter(name: "_ReturnType", type: !1727)
+!7439 = !DILocation(line: 0, scope: !7432)
+!7440 = !DILocation(line: 1167, column: 14, scope: !7432)
+!7441 = !DILocation(line: 1167, column: 7, scope: !7432)
+!7442 = distinct !DISubprogram(name: "uninitialized_copy<std::move_iterator<ILLIXR_AUDIO::Sound **>, ILLIXR_AUDIO::Sound **>", linkageName: "_ZSt18uninitialized_copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES4_ET0_T_S7_S6_", scope: !2, file: !5779, line: 107, type: !7443, scopeLine: 109, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7450, retainedNodes: !7445)
+!7443 = !DISubroutineType(types: !7444)
+!7444 = !{!93, !1727, !1727, !93}
+!7445 = !{!7446, !7447, !7448, !7449}
+!7446 = !DILocalVariable(name: "__first", arg: 1, scope: !7442, file: !5779, line: 107, type: !1727)
+!7447 = !DILocalVariable(name: "__last", arg: 2, scope: !7442, file: !5779, line: 107, type: !1727)
+!7448 = !DILocalVariable(name: "__result", arg: 3, scope: !7442, file: !5779, line: 108, type: !93)
+!7449 = !DILocalVariable(name: "__assignable", scope: !7442, file: !5779, line: 120, type: !642)
+!7450 = !{!7428, !7321}
+!7451 = !DILocation(line: 0, scope: !7442)
+!7452 = !DILocation(line: 123, column: 14, scope: !7442)
+!7453 = !DILocation(line: 123, column: 7, scope: !7442)
+!7454 = distinct !DISubprogram(name: "__uninit_copy<std::move_iterator<ILLIXR_AUDIO::Sound **>, ILLIXR_AUDIO::Sound **>", linkageName: "_ZNSt20__uninitialized_copyILb1EE13__uninit_copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES6_EET0_T_S9_S8_", scope: !6032, file: !5779, line: 91, type: !7443, scopeLine: 93, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7450, declaration: !7455, retainedNodes: !7456)
+!7455 = !DISubprogram(name: "__uninit_copy<std::move_iterator<ILLIXR_AUDIO::Sound **>, ILLIXR_AUDIO::Sound **>", linkageName: "_ZNSt20__uninitialized_copyILb1EE13__uninit_copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES6_EET0_T_S9_S8_", scope: !6032, file: !5779, line: 91, type: !7443, scopeLine: 91, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !7450)
+!7456 = !{!7457, !7458, !7459}
+!7457 = !DILocalVariable(name: "__first", arg: 1, scope: !7454, file: !5779, line: 91, type: !1727)
+!7458 = !DILocalVariable(name: "__last", arg: 2, scope: !7454, file: !5779, line: 91, type: !1727)
+!7459 = !DILocalVariable(name: "__result", arg: 3, scope: !7454, file: !5779, line: 92, type: !93)
+!7460 = !DILocation(line: 0, scope: !7454)
+!7461 = !DILocation(line: 93, column: 18, scope: !7454)
+!7462 = !DILocation(line: 93, column: 11, scope: !7454)
+!7463 = distinct !DISubprogram(name: "copy<std::move_iterator<ILLIXR_AUDIO::Sound **>, ILLIXR_AUDIO::Sound **>", linkageName: "_ZSt4copyISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEES4_ET0_T_S7_S6_", scope: !2, file: !5868, line: 462, type: !7443, scopeLine: 463, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7468, retainedNodes: !7464)
+!7464 = !{!7465, !7466, !7467}
+!7465 = !DILocalVariable(name: "__first", arg: 1, scope: !7463, file: !5868, line: 462, type: !1727)
+!7466 = !DILocalVariable(name: "__last", arg: 2, scope: !7463, file: !5868, line: 462, type: !1727)
+!7467 = !DILocalVariable(name: "__result", arg: 3, scope: !7463, file: !5868, line: 462, type: !93)
+!7468 = !{!7469, !7470}
+!7469 = !DITemplateTypeParameter(name: "_II", type: !1727)
+!7470 = !DITemplateTypeParameter(name: "_OI", type: !93)
+!7471 = !DILocation(line: 0, scope: !7463)
+!7472 = !DILocation(line: 471, column: 9, scope: !7463)
+!7473 = !DILocation(line: 471, column: 37, scope: !7463)
+!7474 = !DILocation(line: 470, column: 15, scope: !7463)
+!7475 = !DILocation(line: 470, column: 7, scope: !7463)
+!7476 = distinct !DISubprogram(name: "__copy_move_a2<true, ILLIXR_AUDIO::Sound **, ILLIXR_AUDIO::Sound **>", linkageName: "_ZSt14__copy_move_a2ILb1EPPN12ILLIXR_AUDIO5SoundES3_ET1_T0_S5_S4_", scope: !2, file: !5868, line: 436, type: !7477, scopeLine: 437, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7483, retainedNodes: !7479)
+!7477 = !DISubroutineType(types: !7478)
+!7478 = !{!93, !93, !93, !93}
+!7479 = !{!7480, !7481, !7482}
+!7480 = !DILocalVariable(name: "__first", arg: 1, scope: !7476, file: !5868, line: 436, type: !93)
+!7481 = !DILocalVariable(name: "__last", arg: 2, scope: !7476, file: !5868, line: 436, type: !93)
+!7482 = !DILocalVariable(name: "__result", arg: 3, scope: !7476, file: !5868, line: 436, type: !93)
+!7483 = !{!6063, !7484, !7470}
+!7484 = !DITemplateTypeParameter(name: "_II", type: !93)
+!7485 = !DILocation(line: 0, scope: !7476)
+!7486 = !DILocation(line: 438, column: 46, scope: !7476)
+!7487 = !DILocation(line: 439, column: 11, scope: !7476)
+!7488 = !DILocation(line: 440, column: 11, scope: !7476)
+!7489 = !DILocation(line: 438, column: 18, scope: !7476)
+!7490 = !DILocation(line: 438, column: 7, scope: !7476)
+!7491 = distinct !DISubprogram(name: "__miter_base<std::move_iterator<ILLIXR_AUDIO::Sound **> >", linkageName: "_ZSt12__miter_baseISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEEENSt11_Miter_baseIT_E13iterator_typeES7_", scope: !2, file: !5868, line: 293, type: !7492, scopeLine: 294, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7502, retainedNodes: !7500)
+!7492 = !DISubroutineType(types: !7493)
+!7493 = !{!7494, !1727}
+!7494 = !DIDerivedType(tag: DW_TAG_typedef, name: "iterator_type", scope: !7495, file: !413, line: 222, baseType: !1737)
+!7495 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "_Iter_base<std::move_iterator<ILLIXR_AUDIO::Sound **>, true>", scope: !2, file: !413, line: 220, size: 8, flags: DIFlagTypePassByValue, elements: !7496, templateParams: !7498, identifier: "_ZTSSt10_Iter_baseISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEELb1EE")
+!7496 = !{!7497}
+!7497 = !DISubprogram(name: "_S_base", linkageName: "_ZNSt10_Iter_baseISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEELb1EE7_S_baseES5_", scope: !7495, file: !413, line: 223, type: !7492, scopeLine: 223, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized)
+!7498 = !{!7499, !6080}
+!7499 = !DITemplateTypeParameter(name: "_Iterator", type: !1727)
+!7500 = !{!7501}
+!7501 = !DILocalVariable(name: "__it", arg: 1, scope: !7491, file: !5868, line: 293, type: !1727)
+!7502 = !{!7499}
+!7503 = !DILocation(line: 0, scope: !7491)
+!7504 = !DILocation(line: 294, column: 14, scope: !7491)
+!7505 = !DILocation(line: 294, column: 7, scope: !7491)
+!7506 = distinct !DISubprogram(name: "__copy_move_a<true, ILLIXR_AUDIO::Sound **, ILLIXR_AUDIO::Sound **>", linkageName: "_ZSt13__copy_move_aILb1EPPN12ILLIXR_AUDIO5SoundES3_ET1_T0_S5_S4_", scope: !2, file: !5868, line: 391, type: !7477, scopeLine: 392, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7483, retainedNodes: !7507)
+!7507 = !{!7508, !7509, !7510, !7511}
+!7508 = !DILocalVariable(name: "__first", arg: 1, scope: !7506, file: !5868, line: 391, type: !93)
+!7509 = !DILocalVariable(name: "__last", arg: 2, scope: !7506, file: !5868, line: 391, type: !93)
+!7510 = !DILocalVariable(name: "__result", arg: 3, scope: !7506, file: !5868, line: 391, type: !93)
+!7511 = !DILocalVariable(name: "__simple", scope: !7506, file: !5868, line: 396, type: !642)
+!7512 = !DILocation(line: 0, scope: !7506)
+!7513 = !DILocation(line: 401, column: 14, scope: !7506)
+!7514 = !DILocation(line: 401, column: 7, scope: !7506)
+!7515 = distinct !DISubprogram(name: "__niter_base<ILLIXR_AUDIO::Sound **>", linkageName: "_ZSt12__niter_baseIPPN12ILLIXR_AUDIO5SoundEENSt11_Niter_baseIT_E13iterator_typeES5_", scope: !2, file: !5868, line: 282, type: !7516, scopeLine: 283, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !1772, retainedNodes: !7523)
+!7516 = !DISubroutineType(types: !7517)
+!7517 = !{!7518, !93}
+!7518 = !DIDerivedType(tag: DW_TAG_typedef, name: "iterator_type", scope: !7519, file: !413, line: 214, baseType: !93)
+!7519 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "_Iter_base<ILLIXR_AUDIO::Sound **, false>", scope: !2, file: !413, line: 212, size: 8, flags: DIFlagTypePassByValue, elements: !7520, templateParams: !7522, identifier: "_ZTSSt10_Iter_baseIPPN12ILLIXR_AUDIO5SoundELb0EE")
+!7520 = !{!7521}
+!7521 = !DISubprogram(name: "_S_base", linkageName: "_ZNSt10_Iter_baseIPPN12ILLIXR_AUDIO5SoundELb0EE7_S_baseES3_", scope: !7519, file: !413, line: 215, type: !7516, scopeLine: 215, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized)
+!7522 = !{!1773, !5918}
+!7523 = !{!7524}
+!7524 = !DILocalVariable(name: "__it", arg: 1, scope: !7515, file: !5868, line: 282, type: !93)
+!7525 = !DILocation(line: 0, scope: !7515)
+!7526 = !DILocation(line: 283, column: 14, scope: !7515)
+!7527 = !DILocation(line: 283, column: 7, scope: !7515)
+!7528 = distinct !DISubprogram(name: "__copy_m<ILLIXR_AUDIO::Sound *>", linkageName: "_ZNSt11__copy_moveILb1ELb1ESt26random_access_iterator_tagE8__copy_mIPN12ILLIXR_AUDIO5SoundEEEPT_PKS6_S9_S7_", scope: !6097, file: !5868, line: 373, type: !7529, scopeLine: 374, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !1192, declaration: !7531, retainedNodes: !7532)
+!7529 = !DISubroutineType(types: !7530)
+!7530 = !{!93, !1179, !1179, !93}
+!7531 = !DISubprogram(name: "__copy_m<ILLIXR_AUDIO::Sound *>", linkageName: "_ZNSt11__copy_moveILb1ELb1ESt26random_access_iterator_tagE8__copy_mIPN12ILLIXR_AUDIO5SoundEEEPT_PKS6_S9_S7_", scope: !6097, file: !5868, line: 373, type: !7529, scopeLine: 373, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !1192)
+!7532 = !{!7533, !7534, !7535, !7536}
+!7533 = !DILocalVariable(name: "__first", arg: 1, scope: !7528, file: !5868, line: 373, type: !1179)
+!7534 = !DILocalVariable(name: "__last", arg: 2, scope: !7528, file: !5868, line: 373, type: !1179)
+!7535 = !DILocalVariable(name: "__result", arg: 3, scope: !7528, file: !5868, line: 373, type: !93)
+!7536 = !DILocalVariable(name: "_Num", scope: !7528, file: !5868, line: 382, type: !6118)
+!7537 = !DILocation(line: 0, scope: !7528)
+!7538 = !DILocation(line: 382, column: 34, scope: !7528)
+!7539 = !DILocation(line: 383, column: 8, scope: !7540)
+!7540 = distinct !DILexicalBlock(scope: !7528, file: !5868, line: 383, column: 8)
+!7541 = !DILocation(line: 383, column: 8, scope: !7528)
+!7542 = !DILocation(line: 384, column: 6, scope: !7540)
+!7543 = !DILocation(line: 385, column: 20, scope: !7528)
+!7544 = !DILocation(line: 385, column: 4, scope: !7528)
+!7545 = distinct !DISubprogram(name: "_S_base", linkageName: "_ZNSt10_Iter_baseIPPN12ILLIXR_AUDIO5SoundELb0EE7_S_baseES3_", scope: !7519, file: !413, line: 215, type: !7516, scopeLine: 216, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !7521, retainedNodes: !7546)
+!7546 = !{!7547}
+!7547 = !DILocalVariable(name: "__it", arg: 1, scope: !7545, file: !413, line: 215, type: !93)
+!7548 = !DILocation(line: 0, scope: !7545)
+!7549 = !DILocation(line: 216, column: 9, scope: !7545)
+!7550 = distinct !DISubprogram(name: "_S_base", linkageName: "_ZNSt10_Iter_baseISt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEELb1EE7_S_baseES5_", scope: !7495, file: !413, line: 223, type: !7492, scopeLine: 224, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !7497, retainedNodes: !7551)
+!7551 = !{!7552}
+!7552 = !DILocalVariable(name: "__it", arg: 1, scope: !7550, file: !413, line: 223, type: !1727)
+!7553 = !DILocation(line: 0, scope: !7550)
+!7554 = !DILocation(line: 224, column: 21, scope: !7550)
+!7555 = !DILocation(line: 224, column: 9, scope: !7550)
+!7556 = distinct !DISubprogram(name: "base", linkageName: "_ZNKSt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEE4baseEv", scope: !1727, file: !396, line: 992, type: !1739, scopeLine: 993, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1738, retainedNodes: !7557)
+!7557 = !{!7558}
+!7558 = !DILocalVariable(name: "this", arg: 1, scope: !7556, type: !7559, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7559 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !1742, size: 64)
+!7560 = !DILocation(line: 0, scope: !7556)
+!7561 = !DILocation(line: 993, column: 16, scope: !7556)
+!7562 = !{!7563, !3172, i64 0}
+!7563 = !{!"_ZTSSt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEE", !3172, i64 0}
+!7564 = !DILocation(line: 993, column: 9, scope: !7556)
+!7565 = distinct !DISubprogram(name: "move_iterator", linkageName: "_ZNSt13move_iteratorIPPN12ILLIXR_AUDIO5SoundEEC2ES3_", scope: !1727, file: !396, line: 984, type: !1735, scopeLine: 985, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1734, retainedNodes: !7566)
+!7566 = !{!7567, !7569}
+!7567 = !DILocalVariable(name: "this", arg: 1, scope: !7565, type: !7568, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7568 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !1727, size: 64)
+!7569 = !DILocalVariable(name: "__i", arg: 2, scope: !7565, file: !396, line: 984, type: !1737)
+!7570 = !DILocation(line: 0, scope: !7565)
+!7571 = !DILocation(line: 985, column: 9, scope: !7565)
+!7572 = !DILocation(line: 985, column: 27, scope: !7565)
+!7573 = distinct !DISubprogram(name: "destroy<ILLIXR_AUDIO::Sound *>", linkageName: "_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE7destroyIS3_EEvPT_", scope: !1156, file: !175, line: 124, type: !7574, scopeLine: 124, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7338, declaration: !7576, retainedNodes: !7577)
+!7574 = !DISubroutineType(types: !7575)
+!7575 = !{null, !1161, !93}
+!7576 = !DISubprogram(name: "destroy<ILLIXR_AUDIO::Sound *>", linkageName: "_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE7destroyIS3_EEvPT_", scope: !1156, file: !175, line: 124, type: !7574, scopeLine: 124, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized, templateParams: !7338)
+!7577 = !{!7578, !7579}
+!7578 = !DILocalVariable(name: "this", arg: 1, scope: !7573, type: !6889, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7579 = !DILocalVariable(name: "__p", arg: 2, scope: !7573, file: !175, line: 124, type: !93)
+!7580 = !DILocation(line: 0, scope: !7573)
+!7581 = !DILocation(line: 124, column: 42, scope: !7573)
+!7582 = distinct !DISubprogram(name: "_Destroy<ILLIXR_AUDIO::Sound **>", linkageName: "_ZSt8_DestroyIPPN12ILLIXR_AUDIO5SoundEEvT_S4_", scope: !2, file: !5292, line: 122, type: !7583, scopeLine: 123, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7588, retainedNodes: !7585)
+!7583 = !DISubroutineType(types: !7584)
+!7584 = !{null, !93, !93}
+!7585 = !{!7586, !7587}
+!7586 = !DILocalVariable(name: "__first", arg: 1, scope: !7582, file: !5292, line: 122, type: !93)
+!7587 = !DILocalVariable(name: "__last", arg: 2, scope: !7582, file: !5292, line: 122, type: !93)
+!7588 = !{!7321}
+!7589 = !DILocation(line: 0, scope: !7582)
+!7590 = !DILocation(line: 126, column: 7, scope: !7582)
+!7591 = !DILocation(line: 128, column: 5, scope: !7582)
+!7592 = distinct !DISubprogram(name: "__destroy<ILLIXR_AUDIO::Sound **>", linkageName: "_ZNSt12_Destroy_auxILb1EE9__destroyIPPN12ILLIXR_AUDIO5SoundEEEvT_S6_", scope: !5334, file: !5292, line: 112, type: !7583, scopeLine: 112, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, templateParams: !7588, declaration: !7593, retainedNodes: !7594)
+!7593 = !DISubprogram(name: "__destroy<ILLIXR_AUDIO::Sound **>", linkageName: "_ZNSt12_Destroy_auxILb1EE9__destroyIPPN12ILLIXR_AUDIO5SoundEEEvT_S6_", scope: !5334, file: !5292, line: 112, type: !7583, scopeLine: 112, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized, templateParams: !7588)
+!7594 = !{!7595, !7596}
+!7595 = !DILocalVariable(arg: 1, scope: !7592, file: !5292, line: 112, type: !93)
+!7596 = !DILocalVariable(arg: 2, scope: !7592, file: !5292, line: 112, type: !93)
+!7597 = !DILocation(line: 0, scope: !7592)
+!7598 = !DILocation(line: 112, column: 57, scope: !7592)
+!7599 = distinct !DISubprogram(name: "deallocate", linkageName: "_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE10deallocateERS3_PS2_m", scope: !86, file: !87, line: 516, type: !1208, scopeLine: 517, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1207, retainedNodes: !7600)
+!7600 = !{!7601, !7602, !7603}
+!7601 = !DILocalVariable(name: "__a", arg: 1, scope: !7599, file: !87, line: 516, type: !1150)
+!7602 = !DILocalVariable(name: "__p", arg: 2, scope: !7599, file: !87, line: 516, type: !92)
+!7603 = !DILocalVariable(name: "__n", arg: 3, scope: !7599, file: !87, line: 516, type: !229)
+!7604 = !DILocation(line: 0, scope: !7599)
+!7605 = !DILocation(line: 517, column: 9, scope: !7599)
+!7606 = !DILocation(line: 517, column: 13, scope: !7599)
+!7607 = !DILocation(line: 517, column: 35, scope: !7599)
+!7608 = distinct !DISubprogram(name: "deallocate", linkageName: "_ZN9__gnu_cxx13new_allocatorIPN12ILLIXR_AUDIO5SoundEE10deallocateEPS3_m", scope: !1156, file: !175, line: 109, type: !1187, scopeLine: 110, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !1186, retainedNodes: !7609)
+!7609 = !{!7610, !7611, !7612}
+!7610 = !DILocalVariable(name: "this", arg: 1, scope: !7608, type: !6889, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7611 = !DILocalVariable(name: "__p", arg: 2, scope: !7608, file: !175, line: 109, type: !1171)
+!7612 = !DILocalVariable(arg: 3, scope: !7608, file: !175, line: 109, type: !205)
+!7613 = !DILocation(line: 0, scope: !7608)
+!7614 = !DILocation(line: 110, column: 27, scope: !7608)
+!7615 = !DILocation(line: 110, column: 9, scope: !7608)
+!7616 = !DILocation(line: 110, column: 33, scope: !7608)
+!7617 = distinct !DISubprogram(linkageName: "_GLOBAL__sub_I_main.cpp", scope: !20, file: !20, type: !7618, flags: DIFlagArtificial, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !19, retainedNodes: !263)
+!7618 = !DISubroutineType(types: !263)
+!7619 = !DILocation(line: 0, scope: !7617)

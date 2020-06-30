@@ -692,7 +692,7 @@ void ILLIXR_AUDIO::ABAudio::audio_process_fxp(/*0*/ Sound** soundSrcs, /*1*/ siz
 // A leaf node function to do the addition of sumBF
 void ILLIXR_AUDIO::ABAudio::sumBF_fxp(/*0*/ Sound** soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ CBFormat* addrSumBF, /*3*/ size_t bytes_sumBF, /*4*/ unsigned int soundSrcsSize) {
     __hpvm__hint(hpvm::CPU_TARGET);
-    // __hpvm__attributes(2, soundSrcs, addrSumBF, 1, addrSumBF);
+    __hpvm__attributes(2, soundSrcs, addrSumBF, 1, addrSumBF);
     // void* thisNode = __hpvm__getNode();
     // int sumNode = __hpvm__getNodeInstanceID_x(thisNode);
 
@@ -707,7 +707,7 @@ void ILLIXR_AUDIO::ABAudio::sumBF_fxp(/*0*/ Sound** soundSrcs, /*1*/ size_t byte
 // The root node for audio encoding
 void ILLIXR_AUDIO::ABAudio::encodingPipeline(/*0*/ Sound** soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ CBFormat* addrSumBF, /*3*/ size_t bytes_sumBF, /*4*/ unsigned nSamples, /*5*/ unsigned int soundSrcsSize) {
     __hpvm__hint(hpvm::CPU_TARGET);
-    // __hpvm__attributes(2, soundSrcs, addrSumBF, 2, soundSrcs, addrSumBF);
+    __hpvm__attributes(2, soundSrcs, addrSumBF, 2, soundSrcs, addrSumBF);
 
     // Function pointers since they are not static member functions
     void (ILLIXR_AUDIO::ABAudio::*funcProcess)(Sound**, size_t, unsigned, unsigned int);
@@ -786,45 +786,7 @@ void ILLIXR_AUDIO::ABAudio::readNEncodeNew(CBFormat& sumBF) {
 
     __hpvm__cleanup();
 
-    /*
-    "soundSrcs[soundIdx]->BFormat->m_ppfChannels" is the one to be printed
-    */
 }
-
-// // Simple rotation
-// void ILLIXR_AUDIO::ABAudio::updateRotation(){
-// 	static int frame = 0;
-// 	frame++;
-// 	Orientation head(0,0,1.0*frame/1500*3.14*2);
-// 	rotator->SetOrientation(head);
-// 	rotator->Refresh();
-// }
-// // Simple zoom
-// void ILLIXR_AUDIO::ABAudio::updateZoom(){
-// 	static int frame = 0;
-// 	frame++;
-// 	zoomer->SetZoom(sinf(frame/100));
-// 	zoomer->Refresh();
-// }
-// // Process some rotation and zoom effects
-// void ILLIXR_AUDIO::ABAudio::rotateNZoom(CBFormat& sumBF){
-// 	updateRotation();
-// 	rotator->Process(&sumBF, BLOCK_SIZE);
-// 	updateZoom();
-// 	zoomer->Process(&sumBF, BLOCK_SIZE);
-// }
-
-// void ILLIXR_AUDIO::ABAudio::writeFile(float** resultSample){
-// 	// Normalize(Clipping), then write into file
-// 	for(int sampleIdx = 0; sampleIdx < BLOCK_SIZE; ++sampleIdx){
-// 		resultSample[0][sampleIdx] = std::max(std::min(resultSample[0][sampleIdx], +1.0f), -1.0f);
-// 		resultSample[1][sampleIdx] = std::max(std::min(resultSample[1][sampleIdx], +1.0f), -1.0f);
-// 		int16_t tempSample0 = (int16_t)(resultSample[0][sampleIdx]/1.0 * 32767);
-// 		int16_t tempSample1 = (int16_t)(resultSample[1][sampleIdx]/1.0 * 32767);
-// 		outputFile->write((char*)&tempSample0,sizeof(short));
-// 		outputFile->write((char*)&tempSample1,sizeof(short));
-// 	}
-// }
 
 void ILLIXR_AUDIO::ABAudio::processBlock(){
     float** resultSample = new float*[2];
