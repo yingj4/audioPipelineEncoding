@@ -18,6 +18,8 @@
 #define NUM_CHANNELS (OrderToComponents(NORDER, true))
 #define NUM_SRCS 16
 
+#define NUM_BLOCKS 500
+
 const unsigned knSpeedOfSound = 344;
 const unsigned knMaxDistance = 150;
 
@@ -349,6 +351,11 @@ namespace ILLIXR_AUDIO{
 		PolarPoint srcPos;
 		// amplitude scale to avoid clipping
 		float amp;
+
+        // HPVM-C related
+        float** sampleArray;                    // size: [NUM_BLOCKS][BLOCK_SIZE]
+        CBFormat** BFormatArray;                // size: [NUM_BLOCKS]
+        CAmbisonicEncoderDist** BEncoderArray;  // size: [NUM_BLOCKS]
 	};
 
 	// Class ABAudio
@@ -366,7 +373,7 @@ namespace ILLIXR_AUDIO{
 		void processBlock();
 		// Load sound source files (predefined)
 		void loadSource();
-	private:
+	// private:
 		ProcessType processType;
 		// a list of sound sources in this audio
 		std::vector<Sound*>* soundSrcs;
@@ -390,12 +397,12 @@ namespace ILLIXR_AUDIO{
 		void readNEncode(CBFormat& sumBF);
 
 		// The pipeline for audio encoding in HPVM-C
-		void audio_process_fxp(/*0*/ Sound** soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize);
-		void sumBF_fxp(/*0*/ Sound** soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ CBFormat* addrSumBF, /*3*/ size_t bytes_sumBF, /*4*/ unsigned int soundSrcsSize);
-		void encodingPipeline(/*0*/ Sound** soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ CBFormat* addrSumBF, /*3*/ size_t bytes_sumBF, /*4*/ unsigned nSamples, /*5*/ unsigned int soundSrcsSize);
+		// void audio_process_fxp(/*0*/ Sound** soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize);
+		// void sumBF_fxp(/*0*/ Sound** soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ CBFormat* addrSumBF, /*3*/ size_t bytes_sumBF, /*4*/ unsigned int soundSrcsSize);
+		// void encodingPipeline(/*0*/ Sound** soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ CBFormat* addrSumBF, /*3*/ size_t bytes_sumBF, /*4*/ unsigned nSamples, /*5*/ unsigned int soundSrcsSize);
 
 		// Modified readNEncode function for HPVM-C
-		void readNEncodeNew(CBFormat& sumBF);
+		// void readNEncodeNew(CBFormat& sumBF);
 
 		// // Apply rotation and zoom effects to the ambisonics sound field
 		// void rotateNZoom(CBFormat& sumBF);
