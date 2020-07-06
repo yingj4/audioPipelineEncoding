@@ -396,14 +396,6 @@ namespace ILLIXR_AUDIO{
 		// Read in data from WAV files and encode into ambisonics
 		void readNEncode(CBFormat& sumBF);
 
-		// The pipeline for audio encoding in HPVM-C
-		// void audio_process_fxp(/*0*/ Sound** soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize);
-		// void sumBF_fxp(/*0*/ Sound** soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ CBFormat* addrSumBF, /*3*/ size_t bytes_sumBF, /*4*/ unsigned int soundSrcsSize);
-		// void encodingPipeline(/*0*/ Sound** soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ CBFormat* addrSumBF, /*3*/ size_t bytes_sumBF, /*4*/ unsigned nSamples, /*5*/ unsigned int soundSrcsSize);
-
-		// Modified readNEncode function for HPVM-C
-		// void readNEncodeNew(CBFormat& sumBF);
-
 		// // Apply rotation and zoom effects to the ambisonics sound field
 		// void rotateNZoom(CBFormat& sumBF);
 		// // Write out a block of samples to the output file
