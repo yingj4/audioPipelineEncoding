@@ -702,8 +702,9 @@ void ILLIXR_AUDIO::ABAudio::processBlock(){
 // A leaf node function for the encoding process
 void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize, /*4*/ const int numBlocks) {
     __hpvm__hint(hpvm::CPU_TARGET);
-    __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
+    __hpvm__attributes(1, soundSrcs, 1, nSamples);
 
+    /*
     for (int i = 0; i < soundSrcsSize; ++i) {
         for (int j = 0; j < numBlocks; ++j) {
             (*soundSrcs)[i]->BEncoderArray[j]->Process((*soundSrcs)[i]->sampleArray[j], nSamples, (*soundSrcs)[i]->BFormatArray[j]);
@@ -711,6 +712,8 @@ void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_
     }
 
     __hpvm__return(1, bytes_soundSrcs);
+    */
+    __hpvm__return(1, nSamples);
 }
 
 // A leaf node function for the sumBF addition
