@@ -712,9 +712,14 @@ void ILLIXR_AUDIO::ABAudio::processBlock(){
     delete[] resultSample;
 }
 
+void ILLIXR_AUDIO::ABAudio::generateWAVHeader(){
+	// brute force wav header
+	WAVHeader wavh;
+	outputFile->write((char*)&wavh, sizeof(WAVHeader));
+}
 
 // A leaf node function for the encoding process
-void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs /*int* haha*/, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize, /*4*/ const int numBlocks) {
+void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize, /*4*/ const int numBlocks) {
     __hpvm__hint(hpvm::CPU_TARGET);
     __hpvm__attributes(1, soundSrcs, 1, nSamples);
     // __hpvm__attributes(1, haha, 1, nSamples);
@@ -729,7 +734,7 @@ void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs /*int* haha*
 }
 
 // A leaf node function for the sumBF addition
-void sumBF_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs /*int* haha*/, /*1*/ size_t bytes_soundSrcs, /*2*/ CBFormat* sumBF /*int* hehe*/, /*3*/ size_t bytes_sumBF, /*4*/ unsigned int soundSrcsSize, /*5*/ const int numBlocks) {
+void sumBF_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ CBFormat* sumBF, /*3*/ size_t bytes_sumBF, /*4*/ unsigned int soundSrcsSize, /*5*/ const int numBlocks) {
     __hpvm__hint(hpvm::CPU_TARGET);
     __hpvm__attributes(2, soundSrcs, sumBF, 1, sumBF);
     // __hpvm__attributes(2, haha, hehe, 1, hehe);
@@ -741,10 +746,9 @@ void sumBF_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs /*int* haha*/,
 }
 
 // A root node function for the whole pipeline
-void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs /*int* haha*/, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize, /*4*/ const int numBlocks, /*5*/ CBFormat* sumBF /*int * hehe*/, /*6*/ size_t bytes_sumBF) {
+void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize, /*4*/ const int numBlocks, /*5*/ CBFormat* sumBF, /*6*/ size_t bytes_sumBF) {
     __hpvm__hint(hpvm::CPU_TARGET);
     __hpvm__attributes(2, soundSrcs, sumBF, 2, soundSrcs, sumBF);
-    // __hpvm__attributes(2, haha, hehe, 2, haha, hehe);
 
     // HPVM node generation
     void* encoderNode = __hpvm__createNodeND(0, encoder_fxp);
@@ -792,14 +796,9 @@ void encodeProcess(ILLIXR_AUDIO::ABAudio* audioAddr) {
 
     // The HPVM part goes from here
     // variable initialization
-    // size_t bytes_soundSrcs = soundSrcsSize * sizeof(int); /*(ILLIXR_AUDIO::Sound)*/
-    // size_t bytes_sumBF = soundSrcsSize * sizeof(int); /*CBFormat)*/
     size_t bytes_soundSrcs = soundSrcsSize * sizeof(ILLIXR_AUDIO::Sound);
     size_t bytes_sumBF = soundSrcsSize * sizeof(CBFormat);
 
-    // Testing only
-    // int haha[10];
-    // int hehe[10];
 
     __hpvm__init();
 
@@ -811,9 +810,6 @@ void encodeProcess(ILLIXR_AUDIO::ABAudio* audioAddr) {
     rootArgs->sumBF = sumBF;    // We do have an "operator=" overloading for CBFormat
     rootArgs->bytes_sumBF = bytes_sumBF;
     rootArgs->soundSrcsSize = soundSrcsSize;
-
-    // rootArgs->haha = haha;
-    // rootArgs->hehe = hehe;
 
     // Memory tracking is required for pointer arguments, as specified by the HPVM-C instruction
     llvm_hpvm_track_mem(audioAddr->soundSrcs, bytes_soundSrcs);
@@ -841,14 +837,6 @@ void encodeProcess(ILLIXR_AUDIO::ABAudio* audioAddr) {
 
 }
 
-/*
-void ILLIXR_AUDIO::ABAudio::generateWAVHeader(){
-	// brute force wav header
-	WAVHeader wavh;
-	outputFile->write((char*)&wavh, sizeof(WAVHeader));
-}
-*/
-
 
 int main(int argc, char const *argv[])
 {
@@ -861,8 +849,8 @@ int main(int argc, char const *argv[])
         return 1;
     }
 
-    // // const int numBlocks = atoi(argv[1]);
-    const int numBlocks = NUM_BLOCKS;
+    // const int numBlocks = atoi(argv[1]);
+    // const int numBlocks = NUM_BLOCKS;
     // ABAudio::ProcessType procType(ABAudio::ProcessType::FULL);
     // if (argc > 2){
     //     if (!strcmp(argv[2], "encode"))

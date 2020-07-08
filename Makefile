@@ -33,8 +33,8 @@ INCLUDES += -I$(LLVM_SRC_ROOT)/include -I../include -I$(HPVM_BUILD_DIR)/include
 
 ## BEGIN HPVM MAKEFILE
 LANGUAGE=hpvm
-SRCDIR_OBJS=libspatialaudio.ll
-OBJS_SRC=lispatialaudio/build/Debug/lib/libspatialaudio.a
+SRCDIR_OBJS=AmbisonicCommons.ll
+OBJS_SRC=/src/AmbisonicCommons.cpp
 HPVM_OBJS=main.hpvm.ll
 APP = $(EXE)
 APP_CFLAGS += $(INCLUDES) -ffast-math -O3 -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize
@@ -105,10 +105,10 @@ clean :
 $(KERNEL_OCL) : $(KERNEL)
 	$(OCLBE) $< -o $@
 
-$(EXE) : $(HOST_LINKED) $(OBJS_SRC)
-	$(CXX) -O3 $(LDFLAGS) $^ -o $@
+$(EXE) : $(HOST_LINKED)
+	$(CXX) -O3 $(LDFLAGS) $< -o $@
 
-$(HOST_LINKED) : $(HOST) $(HPVM_RT_LIB)
+$(HOST_LINKED) : $(HOST) $(OBJS) $(HPVM_RT_LIB)
 	$(LLVM_LINK) $^ -S -o $@
 
 $(HOST) $(KERNEL): $(BUILD_DIR)/$(HPVM_OBJS)
