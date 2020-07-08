@@ -23,6 +23,7 @@
 const unsigned knSpeedOfSound = 344;
 const unsigned knMaxDistance = 150;
 
+
 // Class CAmbisonicBase
 class CAmbisonicBase
 {
@@ -406,4 +407,5 @@ namespace ILLIXR_AUDIO{
 		
 	};
 }
+
 #endif

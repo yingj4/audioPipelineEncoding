@@ -42,9 +42,9 @@ APP_CXXFLAGS += $(INCLUDES) -ffast-math -O3 -fno-lax-vector-conversions -fno-vec
 APP_LDFLAGS=`pkg-config opencv --libs`
 
 CFLAGS=-Wall -fPIC -I./include
-CXXFLAGS=-O1 -std=c++14 -Wall -fPIC -I./include
+CXXFLAGS=-O3 -std=c++14 -Wall -fPIC -I./include
 LD_LIBS=-lpthread -pthread
-DBG_FLAGS=-g -I./libspatialaudio/build/Debug/include
+DBG_FLAGS=-I./libspatialaudio/build/Debug/include
 OPT_FLAGS=-O3 -I./libspatialaudio/build/Release/include
 
 OBJS_CFLAGS = $(APP_CFLAGS) $(PLATFORM_CFLAGS)
@@ -53,7 +53,8 @@ LDFLAGS= $(APP_LDFLAGS) $(PLATFORM_LDFLAGS)
 HPVM_RT_PATH = $(LLVM_BUILD_DIR)/tools/hpvm/projects/hpvm-rt
 HPVM_RT_LIB = $(HPVM_RT_PATH)/hpvm-rt.bc
 
-TESTGEN_OPTFLAGS = -debug -load LLVMGenHPVM.so -genhpvm -globaldce
+# TESTGEN_OPTFLAGS = -debug -load LLVMGenHPVM.so -genhpvm -globaldce
+TESTGEN_OPTFLAGS = -load LLVMGenHPVM.so -genhpvm -globaldce
 
 ifeq ($(TARGET),seq)
   DEVICE = CPU_TARGET
