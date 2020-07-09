@@ -235,7 +235,7 @@ CBFormat& CBFormat::operator /= (const float &fValue) {
     return *this;
 }
 
-// For CAmbisonicSource
+// For CAmbisonicSourcec
 CAmbisonicSource::CAmbisonicSource() {
     m_polPosition.fAzimuth = 0.f;
     m_polPosition.fElevation = 0.f;
@@ -638,8 +638,8 @@ void ILLIXR_AUDIO::ABAudio::generateWAVHeader(){
 void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize, /*4*/ const int numBlocks) {
     __hpvm__hint(hpvm::CPU_TARGET);
     __hpvm__attributes(1, soundSrcs, 1, nSamples);
-    // __hpvm__attributes(1, haha, 1, nSamples);
 
+    // 
     for (int i = 0; i < soundSrcsSize; ++i) {
         for (int j = 0; j < numBlocks; ++j) {
             (*soundSrcs)[i]->BEncoderArray[j]->Process((*soundSrcs)[i]->sampleArray[j], nSamples, (*soundSrcs)[i]->BFormatArray[j]);
@@ -653,7 +653,6 @@ void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_
 void sumBF_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ CBFormat* sumBF, /*3*/ size_t bytes_sumBF, /*4*/ unsigned int soundSrcsSize, /*5*/ const int numBlocks) {
     __hpvm__hint(hpvm::CPU_TARGET);
     __hpvm__attributes(2, soundSrcs, sumBF, 1, sumBF);
-    // __hpvm__attributes(2, haha, hehe, 1, hehe);
     for (int i = 0; i < soundSrcsSize; ++i) {
         for (int j = 0; j < numBlocks; ++j) {
             sumBF[i] += *((*soundSrcs)[i]->BFormatArray[j]);
@@ -689,7 +688,6 @@ void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ s
 // This is the function launch for the encoding process
 void encodeProcess(ILLIXR_AUDIO::ABAudio* audioAddr) {
 
-    // unsigned int soundSrcsSize = 10; /*audioAddr->soundSrcs->size();*/
     unsigned int soundSrcsSize = audioAddr->soundSrcs->size();
     
     CBFormat* sumBF = new CBFormat[soundSrcsSize];
