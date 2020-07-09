@@ -330,15 +330,6 @@ namespace ILLIXR_AUDIO{
 		void setSrcPos(PolarPoint& pos);
 		// set sound amplitude scale
 		void setSrcAmp(float ampScale);
-		// read sound samples from mono 16bit WAV file and encode into ambisonics format
-		CBFormat* readInBFormat();
-		// The following two functions are for HPVM-C compilation and hardware acceleration. The combination of both is the readInBFormat() function.
-		void justReadInForBFormat();
-		CBFormat* processToBFormat();
-
-		// Helper functions for HPVM-C
-		float* getSample();
-		CBFormat* getBFormat();
 	// private:
 		// corresponding sound src file
 		std::fstream* srcFile;
@@ -370,8 +361,6 @@ namespace ILLIXR_AUDIO{
 		};
 		ABAudio(std::string outputFilePath, ProcessType processType);
 		~ABAudio();
-		// Process a block (1024) samples of sound
-		void processBlock();
 		// Load sound source files (predefined)
 		void loadSource();
 	// private:
@@ -385,25 +374,8 @@ namespace ILLIXR_AUDIO{
 		// target output file
 		std::ofstream* outputFile;
 
-		// decoder associated with this audio
-		// CAmbisonicBinauralizer* decoder;
-		// ambisonics rotator associated with this audio
-		// CAmbisonicProcessor* rotator;
-		// ambisonics zoomer associated with this audio
-		// CAmbisonicZoomer* zoomer;
-
-		// Generate dummy WAV output file header
-		void generateWAVHeader();
-		// Read in data from WAV files and encode into ambisonics
-		void readNEncode(CBFormat& sumBF);
-
-		// // Apply rotation and zoom effects to the ambisonics sound field
-		// void rotateNZoom(CBFormat& sumBF);
-		// // Write out a block of samples to the output file
-		// void writeFile(float** resultSample);
-
-		void updateRotation();
-		void updateZoom();
+        // Generate dummy WAV output file header
+        void generateWAVHeader();
 		
 	};
 }

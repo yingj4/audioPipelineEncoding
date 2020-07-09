@@ -558,40 +558,6 @@ void ILLIXR_AUDIO::Sound::setSrcAmp(float ampScale){
     amp = ampScale;
 }
 
-//TODO: Change brutal read from wav file
-CBFormat* ILLIXR_AUDIO::Sound::readInBFormat() {
-    short sampleTemp[BLOCK_SIZE];
-    srcFile->read((char*)sampleTemp, BLOCK_SIZE * sizeof(short));
-    // normalize samples to -1 to 1 float, with amplitude scale
-    for (int i = 0; i < BLOCK_SIZE; ++i){
-        sample[i] = amp * (sampleTemp[i] / 32767.0);
-    }
-    BEncoder->Process(sample, BLOCK_SIZE, BFormat);
-    return BFormat;
-}
-
-void ILLIXR_AUDIO::Sound::justReadInForBFormat() {
-    short sampleTemp[BLOCK_SIZE];
-    srcFile->read((char*)sampleTemp, BLOCK_SIZE * sizeof(short));
-    // normalize samples to -1 to 1 float, with amplitude scale
-    for (int i = 0; i < BLOCK_SIZE; ++i){
-        sample[i] = amp * (sampleTemp[i] / 32767.0);
-    }
-}
-
-CBFormat* ILLIXR_AUDIO::Sound::processToBFormat() {
-    BEncoder->Process(sample, BLOCK_SIZE, BFormat); // (float* pfSrc, unsigned nSamples, CBFormat* pfDst)
-    return BFormat;
-}
-
-float* ILLIXR_AUDIO::Sound::getSample() {
-    return sample;
-}
-
-CBFormat* ILLIXR_AUDIO::Sound::getBFormat() {
-    return BFormat;
-}
-
 ILLIXR_AUDIO::Sound::~Sound(){
     srcFile->close();
     delete srcFile;
@@ -630,9 +596,6 @@ ILLIXR_AUDIO::ABAudio::~ABAudio(){
         free((*soundSrcs)[soundIdx]);
     }
     free(soundSrcs);
-    // free(decoder);
-    // free(rotator);
-    // free(zoomer);
 }
 
 void ILLIXR_AUDIO::ABAudio::loadSource(){
@@ -663,53 +626,6 @@ void ILLIXR_AUDIO::ABAudio::loadSource(){
             soundSrcs->push_back(inSound);
         }
     }
-}
-
-// Read from WAV files and encode into ambisonics format
-void ILLIXR_AUDIO::ABAudio::readNEncode(CBFormat& sumBF) {
-    CBFormat* tempBF;
-    // sumBF = 0;
-    unsigned int soundSrcsSize = soundSrcs->size();
-    for (unsigned int soundIdx = 0; soundIdx < soundSrcsSize; ++soundIdx) {
-        (*soundSrcs)[soundIdx]->justReadInForBFormat();
-    }
-    for (unsigned int soundIdx = 0; soundIdx < soundSrcsSize; ++soundIdx) {
-        tempBF = (*soundSrcs)[soundIdx]->processToBFormat();
-        if (soundIdx == 0)
-            sumBF = *tempBF;
-        else
-            sumBF += *tempBF;
-    }
-}
-
-void ILLIXR_AUDIO::ABAudio::processBlock(){
-    float** resultSample = new float*[2];
-    resultSample[0] = new float[BLOCK_SIZE];
-    resultSample[1] = new float[BLOCK_SIZE];
-
-    // temporary BFormat file to sum up ambisonics
-    CBFormat sumBF;
-    sumBF.Configure(NORDER, true, BLOCK_SIZE);
-
-    if (processType != ILLIXR_AUDIO::ABAudio::ProcessType::DECODE){
-        // readNEncode(sumBF);
-        readNEncode(sumBF);
-    }
-    /*
-    if (processType != ILLIXR_AUDIO::ABAudio::ProcessType::ENCODE){
-        // processing garbage data if just decoding
-        rotateNZoom(sumBF);
-        decoder->Process(&sumBF, resultSample);
-    }
-
-    if (processType == ILLIXR_AUDIO::ABAudio::ProcessType::FULL){
-        writeFile(resultSample);
-    }
-    */
-
-    delete[] resultSample[0];
-    delete[] resultSample[1];
-    delete[] resultSample;
 }
 
 void ILLIXR_AUDIO::ABAudio::generateWAVHeader(){
@@ -849,24 +765,11 @@ int main(int argc, char const *argv[])
         return 1;
     }
 
-    // const int numBlocks = atoi(argv[1]);
-    // const int numBlocks = NUM_BLOCKS;
-    // ABAudio::ProcessType procType(ABAudio::ProcessType::FULL);
-    // if (argc > 2){
-    //     if (!strcmp(argv[2], "encode"))
-    //         procType = ABAudio::ProcessType::ENCODE;
-    //     else
-    //         procType = ABAudio::ProcessType::DECODE;
-    // }
-    
-    // ABAudio audio("output.wav", procType);
     ABAudio audio("output.wav", ABAudio::ProcessType::ENCODE);
     audio.loadSource();
 
     ABAudio* audioAddr = &audio;
-    // for (int i = 0; i < numBlocks; ++i){
-    //     audio.processBlock();
-    // }
+
     encodeProcess(audioAddr);
     return 0;
 }
