@@ -21,14 +21,12 @@
 // The structure needed for HPVM launching
 typedef struct __attribute__((__packed__)) {
     std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs;
-    // int* haha;
     size_t bytes_soundSrcs;
     unsigned nSamples;
+    unsigned int soundSrcsSize;
     int numBlocks;
     CBFormat* sumBF;
-    // int* hehe;
     size_t bytes_sumBF;
-    unsigned int soundSrcsSize;
 } RootIn;
 
 
@@ -535,7 +533,7 @@ ILLIXR_AUDIO::Sound::Sound(std::string srcFilename, unsigned nOrder, bool b3D){
     BEncoderArray = new CAmbisonicEncoderDist*[NUM_BLOCKS];
     for (int i = 0; i < NUM_BLOCKS; ++i) {
         BFormatArray[i] = new CBFormat();
-        bool okk = BFormatArray[i]->Configure(nOrder, true, SAMPLERATE);
+        bool okk = BFormatArray[i]->Configure(nOrder, true, BLOCK_SIZE);
         BFormatArray[i]->Refresh();
 
         BEncoderArray[i] = new CAmbisonicEncoderDist();
@@ -552,6 +550,10 @@ void ILLIXR_AUDIO::Sound::setSrcPos(PolarPoint& pos){
     srcPos.fDistance = pos.fDistance;
     BEncoder->SetPosition(srcPos);
     BEncoder->Refresh();
+    for (int i = 0; i < NUM_BLOCKS; ++i) {
+        BEncoderArray[i]->SetPosition(srcPos);
+        BEncoderArray[i]->Refresh();
+    }
 }
 
 void ILLIXR_AUDIO::Sound::setSrcAmp(float ampScale){
@@ -637,14 +639,14 @@ void ILLIXR_AUDIO::ABAudio::generateWAVHeader(){
 // A leaf node function for the encoding process
 void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize, /*4*/ const int numBlocks) {
     __hpvm__hint(hpvm::CPU_TARGET);
-    __hpvm__attributes(1, soundSrcs, 1, nSamples);
+    __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
 
-    // 
     for (int i = 0; i < soundSrcsSize; ++i) {
         for (int j = 0; j < numBlocks; ++j) {
             (*soundSrcs)[i]->BEncoderArray[j]->Process((*soundSrcs)[i]->sampleArray[j], nSamples, (*soundSrcs)[i]->BFormatArray[j]);
         }
     }
+
     __hpvm__return(1, bytes_soundSrcs);
     
 }
@@ -653,9 +655,9 @@ void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_
 void sumBF_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ CBFormat* sumBF, /*3*/ size_t bytes_sumBF, /*4*/ unsigned int soundSrcsSize, /*5*/ const int numBlocks) {
     __hpvm__hint(hpvm::CPU_TARGET);
     __hpvm__attributes(2, soundSrcs, sumBF, 1, sumBF);
-    for (int i = 0; i < soundSrcsSize; ++i) {
-        for (int j = 0; j < numBlocks; ++j) {
-            sumBF[i] += *((*soundSrcs)[i]->BFormatArray[j]);
+    for (int j = 0; j < numBlocks; ++j) {
+        for (int i = 0; i < soundSrcsSize; ++i) {
+            sumBF[j] += *((*soundSrcs)[i]->BFormatArray[j]);
         }
     }
 }
@@ -689,9 +691,10 @@ void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ s
 void encodeProcess(ILLIXR_AUDIO::ABAudio* audioAddr) {
 
     unsigned int soundSrcsSize = audioAddr->soundSrcs->size();
+    printf("%u\n", soundSrcsSize);
     
-    CBFormat* sumBF = new CBFormat[soundSrcsSize];
-    for (int i = 0; i < soundSrcsSize; ++i) {
+    CBFormat* sumBF = new CBFormat[NUM_BLOCKS];
+    for (int i = 0; i < NUM_BLOCKS; ++i) {
         sumBF[i].Configure(NORDER, true, BLOCK_SIZE);
     }
 
@@ -701,7 +704,7 @@ void encodeProcess(ILLIXR_AUDIO::ABAudio* audioAddr) {
             short sampleTemp[BLOCK_SIZE];
             (*(audioAddr->soundSrcs))[j]->srcFile->read((char*)sampleTemp, BLOCK_SIZE * sizeof(short));
             // normalize samples to -1 to 1 float, with amplitude scale
-            for (int k = 0; k < BLOCK_SIZE; ++k){
+            for (int k = 0; k < BLOCK_SIZE; ++k) {
                 (*(audioAddr->soundSrcs))[j]->sampleArray[i][k] = (*(audioAddr->soundSrcs))[j]->amp * (sampleTemp[k] / 32767.0);
             }
         }
@@ -710,8 +713,8 @@ void encodeProcess(ILLIXR_AUDIO::ABAudio* audioAddr) {
 
     // The HPVM part goes from here
     // variable initialization
-    size_t bytes_soundSrcs = soundSrcsSize * sizeof(ILLIXR_AUDIO::Sound);
-    size_t bytes_sumBF = soundSrcsSize * sizeof(CBFormat);
+    size_t bytes_soundSrcs = soundSrcsSize * sizeof(ILLIXR_AUDIO::Sound*);
+    size_t bytes_sumBF = NUM_BLOCKS * sizeof(CBFormat);
 
 
     __hpvm__init();
@@ -720,10 +723,10 @@ void encodeProcess(ILLIXR_AUDIO::ABAudio* audioAddr) {
     rootArgs->soundSrcs = audioAddr->soundSrcs;
     rootArgs->bytes_soundSrcs = bytes_soundSrcs;
     rootArgs->nSamples = BLOCK_SIZE;
-    rootArgs->numBlocks = NUM_BLOCKS;
-    rootArgs->sumBF = sumBF;    // We do have an "operator=" overloading for CBFormat
-    rootArgs->bytes_sumBF = bytes_sumBF;
     rootArgs->soundSrcsSize = soundSrcsSize;
+    rootArgs->numBlocks = NUM_BLOCKS;
+    rootArgs->sumBF = sumBF;
+    rootArgs->bytes_sumBF = bytes_sumBF;
 
     // Memory tracking is required for pointer arguments, as specified by the HPVM-C instruction
     llvm_hpvm_track_mem(audioAddr->soundSrcs, bytes_soundSrcs);
