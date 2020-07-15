@@ -636,6 +636,23 @@ void ILLIXR_AUDIO::ABAudio::generateWAVHeader(){
 	outputFile->write((char*)&wavh, sizeof(WAVHeader));
 }
 
+// A leaf node function for the normalization
+void normalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize, /*4*/ const int numBlocks) {
+    __hpvm__hint(hpvm::CPU_TARGET);
+    __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
+
+    // normalize samples to -1 to 1 float, with amplitude scale
+    for (int i = 0; i < numBlocks; ++i) {
+        for (int j = 0; j < soundSrcsSize; ++j) {            
+            for (int k = 0; k < nSamples; ++k) {
+                (*soundSrcs)[j]->sampleArray[i][k] = (*soundSrcs)[j]->amp * ((*soundSrcs)[j]->sampleArray[i][k] / 32767.0);
+            }
+        }
+    }
+
+    __hpvm__return(1, bytes_soundSrcs);
+}
+
 // A leaf node function for the encoding process
 void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize, /*4*/ const int numBlocks) {
     __hpvm__hint(hpvm::CPU_TARGET);
@@ -668,12 +685,20 @@ void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ s
     __hpvm__attributes(2, soundSrcs, sumBF, 2, soundSrcs, sumBF);
 
     // HPVM node generation
+    void* normalizationNode = __hpvm__createNodeND(0, normalization_fxp);
     void* encoderNode = __hpvm__createNodeND(0, encoder_fxp);
     void* sumBFNode = __hpvm__createNodeND(0, sumBF_fxp);
 
+    // Bind-in for the normalization process
+    __hpvm__bindIn(normalizationNode, 0, 0, 0);
+    __hpvm__bindIn(normalizationNode, 1, 1, 0);
+    __hpvm__bindIn(normalizationNode, 2, 2, 0);
+    __hpvm__bindIn(normalizationNode, 3, 3, 0);
+    __hpvm__bindIn(normalizationNode, 4, 4, 0);
+
     // Bind-in for the encoder process
     __hpvm__bindIn(encoderNode, 0, 0, 0);
-    __hpvm__bindIn(encoderNode, 1, 1, 0);
+    __hpvm__edge(normalizationNode, encoderNode, 1, 0, 1, 0);
     __hpvm__bindIn(encoderNode, 2, 2, 0);
     __hpvm__bindIn(encoderNode, 3, 3, 0);
     __hpvm__bindIn(encoderNode, 4, 4, 0);
@@ -701,12 +726,7 @@ void encodeProcess(ILLIXR_AUDIO::ABAudio* audioAddr) {
     // The read-in process
     for (int i = 0; i < NUM_BLOCKS; ++i) {
         for (int j = 0; j < soundSrcsSize; ++j) {
-            short sampleTemp[BLOCK_SIZE];
-            (*(audioAddr->soundSrcs))[j]->srcFile->read((char*)sampleTemp, BLOCK_SIZE * sizeof(short));
-            // normalize samples to -1 to 1 float, with amplitude scale
-            for (int k = 0; k < BLOCK_SIZE; ++k) {
-                (*(audioAddr->soundSrcs))[j]->sampleArray[i][k] = (*(audioAddr->soundSrcs))[j]->amp * (sampleTemp[k] / 32767.0);
-            }
+            (*(audioAddr->soundSrcs))[j]->srcFile->read((char*)(*(audioAddr->soundSrcs))[j]->sampleArray[i], BLOCK_SIZE * sizeof(short));
         }
     }
     
