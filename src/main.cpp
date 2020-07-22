@@ -24,9 +24,10 @@ typedef struct __attribute__((__packed__)) {
     size_t bytes_soundSrcs;
     unsigned nSamples;
     unsigned int soundSrcsSize;
-    int numBlocks;
+    short* sampleTemp;
     CBFormat* sumBF;
     size_t bytes_sumBF;
+    
 } RootIn;
 
 
@@ -524,24 +525,24 @@ ILLIXR_AUDIO::Sound::Sound(std::string srcFilename, unsigned nOrder, bool b3D){
     BEncoder->Refresh();
 
     // HPVM-C related initialization
-    sampleArray = new float*[NUM_BLOCKS];
-    for (int i = 0; i < NUM_BLOCKS; ++i) {
-        sampleArray[i] = new float[BLOCK_SIZE];
-    }
+    // sampleArray = new float*[NUM_BLOCKS];
+    // for (int i = 0; i < NUM_BLOCKS; ++i) {
+    //     sampleArray[i] = new float[BLOCK_SIZE];
+    // }
 
-    BFormatArray = new CBFormat*[NUM_BLOCKS];
-    BEncoderArray = new CAmbisonicEncoderDist*[NUM_BLOCKS];
-    for (int i = 0; i < NUM_BLOCKS; ++i) {
-        BFormatArray[i] = new CBFormat();
-        bool okk = BFormatArray[i]->Configure(nOrder, true, BLOCK_SIZE);
-        BFormatArray[i]->Refresh();
+    // BFormatArray = new CBFormat*[NUM_BLOCKS];
+    // BEncoderArray = new CAmbisonicEncoderDist*[NUM_BLOCKS];
+    // for (int i = 0; i < NUM_BLOCKS; ++i) {
+    //     BFormatArray[i] = new CBFormat();
+    //     bool okk = BFormatArray[i]->Configure(nOrder, true, BLOCK_SIZE);
+    //     BFormatArray[i]->Refresh();
 
-        BEncoderArray[i] = new CAmbisonicEncoderDist();
-        okk &= BEncoderArray[i]->Configure(nOrder, true, SAMPLERATE);
-        BEncoderArray[i]->Refresh();
-        BEncoderArray[i]->SetPosition(srcPos);
-        BEncoderArray[i]->Refresh();
-    }    
+    //     BEncoderArray[i] = new CAmbisonicEncoderDist();
+    //     okk &= BEncoderArray[i]->Configure(nOrder, true, SAMPLERATE);
+    //     BEncoderArray[i]->Refresh();
+    //     BEncoderArray[i]->SetPosition(srcPos);
+    //     BEncoderArray[i]->Refresh();
+    // }    
 }
 
 void ILLIXR_AUDIO::Sound::setSrcPos(PolarPoint& pos){
@@ -550,10 +551,10 @@ void ILLIXR_AUDIO::Sound::setSrcPos(PolarPoint& pos){
     srcPos.fDistance = pos.fDistance;
     BEncoder->SetPosition(srcPos);
     BEncoder->Refresh();
-    for (int i = 0; i < NUM_BLOCKS; ++i) {
-        BEncoderArray[i]->SetPosition(srcPos);
-        BEncoderArray[i]->Refresh();
-    }
+    // for (int i = 0; i < NUM_BLOCKS; ++i) {
+    //     BEncoderArray[i]->SetPosition(srcPos);
+    //     BEncoderArray[i]->Refresh();
+    // }
 }
 
 void ILLIXR_AUDIO::Sound::setSrcAmp(float ampScale){
@@ -566,17 +567,17 @@ ILLIXR_AUDIO::Sound::~Sound(){
     delete BFormat;
     delete BEncoder;
 
-    for (int i = 0; i <BLOCK_SIZE; ++i) {
-        delete[] sampleArray[i];
-    }
-    delete[] sampleArray;
+    // for (int i = 0; i <BLOCK_SIZE; ++i) {
+    //     delete[] sampleArray[i];
+    // }
+    // delete[] sampleArray;
 
-    for (int i = 0; i < NUM_BLOCKS; ++i) {
-        delete BFormatArray[i];
-        delete BEncoderArray[i];
-    }
-    delete[] BFormatArray;
-    delete[] BEncoderArray;
+    // for (int i = 0; i < NUM_BLOCKS; ++i) {
+    //     delete BFormatArray[i];
+    //     delete BEncoderArray[i];
+    // }
+    // delete[] BFormatArray;
+    // delete[] BEncoderArray;
 }
 
 // For ABAudio
@@ -637,31 +638,27 @@ void ILLIXR_AUDIO::ABAudio::generateWAVHeader(){
 }
 
 // A leaf node function for the normalization
-void normalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize, /*4*/ const int numBlocks) {
+void normalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize, /*4*/ short* sampleTemp) {
     __hpvm__hint(hpvm::CPU_TARGET);
     __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
 
     // normalize samples to -1 to 1 float, with amplitude scale
-    for (int i = 0; i < numBlocks; ++i) {
-        for (int j = 0; j < soundSrcsSize; ++j) {            
-            for (int k = 0; k < nSamples; ++k) {
-                (*soundSrcs)[j]->sampleArray[i][k] = (*soundSrcs)[j]->amp * ((*soundSrcs)[j]->sampleArray[i][k] / 32767.0);
-            }
+    for (int j = 0; j < soundSrcsSize; ++j) {            
+        for (int k = 0; k < nSamples; ++k) {
+            (*soundSrcs)[j]->sample[k] = (*soundSrcs)[j]->amp * (sampleTemp[k] / 32767.0);
         }
-    }
+    }    
 
     __hpvm__return(1, bytes_soundSrcs);
 }
 
 // A leaf node function for the encoding process
-void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize, /*4*/ const int numBlocks) {
+void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize) {
     __hpvm__hint(hpvm::CPU_TARGET);
     __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
 
-    for (int i = 0; i < soundSrcsSize; ++i) {
-        for (int j = 0; j < numBlocks; ++j) {
-            (*soundSrcs)[i]->BEncoderArray[j]->Process((*soundSrcs)[i]->sampleArray[j], nSamples, (*soundSrcs)[i]->BFormatArray[j]);
-        }
+    for (int j = 0; j < soundSrcsSize; ++j) {
+        (*soundSrcs)[j]->BEncoder->Process((*soundSrcs)[j]->sample, nSamples, (*soundSrcs)[j]->BFormat);
     }
 
     __hpvm__return(1, bytes_soundSrcs);
@@ -669,18 +666,18 @@ void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_
 }
 
 // A leaf node function for the sumBF addition
-void sumBF_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ CBFormat* sumBF, /*3*/ size_t bytes_sumBF, /*4*/ unsigned int soundSrcsSize, /*5*/ const int numBlocks) {
+void sumBF_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ CBFormat* sumBF, /*3*/ size_t bytes_sumBF, /*4*/ unsigned int soundSrcsSize) {
     __hpvm__hint(hpvm::CPU_TARGET);
     __hpvm__attributes(2, soundSrcs, sumBF, 1, sumBF);
-    for (int j = 0; j < numBlocks; ++j) {
-        for (int i = 0; i < soundSrcsSize; ++i) {
-            sumBF[j] += *((*soundSrcs)[i]->BFormatArray[j]);
-        }
+
+    for (int j = 0; j < soundSrcsSize; ++j) {
+        (*sumBF) += *((*soundSrcs)[j]->BFormat);
     }
+    
 }
 
 // A root node function for the whole pipeline
-void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize, /*4*/ const int numBlocks, /*5*/ CBFormat* sumBF, /*6*/ size_t bytes_sumBF) {
+void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize, /*4*/ short* sampleTemp, /*5*/ CBFormat* sumBF, /*6*/ size_t bytes_sumBF) {
     __hpvm__hint(hpvm::CPU_TARGET);
     __hpvm__attributes(2, soundSrcs, sumBF, 2, soundSrcs, sumBF);
 
@@ -701,7 +698,6 @@ void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ s
     __hpvm__edge(normalizationNode, encoderNode, 1, 0, 1, 0);
     __hpvm__bindIn(encoderNode, 2, 2, 0);
     __hpvm__bindIn(encoderNode, 3, 3, 0);
-    __hpvm__bindIn(encoderNode, 4, 4, 0);
 
     // Bind-in for the sumBF process
     __hpvm__bindIn(sumBFNode, 0, 0, 0);
@@ -709,66 +705,65 @@ void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ s
     __hpvm__bindIn(sumBFNode, 5, 2, 0);
     __hpvm__bindIn(sumBFNode, 6, 3, 0);
     __hpvm__bindIn(sumBFNode, 3, 4, 0);
-    __hpvm__bindIn(sumBFNode, 4, 5, 0);
 }
 
 // This is the function launch for the encoding process
 void encodeProcess(ILLIXR_AUDIO::ABAudio* audioAddr) {
 
     unsigned int soundSrcsSize = audioAddr->soundSrcs->size();
-    printf("%u\n", soundSrcsSize);
     
-    CBFormat* sumBF = new CBFormat[NUM_BLOCKS];
-    for (int i = 0; i < NUM_BLOCKS; ++i) {
-        sumBF[i].Configure(NORDER, true, BLOCK_SIZE);
-    }
+    CBFormat* sumBF = new CBFormat;
+    sumBF->Configure(NORDER, true, BLOCK_SIZE);
+
+    short sampleTemp[BLOCK_SIZE];
 
     // The read-in process
-    for (int i = 0; i < NUM_BLOCKS; ++i) {
-        for (int j = 0; j < soundSrcsSize; ++j) {
-            (*(audioAddr->soundSrcs))[j]->srcFile->read((char*)(*(audioAddr->soundSrcs))[j]->sampleArray[i], BLOCK_SIZE * sizeof(short));
-        }
+    for (int j = 0; j < soundSrcsSize; ++j) {
+        (*(audioAddr->soundSrcs))[j]->srcFile->read((char*)sampleTemp, BLOCK_SIZE * sizeof(short));
     }
+
     
 
     // The HPVM part goes from here
     // variable initialization
     size_t bytes_soundSrcs = soundSrcsSize * sizeof(ILLIXR_AUDIO::Sound*);
-    size_t bytes_sumBF = NUM_BLOCKS * sizeof(CBFormat);
-
+    size_t bytes_sumBF = sizeof(CBFormat);
 
     __hpvm__init();
 
+    
     RootIn* rootArgs = (RootIn*)malloc(sizeof(RootIn));
     rootArgs->soundSrcs = audioAddr->soundSrcs;
     rootArgs->bytes_soundSrcs = bytes_soundSrcs;
     rootArgs->nSamples = BLOCK_SIZE;
     rootArgs->soundSrcsSize = soundSrcsSize;
-    rootArgs->numBlocks = NUM_BLOCKS;
+    rootArgs->sampleTemp = sampleTemp;
     rootArgs->sumBF = sumBF;
     rootArgs->bytes_sumBF = bytes_sumBF;
+        
 
     // Memory tracking is required for pointer arguments, as specified by the HPVM-C instruction
     llvm_hpvm_track_mem(audioAddr->soundSrcs, bytes_soundSrcs);
     llvm_hpvm_track_mem(sumBF, bytes_sumBF);
 
-    printf("\n\nLaunching audio encoding pipeline!\n");
+    // printf("\n\nLaunching audio encoding pipeline!\n");
 
     // The launch of the root node
     void* encodingDFG = __hpvm__launch(0, encoderPipeline, (void*) rootArgs);
     __hpvm__wait(encodingDFG);
 
-    printf("\n\nPipeline execution completed!\n");
-    printf("\n\nRequesting memory!\n");
+    // printf("\n\nPipeline execution completed!\n");
+    // printf("\n\nRequesting memory!\n");
 
     // Request data from graph
     llvm_hpvm_request_mem(audioAddr->soundSrcs, bytes_soundSrcs);
     llvm_hpvm_request_mem(sumBF, bytes_sumBF);
 
-    printf("\n\nDone requesting memory!\n");
+    // printf("\n\nDone requesting memory!\n");
 
     llvm_hpvm_untrack_mem(audioAddr->soundSrcs);
     llvm_hpvm_untrack_mem(sumBF);
+      
 
     __hpvm__cleanup();
 
@@ -786,11 +781,15 @@ int main(int argc, char const *argv[])
         return 1;
     }
 
+    const int numBlocks = atoi(argv[1]);
+
     ABAudio audio("output.wav", ABAudio::ProcessType::ENCODE);
     audio.loadSource();
 
     ABAudio* audioAddr = &audio;
 
-    encodeProcess(audioAddr);
+    for (int i = 0; i < numBlocks; ++i) {
+        encodeProcess(audioAddr);
+    }
     return 0;
 }

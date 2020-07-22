@@ -1,0 +1,23 @@
+digraph "_Z15encoderPipelinePSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEmjjPsP8CBFormatm_cloned" {
+	label="_Z15encoderPipelinePSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEmjjPsP8CBFormatm_cloned";
+	compound=true;
+	Node0x7a4b890 [shape=record,shape=oval,label="{Entry}"];
+	Node0x7a4b890 -> Node0x7a68b80;
+	Node0x7a4b890 -> Node0x7a68b80;
+	Node0x7a4b890 -> Node0x7a68b80;
+	Node0x7a4b890 -> Node0x7a68b80;
+	Node0x7a4b890 -> Node0x7a68b80;
+	Node0x7a4b890 -> Node0x7a88cf0;
+	Node0x7a4b890 -> Node0x7a88cf0;
+	Node0x7a4b890 -> Node0x7a88cf0;
+	Node0x7a4b890 -> Node0x7a987e0;
+	Node0x7a4b890 -> Node0x7a987e0;
+	Node0x7a4b890 -> Node0x7a987e0;
+	Node0x7a4b890 -> Node0x7a987e0;
+	Node0x7a66a70 [shape=record,shape=oval,label="{Exit}"];
+	Node0x7a68b80 [shape=record,shape=oval,label="{_Z17normalization_fxpPSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEmjjPs_cloned}"];
+	Node0x7a68b80 -> Node0x7a88cf0;
+	Node0x7a88cf0 [shape=record,shape=oval,label="{_Z11encoder_fxpPSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEmjj_cloned}"];
+	Node0x7a88cf0 -> Node0x7a987e0;
+	Node0x7a987e0 [shape=record,shape=oval,label="{_Z9sumBF_fxpPSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEmP8CBFormatmj_cloned}"];
+}

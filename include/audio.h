@@ -18,7 +18,7 @@
 #define NUM_CHANNELS (OrderToComponents(NORDER, true))
 #define NUM_SRCS 16
 
-#define NUM_BLOCKS 500
+// #define NUM_BLOCKS 500
 
 const unsigned knSpeedOfSound = 344;
 const unsigned knMaxDistance = 150;
@@ -345,9 +345,9 @@ namespace ILLIXR_AUDIO{
 		float amp;
 
         // HPVM-C related
-        float** sampleArray;                    // size: [NUM_BLOCKS][BLOCK_SIZE]
-        CBFormat** BFormatArray;                // size: [NUM_BLOCKS]
-        CAmbisonicEncoderDist** BEncoderArray;  // size: [NUM_BLOCKS]
+        // float** sampleArray;                    // size: [numBlocks][BLOCK_SIZE]
+        // CBFormat** BFormatArray;                // size: [NUM_BLOCKS]
+        // CAmbisonicEncoderDist** BEncoderArray;  // size: [NUM_BLOCKS]
 	};
 
 	// Class ABAudio
