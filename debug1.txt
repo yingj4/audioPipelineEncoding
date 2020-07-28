@@ -1,0 +1,3067 @@
+Script started on Tue 28 Jul 2020 11:07:53 AM CDT
+[01;32myingj4@acadia[00m:[01;34m/shared/workspace/yingj4/HPVM/hpvm-release/hpvm/test/benchmarks/audioEncodingNoPara[00m$ make TARGET=-[Kseq
+/shared/workspace/yingj4/HPVM/hpvm-release/hpvm/build/bin/opt -debug -load LLVMBuildDFG.so -load LLVMDFG2LLVM_CPU.so -load LLVMClearDFG.so -dfg2llvm-cpu -clearDFG -hpvm-timers-cpu -S build/seq/main.hpvm.ll -o build/seq/audioEncoding-seq.host.ll
+Args: /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/build/bin/opt -debug -load LLVMBuildDFG.so -load LLVMDFG2LLVM_CPU.so -load LLVMClearDFG.so -dfg2llvm-cpu -clearDFG -hpvm-timers-cpu -S build/seq/main.hpvm.ll -o build/seq/audioEncoding-seq.host.ll 
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then.i
+	discovered a new reachable node %_ZNSt6vectorIfSaIfEE6resizeEm.exit
+	discovered a new reachable node %_ZNSt10unique_ptrIA_PfSt14default_deleteIS1_EE5resetEPS0_.exit
+	discovered a new reachable node %cleanup
+	discovered a new reachable node %for.body.lr.ph
+	discovered a new reachable node %cleanup.loopexit.unr-lcssa
+	discovered a new reachable node %for.body.epil
+	discovered a new reachable node %for.body.lr.ph.new
+	discovered a new reachable node %for.body
+	discovered a new reachable node %_ZNKSt14default_deleteIA_PfEclEPS0_.exit.i
+	discovered a new reachable node %if.else.i
+	discovered a new reachable node %if.then5.i
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %land.lhs.true
+	discovered a new reachable node %land.lhs.true7
+	discovered a new reachable node %return
+	discovered a new reachable node %if.else
+	discovered a new reachable node %entry
+	discovered a new reachable node %lor.lhs.false
+	discovered a new reachable node %lor.lhs.false7
+	discovered a new reachable node %return
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.end12
+	discovered a new reachable node %for.cond2.preheader.lr.ph
+	discovered a new reachable node %for.cond2.preheader.us.preheader
+	discovered a new reachable node %for.cond2.preheader.us
+	discovered a new reachable node %for.body4.us.preheader
+	discovered a new reachable node %for.body4.us
+	discovered a new reachable node %for.cond2.for.inc10_crit_edge.us
+	discovered a new reachable node %vector.memcheck
+	discovered a new reachable node %vector.ph
+	discovered a new reachable node %middle.block.unr-lcssa
+	discovered a new reachable node %middle.block
+	discovered a new reachable node %vector.body.epil
+	discovered a new reachable node %vector.body
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.end12
+	discovered a new reachable node %for.cond2.preheader.lr.ph
+	discovered a new reachable node %for.cond2.preheader.us.preheader
+	discovered a new reachable node %for.cond2.preheader.us
+	discovered a new reachable node %for.body4.us.preheader
+	discovered a new reachable node %for.body4.us
+	discovered a new reachable node %for.cond2.for.inc10_crit_edge.us
+	discovered a new reachable node %vector.memcheck
+	discovered a new reachable node %vector.ph
+	discovered a new reachable node %middle.block.unr-lcssa
+	discovered a new reachable node %middle.block
+	discovered a new reachable node %vector.body.epil
+	discovered a new reachable node %vector.body
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.end12
+	discovered a new reachable node %for.cond2.preheader.lr.ph
+	discovered a new reachable node %for.cond2.preheader.us.preheader
+	discovered a new reachable node %for.cond2.preheader.us
+	discovered a new reachable node %for.body4.us.preheader
+	discovered a new reachable node %for.body4.us
+	discovered a new reachable node %for.cond2.for.inc10_crit_edge.us
+	discovered a new reachable node %vector.memcheck
+	discovered a new reachable node %vector.ph
+	discovered a new reachable node %middle.block.unr-lcssa
+	discovered a new reachable node %middle.block
+	discovered a new reachable node %vector.body.epil
+	discovered a new reachable node %vector.body
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.end12
+	discovered a new reachable node %for.cond2.preheader.lr.ph
+	discovered a new reachable node %for.cond2.preheader.us.preheader
+	discovered a new reachable node %for.cond2.preheader.us
+	discovered a new reachable node %for.body4.us.preheader
+	discovered a new reachable node %for.body4.us
+	discovered a new reachable node %for.cond2.for.inc10_crit_edge.us
+	discovered a new reachable node %vector.memcheck
+	discovered a new reachable node %vector.ph
+	discovered a new reachable node %middle.block.unr-lcssa
+	discovered a new reachable node %middle.block
+	discovered a new reachable node %vector.body.epil
+	discovered a new reachable node %vector.body
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.end7
+	discovered a new reachable node %for.cond2.preheader.lr.ph
+	discovered a new reachable node %for.cond2.preheader.us.preheader
+	discovered a new reachable node %for.cond2.preheader.us
+	discovered a new reachable node %for.body4.us.preheader
+	discovered a new reachable node %for.body4.us
+	discovered a new reachable node %for.cond2.for.inc5_crit_edge.us
+	discovered a new reachable node %vector.memcheck
+	discovered a new reachable node %vector.ph
+	discovered a new reachable node %middle.block.unr-lcssa
+	discovered a new reachable node %middle.block
+	discovered a new reachable node %vector.body.epil
+	discovered a new reachable node %vector.ph.new
+	discovered a new reachable node %vector.body
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.end7
+	discovered a new reachable node %for.cond2.preheader.lr.ph
+	discovered a new reachable node %for.cond2.preheader.us.preheader
+	discovered a new reachable node %for.cond2.preheader.us
+	discovered a new reachable node %for.body4.us.preheader
+	discovered a new reachable node %for.body4.us
+	discovered a new reachable node %for.cond2.for.inc5_crit_edge.us
+	discovered a new reachable node %vector.memcheck
+	discovered a new reachable node %vector.ph
+	discovered a new reachable node %middle.block.unr-lcssa
+	discovered a new reachable node %middle.block
+	discovered a new reachable node %vector.body.epil
+	discovered a new reachable node %vector.ph.new
+	discovered a new reachable node %vector.body
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.end7
+	discovered a new reachable node %for.cond2.preheader.lr.ph
+	discovered a new reachable node %for.cond2.preheader.us.preheader
+	discovered a new reachable node %for.cond2.preheader.us
+	discovered a new reachable node %for.body4.us.preheader
+	discovered a new reachable node %for.body4.us
+	discovered a new reachable node %for.cond2.for.inc5_crit_edge.us
+	discovered a new reachable node %vector.memcheck
+	discovered a new reachable node %vector.ph
+	discovered a new reachable node %middle.block.unr-lcssa
+	discovered a new reachable node %middle.block
+	discovered a new reachable node %vector.body.epil
+	discovered a new reachable node %vector.ph.new
+	discovered a new reachable node %vector.body
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.end7
+	discovered a new reachable node %for.cond2.preheader.lr.ph
+	discovered a new reachable node %for.cond2.preheader.us.preheader
+	discovered a new reachable node %for.cond2.preheader.us
+	discovered a new reachable node %for.body4.us.preheader
+	discovered a new reachable node %for.body4.us
+	discovered a new reachable node %for.cond2.for.inc5_crit_edge.us
+	discovered a new reachable node %vector.memcheck
+	discovered a new reachable node %vector.ph
+	discovered a new reachable node %middle.block.unr-lcssa
+	discovered a new reachable node %middle.block
+	discovered a new reachable node %vector.body.epil
+	discovered a new reachable node %vector.ph.new
+	discovered a new reachable node %vector.body
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then.i
+	discovered a new reachable node %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit
+	discovered a new reachable node %if.then.i11
+	discovered a new reachable node %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit16
+	discovered a new reachable node %if.else.i13
+	discovered a new reachable node %if.then9.i15
+	discovered a new reachable node %if.else.i
+	discovered a new reachable node %if.then9.i
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then211
+	discovered a new reachable node %if.end277
+	discovered a new reachable node %for.cond.cleanup
+	discovered a new reachable node %for.body.lr.ph
+	discovered a new reachable node %for.body.preheader
+	discovered a new reachable node %for.body
+	discovered a new reachable node %vector.memcheck
+	discovered a new reachable node %vector.ph
+	discovered a new reachable node %middle.block.unr-lcssa
+	discovered a new reachable node %middle.block
+	discovered a new reachable node %vector.body.epil
+	discovered a new reachable node %vector.ph.new
+	discovered a new reachable node %vector.body
+	discovered a new reachable node %if.end232
+	discovered a new reachable node %if.end250
+	discovered a new reachable node %if.then253
+	discovered a new reachable node %if.then21
+	discovered a new reachable node %if.end45
+	discovered a new reachable node %if.end104
+	discovered a new reachable node %if.then107
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.cond.cleanup
+	discovered a new reachable node %for.body.lr.ph
+	discovered a new reachable node %for.body.preheader
+	discovered a new reachable node %for.body
+	discovered a new reachable node %vector.ph
+	discovered a new reachable node %middle.block.unr-lcssa
+	discovered a new reachable node %middle.block
+	discovered a new reachable node %vector.body.epil
+	discovered a new reachable node %vector.ph.new
+	discovered a new reachable node %vector.body
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %_ZNSt6vectorIfSaIfEED2Ev.exit.i
+	discovered a new reachable node %_ZN16CAmbisonicSourceD2Ev.exit
+	discovered a new reachable node %if.then.i.i.i4.i
+	discovered a new reachable node %if.then.i.i.i.i
+	discovered a new reachable node %entry
+	discovered a new reachable node %_ZNSt6vectorIfSaIfEED2Ev.exit.i.i
+	discovered a new reachable node %_ZN17CAmbisonicEncoderD2Ev.exit
+	discovered a new reachable node %if.then.i.i.i4.i.i
+	discovered a new reachable node %if.then.i.i.i.i.i
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then.i.i
+	discovered a new reachable node %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit.i
+	discovered a new reachable node %if.then.i11.i
+	discovered a new reachable node %_ZN16CAmbisonicSource9ConfigureEjbj.exit
+	discovered a new reachable node %if.else.i13.i
+	discovered a new reachable node %if.then9.i15.i
+	discovered a new reachable node %if.else.i.i
+	discovered a new reachable node %if.then9.i.i
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.end11
+	discovered a new reachable node %for.cond2.preheader.us.preheader
+	discovered a new reachable node %for.cond2.preheader.us
+	discovered a new reachable node %for.body4.us.preheader
+	discovered a new reachable node %for.body4.us.prol.loopexit
+	discovered a new reachable node %for.cond2.for.inc9_crit_edge.us
+	discovered a new reachable node %for.body4.us
+	discovered a new reachable node %for.body4.us.prol
+	discovered a new reachable node %vector.memcheck
+	discovered a new reachable node %vector.ph
+	discovered a new reachable node %middle.block.unr-lcssa
+	discovered a new reachable node %middle.block
+	discovered a new reachable node %vector.body.epil
+	discovered a new reachable node %vector.ph.new
+	discovered a new reachable node %vector.body
+	discovered a new reachable node %entry
+	discovered a new reachable node %call.i.i.i.noexc
+	discovered a new reachable node %if.then.i.i.i
+	discovered a new reachable node %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit.i.i
+	discovered a new reachable node %if.then.i11.i.i
+	discovered a new reachable node %call.i.noexc
+	discovered a new reachable node %if.end9.i
+	discovered a new reachable node %call12.i.noexc
+	discovered a new reachable node %invoke.cont
+	discovered a new reachable node %lpad
+	discovered a new reachable node %_ZNSt6vectorIfSaIfEED2Ev.exit.i.i
+	discovered a new reachable node %_ZN17CAmbisonicEncoderD2Ev.exit
+	discovered a new reachable node %if.then.i.i.i4.i.i
+	discovered a new reachable node %if.then.i.i.i.i.i
+	discovered a new reachable node %delete.notnull.i
+	discovered a new reachable node %if.else.i13.i.i
+	discovered a new reachable node %if.then9.i15.i.i
+	discovered a new reachable node %if.else.i.i.i
+	discovered a new reachable node %if.then9.i.i.i
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.end
+	discovered a new reachable node %_ZNSt6vectorIfSaIfEED2Ev.exit.i.i
+	discovered a new reachable node %_ZN17CAmbisonicEncoderD2Ev.exit
+	discovered a new reachable node %if.then.i.i.i4.i.i
+	discovered a new reachable node %if.then.i.i.i.i.i
+	discovered a new reachable node %delete.notnull
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.end.i
+	discovered a new reachable node %_ZNSt6vectorIfSaIfEED2Ev.exit.i.i.i
+	discovered a new reachable node %_ZN21CAmbisonicEncoderDistD2Ev.exit
+	discovered a new reachable node %if.then.i.i.i4.i.i.i
+	discovered a new reachable node %if.then.i.i.i.i.i.i
+	discovered a new reachable node %delete.notnull.i
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then.i.i.i
+	discovered a new reachable node %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit.i.i
+	discovered a new reachable node %if.then.i11.i.i
+	discovered a new reachable node %_ZN17CAmbisonicEncoder9ConfigureEjbj.exit
+	discovered a new reachable node %if.end9
+	discovered a new reachable node %delete.notnull
+	discovered a new reachable node %if.else.i13.i.i
+	discovered a new reachable node %if.then9.i15.i.i
+	discovered a new reachable node %if.else.i.i.i
+	discovered a new reachable node %if.then9.i.i.i
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.else
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.then
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.end44
+	discovered a new reachable node %for.body.lr.ph
+	discovered a new reachable node %for.body.us.preheader
+	discovered a new reachable node %for.body.us
+	discovered a new reachable node %for.cond18.for.end_crit_edge.us.unr-lcssa
+	discovered a new reachable node %for.cond18.for.end_crit_edge.us
+	discovered a new reachable node %for.cond.for.end44_crit_edge
+	discovered a new reachable node %for.body20.us.epil
+	discovered a new reachable node %for.body20.us
+	discovered a new reachable node %for.body
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %invoke.cont
+	discovered a new reachable node %invoke.cont15
+	discovered a new reachable node %lpad14
+	discovered a new reachable node %eh.resume
+	discovered a new reachable node %lpad
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %call.i.noexc
+	discovered a new reachable node %if.then.i
+	discovered a new reachable node %invoke.cont
+	discovered a new reachable node %delete.end
+	discovered a new reachable node %delete.end7
+	discovered a new reachable node %delete.end12
+	discovered a new reachable node %delete.notnull9
+	discovered a new reachable node %delete.notnull4
+	discovered a new reachable node %delete.notnull
+	discovered a new reachable node %terminate.lpad
+	discovered a new reachable node %1
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %invoke.cont4
+	discovered a new reachable node %if.end
+	discovered a new reachable node %lpad
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %for.cond.cleanup
+	discovered a new reachable node %for.body
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %call5.i.i.i9.i.noexc
+	discovered a new reachable node %invoke.cont3
+	discovered a new reachable node %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit66
+	discovered a new reachable node %if.else.i
+	discovered a new reachable node %invoke.cont.i.i
+	discovered a new reachable node %invoke.cont8.i.i
+	discovered a new reachable node %_ZNSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_.exit.i
+	discovered a new reachable node %_ZNSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE9push_backERKS2_.exit
+	discovered a new reachable node %call5.i.i.i9.i.noexc79
+	discovered a new reachable node %invoke.cont12
+	discovered a new reachable node %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit86
+	discovered a new reachable node %if.else.i115
+	discovered a new reachable node %invoke.cont.i.i129
+	discovered a new reachable node %invoke.cont8.i.i134
+	discovered a new reachable node %_ZNSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_.exit.i137
+	discovered a new reachable node %if.end.sink.split
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.then.i63.i.i135
+	discovered a new reachable node %if.then.i.i.i.i.i.i.i.i.i.i130
+	discovered a new reachable node %_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE8allocateERS3_m.exit.i.i.i122
+	discovered a new reachable node %if.then.i104
+	discovered a new reachable node %if.then.i.i85
+	discovered a new reachable node %lpad11
+	discovered a new reachable node %ehcleanup52
+	discovered a new reachable node %if.then.i.i147
+	discovered a new reachable node %lpad9
+	discovered a new reachable node %if.then.i63.i.i
+	discovered a new reachable node %if.then.i.i.i.i.i.i.i.i.i.i
+	discovered a new reachable node %_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE8allocateERS3_m.exit.i.i.i
+	discovered a new reachable node %if.then.i
+	discovered a new reachable node %if.then.i.i65
+	discovered a new reachable node %lpad2
+	discovered a new reachable node %if.then.i.i142
+	discovered a new reachable node %lpad
+	discovered a new reachable node %for.cond.preheader
+	discovered a new reachable node %for.body
+	discovered a new reachable node %call5.i.i.i9.i.noexc161
+	discovered a new reachable node %invoke.cont32
+	discovered a new reachable node %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit168
+	discovered a new reachable node %if.else.i197
+	discovered a new reachable node %invoke.cont.i.i211
+	discovered a new reachable node %invoke.cont8.i.i216
+	discovered a new reachable node %_ZNSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE19_M_emplace_back_auxIJRKS2_EEEvDpOT_.exit.i219
+	discovered a new reachable node %_ZNSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EE9push_backERKS2_.exit220
+	discovered a new reachable node %if.then.i63.i.i217
+	discovered a new reachable node %if.then.i.i.i.i.i.i.i.i.i.i212
+	discovered a new reachable node %_ZNSt16allocator_traitsISaIPN12ILLIXR_AUDIO5SoundEEE8allocateERS3_m.exit.i.i.i204
+	discovered a new reachable node %if.then.i186
+	discovered a new reachable node %if.then.i.i167
+	discovered a new reachable node %lpad31
+	discovered a new reachable node %if.then.i.i
+	discovered a new reachable node %lpad29
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.then.i
+	discovered a new reachable node %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
+	discovered a new reachable node %return
+	discovered a new reachable node %if.else.i
+	discovered a new reachable node %if.end
+	discovered a new reachable node %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+	discovered a new reachable node %invoke.cont11
+	discovered a new reachable node %invoke.cont14
+	discovered a new reachable node %invoke.cont19
+	discovered a new reachable node %for.body.lr.ph
+	discovered a new reachable node %for.body
+	discovered a new reachable node %invoke.cont30
+	discovered a new reachable node %for.cond39.preheader
+	discovered a new reachable node %for.cond.cleanup41
+	discovered a new reachable node %if.end.i
+	discovered a new reachable node %_ZN12ILLIXR_AUDIO7ABAudioD2Ev.exit
+	discovered a new reachable node %for.body.i
+	discovered a new reachable node %for.body42.preheader
+	discovered a new reachable node %for.body42
+	discovered a new reachable node %for.inc
+	discovered a new reachable node %lpad46
+	discovered a new reachable node %ehcleanup67
+	discovered a new reachable node %if.end.i177
+	discovered a new reachable node %_ZN12ILLIXR_AUDIO7ABAudioD2Ev.exit190
+	discovered a new reachable node %ehcleanup82
+	discovered a new reachable node %for.body.i189
+	discovered a new reachable node %lpad29
+	discovered a new reachable node %lpad13
+	discovered a new reachable node %lpad10
+	discovered a new reachable node %lpad7
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %_ZNSt10unique_ptrIA_PfSt14default_deleteIS1_EED2Ev.exit
+	discovered a new reachable node %_ZNSt6vectorIfSaIfEED2Ev.exit
+	discovered a new reachable node %if.then.i.i.i
+	discovered a new reachable node %_ZNKSt14default_deleteIA_PfEclEPS0_.exit.i
+	discovered a new reachable node %entry
+	discovered a new reachable node %_ZNSt10unique_ptrIA_PfSt14default_deleteIS1_EED2Ev.exit.i
+	discovered a new reachable node %_ZN8CBFormatD2Ev.exit
+	discovered a new reachable node %if.then.i.i.i.i
+	discovered a new reachable node %_ZNKSt14default_deleteIA_PfEclEPS0_.exit.i.i
+	discovered a new reachable node %entry
+	discovered a new reachable node %_ZNSt6vectorIfSaIfEED2Ev.exit
+	discovered a new reachable node %_ZNSt6vectorIfSaIfEED2Ev.exit5
+	discovered a new reachable node %if.then.i.i.i4
+	discovered a new reachable node %if.then.i.i.i
+	discovered a new reachable node %entry
+	discovered a new reachable node %_ZNSt6vectorIfSaIfEED2Ev.exit.i
+	discovered a new reachable node %_ZN16CAmbisonicSourceD2Ev.exit
+	discovered a new reachable node %if.then.i.i.i4.i
+	discovered a new reachable node %if.then.i.i.i.i
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.end47
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.else
+	discovered a new reachable node %if.then.i71
+	discovered a new reachable node %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit
+	discovered a new reachable node %_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm.exit
+	discovered a new reachable node %invoke.cont19
+	discovered a new reachable node %_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm.exit74
+	discovered a new reachable node %if.end47.sink.split
+	discovered a new reachable node %if.then.i73
+	discovered a new reachable node %if.then.i.i.i.i.i.i.i.i
+	discovered a new reachable node %_ZNSt16allocator_traitsISaIfEE8allocateERS0_m.exit.i
+	discovered a new reachable node %_ZSt27__uninitialized_default_n_aIPfmfET_S1_T0_RSaIT1_E.exit
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.end102
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.else44
+	discovered a new reachable node %if.then.i169
+	discovered a new reachable node %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit
+	discovered a new reachable node %_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm.exit
+	discovered a new reachable node %for.body.i.i.i.i.i.preheader
+	discovered a new reachable node %for.body.i.i.i.i.i
+	discovered a new reachable node %invoke.cont
+	discovered a new reachable node %invoke.cont57
+	discovered a new reachable node %invoke.cont64
+	discovered a new reachable node %_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm.exit148
+	discovered a new reachable node %if.then.i147
+	discovered a new reachable node %if.then.i.i.i.i.i.i.i.i154
+	discovered a new reachable node %if.then.i.i.i.i.i.i.i.i161
+	discovered a new reachable node %vector.ph266
+	discovered a new reachable node %middle.block263.unr-lcssa
+	discovered a new reachable node %middle.block263
+	discovered a new reachable node %vector.body262.epil
+	discovered a new reachable node %vector.ph266.new
+	discovered a new reachable node %vector.body262
+	discovered a new reachable node %_ZNSt16allocator_traitsISaIfEE8allocateERS0_m.exit.i
+	discovered a new reachable node %if.then4
+	discovered a new reachable node %if.then10
+	discovered a new reachable node %_ZSt22__uninitialized_move_aIPfS0_SaIfEET0_T_S3_S2_RT1_.exit
+	discovered a new reachable node %for.body.i.i196.preheader
+	discovered a new reachable node %for.body.i.i196.preheader287
+	discovered a new reachable node %for.body.i.i196
+	discovered a new reachable node %vector.ph248
+	discovered a new reachable node %middle.block245.unr-lcssa
+	discovered a new reachable node %middle.block245
+	discovered a new reachable node %vector.body244.epil
+	discovered a new reachable node %vector.ph248.new
+	discovered a new reachable node %vector.body244
+	discovered a new reachable node %if.then.i.i.i.i
+	discovered a new reachable node %if.then.i.i.i.i.i.i.i.i
+	discovered a new reachable node %if.else
+	discovered a new reachable node %_ZSt24__uninitialized_fill_n_aIPfmffET_S1_T0_RKT1_RSaIT2_E.exit191
+	discovered a new reachable node %_ZSt22__uninitialized_move_aIPfS0_SaIfEET0_T_S3_S2_RT1_.exit181
+	discovered a new reachable node %for.body.i.i.preheader
+	discovered a new reachable node %for.body.i.i.preheader288
+	discovered a new reachable node %for.body.i.i
+	discovered a new reachable node %vector.ph230
+	discovered a new reachable node %middle.block225.unr-lcssa
+	discovered a new reachable node %middle.block225
+	discovered a new reachable node %vector.body224.epil
+	discovered a new reachable node %vector.ph230.new
+	discovered a new reachable node %vector.body224
+	discovered a new reachable node %if.then.i.i.i.i.i.i.i.i179
+	discovered a new reachable node %for.body.i.i.i.i.i189.preheader
+	discovered a new reachable node %for.body.i.i.i.i.i189.preheader290
+	discovered a new reachable node %for.body.i.i.i.i.i189
+	discovered a new reachable node %vector.ph
+	discovered a new reachable node %middle.block.unr-lcssa
+	discovered a new reachable node %middle.block
+	discovered a new reachable node %vector.body.epil
+	discovered a new reachable node %vector.ph.new
+	discovered a new reachable node %vector.body
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.cond.cleanup
+	discovered a new reachable node %for.cond1.preheader.us.preheader
+	discovered a new reachable node %for.cond1.preheader.us
+	discovered a new reachable node %for.cond1.for.cond.cleanup3_crit_edge.us.unr-lcssa
+	discovered a new reachable node %for.cond1.for.cond.cleanup3_crit_edge.us
+	discovered a new reachable node %for.body4.us.epil
+	discovered a new reachable node %for.body4.us
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.cond.cleanup
+	discovered a new reachable node %for.body.lr.ph
+	discovered a new reachable node %for.body
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.cond.cleanup
+	discovered a new reachable node %for.body.lr.ph
+	discovered a new reachable node %for.body
+	discovered a new reachable node %_ZN8CBFormatpLERKS_.exit
+	discovered a new reachable node %for.cond2.preheader.lr.ph.i
+	discovered a new reachable node %for.cond2.preheader.us.preheader.i
+	discovered a new reachable node %for.cond2.preheader.us.i
+	discovered a new reachable node %for.body4.us.i.preheader
+	discovered a new reachable node %for.body4.us.i.prol.loopexit
+	discovered a new reachable node %for.cond2.for.inc10_crit_edge.us.i
+	discovered a new reachable node %for.body4.us.i
+	discovered a new reachable node %for.body4.us.i.prol
+	discovered a new reachable node %vector.memcheck
+	discovered a new reachable node %vector.ph
+	discovered a new reachable node %middle.block.unr-lcssa
+	discovered a new reachable node %middle.block
+	discovered a new reachable node %vector.body.epil
+	discovered a new reachable node %vector.body
+	discovered a new reachable node %entry
+
+BUILDDFG PASS
+-------- Searching for launch sites ----------
+Function: _ZNSt8ios_base4InitC1Ev
+Function: _ZNSt8ios_base4InitD1Ev
+Function: __cxa_atexit
+Function: _ZN14CAmbisonicBaseC2Ev
+Function: _ZN14CAmbisonicBase8GetOrderEv
+Function: _ZN14CAmbisonicBase9GetHeightEv
+Function: _ZN14CAmbisonicBase15GetChannelCountEv
+Function: _ZN14CAmbisonicBase9ConfigureEjbj
+Function: _Z17OrderToComponentsjb
+Function: _ZN8CBFormatC2Ev
+Function: _ZN8CBFormat14GetSampleCountEv
+Function: _ZN8CBFormat9ConfigureEjbj
+Function: llvm.lifetime.start.p0i8
+Function: llvm.memset.p0i8.i64
+Function: _Znam
+Function: llvm.lifetime.end.p0i8
+Function: _ZN8CBFormat5ResetEv
+Function: _ZN8CBFormat7RefreshEv
+Function: _ZN8CBFormat12InsertStreamEPfjj
+Function: llvm.memcpy.p0i8.p0i8.i64
+Function: _ZN8CBFormat13ExtractStreamEPfjj
+Function: _ZN8CBFormataSERKS_
+Function: _ZN8CBFormateqERKS_
+Function: _ZN8CBFormatneERKS_
+Function: _ZN8CBFormatpLERKS_
+Function: _ZN8CBFormatmIERKS_
+Function: _ZN8CBFormatmLERKS_
+Function: _ZN8CBFormatdVERKS_
+Function: _ZN8CBFormatpLERKf
+Function: _ZN8CBFormatmIERKf
+Function: _ZN8CBFormatmLERKf
+Function: _ZN8CBFormatdVERKf
+Function: _ZN16CAmbisonicSourceC2Ev
+Function: _ZN16CAmbisonicSource9ConfigureEjbj
+Function: _ZN16CAmbisonicSource5ResetEv
+Function: _ZN16CAmbisonicSource7RefreshEv
+Function: cosf
+Function: sinf
+Function: powf
+Function: _ZN16CAmbisonicSource11SetPositionE10PolarPoint
+Function: _ZN16CAmbisonicSource11GetPositionEv
+Function: _ZN16CAmbisonicSource14SetOrderWeightEjf
+Function: _ZN16CAmbisonicSource17SetOrderWeightAllEf
+Function: _ZN16CAmbisonicSource14SetCoefficientEjf
+Function: _ZN16CAmbisonicSource14GetOrderWeightEj
+Function: _ZN16CAmbisonicSource14GetCoefficientEj
+Function: _ZN16CAmbisonicSource7SetGainEf
+Function: _ZN16CAmbisonicSource7GetGainEv
+Function: _ZN17CAmbisonicEncoderC2Ev
+Function: _ZN17CAmbisonicEncoderD2Ev
+Function: _ZN17CAmbisonicEncoderD0Ev
+Function: _ZdlPv
+Function: _ZN17CAmbisonicEncoder9ConfigureEjbj
+Function: _ZN17CAmbisonicEncoder7RefreshEv
+Function: _ZN17CAmbisonicEncoder7ProcessEPfjP8CBFormat
+Function: _ZN21CAmbisonicEncoderDistC2Ev
+Function: __gxx_personality_v0
+Function: _ZN21CAmbisonicEncoderDistD2Ev
+Function: _ZdaPv
+Function: _ZN21CAmbisonicEncoderDistD0Ev
+Function: _ZN21CAmbisonicEncoderDist9ConfigureEjbj
+Function: _ZN21CAmbisonicEncoderDist5ResetEv
+Function: _ZN21CAmbisonicEncoderDist7RefreshEv
+Function: _ZN21CAmbisonicEncoderDist7ProcessEPfjP8CBFormat
+Function: _ZN21CAmbisonicEncoderDist13SetRoomRadiusEf
+Function: _ZN21CAmbisonicEncoderDist13GetRoomRadiusEv
+Function: _ZN12ILLIXR_AUDIO5SoundC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEjb
+Function: _Znwm
+Function: _ZNSt13basic_fstreamIcSt11char_traitsIcEEC1ERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode
+Function: _ZNSi4readEPcl
+Function: _ZN12ILLIXR_AUDIO5Sound9setSrcPosER10PolarPoint
+Function: _ZN12ILLIXR_AUDIO5Sound9setSrcAmpEf
+Function: _ZN12ILLIXR_AUDIO5SoundD2Ev
+Function: __clang_call_terminate
+Function: __cxa_begin_catch
+Function: _ZSt9terminatev
+Function: _ZN12ILLIXR_AUDIO7ABAudioC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_11ProcessTypeE
+Function: _ZNSt14basic_ofstreamIcSt11char_traitsIcEEC1ERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode
+Function: _ZN12ILLIXR_AUDIO7ABAudio17generateWAVHeaderEv
+Function: _ZN12ILLIXR_AUDIO7ABAudioD2Ev
+Function: free
+Function: _ZN12ILLIXR_AUDIO7ABAudio10loadSourceEv
+Function: _ZNSo5writeEPKcl
+Function: main
+------------ Found launch site --------------
+Finding preferred target for encoderPipeline_cloned
+FUNCTION: encoderPipeline_cloned
+  %normalization_fxp_cloned.node = call i8* @llvm.hpvm.createNode(i8* bitcast (%struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i32, i32, i16*, i64)* @normalization_fxp_cloned to i8*))
+IntrinsicID = 3162: llvm.hpvm.createNode
+Finding preferred target for normalization_fxp_cloned
+  %encoder_fxp_cloned.node = call i8* @llvm.hpvm.createNode(i8* bitcast (%struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i32, i32)* @encoder_fxp_cloned to i8*))
+IntrinsicID = 3162: llvm.hpvm.createNode
+Finding preferred target for encoder_fxp_cloned
+  %sumBF_fxp_cloned.node = call i8* @llvm.hpvm.createNode(i8* bitcast (%emptyStruct (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32)* @sumBF_fxp_cloned to i8*))
+IntrinsicID = 3162: llvm.hpvm.createNode
+Finding preferred target for sumBF_fxp_cloned
+  call void @llvm.hpvm.bind.input(i8* %normalization_fxp_cloned.node, i32 0, i32 0, i1 false)
+IntrinsicID = 3158: llvm.hpvm.bind.input
+  call void @llvm.hpvm.bind.input(i8* %normalization_fxp_cloned.node, i32 1, i32 1, i1 false)
+IntrinsicID = 3158: llvm.hpvm.bind.input
+  call void @llvm.hpvm.bind.input(i8* %normalization_fxp_cloned.node, i32 2, i32 2, i1 false)
+IntrinsicID = 3158: llvm.hpvm.bind.input
+  call void @llvm.hpvm.bind.input(i8* %normalization_fxp_cloned.node, i32 3, i32 3, i1 false)
+IntrinsicID = 3158: llvm.hpvm.bind.input
+  call void @llvm.hpvm.bind.input(i8* %normalization_fxp_cloned.node, i32 4, i32 4, i1 false)
+IntrinsicID = 3158: llvm.hpvm.bind.input
+  call void @llvm.hpvm.bind.input(i8* %normalization_fxp_cloned.node, i32 7, i32 5, i1 false)
+IntrinsicID = 3158: llvm.hpvm.bind.input
+  call void @llvm.hpvm.bind.input(i8* %encoder_fxp_cloned.node, i32 0, i32 0, i1 false)
+IntrinsicID = 3158: llvm.hpvm.bind.input
+  %output = call i8* @llvm.hpvm.createEdge(i8* %normalization_fxp_cloned.node, i8* %encoder_fxp_cloned.node, i1 true, i32 0, i32 1, i1 false)
+IntrinsicID = 3161: llvm.hpvm.createEdge
+  call void @llvm.hpvm.bind.input(i8* %encoder_fxp_cloned.node, i32 2, i32 2, i1 false)
+IntrinsicID = 3158: llvm.hpvm.bind.input
+  call void @llvm.hpvm.bind.input(i8* %encoder_fxp_cloned.node, i32 3, i32 3, i1 false)
+IntrinsicID = 3158: llvm.hpvm.bind.input
+  call void @llvm.hpvm.bind.input(i8* %sumBF_fxp_cloned.node, i32 0, i32 0, i1 false)
+IntrinsicID = 3158: llvm.hpvm.bind.input
+  %output1 = call i8* @llvm.hpvm.createEdge(i8* %encoder_fxp_cloned.node, i8* %sumBF_fxp_cloned.node, i1 true, i32 0, i32 1, i1 false)
+IntrinsicID = 3161: llvm.hpvm.createEdge
+  call void @llvm.hpvm.bind.input(i8* %sumBF_fxp_cloned.node, i32 5, i32 2, i1 false)
+IntrinsicID = 3158: llvm.hpvm.bind.input
+  call void @llvm.hpvm.bind.input(i8* %sumBF_fxp_cloned.node, i32 6, i32 3, i1 false)
+IntrinsicID = 3158: llvm.hpvm.bind.input
+  call void @llvm.hpvm.bind.input(i8* %sumBF_fxp_cloned.node, i32 3, i32 4, i1 false)
+IntrinsicID = 3158: llvm.hpvm.bind.input
+  ret %emptyStruct.28 undef
+	encoderPipeline_cloned
+	encoderPipeline_cloned
+	normalization_fxp_cloned
+	encoder_fxp_cloned
+	sumBF_fxp_cloned
+	encoderPipeline_cloned
+	encoderPipeline_cloned
+	normalization_fxp_cloned
+	encoder_fxp_cloned
+	sumBF_fxp_cloned
+Writing '/tmp/DataflowGraph-e1f8c4.dot'...  done. 
+Function: malloc
+Function: llvm_hpvm_track_mem
+Function: llvm_hpvm_request_mem
+Function: llvm_hpvm_untrack_mem
+Function: _ZN14CAmbisonicBaseD2Ev
+Function: _ZN14CAmbisonicBaseD0Ev
+Function: __cxa_pure_virtual
+Function: _ZN8CBFormatD2Ev
+Function: _ZN8CBFormatD0Ev
+Function: _ZN16CAmbisonicSourceD2Ev
+Function: _ZN16CAmbisonicSourceD0Ev
+Function: strtol
+Function: llvm.trap
+Function: _ZNSt6vectorIfSaIfEE17_M_default_appendEm
+Function: _ZSt20__throw_length_errorPKc
+Function: llvm.memmove.p0i8.p0i8.i64
+Function: _ZNSt6vectorIfSaIfEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPfS1_EEmRKf
+Function: _ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate
+Function: _ZNSt13basic_filebufIcSt11char_traitsIcEE5closeEv
+Function: _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm
+Function: strlen
+Function: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+Function: _GLOBAL__sub_I_main.cpp
+Function: llvm.fabs.f32
+Function: llvm_hpvm_initializeTimerSet
+Function: llvm_hpvm_switchToTimer
+Function: llvm_hpvm_printTimerSet
+Function: normalization_fxp_cloned
+Function: encoder_fxp_cloned
+Function: llvm.hpvm.createNode
+Function: sumBF_fxp_cloned
+Function: llvm.hpvm.bind.input
+Function: llvm.hpvm.createEdge
+Function: llvm.hpvm.init
+Function: llvm.hpvm.cleanup
+Function: llvm.hpvm.launch
+Function: encoderPipeline_cloned
+Function: llvm.hpvm.push
+Function: llvm.hpvm.pop
+Function: llvm.hpvm.wait
+
+DFG2LLVM_CPU PASS
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %cond.true
+	discovered a new reachable node %cond.end
+	discovered a new reachable node %cond.false
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.else
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %cond.true
+	discovered a new reachable node %cond.end
+	discovered a new reachable node %cond.false
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %cond.true
+	discovered a new reachable node %cond.end
+	discovered a new reachable node %cond.false
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %return
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %return
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %return
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.then6
+	discovered a new reachable node %if.end9
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.then6
+	discovered a new reachable node %return
+	discovered a new reachable node %if.end9
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %cond.true
+	discovered a new reachable node %cond.end
+	discovered a new reachable node %if.else26
+	discovered a new reachable node %if.end32
+	discovered a new reachable node %if.end33
+	discovered a new reachable node %if.end34
+	discovered a new reachable node %land.lhs.true
+	discovered a new reachable node %lor.lhs.false
+	discovered a new reachable node %if.then43
+	discovered a new reachable node %if.then47
+	discovered a new reachable node %if.end49
+	discovered a new reachable node %if.then52
+	discovered a new reachable node %if.then54
+	discovered a new reachable node %if.end57
+	discovered a new reachable node %if.then61
+	discovered a new reachable node %if.end63
+	discovered a new reachable node %if.then66
+	discovered a new reachable node %if.end70
+	discovered a new reachable node %if.end80
+	discovered a new reachable node %if.end81
+	discovered a new reachable node %if.then83
+	discovered a new reachable node %if.else90
+	discovered a new reachable node %if.else95
+	discovered a new reachable node %if.end102
+	discovered a new reachable node %if.end103
+	discovered a new reachable node %if.end110
+	discovered a new reachable node %if.end111
+	discovered a new reachable node %if.end112
+	discovered a new reachable node %if.then107
+	discovered a new reachable node %if.then99
+	discovered a new reachable node %if.then93
+	discovered a new reachable node %if.then86
+	discovered a new reachable node %if.else71
+	discovered a new reachable node %if.then73
+	discovered a new reachable node %if.end79
+	discovered a new reachable node %if.then29
+	discovered a new reachable node %if.then5
+	discovered a new reachable node %if.then8
+	discovered a new reachable node %if.then10
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.end25
+	discovered a new reachable node %if.else
+	discovered a new reachable node %if.else20
+	discovered a new reachable node %if.then22
+	discovered a new reachable node %if.end24
+	discovered a new reachable node %cond.false
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %return
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.then3
+	discovered a new reachable node %if.end6
+	discovered a new reachable node %if.then8
+	discovered a new reachable node %if.end24
+	discovered a new reachable node %if.end9
+	discovered a new reachable node %if.then14
+	discovered a new reachable node %if.end15
+	discovered a new reachable node %if.then18
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %return
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.then3
+	discovered a new reachable node %if.end6
+	discovered a new reachable node %if.then8
+	discovered a new reachable node %if.end23
+	discovered a new reachable node %if.end9
+	discovered a new reachable node %if.then14
+	discovered a new reachable node %if.end16
+	discovered a new reachable node %if.then19
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.cond
+	discovered a new reachable node %for.body
+	discovered a new reachable node %for.inc
+	discovered a new reachable node %for.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.else
+	discovered a new reachable node %while.cond
+	discovered a new reachable node %while.body
+	discovered a new reachable node %while.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %cond.true
+	discovered a new reachable node %cond.end
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.else25
+	discovered a new reachable node %if.end31
+	discovered a new reachable node %if.end32
+	discovered a new reachable node %if.end33
+	discovered a new reachable node %land.lhs.true
+	discovered a new reachable node %lor.lhs.false
+	discovered a new reachable node %if.then42
+	discovered a new reachable node %if.then46
+	discovered a new reachable node %if.end48
+	discovered a new reachable node %if.then51
+	discovered a new reachable node %if.then53
+	discovered a new reachable node %if.end56
+	discovered a new reachable node %if.then60
+	discovered a new reachable node %if.end62
+	discovered a new reachable node %if.then65
+	discovered a new reachable node %if.end69
+	discovered a new reachable node %if.end79
+	discovered a new reachable node %if.end80
+	discovered a new reachable node %if.then85
+	discovered a new reachable node %while.cond
+	discovered a new reachable node %while.body
+	discovered a new reachable node %if.then90
+	discovered a new reachable node %while.end
+	discovered a new reachable node %if.end93
+	discovered a new reachable node %if.then95
+	discovered a new reachable node %if.else122
+	discovered a new reachable node %if.then124
+	discovered a new reachable node %if.end126
+	discovered a new reachable node %if.else131
+	discovered a new reachable node %if.end139
+	discovered a new reachable node %if.end140
+	discovered a new reachable node %if.end147
+	discovered a new reachable node %if.end148
+	discovered a new reachable node %if.end149
+	discovered a new reachable node %if.then144
+	discovered a new reachable node %if.then135
+	discovered a new reachable node %if.then129
+	discovered a new reachable node %if.then98
+	discovered a new reachable node %if.then100
+	discovered a new reachable node %if.end102
+	discovered a new reachable node %land.lhs.true105
+	discovered a new reachable node %if.then107
+	discovered a new reachable node %if.end121
+	discovered a new reachable node %if.else112
+	discovered a new reachable node %if.then114
+	discovered a new reachable node %if.end120
+	discovered a new reachable node %if.else116
+	discovered a new reachable node %if.else91
+	discovered a new reachable node %if.end92
+	discovered a new reachable node %if.else70
+	discovered a new reachable node %if.then72
+	discovered a new reachable node %if.end78
+	discovered a new reachable node %if.then28
+	discovered a new reachable node %if.then5
+	discovered a new reachable node %if.then8
+	discovered a new reachable node %if.then10
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.end24
+	discovered a new reachable node %if.else
+	discovered a new reachable node %if.else19
+	discovered a new reachable node %if.then21
+	discovered a new reachable node %if.end23
+	discovered a new reachable node %cond.false
+	discovered a new reachable node %entry
+	discovered a new reachable node %lor.end
+	discovered a new reachable node %lor.rhs
+	discovered a new reachable node %entry
+	discovered a new reachable node %while.cond
+	discovered a new reachable node %land.rhs
+	discovered a new reachable node %land.end
+	discovered a new reachable node %while.body
+	discovered a new reachable node %while.end
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.then10
+	discovered a new reachable node %if.end12
+	discovered a new reachable node %entry
+	discovered a new reachable node %land.rhs
+	discovered a new reachable node %land.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %lor.end
+	discovered a new reachable node %lor.rhs
+	discovered a new reachable node %entry
+	discovered a new reachable node %land.lhs.true
+	discovered a new reachable node %if.then
+	discovered a new reachable node %while.cond
+	discovered a new reachable node %land.rhs
+	discovered a new reachable node %land.end
+	discovered a new reachable node %while.body
+	discovered a new reachable node %while.end
+	discovered a new reachable node %return
+	discovered a new reachable node %if.else
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.cond
+	discovered a new reachable node %for.body
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.then7
+	discovered a new reachable node %if.end9
+	discovered a new reachable node %if.then12
+	discovered a new reachable node %while.cond
+	discovered a new reachable node %while.body
+	discovered a new reachable node %if.then21
+	discovered a new reachable node %while.end
+	discovered a new reachable node %if.end26
+	discovered a new reachable node %for.inc
+	discovered a new reachable node %if.end24
+	discovered a new reachable node %for.end
+	discovered a new reachable node %if.then31
+	discovered a new reachable node %if.end33
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.cond
+	discovered a new reachable node %for.body
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.then14
+	discovered a new reachable node %while.cond
+	discovered a new reachable node %while.body
+	discovered a new reachable node %if.then21
+	discovered a new reachable node %if.end
+	discovered a new reachable node %while.end
+	discovered a new reachable node %if.then26
+	discovered a new reachable node %if.end27
+	discovered a new reachable node %while.cond32
+	discovered a new reachable node %while.body34
+	discovered a new reachable node %while.end39
+	discovered a new reachable node %if.end40
+	discovered a new reachable node %if.end41
+	discovered a new reachable node %for.inc
+	discovered a new reachable node %lor.lhs.false
+	discovered a new reachable node %for.end
+	discovered a new reachable node %if.then45
+	discovered a new reachable node %if.end49
+	discovered a new reachable node %entry
+	discovered a new reachable node %while.cond
+	discovered a new reachable node %while.body
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.then5
+	discovered a new reachable node %if.end7
+	discovered a new reachable node %while.end
+	discovered a new reachable node %for.cond
+	discovered a new reachable node %for.body
+	discovered a new reachable node %if.then12
+	discovered a new reachable node %while.cond16
+	discovered a new reachable node %while.body18
+	discovered a new reachable node %while.end20
+	discovered a new reachable node %if.end24
+	discovered a new reachable node %for.inc
+	discovered a new reachable node %for.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.cond
+	discovered a new reachable node %for.body
+	discovered a new reachable node %for.cond7
+	discovered a new reachable node %for.body11
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %for.inc
+	discovered a new reachable node %for.end
+	discovered a new reachable node %for.inc18
+	discovered a new reachable node %for.end20
+	discovered a new reachable node %for.cond24
+	discovered a new reachable node %for.body26
+	discovered a new reachable node %for.inc28
+	discovered a new reachable node %for.end30
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %lor.end
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %lor.rhs
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.cond
+	discovered a new reachable node %for.body
+	discovered a new reachable node %for.inc
+	discovered a new reachable node %for.end
+	discovered a new reachable node %for.cond9
+	discovered a new reachable node %for.body12
+	discovered a new reachable node %for.inc26
+	discovered a new reachable node %for.end27
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.cond
+	discovered a new reachable node %for.body
+	discovered a new reachable node %for.inc
+	discovered a new reachable node %for.end
+	discovered a new reachable node %for.cond5
+	discovered a new reachable node %for.body9
+	discovered a new reachable node %for.inc13
+	discovered a new reachable node %for.end15
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.cond
+	discovered a new reachable node %for.body
+	discovered a new reachable node %for.inc
+	discovered a new reachable node %for.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.else
+	discovered a new reachable node %entry
+	discovered a new reachable node %lor.end
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %lor.rhs
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.else
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.else
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.cond
+	discovered a new reachable node %for.body
+	discovered a new reachable node %delete.end
+	discovered a new reachable node %for.inc
+	discovered a new reachable node %delete.notnull
+	discovered a new reachable node %for.end
+	discovered a new reachable node %for.cond13
+	discovered a new reachable node %for.body15
+	discovered a new reachable node %delete.end20
+	discovered a new reachable node %for.inc21
+	discovered a new reachable node %delete.notnull19
+	discovered a new reachable node %for.end23
+	discovered a new reachable node %for.cond31
+	discovered a new reachable node %for.body33
+	discovered a new reachable node %delete.end38
+	discovered a new reachable node %for.inc39
+	discovered a new reachable node %delete.notnull37
+	discovered a new reachable node %for.end41
+	discovered a new reachable node %for.cond49
+	discovered a new reachable node %for.body51
+	discovered a new reachable node %delete.end56
+	discovered a new reachable node %for.inc57
+	discovered a new reachable node %delete.notnull55
+	discovered a new reachable node %for.end59
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %delete.end
+	discovered a new reachable node %delete.notnull
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.cond
+	discovered a new reachable node %for.body
+	discovered a new reachable node %if.then
+	discovered a new reachable node %cleanup
+	discovered a new reachable node %cleanup34
+	discovered a new reachable node %cleanup.cont
+	discovered a new reachable node %for.inc
+	discovered a new reachable node %if.end
+	discovered a new reachable node %for.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.cond
+	discovered a new reachable node %for.body
+	discovered a new reachable node %for.inc
+	discovered a new reachable node %for.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.cond
+	discovered a new reachable node %for.body
+	discovered a new reachable node %for.inc
+	discovered a new reachable node %for.end
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.else
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %cond.true
+	discovered a new reachable node %cond.end
+	discovered a new reachable node %cond.false
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %land.lhs.true
+	discovered a new reachable node %if.then9
+	discovered a new reachable node %return
+	discovered a new reachable node %if.end12
+	discovered a new reachable node %land.lhs.true13
+	discovered a new reachable node %if.then15
+	discovered a new reachable node %if.end24
+	discovered a new reachable node %if.then28
+	discovered a new reachable node %if.end31
+	discovered a new reachable node %if.else
+	discovered a new reachable node %if.then17
+	discovered a new reachable node %if.end23
+	discovered a new reachable node %if.else18
+	discovered a new reachable node %if.then20
+	discovered a new reachable node %if.end22
+	discovered a new reachable node %if.else21
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.cond
+	discovered a new reachable node %for.body
+	discovered a new reachable node %for.inc
+	discovered a new reachable node %for.end
+	discovered a new reachable node %if.then
+	discovered a new reachable node %for.cond5
+	discovered a new reachable node %for.body7
+	discovered a new reachable node %for.inc12
+	discovered a new reachable node %for.end14
+	discovered a new reachable node %if.end
+	discovered a new reachable node %for.cond16
+	discovered a new reachable node %for.body18
+	discovered a new reachable node %for.inc19
+	discovered a new reachable node %for.end21
+	discovered a new reachable node %if.then23
+	discovered a new reachable node %for.cond25
+	discovered a new reachable node %for.body27
+	discovered a new reachable node %for.inc28
+	discovered a new reachable node %for.end30
+	discovered a new reachable node %if.end31
+	discovered a new reachable node %cond.true
+	discovered a new reachable node %cond.end
+	discovered a new reachable node %cond.false
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %return
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.then7
+	discovered a new reachable node %if.end9
+	discovered a new reachable node %if.then12
+	discovered a new reachable node %if.end13
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.else
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %while.cond
+	discovered a new reachable node %while.body
+	discovered a new reachable node %while.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %lor.end
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %lor.rhs
+	discovered a new reachable node %entry
+	discovered a new reachable node %cond.true
+	discovered a new reachable node %cond.end
+	discovered a new reachable node %lor.lhs.false
+	discovered a new reachable node %cond.false
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %while.cond
+	discovered a new reachable node %while.body
+	discovered a new reachable node %if.else
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.then
+	discovered a new reachable node %while.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %return
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %while.cond
+	discovered a new reachable node %while.body
+	discovered a new reachable node %if.else
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.then
+	discovered a new reachable node %while.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %land.lhs.true
+	discovered a new reachable node %if.then9
+	discovered a new reachable node %return
+	discovered a new reachable node %if.else
+	discovered a new reachable node %if.else12
+	discovered a new reachable node %if.then18
+	discovered a new reachable node %if.then22
+	discovered a new reachable node %if.else25
+	discovered a new reachable node %if.then32
+	discovered a new reachable node %if.then36
+	discovered a new reachable node %if.else39
+	discovered a new reachable node %if.else42
+	discovered a new reachable node %if.else44
+	discovered a new reachable node %if.then50
+	discovered a new reachable node %if.then54
+	discovered a new reachable node %if.else57
+	discovered a new reachable node %if.then64
+	discovered a new reachable node %if.then68
+	discovered a new reachable node %if.else71
+	discovered a new reachable node %if.else74
+	discovered a new reachable node %if.else76
+	discovered a new reachable node %entry
+	discovered a new reachable node %lor.end
+	discovered a new reachable node %lor.lhs.false
+	discovered a new reachable node %lor.rhs
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %while.cond
+	discovered a new reachable node %while.body
+	discovered a new reachable node %cond.true
+	discovered a new reachable node %cond.end
+	discovered a new reachable node %cond.false
+	discovered a new reachable node %while.end
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.then10
+	discovered a new reachable node %return
+	discovered a new reachable node %if.else
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.end12
+	discovered a new reachable node %if.then17
+	discovered a new reachable node %if.end18
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %return
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %lor.end
+	discovered a new reachable node %lor.lhs.false
+	discovered a new reachable node %lor.rhs
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %while.cond
+	discovered a new reachable node %while.body
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end19
+	discovered a new reachable node %if.else
+	discovered a new reachable node %if.then10
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.else12
+	discovered a new reachable node %return
+	discovered a new reachable node %while.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %while.cond
+	discovered a new reachable node %while.body
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.else
+	discovered a new reachable node %while.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %land.rhs
+	discovered a new reachable node %land.end
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.else
+	discovered a new reachable node %while.cond
+	discovered a new reachable node %while.body
+	discovered a new reachable node %while.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %sw.default
+	discovered a new reachable node %return
+	discovered a new reachable node %sw.bb
+	discovered a new reachable node %sw.bb1
+	discovered a new reachable node %sw.bb2
+	discovered a new reachable node %sw.bb3
+	discovered a new reachable node %sw.bb4
+	discovered a new reachable node %sw.bb5
+	discovered a new reachable node %sw.bb6
+	discovered a new reachable node %sw.bb7
+	discovered a new reachable node %sw.bb8
+	discovered a new reachable node %sw.bb9
+	discovered a new reachable node %sw.bb10
+	discovered a new reachable node %sw.bb11
+	discovered a new reachable node %sw.bb12
+	discovered a new reachable node %sw.bb13
+	discovered a new reachable node %sw.bb14
+	discovered a new reachable node %sw.bb15
+	discovered a new reachable node %sw.bb16
+	discovered a new reachable node %sw.bb17
+	discovered a new reachable node %sw.bb18
+	discovered a new reachable node %sw.bb19
+	discovered a new reachable node %sw.bb20
+	discovered a new reachable node %sw.bb21
+	discovered a new reachable node %sw.bb22
+	discovered a new reachable node %sw.bb23
+	discovered a new reachable node %sw.bb24
+	discovered a new reachable node %sw.bb25
+	discovered a new reachable node %sw.bb26
+	discovered a new reachable node %sw.bb27
+	discovered a new reachable node %sw.bb28
+	discovered a new reachable node %sw.bb29
+	discovered a new reachable node %sw.bb30
+	discovered a new reachable node %sw.bb31
+	discovered a new reachable node %sw.bb32
+	discovered a new reachable node %sw.bb33
+	discovered a new reachable node %sw.bb34
+	discovered a new reachable node %sw.bb35
+	discovered a new reachable node %sw.bb36
+	discovered a new reachable node %sw.bb37
+	discovered a new reachable node %sw.bb38
+	discovered a new reachable node %sw.bb39
+	discovered a new reachable node %sw.bb40
+	discovered a new reachable node %sw.bb41
+	discovered a new reachable node %sw.bb42
+	discovered a new reachable node %sw.bb43
+	discovered a new reachable node %sw.bb44
+	discovered a new reachable node %sw.bb45
+	discovered a new reachable node %sw.bb46
+	discovered a new reachable node %sw.bb47
+	discovered a new reachable node %sw.bb48
+	discovered a new reachable node %sw.bb49
+	discovered a new reachable node %sw.bb50
+	discovered a new reachable node %sw.bb51
+	discovered a new reachable node %sw.bb52
+	discovered a new reachable node %sw.bb53
+	discovered a new reachable node %sw.bb54
+	discovered a new reachable node %sw.bb55
+	discovered a new reachable node %sw.bb56
+	discovered a new reachable node %sw.bb57
+	discovered a new reachable node %sw.bb58
+	discovered a new reachable node %sw.bb59
+	discovered a new reachable node %sw.bb60
+	discovered a new reachable node %sw.bb61
+	discovered a new reachable node %sw.bb62
+	discovered a new reachable node %sw.bb63
+	discovered a new reachable node %sw.bb64
+	discovered a new reachable node %entry
+	discovered a new reachable node %while.cond
+	discovered a new reachable node %land.rhs
+	discovered a new reachable node %land.end
+	discovered a new reachable node %while.body
+	discovered a new reachable node %while.end
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.then9
+	discovered a new reachable node %if.end11
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %for.cond
+	discovered a new reachable node %for.body
+	discovered a new reachable node %for.inc
+	discovered a new reachable node %for.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %cond.true
+	discovered a new reachable node %cond.end
+	discovered a new reachable node %lor.lhs.false
+	discovered a new reachable node %cond.false
+	discovered a new reachable node %entry
+	discovered a new reachable node %cond.true
+	discovered a new reachable node %cond.end
+	discovered a new reachable node %cond.false
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %return
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %while.cond
+	discovered a new reachable node %while.body
+	discovered a new reachable node %if.else
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.then
+	discovered a new reachable node %while.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.then4
+	discovered a new reachable node %if.end33
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %cond.true
+	discovered a new reachable node %cond.end
+	discovered a new reachable node %cond.false
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %cond.true
+	discovered a new reachable node %cond.end
+	discovered a new reachable node %lor.lhs.false
+	discovered a new reachable node %cond.false
+	discovered a new reachable node %entry
+	discovered a new reachable node %cond.true
+	discovered a new reachable node %cond.end
+	discovered a new reachable node %cond.false
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %return
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %land.lhs.true
+	discovered a new reachable node %if.then9
+	discovered a new reachable node %return
+	discovered a new reachable node %if.else
+	discovered a new reachable node %if.else12
+	discovered a new reachable node %if.then18
+	discovered a new reachable node %if.then22
+	discovered a new reachable node %if.else25
+	discovered a new reachable node %if.then32
+	discovered a new reachable node %if.then36
+	discovered a new reachable node %if.else39
+	discovered a new reachable node %if.else42
+	discovered a new reachable node %if.else44
+	discovered a new reachable node %if.then50
+	discovered a new reachable node %if.then54
+	discovered a new reachable node %if.else57
+	discovered a new reachable node %if.then64
+	discovered a new reachable node %if.then68
+	discovered a new reachable node %if.else71
+	discovered a new reachable node %if.else74
+	discovered a new reachable node %if.else76
+	discovered a new reachable node %entry
+	discovered a new reachable node %lor.end
+	discovered a new reachable node %lor.lhs.false
+	discovered a new reachable node %lor.rhs
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %while.cond
+	discovered a new reachable node %while.body
+	discovered a new reachable node %cond.true
+	discovered a new reachable node %cond.end
+	discovered a new reachable node %cond.false
+	discovered a new reachable node %while.end
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.then10
+	discovered a new reachable node %return
+	discovered a new reachable node %if.else
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.end12
+	discovered a new reachable node %if.then17
+	discovered a new reachable node %if.end18
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %cond.true
+	discovered a new reachable node %cond.end
+	discovered a new reachable node %lor.lhs.false
+	discovered a new reachable node %cond.false
+	discovered a new reachable node %entry
+	discovered a new reachable node %cond.true
+	discovered a new reachable node %cond.end
+	discovered a new reachable node %cond.false
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %cond.true
+	discovered a new reachable node %cond.end
+	discovered a new reachable node %lor.lhs.false
+	discovered a new reachable node %cond.false
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %land.lhs.true
+	discovered a new reachable node %if.then
+	discovered a new reachable node %if.end
+	discovered a new reachable node %if.then4
+	discovered a new reachable node %if.end6
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+	discovered a new reachable node %entry
+Successfully loaded hpvm-rt API module
+Inserting cpu timer initialization
+New global variable: @hpvmTimerSet_CPU = common global i8* null
+Inserting cpu timer print
+Start: Generating Code for Node (I) - encoderPipeline_cloned
+Start: Generating Code for Node (L) - encoderPipeline_cloned
+Skipping dummy node
+DONE: Generating Code for Node (L) - encoderPipeline_cloned
+Start: Generating Code for Node (L) - encoderPipeline_cloned
+Skipping dummy node
+DONE: Generating Code for Node (L) - encoderPipeline_cloned
+Start: Generating Code for Node (L) - normalization_fxp_cloned
+Function Type: %struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i32, i32, i16*, i64)
+Cloning Function: normalization_fxp_cloned.1
+Old Function Type: %struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i32, i32, i16*, i64)
+New Function Type: %struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i32, i32, i16*, i64, i64)
+Old Function name: normalization_fxp_cloned.1
+New Function name: normalization_fxp_cloned.1_cloned
+No value map provided. Creating default value map
+Case 2: Extra arguments are added at the end of old function
+0. %"class.std::vector.6"* %soundSrcs : %"class.std::vector.6"* %0
+1. i64 %bytes_soundSrcs : i64 %0
+2. i32 %nSamples : i32 %0
+3. i32 %soundSrcsSize : i32 %0
+4. i16* %sampleTemp : i16* %0
+5. i64 %bytes_sampleTemp : i64 %0
+Cloning Function: normalization_fxp_cloned.1_cloned
+Old Function Type: %struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i32, i32, i16*, i64, i64)
+New Function Type: %struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i32, i32, i16*, i64, i64, i64)
+Old Function name: normalization_fxp_cloned.1_cloned
+New Function name: normalization_fxp_cloned.1_cloned_cloned
+No value map provided. Creating default value map
+Case 2: Extra arguments are added at the end of old function
+0. %"class.std::vector.6"* %soundSrcs : %"class.std::vector.6"* %0
+1. i64 %bytes_soundSrcs : i64 %0
+2. i32 %nSamples : i32 %0
+3. i32 %soundSrcsSize : i32 %0
+4. i16* %sampleTemp : i16* %0
+5. i64 %bytes_sampleTemp : i64 %0
+6. i64 %idx_x : i64 %0
+Cloning Function: normalization_fxp_cloned.1_cloned_cloned
+Old Function Type: %struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i32, i32, i16*, i64, i64, i64)
+New Function Type: %struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i32, i32, i16*, i64, i64, i64, i64)
+Old Function name: normalization_fxp_cloned.1_cloned_cloned
+New Function name: normalization_fxp_cloned.1_cloned_cloned_cloned
+No value map provided. Creating default value map
+Case 2: Extra arguments are added at the end of old function
+0. %"class.std::vector.6"* %soundSrcs : %"class.std::vector.6"* %0
+1. i64 %bytes_soundSrcs : i64 %0
+2. i32 %nSamples : i32 %0
+3. i32 %soundSrcsSize : i32 %0
+4. i16* %sampleTemp : i16* %0
+5. i64 %bytes_sampleTemp : i64 %0
+6. i64 %idx_x : i64 %0
+7. i64 %idx_y : i64 %0
+Cloning Function: normalization_fxp_cloned.1_cloned_cloned_cloned
+Old Function Type: %struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i32, i32, i16*, i64, i64, i64, i64)
+New Function Type: %struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i32, i32, i16*, i64, i64, i64, i64, i64)
+Old Function name: normalization_fxp_cloned.1_cloned_cloned_cloned
+New Function name: normalization_fxp_cloned.1_cloned_cloned_cloned_cloned
+No value map provided. Creating default value map
+Case 2: Extra arguments are added at the end of old function
+0. %"class.std::vector.6"* %soundSrcs : %"class.std::vector.6"* %0
+1. i64 %bytes_soundSrcs : i64 %0
+2. i32 %nSamples : i32 %0
+3. i32 %soundSrcsSize : i32 %0
+4. i16* %sampleTemp : i16* %0
+5. i64 %bytes_sampleTemp : i64 %0
+6. i64 %idx_x : i64 %0
+7. i64 %idx_y : i64 %0
+8. i64 %idx_z : i64 %0
+Cloning Function: normalization_fxp_cloned.1_cloned_cloned_cloned_cloned
+Old Function Type: %struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i32, i32, i16*, i64, i64, i64, i64, i64)
+New Function Type: %struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i32, i32, i16*, i64, i64, i64, i64, i64, i64)
+Old Function name: normalization_fxp_cloned.1_cloned_cloned_cloned_cloned
+New Function name: normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned
+No value map provided. Creating default value map
+Case 2: Extra arguments are added at the end of old function
+0. %"class.std::vector.6"* %soundSrcs : %"class.std::vector.6"* %0
+1. i64 %bytes_soundSrcs : i64 %0
+2. i32 %nSamples : i32 %0
+3. i32 %soundSrcsSize : i32 %0
+4. i16* %sampleTemp : i16* %0
+5. i64 %bytes_sampleTemp : i64 %0
+6. i64 %idx_x : i64 %0
+7. i64 %idx_y : i64 %0
+8. i64 %idx_z : i64 %0
+9. i64 %dim_x : i64 %0
+Cloning Function: normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned
+Old Function Type: %struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i32, i32, i16*, i64, i64, i64, i64, i64, i64)
+New Function Type: %struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i32, i32, i16*, i64, i64, i64, i64, i64, i64, i64)
+Old Function name: normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned
+New Function name: normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned
+No value map provided. Creating default value map
+Case 2: Extra arguments are added at the end of old function
+0. %"class.std::vector.6"* %soundSrcs : %"class.std::vector.6"* %0
+1. i64 %bytes_soundSrcs : i64 %0
+2. i32 %nSamples : i32 %0
+3. i32 %soundSrcsSize : i32 %0
+4. i16* %sampleTemp : i16* %0
+5. i64 %bytes_sampleTemp : i64 %0
+6. i64 %idx_x : i64 %0
+7. i64 %idx_y : i64 %0
+8. i64 %idx_z : i64 %0
+9. i64 %dim_x : i64 %0
+10. i64 %dim_y : i64 %0
+Function Type after adding args: %struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i32, i32, i16*, i64, i64, i64, i64, i64, i64, i64)
+
+getHPVMPtrArgs:
+  %soundSrcs.i8ptr = bitcast %"class.std::vector.6"* %soundSrcs to i8*
+  %0 = call i8* @llvm_hpvm_cpu_argument_ptr(i8* %soundSrcs.i8ptr, i64 %bytes_soundSrcs)
+  br label %entry
+
+  %soundSrcs.i8ptr = bitcast %"class.std::vector.6"* %soundSrcs to i8*
+  %0 = call i8* @llvm_hpvm_cpu_argument_ptr(i8* %soundSrcs.i8ptr, i64 %bytes_soundSrcs)
+  br label %entry
+  %cmp31 = icmp eq i32 %soundSrcsSize, 0
+  %cmp229 = icmp eq i32 %nSamples, 0
+  %or.cond = or i1 %cmp31, %cmp229
+  br i1 %or.cond, label %for.cond.cleanup, label %for.cond1.preheader.us.preheader
+  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %soundSrcs, i64 0, i32 0, i32 0, i32 0
+  %wide.trip.count37 = zext i32 %soundSrcsSize to i64
+  %.pre = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !tbaa !7
+  %wide.trip.count = zext i32 %nSamples to i64
+  %xtraiter = and i64 %wide.trip.count, 1
+  %1 = icmp eq i32 %nSamples, 1
+  %unroll_iter = sub nsw i64 %wide.trip.count, %xtraiter
+  %lcmp.mod = icmp eq i64 %xtraiter, 0
+  br label %for.cond1.preheader.us
+  %indvars.iv35 = phi i64 [ 0, %for.cond1.preheader.us.preheader ], [ %indvars.iv.next36, %for.cond1.for.cond.cleanup3_crit_edge.us ]
+  %add.ptr.i.us = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %.pre, i64 %indvars.iv35
+  %2 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i.us, align 8, !tbaa !13
+  %amp.us = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 5
+  br i1 %1, label %for.cond1.for.cond.cleanup3_crit_edge.us.unr-lcssa, label %for.body4.us
+  %indvars.iv = phi i64 [ %indvars.iv.next.1, %for.body4.us ], [ 0, %for.cond1.preheader.us ]
+  %niter = phi i64 [ %niter.nsub.1, %for.body4.us ], [ %unroll_iter, %for.cond1.preheader.us ]
+  %3 = load float, float* %amp.us, align 4, !tbaa !14
+  %conv5.us = fpext float %3 to double
+  %arrayidx.us = getelementptr inbounds i16, i16* %sampleTemp, i64 %indvars.iv
+  %4 = load i16, i16* %arrayidx.us, align 2, !tbaa !18
+  %conv7.us = sitofp i16 %4 to double
+  %div.us = fdiv double %conv7.us, 3.276700e+04
+  %mul.us = fmul double %div.us, %conv5.us
+  %conv8.us = fptrunc double %mul.us to float
+  %arrayidx12.us = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 1, i64 %indvars.iv
+  store float %conv8.us, float* %arrayidx12.us, align 4, !tbaa !20
+  %indvars.iv.next = or i64 %indvars.iv, 1
+  %5 = load float, float* %amp.us, align 4, !tbaa !14
+  %conv5.us.1 = fpext float %5 to double
+  %arrayidx.us.1 = getelementptr inbounds i16, i16* %sampleTemp, i64 %indvars.iv.next
+  %6 = load i16, i16* %arrayidx.us.1, align 2, !tbaa !18
+  %conv7.us.1 = sitofp i16 %6 to double
+  %div.us.1 = fdiv double %conv7.us.1, 3.276700e+04
+  %mul.us.1 = fmul double %div.us.1, %conv5.us.1
+  %conv8.us.1 = fptrunc double %mul.us.1 to float
+  %arrayidx12.us.1 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 1, i64 %indvars.iv.next
+  store float %conv8.us.1, float* %arrayidx12.us.1, align 4, !tbaa !20
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2
+  %niter.nsub.1 = add i64 %niter, -2
+  %niter.ncmp.1 = icmp eq i64 %niter.nsub.1, 0
+  br i1 %niter.ncmp.1, label %for.cond1.for.cond.cleanup3_crit_edge.us.unr-lcssa, label %for.body4.us
+  %indvars.iv.unr = phi i64 [ 0, %for.cond1.preheader.us ], [ %indvars.iv.next.1, %for.body4.us ]
+  br i1 %lcmp.mod, label %for.cond1.for.cond.cleanup3_crit_edge.us, label %for.body4.us.epil
+  %7 = load float, float* %amp.us, align 4, !tbaa !14
+  %conv5.us.epil = fpext float %7 to double
+  %arrayidx.us.epil = getelementptr inbounds i16, i16* %sampleTemp, i64 %indvars.iv.unr
+  %8 = load i16, i16* %arrayidx.us.epil, align 2, !tbaa !18
+  %conv7.us.epil = sitofp i16 %8 to double
+  %div.us.epil = fdiv double %conv7.us.epil, 3.276700e+04
+  %mul.us.epil = fmul double %div.us.epil, %conv5.us.epil
+  %conv8.us.epil = fptrunc double %mul.us.epil to float
+  %arrayidx12.us.epil = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 1, i64 %indvars.iv.unr
+  store float %conv8.us.epil, float* %arrayidx12.us.epil, align 4, !tbaa !20
+  br label %for.cond1.for.cond.cleanup3_crit_edge.us
+  %indvars.iv.next36 = add nuw nsw i64 %indvars.iv35, 1
+  %exitcond38 = icmp eq i64 %indvars.iv.next36, %wide.trip.count37
+  br i1 %exitcond38, label %for.cond.cleanup, label %for.cond1.preheader.us
+  %returnStruct = insertvalue %struct.out.normalization_fxp undef, i64 %bytes_soundSrcs, 0
+  ret %struct.out.normalization_fxp %returnStruct
+
+; Function Attrs: nounwind uwtable
+define %struct.out.normalization_fxp @normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* in out %soundSrcs, i64 %bytes_soundSrcs, i32 %nSamples, i32 %soundSrcsSize, i16* nocapture readonly %sampleTemp, i64 %bytes_sampleTemp, i64 %idx_x, i64 %idx_y, i64 %idx_z, i64 %dim_x, i64 %dim_y, i64 %dim_z) #6 {
+getHPVMPtrArgs:
+  %soundSrcs.i8ptr = bitcast %"class.std::vector.6"* %soundSrcs to i8*
+  %0 = call i8* @llvm_hpvm_cpu_argument_ptr(i8* %soundSrcs.i8ptr, i64 %bytes_soundSrcs)
+  br label %entry
+
+entry:                                            ; preds = %getHPVMPtrArgs
+  %cmp31 = icmp eq i32 %soundSrcsSize, 0
+  %cmp229 = icmp eq i32 %nSamples, 0
+  %or.cond = or i1 %cmp31, %cmp229
+  br i1 %or.cond, label %for.cond.cleanup, label %for.cond1.preheader.us.preheader
+
+for.cond1.preheader.us.preheader:                 ; preds = %entry
+  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %soundSrcs, i64 0, i32 0, i32 0, i32 0
+  %wide.trip.count37 = zext i32 %soundSrcsSize to i64
+  %.pre = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !tbaa !171
+  %wide.trip.count = zext i32 %nSamples to i64
+  %xtraiter = and i64 %wide.trip.count, 1
+  %1 = icmp eq i32 %nSamples, 1
+  %unroll_iter = sub nsw i64 %wide.trip.count, %xtraiter
+  %lcmp.mod = icmp eq i64 %xtraiter, 0
+  br label %for.cond1.preheader.us
+
+for.cond1.preheader.us:                           ; preds = %for.cond1.for.cond.cleanup3_crit_edge.us, %for.cond1.preheader.us.preheader
+  %indvars.iv35 = phi i64 [ 0, %for.cond1.preheader.us.preheader ], [ %indvars.iv.next36, %for.cond1.for.cond.cleanup3_crit_edge.us ]
+  %add.ptr.i.us = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %.pre, i64 %indvars.iv35
+  %2 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i.us, align 8, !tbaa !30
+  %amp.us = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 5
+  br i1 %1, label %for.cond1.for.cond.cleanup3_crit_edge.us.unr-lcssa, label %for.body4.us
+
+for.body4.us:                                     ; preds = %for.body4.us, %for.cond1.preheader.us
+  %indvars.iv = phi i64 [ %indvars.iv.next.1, %for.body4.us ], [ 0, %for.cond1.preheader.us ]
+  %niter = phi i64 [ %niter.nsub.1, %for.body4.us ], [ %unroll_iter, %for.cond1.preheader.us ]
+  %3 = load float, float* %amp.us, align 4, !tbaa !133
+  %conv5.us = fpext float %3 to double
+  %arrayidx.us = getelementptr inbounds i16, i16* %sampleTemp, i64 %indvars.iv
+  %4 = load i16, i16* %arrayidx.us, align 2, !tbaa !200
+  %conv7.us = sitofp i16 %4 to double
+  %div.us = fdiv double %conv7.us, 3.276700e+04
+  %mul.us = fmul double %div.us, %conv5.us
+  %conv8.us = fptrunc double %mul.us to float
+  %arrayidx12.us = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 1, i64 %indvars.iv
+  store float %conv8.us, float* %arrayidx12.us, align 4, !tbaa !33
+  %indvars.iv.next = or i64 %indvars.iv, 1
+  %5 = load float, float* %amp.us, align 4, !tbaa !133
+  %conv5.us.1 = fpext float %5 to double
+  %arrayidx.us.1 = getelementptr inbounds i16, i16* %sampleTemp, i64 %indvars.iv.next
+  %6 = load i16, i16* %arrayidx.us.1, align 2, !tbaa !200
+  %conv7.us.1 = sitofp i16 %6 to double
+  %div.us.1 = fdiv double %conv7.us.1, 3.276700e+04
+  %mul.us.1 = fmul double %div.us.1, %conv5.us.1
+  %conv8.us.1 = fptrunc double %mul.us.1 to float
+  %arrayidx12.us.1 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 1, i64 %indvars.iv.next
+  store float %conv8.us.1, float* %arrayidx12.us.1, align 4, !tbaa !33
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2
+  %niter.nsub.1 = add i64 %niter, -2
+  %niter.ncmp.1 = icmp eq i64 %niter.nsub.1, 0
+  br i1 %niter.ncmp.1, label %for.cond1.for.cond.cleanup3_crit_edge.us.unr-lcssa, label %for.body4.us
+
+for.cond1.for.cond.cleanup3_crit_edge.us.unr-lcssa: ; preds = %for.body4.us, %for.cond1.preheader.us
+  %indvars.iv.unr = phi i64 [ 0, %for.cond1.preheader.us ], [ %indvars.iv.next.1, %for.body4.us ]
+  br i1 %lcmp.mod, label %for.cond1.for.cond.cleanup3_crit_edge.us, label %for.body4.us.epil
+
+for.body4.us.epil:                                ; preds = %for.cond1.for.cond.cleanup3_crit_edge.us.unr-lcssa
+  %7 = load float, float* %amp.us, align 4, !tbaa !133
+  %conv5.us.epil = fpext float %7 to double
+  %arrayidx.us.epil = getelementptr inbounds i16, i16* %sampleTemp, i64 %indvars.iv.unr
+  %8 = load i16, i16* %arrayidx.us.epil, align 2, !tbaa !200
+  %conv7.us.epil = sitofp i16 %8 to double
+  %div.us.epil = fdiv double %conv7.us.epil, 3.276700e+04
+  %mul.us.epil = fmul double %div.us.epil, %conv5.us.epil
+  %conv8.us.epil = fptrunc double %mul.us.epil to float
+  %arrayidx12.us.epil = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 1, i64 %indvars.iv.unr
+  store float %conv8.us.epil, float* %arrayidx12.us.epil, align 4, !tbaa !33
+  br label %for.cond1.for.cond.cleanup3_crit_edge.us
+
+for.cond1.for.cond.cleanup3_crit_edge.us:         ; preds = %for.body4.us.epil, %for.cond1.for.cond.cleanup3_crit_edge.us.unr-lcssa
+  %indvars.iv.next36 = add nuw nsw i64 %indvars.iv35, 1
+  %exitcond38 = icmp eq i64 %indvars.iv.next36, %wide.trip.count37
+  br i1 %exitcond38, label %for.cond.cleanup, label %for.cond1.preheader.us
+
+for.cond.cleanup:                                 ; preds = %for.cond1.for.cond.cleanup3_crit_edge.us, %entry
+  %returnStruct = insertvalue %struct.out.normalization_fxp undef, i64 %bytes_soundSrcs, 0
+  ret %struct.out.normalization_fxp %returnStruct
+}
+DONE: Generating Code for Node (L) - normalization_fxp_cloned
+Start: Generating Code for Node (L) - encoder_fxp_cloned
+Function Type: %struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i32, i32)
+Cloning Function: encoder_fxp_cloned.2
+Old Function Type: %struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i32, i32)
+New Function Type: %struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i32, i32, i64)
+Old Function name: encoder_fxp_cloned.2
+New Function name: encoder_fxp_cloned.2_cloned
+No value map provided. Creating default value map
+Case 2: Extra arguments are added at the end of old function
+0. %"class.std::vector.6"* %soundSrcs : %"class.std::vector.6"* %0
+1. i64 %bytes_soundSrcs : i64 %0
+2. i32 %nSamples : i32 %0
+3. i32 %soundSrcsSize : i32 %0
+Cloning Function: encoder_fxp_cloned.2_cloned
+Old Function Type: %struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i32, i32, i64)
+New Function Type: %struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i32, i32, i64, i64)
+Old Function name: encoder_fxp_cloned.2_cloned
+New Function name: encoder_fxp_cloned.2_cloned_cloned
+No value map provided. Creating default value map
+Case 2: Extra arguments are added at the end of old function
+0. %"class.std::vector.6"* %soundSrcs : %"class.std::vector.6"* %0
+1. i64 %bytes_soundSrcs : i64 %0
+2. i32 %nSamples : i32 %0
+3. i32 %soundSrcsSize : i32 %0
+4. i64 %idx_x : i64 %0
+Cloning Function: encoder_fxp_cloned.2_cloned_cloned
+Old Function Type: %struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i32, i32, i64, i64)
+New Function Type: %struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i32, i32, i64, i64, i64)
+Old Function name: encoder_fxp_cloned.2_cloned_cloned
+New Function name: encoder_fxp_cloned.2_cloned_cloned_cloned
+No value map provided. Creating default value map
+Case 2: Extra arguments are added at the end of old function
+0. %"class.std::vector.6"* %soundSrcs : %"class.std::vector.6"* %0
+1. i64 %bytes_soundSrcs : i64 %0
+2. i32 %nSamples : i32 %0
+3. i32 %soundSrcsSize : i32 %0
+4. i64 %idx_x : i64 %0
+5. i64 %idx_y : i64 %0
+Cloning Function: encoder_fxp_cloned.2_cloned_cloned_cloned
+Old Function Type: %struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i32, i32, i64, i64, i64)
+New Function Type: %struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i32, i32, i64, i64, i64, i64)
+Old Function name: encoder_fxp_cloned.2_cloned_cloned_cloned
+New Function name: encoder_fxp_cloned.2_cloned_cloned_cloned_cloned
+No value map provided. Creating default value map
+Case 2: Extra arguments are added at the end of old function
+0. %"class.std::vector.6"* %soundSrcs : %"class.std::vector.6"* %0
+1. i64 %bytes_soundSrcs : i64 %0
+2. i32 %nSamples : i32 %0
+3. i32 %soundSrcsSize : i32 %0
+4. i64 %idx_x : i64 %0
+5. i64 %idx_y : i64 %0
+6. i64 %idx_z : i64 %0
+Cloning Function: encoder_fxp_cloned.2_cloned_cloned_cloned_cloned
+Old Function Type: %struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i32, i32, i64, i64, i64, i64)
+New Function Type: %struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i32, i32, i64, i64, i64, i64, i64)
+Old Function name: encoder_fxp_cloned.2_cloned_cloned_cloned_cloned
+New Function name: encoder_fxp_cloned.2_cloned_cloned_cloned_cloned_cloned
+No value map provided. Creating default value map
+Case 2: Extra arguments are added at the end of old function
+0. %"class.std::vector.6"* %soundSrcs : %"class.std::vector.6"* %0
+1. i64 %bytes_soundSrcs : i64 %0
+2. i32 %nSamples : i32 %0
+3. i32 %soundSrcsSize : i32 %0
+4. i64 %idx_x : i64 %0
+5. i64 %idx_y : i64 %0
+6. i64 %idx_z : i64 %0
+7. i64 %dim_x : i64 %0
+Cloning Function: encoder_fxp_cloned.2_cloned_cloned_cloned_cloned_cloned
+Old Function Type: %struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i32, i32, i64, i64, i64, i64, i64)
+New Function Type: %struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i32, i32, i64, i64, i64, i64, i64, i64)
+Old Function name: encoder_fxp_cloned.2_cloned_cloned_cloned_cloned_cloned
+New Function name: encoder_fxp_cloned.2_cloned_cloned_cloned_cloned_cloned_cloned
+No value map provided. Creating default value map
+Case 2: Extra arguments are added at the end of old function
+0. %"class.std::vector.6"* %soundSrcs : %"class.std::vector.6"* %0
+1. i64 %bytes_soundSrcs : i64 %0
+2. i32 %nSamples : i32 %0
+3. i32 %soundSrcsSize : i32 %0
+4. i64 %idx_x : i64 %0
+5. i64 %idx_y : i64 %0
+6. i64 %idx_z : i64 %0
+7. i64 %dim_x : i64 %0
+8. i64 %dim_y : i64 %0
+Function Type after adding args: %struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i32, i32, i64, i64, i64, i64, i64, i64)
+
+getHPVMPtrArgs:
+  %soundSrcs.i8ptr = bitcast %"class.std::vector.6"* %soundSrcs to i8*
+  %0 = call i8* @llvm_hpvm_cpu_argument_ptr(i8* %soundSrcs.i8ptr, i64 %bytes_soundSrcs)
+  br label %entry
+
+  %soundSrcs.i8ptr = bitcast %"class.std::vector.6"* %soundSrcs to i8*
+  %0 = call i8* @llvm_hpvm_cpu_argument_ptr(i8* %soundSrcs.i8ptr, i64 %bytes_soundSrcs)
+  br label %entry
+  %cmp18 = icmp eq i32 %soundSrcsSize, 0
+  br i1 %cmp18, label %for.cond.cleanup, label %for.body.lr.ph
+  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %soundSrcs, i64 0, i32 0, i32 0, i32 0
+  %wide.trip.count = zext i32 %soundSrcsSize to i64
+  br label %for.body
+  %returnStruct = insertvalue %struct.out.encoder_fxp undef, i64 %bytes_soundSrcs, 0
+  ret %struct.out.encoder_fxp %returnStruct
+  %indvars.iv = phi i64 [ 0, %for.body.lr.ph ], [ %indvars.iv.next, %for.body ]
+  %1 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !tbaa !7
+  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %1, i64 %indvars.iv
+  %2 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i, align 8, !tbaa !13
+  %BEncoder = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 3
+  %3 = load %class.CAmbisonicEncoderDist*, %class.CAmbisonicEncoderDist** %BEncoder, align 8, !tbaa !14
+  %arraydecay = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 1, i64 0
+  %BFormat = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 2
+  %4 = load %class.CBFormat*, %class.CBFormat** %BFormat, align 8, !tbaa !18
+  tail call void @_ZN21CAmbisonicEncoderDist7ProcessEPfjP8CBFormat(%class.CAmbisonicEncoderDist* %3, float* nonnull %arraydecay, i32 %nSamples, %class.CBFormat* %4)
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond, label %for.cond.cleanup, label %for.body
+
+; Function Attrs: nounwind uwtable
+define %struct.out.encoder_fxp @encoder_fxp_cloned.2_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* in out %soundSrcs, i64 %bytes_soundSrcs, i32 %nSamples, i32 %soundSrcsSize, i64 %idx_x, i64 %idx_y, i64 %idx_z, i64 %dim_x, i64 %dim_y, i64 %dim_z) #6 {
+getHPVMPtrArgs:
+  %soundSrcs.i8ptr = bitcast %"class.std::vector.6"* %soundSrcs to i8*
+  %0 = call i8* @llvm_hpvm_cpu_argument_ptr(i8* %soundSrcs.i8ptr, i64 %bytes_soundSrcs)
+  br label %entry
+
+entry:                                            ; preds = %getHPVMPtrArgs
+  %cmp18 = icmp eq i32 %soundSrcsSize, 0
+  br i1 %cmp18, label %for.cond.cleanup, label %for.body.lr.ph
+
+for.body.lr.ph:                                   ; preds = %entry
+  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %soundSrcs, i64 0, i32 0, i32 0, i32 0
+  %wide.trip.count = zext i32 %soundSrcsSize to i64
+  br label %for.body
+
+for.cond.cleanup:                                 ; preds = %for.body, %entry
+  %returnStruct = insertvalue %struct.out.encoder_fxp undef, i64 %bytes_soundSrcs, 0
+  ret %struct.out.encoder_fxp %returnStruct
+
+for.body:                                         ; preds = %for.body, %for.body.lr.ph
+  %indvars.iv = phi i64 [ 0, %for.body.lr.ph ], [ %indvars.iv.next, %for.body ]
+  %1 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !tbaa !171
+  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %1, i64 %indvars.iv
+  %2 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i, align 8, !tbaa !30
+  %BEncoder = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 3
+  %3 = load %class.CAmbisonicEncoderDist*, %class.CAmbisonicEncoderDist** %BEncoder, align 8, !tbaa !137
+  %arraydecay = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 1, i64 0
+  %BFormat = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 2
+  %4 = load %class.CBFormat*, %class.CBFormat** %BFormat, align 8, !tbaa !136
+  tail call void @_ZN21CAmbisonicEncoderDist7ProcessEPfjP8CBFormat(%class.CAmbisonicEncoderDist* %3, float* nonnull %arraydecay, i32 %nSamples, %class.CBFormat* %4)
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond, label %for.cond.cleanup, label %for.body
+}
+DONE: Generating Code for Node (L) - encoder_fxp_cloned
+Start: Generating Code for Node (L) - sumBF_fxp_cloned
+Function Type: %emptyStruct (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32)
+Cloning Function: sumBF_fxp_cloned.3
+Old Function Type: %emptyStruct (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32)
+New Function Type: %emptyStruct (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32, i64)
+Old Function name: sumBF_fxp_cloned.3
+New Function name: sumBF_fxp_cloned.3_cloned
+No value map provided. Creating default value map
+Case 2: Extra arguments are added at the end of old function
+0. %"class.std::vector.6"* %soundSrcs : %"class.std::vector.6"* %0
+1. i64 %bytes_soundSrcs : i64 %0
+2. %class.CBFormat* %sumBF : %class.CBFormat* %0
+3. i64 %bytes_sumBF : i64 %0
+4. i32 %soundSrcsSize : i32 %0
+Cloning Function: sumBF_fxp_cloned.3_cloned
+Old Function Type: %emptyStruct (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32, i64)
+New Function Type: %emptyStruct (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32, i64, i64)
+Old Function name: sumBF_fxp_cloned.3_cloned
+New Function name: sumBF_fxp_cloned.3_cloned_cloned
+No value map provided. Creating default value map
+Case 2: Extra arguments are added at the end of old function
+0. %"class.std::vector.6"* %soundSrcs : %"class.std::vector.6"* %0
+1. i64 %bytes_soundSrcs : i64 %0
+2. %class.CBFormat* %sumBF : %class.CBFormat* %0
+3. i64 %bytes_sumBF : i64 %0
+4. i32 %soundSrcsSize : i32 %0
+5. i64 %idx_x : i64 %0
+Cloning Function: sumBF_fxp_cloned.3_cloned_cloned
+Old Function Type: %emptyStruct (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32, i64, i64)
+New Function Type: %emptyStruct (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32, i64, i64, i64)
+Old Function name: sumBF_fxp_cloned.3_cloned_cloned
+New Function name: sumBF_fxp_cloned.3_cloned_cloned_cloned
+No value map provided. Creating default value map
+Case 2: Extra arguments are added at the end of old function
+0. %"class.std::vector.6"* %soundSrcs : %"class.std::vector.6"* %0
+1. i64 %bytes_soundSrcs : i64 %0
+2. %class.CBFormat* %sumBF : %class.CBFormat* %0
+3. i64 %bytes_sumBF : i64 %0
+4. i32 %soundSrcsSize : i32 %0
+5. i64 %idx_x : i64 %0
+6. i64 %idx_y : i64 %0
+Cloning Function: sumBF_fxp_cloned.3_cloned_cloned_cloned
+Old Function Type: %emptyStruct (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32, i64, i64, i64)
+New Function Type: %emptyStruct (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32, i64, i64, i64, i64)
+Old Function name: sumBF_fxp_cloned.3_cloned_cloned_cloned
+New Function name: sumBF_fxp_cloned.3_cloned_cloned_cloned_cloned
+No value map provided. Creating default value map
+Case 2: Extra arguments are added at the end of old function
+0. %"class.std::vector.6"* %soundSrcs : %"class.std::vector.6"* %0
+1. i64 %bytes_soundSrcs : i64 %0
+2. %class.CBFormat* %sumBF : %class.CBFormat* %0
+3. i64 %bytes_sumBF : i64 %0
+4. i32 %soundSrcsSize : i32 %0
+5. i64 %idx_x : i64 %0
+6. i64 %idx_y : i64 %0
+7. i64 %idx_z : i64 %0
+Cloning Function: sumBF_fxp_cloned.3_cloned_cloned_cloned_cloned
+Old Function Type: %emptyStruct (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32, i64, i64, i64, i64)
+New Function Type: %emptyStruct (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32, i64, i64, i64, i64, i64)
+Old Function name: sumBF_fxp_cloned.3_cloned_cloned_cloned_cloned
+New Function name: sumBF_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned
+No value map provided. Creating default value map
+Case 2: Extra arguments are added at the end of old function
+0. %"class.std::vector.6"* %soundSrcs : %"class.std::vector.6"* %0
+1. i64 %bytes_soundSrcs : i64 %0
+2. %class.CBFormat* %sumBF : %class.CBFormat* %0
+3. i64 %bytes_sumBF : i64 %0
+4. i32 %soundSrcsSize : i32 %0
+5. i64 %idx_x : i64 %0
+6. i64 %idx_y : i64 %0
+7. i64 %idx_z : i64 %0
+8. i64 %dim_x : i64 %0
+Cloning Function: sumBF_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned
+Old Function Type: %emptyStruct (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32, i64, i64, i64, i64, i64)
+New Function Type: %emptyStruct (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32, i64, i64, i64, i64, i64, i64)
+Old Function name: sumBF_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned
+New Function name: sumBF_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned
+No value map provided. Creating default value map
+Case 2: Extra arguments are added at the end of old function
+0. %"class.std::vector.6"* %soundSrcs : %"class.std::vector.6"* %0
+1. i64 %bytes_soundSrcs : i64 %0
+2. %class.CBFormat* %sumBF : %class.CBFormat* %0
+3. i64 %bytes_sumBF : i64 %0
+4. i32 %soundSrcsSize : i32 %0
+5. i64 %idx_x : i64 %0
+6. i64 %idx_y : i64 %0
+7. i64 %idx_z : i64 %0
+8. i64 %dim_x : i64 %0
+9. i64 %dim_y : i64 %0
+Function Type after adding args: %emptyStruct (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32, i64, i64, i64, i64, i64, i64)
+
+getHPVMPtrArgs:
+  %soundSrcs.i8ptr = bitcast %"class.std::vector.6"* %soundSrcs to i8*
+  %0 = call i8* @llvm_hpvm_cpu_argument_ptr(i8* %soundSrcs.i8ptr, i64 %bytes_soundSrcs)
+  %sumBF.i8ptr = bitcast %class.CBFormat* %sumBF to i8*
+  %1 = call i8* @llvm_hpvm_cpu_argument_ptr(i8* %sumBF.i8ptr, i64 %bytes_sumBF)
+  br label %entry
+
+  %soundSrcs.i8ptr = bitcast %"class.std::vector.6"* %soundSrcs to i8*
+  %0 = call i8* @llvm_hpvm_cpu_argument_ptr(i8* %soundSrcs.i8ptr, i64 %bytes_soundSrcs)
+  %sumBF.i8ptr = bitcast %class.CBFormat* %sumBF to i8*
+  %1 = call i8* @llvm_hpvm_cpu_argument_ptr(i8* %sumBF.i8ptr, i64 %bytes_sumBF)
+  br label %entry
+  %cmp8 = icmp eq i32 %soundSrcsSize, 0
+  br i1 %cmp8, label %for.cond.cleanup, label %for.body.lr.ph
+  %2 = getelementptr inbounds %class.CBFormat, %class.CBFormat* %sumBF, i64 0, i32 0, i32 4
+  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %soundSrcs, i64 0, i32 0, i32 0, i32 0
+  %m_nSamples.i = getelementptr inbounds %class.CBFormat, %class.CBFormat* %sumBF, i64 0, i32 1
+  %_M_head_impl.i.i.i.i.i.i21.i = getelementptr inbounds %class.CBFormat, %class.CBFormat* %sumBF, i64 0, i32 4, i32 0, i32 0, i32 0, i32 0
+  %wide.trip.count = zext i32 %soundSrcsSize to i64
+  %.pre = load i32, i32* %2, align 8, !tbaa !7
+  %cmp25.i = icmp eq i32 %.pre, 0
+  %3 = zext i32 %.pre to i64
+  br label %for.body
+  ret %emptyStruct undef
+  %indvars.iv = phi i64 [ 0, %for.body.lr.ph ], [ %indvars.iv.next, %_ZN8CBFormatpLERKS_.exit ]
+  br i1 %cmp25.i, label %_ZN8CBFormatpLERKS_.exit, label %for.cond2.preheader.lr.ph.i
+  %4 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !tbaa !13
+  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %4, i64 %indvars.iv
+  %5 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i, align 8, !tbaa !17
+  %BFormat = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %5, i64 0, i32 2
+  %6 = load %class.CBFormat*, %class.CBFormat** %BFormat, align 8, !tbaa !18
+  %7 = load i32, i32* %m_nSamples.i, align 8, !tbaa !22
+  %cmp323.i = icmp eq i32 %7, 0
+  %_M_head_impl.i.i.i.i.i.i.i = getelementptr inbounds %class.CBFormat, %class.CBFormat* %6, i64 0, i32 4, i32 0, i32 0, i32 0, i32 0
+  %8 = load float**, float*** %_M_head_impl.i.i.i.i.i.i.i, align 8
+  br i1 %cmp323.i, label %_ZN8CBFormatpLERKS_.exit, label %for.cond2.preheader.us.preheader.i
+  %.pre.i = load float**, float*** %_M_head_impl.i.i.i.i.i.i21.i, align 8, !tbaa !17
+  %9 = zext i32 %7 to i64
+  %10 = and i64 %9, 4294967288
+  %11 = add nsw i64 %10, -8
+  %12 = lshr exact i64 %11, 3
+  %13 = add nuw nsw i64 %12, 1
+  %min.iters.check = icmp ult i32 %7, 8
+  %n.vec = and i64 %9, 4294967288
+  %xtraiter = and i64 %13, 1
+  %14 = icmp eq i64 %11, 0
+  %unroll_iter = sub nuw nsw i64 %13, %xtraiter
+  %lcmp.mod = icmp eq i64 %xtraiter, 0
+  %cmp.n = icmp eq i64 %n.vec, %9
+  %xtraiter20 = and i64 %9, 3
+  %lcmp.mod21 = icmp eq i64 %xtraiter20, 0
+  br label %for.cond2.preheader.us.i
+  %indvars.iv29.i = phi i64 [ 0, %for.cond2.preheader.us.preheader.i ], [ %indvars.iv.next30.i, %for.cond2.for.inc10_crit_edge.us.i ]
+  %arrayidx.i.us.i = getelementptr inbounds float*, float** %8, i64 %indvars.iv29.i
+  %15 = load float*, float** %arrayidx.i.us.i, align 8, !tbaa !17
+  %arrayidx.i22.us.i = getelementptr inbounds float*, float** %.pre.i, i64 %indvars.iv29.i
+  %16 = load float*, float** %arrayidx.i22.us.i, align 8, !tbaa !17
+  br i1 %min.iters.check, label %for.body4.us.i.preheader, label %vector.memcheck
+  %scevgep = getelementptr float, float* %16, i64 %9
+  %scevgep14 = getelementptr float, float* %15, i64 %9
+  %bound0 = icmp ult float* %16, %scevgep14
+  %bound1 = icmp ult float* %15, %scevgep
+  %found.conflict = and i1 %bound0, %bound1
+  br i1 %found.conflict, label %for.body4.us.i.preheader, label %vector.ph
+  br i1 %14, label %middle.block.unr-lcssa, label %vector.body
+  %index = phi i64 [ %index.next.1, %vector.body ], [ 0, %vector.ph ]
+  %niter = phi i64 [ %niter.nsub.1, %vector.body ], [ %unroll_iter, %vector.ph ]
+  %17 = getelementptr inbounds float, float* %15, i64 %index
+  %18 = bitcast float* %17 to <4 x float>*
+  %wide.load = load <4 x float>, <4 x float>* %18, align 4, !tbaa !27, !alias.scope !28
+  %19 = getelementptr inbounds float, float* %17, i64 4
+  %20 = bitcast float* %19 to <4 x float>*
+  %wide.load17 = load <4 x float>, <4 x float>* %20, align 4, !tbaa !27, !alias.scope !28
+  %21 = getelementptr inbounds float, float* %16, i64 %index
+  %22 = bitcast float* %21 to <4 x float>*
+  %wide.load18 = load <4 x float>, <4 x float>* %22, align 4, !tbaa !27, !alias.scope !31, !noalias !28
+  %23 = getelementptr inbounds float, float* %21, i64 4
+  %24 = bitcast float* %23 to <4 x float>*
+  %wide.load19 = load <4 x float>, <4 x float>* %24, align 4, !tbaa !27, !alias.scope !31, !noalias !28
+  %25 = fadd <4 x float> %wide.load, %wide.load18
+  %26 = fadd <4 x float> %wide.load17, %wide.load19
+  %27 = bitcast float* %21 to <4 x float>*
+  store <4 x float> %25, <4 x float>* %27, align 4, !tbaa !27, !alias.scope !31, !noalias !28
+  %28 = bitcast float* %23 to <4 x float>*
+  store <4 x float> %26, <4 x float>* %28, align 4, !tbaa !27, !alias.scope !31, !noalias !28
+  %index.next = or i64 %index, 8
+  %29 = getelementptr inbounds float, float* %15, i64 %index.next
+  %30 = bitcast float* %29 to <4 x float>*
+  %wide.load.1 = load <4 x float>, <4 x float>* %30, align 4, !tbaa !27, !alias.scope !28
+  %31 = getelementptr inbounds float, float* %29, i64 4
+  %32 = bitcast float* %31 to <4 x float>*
+  %wide.load17.1 = load <4 x float>, <4 x float>* %32, align 4, !tbaa !27, !alias.scope !28
+  %33 = getelementptr inbounds float, float* %16, i64 %index.next
+  %34 = bitcast float* %33 to <4 x float>*
+  %wide.load18.1 = load <4 x float>, <4 x float>* %34, align 4, !tbaa !27, !alias.scope !31, !noalias !28
+  %35 = getelementptr inbounds float, float* %33, i64 4
+  %36 = bitcast float* %35 to <4 x float>*
+  %wide.load19.1 = load <4 x float>, <4 x float>* %36, align 4, !tbaa !27, !alias.scope !31, !noalias !28
+  %37 = fadd <4 x float> %wide.load.1, %wide.load18.1
+  %38 = fadd <4 x float> %wide.load17.1, %wide.load19.1
+  %39 = bitcast float* %33 to <4 x float>*
+  store <4 x float> %37, <4 x float>* %39, align 4, !tbaa !27, !alias.scope !31, !noalias !28
+  %40 = bitcast float* %35 to <4 x float>*
+  store <4 x float> %38, <4 x float>* %40, align 4, !tbaa !27, !alias.scope !31, !noalias !28
+  %index.next.1 = add i64 %index, 16
+  %niter.nsub.1 = add i64 %niter, -2
+  %niter.ncmp.1 = icmp eq i64 %niter.nsub.1, 0
+  br i1 %niter.ncmp.1, label %middle.block.unr-lcssa, label %vector.body, !llvm.loop !33
+  %index.unr = phi i64 [ 0, %vector.ph ], [ %index.next.1, %vector.body ]
+  br i1 %lcmp.mod, label %middle.block, label %vector.body.epil
+  %41 = getelementptr inbounds float, float* %15, i64 %index.unr
+  %42 = bitcast float* %41 to <4 x float>*
+  %wide.load.epil = load <4 x float>, <4 x float>* %42, align 4, !tbaa !27, !alias.scope !28
+  %43 = getelementptr inbounds float, float* %41, i64 4
+  %44 = bitcast float* %43 to <4 x float>*
+  %wide.load17.epil = load <4 x float>, <4 x float>* %44, align 4, !tbaa !27, !alias.scope !28
+  %45 = getelementptr inbounds float, float* %16, i64 %index.unr
+  %46 = bitcast float* %45 to <4 x float>*
+  %wide.load18.epil = load <4 x float>, <4 x float>* %46, align 4, !tbaa !27, !alias.scope !31, !noalias !28
+  %47 = getelementptr inbounds float, float* %45, i64 4
+  %48 = bitcast float* %47 to <4 x float>*
+  %wide.load19.epil = load <4 x float>, <4 x float>* %48, align 4, !tbaa !27, !alias.scope !31, !noalias !28
+  %49 = fadd <4 x float> %wide.load.epil, %wide.load18.epil
+  %50 = fadd <4 x float> %wide.load17.epil, %wide.load19.epil
+  %51 = bitcast float* %45 to <4 x float>*
+  store <4 x float> %49, <4 x float>* %51, align 4, !tbaa !27, !alias.scope !31, !noalias !28
+  %52 = bitcast float* %47 to <4 x float>*
+  store <4 x float> %50, <4 x float>* %52, align 4, !tbaa !27, !alias.scope !31, !noalias !28
+  br label %middle.block
+  br i1 %cmp.n, label %for.cond2.for.inc10_crit_edge.us.i, label %for.body4.us.i.preheader
+  %indvars.iv.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %for.cond2.preheader.us.i ], [ %n.vec, %middle.block ]
+  %53 = xor i64 %indvars.iv.i.ph, -1
+  %54 = add nsw i64 %53, %9
+  br i1 %lcmp.mod21, label %for.body4.us.i.prol.loopexit, label %for.body4.us.i.prol
+  %indvars.iv.i.prol = phi i64 [ %indvars.iv.next.i.prol, %for.body4.us.i.prol ], [ %indvars.iv.i.ph, %for.body4.us.i.preheader ]
+  %prol.iter = phi i64 [ %prol.iter.sub, %for.body4.us.i.prol ], [ %xtraiter20, %for.body4.us.i.preheader ]
+  %arrayidx.us.i.prol = getelementptr inbounds float, float* %15, i64 %indvars.iv.i.prol
+  %55 = load float, float* %arrayidx.us.i.prol, align 4, !tbaa !27
+  %arrayidx9.us.i.prol = getelementptr inbounds float, float* %16, i64 %indvars.iv.i.prol
+  %56 = load float, float* %arrayidx9.us.i.prol, align 4, !tbaa !27
+  %add.us.i.prol = fadd float %55, %56
+  store float %add.us.i.prol, float* %arrayidx9.us.i.prol, align 4, !tbaa !27
+  %indvars.iv.next.i.prol = add nuw nsw i64 %indvars.iv.i.prol, 1
+  %prol.iter.sub = add i64 %prol.iter, -1
+  %prol.iter.cmp = icmp eq i64 %prol.iter.sub, 0
+  br i1 %prol.iter.cmp, label %for.body4.us.i.prol.loopexit, label %for.body4.us.i.prol, !llvm.loop !35
+  %indvars.iv.i.unr = phi i64 [ %indvars.iv.i.ph, %for.body4.us.i.preheader ], [ %indvars.iv.next.i.prol, %for.body4.us.i.prol ]
+  %57 = icmp ult i64 %54, 3
+  br i1 %57, label %for.cond2.for.inc10_crit_edge.us.i, label %for.body4.us.i
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.3, %for.body4.us.i ], [ %indvars.iv.i.unr, %for.body4.us.i.prol.loopexit ]
+  %arrayidx.us.i = getelementptr inbounds float, float* %15, i64 %indvars.iv.i
+  %58 = load float, float* %arrayidx.us.i, align 4, !tbaa !27
+  %arrayidx9.us.i = getelementptr inbounds float, float* %16, i64 %indvars.iv.i
+  %59 = load float, float* %arrayidx9.us.i, align 4, !tbaa !27
+  %add.us.i = fadd float %58, %59
+  store float %add.us.i, float* %arrayidx9.us.i, align 4, !tbaa !27
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
+  %arrayidx.us.i.1 = getelementptr inbounds float, float* %15, i64 %indvars.iv.next.i
+  %60 = load float, float* %arrayidx.us.i.1, align 4, !tbaa !27
+  %arrayidx9.us.i.1 = getelementptr inbounds float, float* %16, i64 %indvars.iv.next.i
+  %61 = load float, float* %arrayidx9.us.i.1, align 4, !tbaa !27
+  %add.us.i.1 = fadd float %60, %61
+  store float %add.us.i.1, float* %arrayidx9.us.i.1, align 4, !tbaa !27
+  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2
+  %arrayidx.us.i.2 = getelementptr inbounds float, float* %15, i64 %indvars.iv.next.i.1
+  %62 = load float, float* %arrayidx.us.i.2, align 4, !tbaa !27
+  %arrayidx9.us.i.2 = getelementptr inbounds float, float* %16, i64 %indvars.iv.next.i.1
+  %63 = load float, float* %arrayidx9.us.i.2, align 4, !tbaa !27
+  %add.us.i.2 = fadd float %62, %63
+  store float %add.us.i.2, float* %arrayidx9.us.i.2, align 4, !tbaa !27
+  %indvars.iv.next.i.2 = add nuw nsw i64 %indvars.iv.i, 3
+  %arrayidx.us.i.3 = getelementptr inbounds float, float* %15, i64 %indvars.iv.next.i.2
+  %64 = load float, float* %arrayidx.us.i.3, align 4, !tbaa !27
+  %arrayidx9.us.i.3 = getelementptr inbounds float, float* %16, i64 %indvars.iv.next.i.2
+  %65 = load float, float* %arrayidx9.us.i.3, align 4, !tbaa !27
+  %add.us.i.3 = fadd float %64, %65
+  store float %add.us.i.3, float* %arrayidx9.us.i.3, align 4, !tbaa !27
+  %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4
+  %exitcond.3 = icmp eq i64 %indvars.iv.next.i.3, %9
+  br i1 %exitcond.3, label %for.cond2.for.inc10_crit_edge.us.i, label %for.body4.us.i, !llvm.loop !37
+  %indvars.iv.next30.i = add nuw nsw i64 %indvars.iv29.i, 1
+  %exitcond11 = icmp eq i64 %indvars.iv.next30.i, %3
+  br i1 %exitcond11, label %_ZN8CBFormatpLERKS_.exit, label %for.cond2.preheader.us.i
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %exitcond12 = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond12, label %for.cond.cleanup, label %for.body
+
+; Function Attrs: nounwind uwtable
+define %emptyStruct @sumBF_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* in %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* in out %sumBF, i64 %bytes_sumBF, i32 %soundSrcsSize, i64 %idx_x, i64 %idx_y, i64 %idx_z, i64 %dim_x, i64 %dim_y, i64 %dim_z) #6 {
+getHPVMPtrArgs:
+  %soundSrcs.i8ptr = bitcast %"class.std::vector.6"* %soundSrcs to i8*
+  %0 = call i8* @llvm_hpvm_cpu_argument_ptr(i8* %soundSrcs.i8ptr, i64 %bytes_soundSrcs)
+  %sumBF.i8ptr = bitcast %class.CBFormat* %sumBF to i8*
+  %1 = call i8* @llvm_hpvm_cpu_argument_ptr(i8* %sumBF.i8ptr, i64 %bytes_sumBF)
+  br label %entry
+
+entry:                                            ; preds = %getHPVMPtrArgs
+  %cmp8 = icmp eq i32 %soundSrcsSize, 0
+  br i1 %cmp8, label %for.cond.cleanup, label %for.body.lr.ph
+
+for.body.lr.ph:                                   ; preds = %entry
+  %2 = getelementptr inbounds %class.CBFormat, %class.CBFormat* %sumBF, i64 0, i32 0, i32 4
+  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %soundSrcs, i64 0, i32 0, i32 0, i32 0
+  %m_nSamples.i = getelementptr inbounds %class.CBFormat, %class.CBFormat* %sumBF, i64 0, i32 1
+  %_M_head_impl.i.i.i.i.i.i21.i = getelementptr inbounds %class.CBFormat, %class.CBFormat* %sumBF, i64 0, i32 4, i32 0, i32 0, i32 0, i32 0
+  %wide.trip.count = zext i32 %soundSrcsSize to i64
+  %.pre = load i32, i32* %2, align 8, !tbaa !16
+  %cmp25.i = icmp eq i32 %.pre, 0
+  %3 = zext i32 %.pre to i64
+  br label %for.body
+
+for.cond.cleanup:                                 ; preds = %_ZN8CBFormatpLERKS_.exit, %entry
+  ret %emptyStruct undef
+
+for.body:                                         ; preds = %_ZN8CBFormatpLERKS_.exit, %for.body.lr.ph
+  %indvars.iv = phi i64 [ 0, %for.body.lr.ph ], [ %indvars.iv.next, %_ZN8CBFormatpLERKS_.exit ]
+  br i1 %cmp25.i, label %_ZN8CBFormatpLERKS_.exit, label %for.cond2.preheader.lr.ph.i
+
+for.cond2.preheader.lr.ph.i:                      ; preds = %for.body
+  %4 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !tbaa !171
+  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %4, i64 %indvars.iv
+  %5 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i, align 8, !tbaa !30
+  %BFormat = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %5, i64 0, i32 2
+  %6 = load %class.CBFormat*, %class.CBFormat** %BFormat, align 8, !tbaa !136
+  %7 = load i32, i32* %m_nSamples.i, align 8, !tbaa !19
+  %cmp323.i = icmp eq i32 %7, 0
+  %_M_head_impl.i.i.i.i.i.i.i = getelementptr inbounds %class.CBFormat, %class.CBFormat* %6, i64 0, i32 4, i32 0, i32 0, i32 0, i32 0
+  %8 = load float**, float*** %_M_head_impl.i.i.i.i.i.i.i, align 8
+  br i1 %cmp323.i, label %_ZN8CBFormatpLERKS_.exit, label %for.cond2.preheader.us.preheader.i
+
+for.cond2.preheader.us.preheader.i:               ; preds = %for.cond2.preheader.lr.ph.i
+  %.pre.i = load float**, float*** %_M_head_impl.i.i.i.i.i.i21.i, align 8, !tbaa !30
+  %9 = zext i32 %7 to i64
+  %10 = and i64 %9, 4294967288
+  %11 = add nsw i64 %10, -8
+  %12 = lshr exact i64 %11, 3
+  %13 = add nuw nsw i64 %12, 1
+  %min.iters.check = icmp ult i32 %7, 8
+  %n.vec = and i64 %9, 4294967288
+  %xtraiter = and i64 %13, 1
+  %14 = icmp eq i64 %11, 0
+  %unroll_iter = sub nuw nsw i64 %13, %xtraiter
+  %lcmp.mod = icmp eq i64 %xtraiter, 0
+  %cmp.n = icmp eq i64 %n.vec, %9
+  %xtraiter20 = and i64 %9, 3
+  %lcmp.mod21 = icmp eq i64 %xtraiter20, 0
+  br label %for.cond2.preheader.us.i
+
+for.cond2.preheader.us.i:                         ; preds = %for.cond2.for.inc10_crit_edge.us.i, %for.cond2.preheader.us.preheader.i
+  %indvars.iv29.i = phi i64 [ 0, %for.cond2.preheader.us.preheader.i ], [ %indvars.iv.next30.i, %for.cond2.for.inc10_crit_edge.us.i ]
+  %arrayidx.i.us.i = getelementptr inbounds float*, float** %8, i64 %indvars.iv29.i
+  %15 = load float*, float** %arrayidx.i.us.i, align 8, !tbaa !30
+  %arrayidx.i22.us.i = getelementptr inbounds float*, float** %.pre.i, i64 %indvars.iv29.i
+  %16 = load float*, float** %arrayidx.i22.us.i, align 8, !tbaa !30
+  br i1 %min.iters.check, label %for.body4.us.i.preheader, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %for.cond2.preheader.us.i
+  %scevgep = getelementptr float, float* %16, i64 %9
+  %scevgep14 = getelementptr float, float* %15, i64 %9
+  %bound0 = icmp ult float* %16, %scevgep14
+  %bound1 = icmp ult float* %15, %scevgep
+  %found.conflict = and i1 %bound0, %bound1
+  br i1 %found.conflict, label %for.body4.us.i.preheader, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
+  br i1 %14, label %middle.block.unr-lcssa, label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ %index.next.1, %vector.body ], [ 0, %vector.ph ]
+  %niter = phi i64 [ %niter.nsub.1, %vector.body ], [ %unroll_iter, %vector.ph ]
+  %17 = getelementptr inbounds float, float* %15, i64 %index
+  %18 = bitcast float* %17 to <4 x float>*
+  %wide.load = load <4 x float>, <4 x float>* %18, align 4, !tbaa !33, !alias.scope !201
+  %19 = getelementptr inbounds float, float* %17, i64 4
+  %20 = bitcast float* %19 to <4 x float>*
+  %wide.load17 = load <4 x float>, <4 x float>* %20, align 4, !tbaa !33, !alias.scope !201
+  %21 = getelementptr inbounds float, float* %16, i64 %index
+  %22 = bitcast float* %21 to <4 x float>*
+  %wide.load18 = load <4 x float>, <4 x float>* %22, align 4, !tbaa !33, !alias.scope !204, !noalias !201
+  %23 = getelementptr inbounds float, float* %21, i64 4
+  %24 = bitcast float* %23 to <4 x float>*
+  %wide.load19 = load <4 x float>, <4 x float>* %24, align 4, !tbaa !33, !alias.scope !204, !noalias !201
+  %25 = fadd <4 x float> %wide.load, %wide.load18
+  %26 = fadd <4 x float> %wide.load17, %wide.load19
+  %27 = bitcast float* %21 to <4 x float>*
+  store <4 x float> %25, <4 x float>* %27, align 4, !tbaa !33, !alias.scope !204, !noalias !201
+  %28 = bitcast float* %23 to <4 x float>*
+  store <4 x float> %26, <4 x float>* %28, align 4, !tbaa !33, !alias.scope !204, !noalias !201
+  %index.next = or i64 %index, 8
+  %29 = getelementptr inbounds float, float* %15, i64 %index.next
+  %30 = bitcast float* %29 to <4 x float>*
+  %wide.load.1 = load <4 x float>, <4 x float>* %30, align 4, !tbaa !33, !alias.scope !201
+  %31 = getelementptr inbounds float, float* %29, i64 4
+  %32 = bitcast float* %31 to <4 x float>*
+  %wide.load17.1 = load <4 x float>, <4 x float>* %32, align 4, !tbaa !33, !alias.scope !201
+  %33 = getelementptr inbounds float, float* %16, i64 %index.next
+  %34 = bitcast float* %33 to <4 x float>*
+  %wide.load18.1 = load <4 x float>, <4 x float>* %34, align 4, !tbaa !33, !alias.scope !204, !noalias !201
+  %35 = getelementptr inbounds float, float* %33, i64 4
+  %36 = bitcast float* %35 to <4 x float>*
+  %wide.load19.1 = load <4 x float>, <4 x float>* %36, align 4, !tbaa !33, !alias.scope !204, !noalias !201
+  %37 = fadd <4 x float> %wide.load.1, %wide.load18.1
+  %38 = fadd <4 x float> %wide.load17.1, %wide.load19.1
+  %39 = bitcast float* %33 to <4 x float>*
+  store <4 x float> %37, <4 x float>* %39, align 4, !tbaa !33, !alias.scope !204, !noalias !201
+  %40 = bitcast float* %35 to <4 x float>*
+  store <4 x float> %38, <4 x float>* %40, align 4, !tbaa !33, !alias.scope !204, !noalias !201
+  %index.next.1 = add i64 %index, 16
+  %niter.nsub.1 = add i64 %niter, -2
+  %niter.ncmp.1 = icmp eq i64 %niter.nsub.1, 0
+  br i1 %niter.ncmp.1, label %middle.block.unr-lcssa, label %vector.body, !llvm.loop !206
+
+middle.block.unr-lcssa:                           ; preds = %vector.body, %vector.ph
+  %index.unr = phi i64 [ 0, %vector.ph ], [ %index.next.1, %vector.body ]
+  br i1 %lcmp.mod, label %middle.block, label %vector.body.epil
+
+vector.body.epil:                                 ; preds = %middle.block.unr-lcssa
+  %41 = getelementptr inbounds float, float* %15, i64 %index.unr
+  %42 = bitcast float* %41 to <4 x float>*
+  %wide.load.epil = load <4 x float>, <4 x float>* %42, align 4, !tbaa !33, !alias.scope !201
+  %43 = getelementptr inbounds float, float* %41, i64 4
+  %44 = bitcast float* %43 to <4 x float>*
+  %wide.load17.epil = load <4 x float>, <4 x float>* %44, align 4, !tbaa !33, !alias.scope !201
+  %45 = getelementptr inbounds float, float* %16, i64 %index.unr
+  %46 = bitcast float* %45 to <4 x float>*
+  %wide.load18.epil = load <4 x float>, <4 x float>* %46, align 4, !tbaa !33, !alias.scope !204, !noalias !201
+  %47 = getelementptr inbounds float, float* %45, i64 4
+  %48 = bitcast float* %47 to <4 x float>*
+  %wide.load19.epil = load <4 x float>, <4 x float>* %48, align 4, !tbaa !33, !alias.scope !204, !noalias !201
+  %49 = fadd <4 x float> %wide.load.epil, %wide.load18.epil
+  %50 = fadd <4 x float> %wide.load17.epil, %wide.load19.epil
+  %51 = bitcast float* %45 to <4 x float>*
+  store <4 x float> %49, <4 x float>* %51, align 4, !tbaa !33, !alias.scope !204, !noalias !201
+  %52 = bitcast float* %47 to <4 x float>*
+  store <4 x float> %50, <4 x float>* %52, align 4, !tbaa !33, !alias.scope !204, !noalias !201
+  br label %middle.block
+
+middle.block:                                     ; preds = %vector.body.epil, %middle.block.unr-lcssa
+  br i1 %cmp.n, label %for.cond2.for.inc10_crit_edge.us.i, label %for.body4.us.i.preheader
+
+for.body4.us.i.preheader:                         ; preds = %middle.block, %vector.memcheck, %for.cond2.preheader.us.i
+  %indvars.iv.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %for.cond2.preheader.us.i ], [ %n.vec, %middle.block ]
+  %53 = xor i64 %indvars.iv.i.ph, -1
+  %54 = add nsw i64 %53, %9
+  br i1 %lcmp.mod21, label %for.body4.us.i.prol.loopexit, label %for.body4.us.i.prol
+
+for.body4.us.i.prol:                              ; preds = %for.body4.us.i.prol, %for.body4.us.i.preheader
+  %indvars.iv.i.prol = phi i64 [ %indvars.iv.next.i.prol, %for.body4.us.i.prol ], [ %indvars.iv.i.ph, %for.body4.us.i.preheader ]
+  %prol.iter = phi i64 [ %prol.iter.sub, %for.body4.us.i.prol ], [ %xtraiter20, %for.body4.us.i.preheader ]
+  %arrayidx.us.i.prol = getelementptr inbounds float, float* %15, i64 %indvars.iv.i.prol
+  %55 = load float, float* %arrayidx.us.i.prol, align 4, !tbaa !33
+  %arrayidx9.us.i.prol = getelementptr inbounds float, float* %16, i64 %indvars.iv.i.prol
+  %56 = load float, float* %arrayidx9.us.i.prol, align 4, !tbaa !33
+  %add.us.i.prol = fadd float %55, %56
+  store float %add.us.i.prol, float* %arrayidx9.us.i.prol, align 4, !tbaa !33
+  %indvars.iv.next.i.prol = add nuw nsw i64 %indvars.iv.i.prol, 1
+  %prol.iter.sub = add i64 %prol.iter, -1
+  %prol.iter.cmp = icmp eq i64 %prol.iter.sub, 0
+  br i1 %prol.iter.cmp, label %for.body4.us.i.prol.loopexit, label %for.body4.us.i.prol, !llvm.loop !207
+
+for.body4.us.i.prol.loopexit:                     ; preds = %for.body4.us.i.prol, %for.body4.us.i.preheader
+  %indvars.iv.i.unr = phi i64 [ %indvars.iv.i.ph, %for.body4.us.i.preheader ], [ %indvars.iv.next.i.prol, %for.body4.us.i.prol ]
+  %57 = icmp ult i64 %54, 3
+  br i1 %57, label %for.cond2.for.inc10_crit_edge.us.i, label %for.body4.us.i
+
+for.body4.us.i:                                   ; preds = %for.body4.us.i, %for.body4.us.i.prol.loopexit
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.3, %for.body4.us.i ], [ %indvars.iv.i.unr, %for.body4.us.i.prol.loopexit ]
+  %arrayidx.us.i = getelementptr inbounds float, float* %15, i64 %indvars.iv.i
+  %58 = load float, float* %arrayidx.us.i, align 4, !tbaa !33
+  %arrayidx9.us.i = getelementptr inbounds float, float* %16, i64 %indvars.iv.i
+  %59 = load float, float* %arrayidx9.us.i, align 4, !tbaa !33
+  %add.us.i = fadd float %58, %59
+  store float %add.us.i, float* %arrayidx9.us.i, align 4, !tbaa !33
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
+  %arrayidx.us.i.1 = getelementptr inbounds float, float* %15, i64 %indvars.iv.next.i
+  %60 = load float, float* %arrayidx.us.i.1, align 4, !tbaa !33
+  %arrayidx9.us.i.1 = getelementptr inbounds float, float* %16, i64 %indvars.iv.next.i
+  %61 = load float, float* %arrayidx9.us.i.1, align 4, !tbaa !33
+  %add.us.i.1 = fadd float %60, %61
+  store float %add.us.i.1, float* %arrayidx9.us.i.1, align 4, !tbaa !33
+  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2
+  %arrayidx.us.i.2 = getelementptr inbounds float, float* %15, i64 %indvars.iv.next.i.1
+  %62 = load float, float* %arrayidx.us.i.2, align 4, !tbaa !33
+  %arrayidx9.us.i.2 = getelementptr inbounds float, float* %16, i64 %indvars.iv.next.i.1
+  %63 = load float, float* %arrayidx9.us.i.2, align 4, !tbaa !33
+  %add.us.i.2 = fadd float %62, %63
+  store float %add.us.i.2, float* %arrayidx9.us.i.2, align 4, !tbaa !33
+  %indvars.iv.next.i.2 = add nuw nsw i64 %indvars.iv.i, 3
+  %arrayidx.us.i.3 = getelementptr inbounds float, float* %15, i64 %indvars.iv.next.i.2
+  %64 = load float, float* %arrayidx.us.i.3, align 4, !tbaa !33
+  %arrayidx9.us.i.3 = getelementptr inbounds float, float* %16, i64 %indvars.iv.next.i.2
+  %65 = load float, float* %arrayidx9.us.i.3, align 4, !tbaa !33
+  %add.us.i.3 = fadd float %64, %65
+  store float %add.us.i.3, float* %arrayidx9.us.i.3, align 4, !tbaa !33
+  %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4
+  %exitcond.3 = icmp eq i64 %indvars.iv.next.i.3, %9
+  br i1 %exitcond.3, label %for.cond2.for.inc10_crit_edge.us.i, label %for.body4.us.i, !llvm.loop !208
+
+for.cond2.for.inc10_crit_edge.us.i:               ; preds = %for.body4.us.i, %for.body4.us.i.prol.loopexit, %middle.block
+  %indvars.iv.next30.i = add nuw nsw i64 %indvars.iv29.i, 1
+  %exitcond11 = icmp eq i64 %indvars.iv.next30.i, %3
+  br i1 %exitcond11, label %_ZN8CBFormatpLERKS_.exit, label %for.cond2.preheader.us.i
+
+_ZN8CBFormatpLERKS_.exit:                         ; preds = %for.cond2.for.inc10_crit_edge.us.i, %for.cond2.preheader.lr.ph.i, %for.body
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %exitcond12 = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond12, label %for.cond.cleanup, label %for.body
+}
+DONE: Generating Code for Node (L) - sumBF_fxp_cloned
+Invoking child nodenormalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned
+Finding argument 0:
+Argument 0 = %"class.std::vector.6"* %soundSrcs
+Finding argument 1:
+Argument 1 = i64 %bytes_soundSrcs
+Finding argument 2:
+Argument 2 = i32 %nSamples
+Finding argument 3:
+Argument 3 = i32 %soundSrcsSize
+Finding argument 4:
+Argument 4 = i16* %sampleTemp
+Finding argument 7:
+Argument 5 = i64 %bytes_sampleTemp
+Gen Function type: %struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i32, i32, i16*, i64, i64, i64, i64, i64, i64, i64)*
+Node Function type: %struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i32, i32, i16*, i64)*
+Arguments: 12
+  %normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.normalization_fxp @normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i32 %nSamples, i32 %soundSrcsSize, i16* %sampleTemp, i64 %bytes_sampleTemp, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+Push on stack:   call void @llvm_hpvm_cpu_dstack_push(i32 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+Pop from stack:   call void @llvm_hpvm_cpu_dstack_pop()
+
+define %emptyStruct.28 @encoderPipeline_cloned.4(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i32 %nSamples, i32 %soundSrcsSize, i16* %sampleTemp, %class.CBFormat* %sumBF, i64 %bytes_sumBF, i64 %bytes_sampleTemp) {
+entry:
+  call void @llvm_hpvm_cpu_dstack_push(i32 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  %normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.normalization_fxp @normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i32 %nSamples, i32 %soundSrcsSize, i16* %sampleTemp, i64 %bytes_sampleTemp, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  call void @llvm_hpvm_cpu_dstack_pop()
+  ret %emptyStruct.28 undef
+}
+Invoking child nodeencoder_fxp_cloned.2_cloned_cloned_cloned_cloned_cloned_cloned
+Finding argument 0:
+Argument 0 = %"class.std::vector.6"* %soundSrcs
+Going to generate ExtarctVal inst from   %normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.normalization_fxp @normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i32 %nSamples, i32 %soundSrcsSize, i16* %sampleTemp, i64 %bytes_sampleTemp, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+Finding argument 2:
+Argument 2 = i32 %nSamples
+Finding argument 3:
+Argument 3 = i32 %soundSrcsSize
+Gen Function type: %struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i32, i32, i64, i64, i64, i64, i64, i64)*
+Node Function type: %struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i32, i32)*
+Arguments: 10
+  %encoder_fxp_cloned.2_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.encoder_fxp @encoder_fxp_cloned.2_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %0, i32 %nSamples, i32 %soundSrcsSize, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+Push on stack:   call void @llvm_hpvm_cpu_dstack_push(i32 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+Pop from stack:   call void @llvm_hpvm_cpu_dstack_pop()
+
+define %emptyStruct.28 @encoderPipeline_cloned.4(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i32 %nSamples, i32 %soundSrcsSize, i16* %sampleTemp, %class.CBFormat* %sumBF, i64 %bytes_sumBF, i64 %bytes_sampleTemp) {
+entry:
+  call void @llvm_hpvm_cpu_dstack_push(i32 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  %normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.normalization_fxp @normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i32 %nSamples, i32 %soundSrcsSize, i16* %sampleTemp, i64 %bytes_sampleTemp, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  call void @llvm_hpvm_cpu_dstack_pop()
+  %0 = extractvalue %struct.out.normalization_fxp %normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned_output, 0
+  call void @llvm_hpvm_cpu_dstack_push(i32 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  %encoder_fxp_cloned.2_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.encoder_fxp @encoder_fxp_cloned.2_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %0, i32 %nSamples, i32 %soundSrcsSize, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  call void @llvm_hpvm_cpu_dstack_pop()
+  ret %emptyStruct.28 undef
+}
+Invoking child nodesumBF_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned
+Finding argument 0:
+Argument 0 = %"class.std::vector.6"* %soundSrcs
+Going to generate ExtarctVal inst from   %encoder_fxp_cloned.2_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.encoder_fxp @encoder_fxp_cloned.2_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %0, i32 %nSamples, i32 %soundSrcsSize, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+Finding argument 5:
+Argument 2 = %class.CBFormat* %sumBF
+Finding argument 6:
+Argument 3 = i64 %bytes_sumBF
+Finding argument 3:
+Argument 4 = i32 %soundSrcsSize
+Gen Function type: %emptyStruct (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32, i64, i64, i64, i64, i64, i64)*
+Node Function type: %emptyStruct (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32)*
+Arguments: 11
+  %sumBF_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned_output = call %emptyStruct @sumBF_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %1, %class.CBFormat* %sumBF, i64 %bytes_sumBF, i32 %soundSrcsSize, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+Push on stack:   call void @llvm_hpvm_cpu_dstack_push(i32 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+Pop from stack:   call void @llvm_hpvm_cpu_dstack_pop()
+
+define %emptyStruct.28 @encoderPipeline_cloned.4(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i32 %nSamples, i32 %soundSrcsSize, i16* %sampleTemp, %class.CBFormat* %sumBF, i64 %bytes_sumBF, i64 %bytes_sampleTemp) {
+entry:
+  call void @llvm_hpvm_cpu_dstack_push(i32 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  %normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.normalization_fxp @normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i32 %nSamples, i32 %soundSrcsSize, i16* %sampleTemp, i64 %bytes_sampleTemp, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  call void @llvm_hpvm_cpu_dstack_pop()
+  %0 = extractvalue %struct.out.normalization_fxp %normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned_output, 0
+  call void @llvm_hpvm_cpu_dstack_push(i32 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  %encoder_fxp_cloned.2_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.encoder_fxp @encoder_fxp_cloned.2_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %0, i32 %nSamples, i32 %soundSrcsSize, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  call void @llvm_hpvm_cpu_dstack_pop()
+  %1 = extractvalue %struct.out.encoder_fxp %encoder_fxp_cloned.2_cloned_cloned_cloned_cloned_cloned_cloned_output, 0
+  call void @llvm_hpvm_cpu_dstack_push(i32 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  %sumBF_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned_output = call %emptyStruct @sumBF_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %1, %class.CBFormat* %sumBF, i64 %bytes_sumBF, i32 %soundSrcsSize, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  call void @llvm_hpvm_cpu_dstack_pop()
+  ret %emptyStruct.28 undef
+}
+*** Generating epilogue code for the function****
+Extracted all
+Before editing
+Node: encoderPipeline_cloned with tag 1
+CPU Fun: encoderPipeline_cloned.4
+hascpuGenFuncForCPU : 1
+GPU Fun: null
+hascpuGenFuncForGPU : 0
+Warning: Second generated CPU function for node encoderPipeline_cloned
+After editing
+Node: encoderPipeline_cloned with tag 1
+CPU Fun: encoderPipeline_cloned.4
+hascpuGenFuncForCPU : 1
+GPU Fun: null
+hascpuGenFuncForGPU : 0
+DONE: Generating Code for Node (I) - encoderPipeline_cloned
+Generating Launch Function
+Generating Launch Function
+Generating Launch Function
+Created Empty Launch Function
+Application specific function:
+
+define i8* @LaunchDataflowGraph(i8* %data.addr) {
+entry:
+  call void @llvm_hpvm_switchToTimer(i8** @hpvmTimerSet_CPU, i32 20)
+  %soundSrcs.addr = bitcast i8* %data.addr to %"class.std::vector.6"**
+  %soundSrcs = load %"class.std::vector.6"*, %"class.std::vector.6"** %soundSrcs.addr
+  %nextArg = getelementptr %"class.std::vector.6"*, %"class.std::vector.6"** %soundSrcs.addr, i64 1
+  %bytes_soundSrcs.addr = bitcast %"class.std::vector.6"** %nextArg to i64*
+  %bytes_soundSrcs = load i64, i64* %bytes_soundSrcs.addr
+  %nextArg1 = getelementptr i64, i64* %bytes_soundSrcs.addr, i64 1
+  %nSamples.addr = bitcast i64* %nextArg1 to i32*
+  %nSamples = load i32, i32* %nSamples.addr
+  %nextArg2 = getelementptr i32, i32* %nSamples.addr, i64 1
+  %soundSrcsSize.addr = bitcast i32* %nextArg2 to i32*
+  %soundSrcsSize = load i32, i32* %soundSrcsSize.addr
+  %nextArg3 = getelementptr i32, i32* %soundSrcsSize.addr, i64 1
+  %sampleTemp.addr = bitcast i32* %nextArg3 to i16**
+  %sampleTemp = load i16*, i16** %sampleTemp.addr
+  %nextArg4 = getelementptr i16*, i16** %sampleTemp.addr, i64 1
+  %sumBF.addr = bitcast i16** %nextArg4 to %class.CBFormat**
+  %sumBF = load %class.CBFormat*, %class.CBFormat** %sumBF.addr
+  %nextArg5 = getelementptr %class.CBFormat*, %class.CBFormat** %sumBF.addr, i64 1
+  %bytes_sumBF.addr = bitcast %class.CBFormat** %nextArg5 to i64*
+  %bytes_sumBF = load i64, i64* %bytes_sumBF.addr
+  %nextArg6 = getelementptr i64, i64* %bytes_sumBF.addr, i64 1
+  %bytes_sampleTemp.addr = bitcast i64* %nextArg6 to i64*
+  %bytes_sampleTemp = load i64, i64* %bytes_sampleTemp.addr
+  call void @llvm_hpvm_switchToTimer(i8** @hpvmTimerSet_CPU, i32 21)
+  %encoderPipeline_cloned.4.output = call %emptyStruct.28 @encoderPipeline_cloned.4(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i32 %nSamples, i32 %soundSrcsSize, i16* %sampleTemp, %class.CBFormat* %sumBF, i64 %bytes_sumBF, i64 %bytes_sampleTemp)
+  call void @llvm_hpvm_switchToTimer(i8** @hpvmTimerSet_CPU, i32 22)
+  %encoderPipeline_cloned.4.output.addr = bitcast i8* %data.addr to %emptyStruct.28*
+  store %emptyStruct.28 %encoderPipeline_cloned.4.output, %emptyStruct.28* %encoderPipeline_cloned.4.output.addr
+  call void @llvm_hpvm_switchToTimer(i8** @hpvmTimerSet_CPU, i32 0)
+  ret i8* null
+}
+
+  %graphencoderPipeline_cloned = call i8* @llvm_hpvm_cpu_launch(i8* (i8*)* @LaunchDataflowGraph, i8* %call22)
+  call void @llvm_hpvm_cpu_wait(i8* %graphencoderPipeline_cloned)
+opt: /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/IR/Value.cpp:403: void llvm::Value::doRAUW(llvm::Value*, llvm::Value::ReplaceMetadataUses): Assertion `New->getType() == getType() && "replaceAllUses of value with new value of different type!"' failed.
+Stack dump:
+0.	Program arguments: /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/build/bin/opt -debug -load LLVMBuildDFG.so -load LLVMDFG2LLVM_CPU.so -load LLVMClearDFG.so -dfg2llvm-cpu -clearDFG -hpvm-timers-cpu -S build/seq/main.hpvm.ll -o build/seq/audioEncoding-seq.host.ll 
+1.	Running pass 'Unnamed pass: implement Pass::getPassName()' on module 'build/seq/main.hpvm.ll'.
+ #0 0x0000000003067291 llvm::sys::PrintStackTrace(llvm::raw_ostream&) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/Support/Unix/Signals.inc:533:0
+ #1 0x0000000003067324 PrintStackTraceSignalHandler(void*) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/Support/Unix/Signals.inc:594:0
+ #2 0x00000000030651f8 llvm::sys::RunSignalHandlers() /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/Support/Signals.cpp:68:0
+ #3 0x0000000003066c46 SignalHandler(int) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/Support/Unix/Signals.inc:385:0
+ #4 0x00007f6d320b5390 __restore_rt (/lib/x86_64-linux-gnu/libpthread.so.0+0x11390)
+ #5 0x00007f6d30e27438 raise /build/glibc-e6zv40/glibc-2.23/signal/../sysdeps/unix/sysv/linux/raise.c:54:0
+ #6 0x00007f6d30e2903a abort /build/glibc-e6zv40/glibc-2.23/stdlib/abort.c:91:0
+ #7 0x00007f6d30e1fbe7 __assert_fail_base /build/glibc-e6zv40/glibc-2.23/assert/assert.c:92:0
+ #8 0x00007f6d30e1fc92 (/lib/x86_64-linux-gnu/libc.so.6+0x2dc92)
+ #9 0x0000000002808d26 llvm::Value::doRAUW(llvm::Value*, llvm::Value::ReplaceMetadataUses) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/IR/Value.cpp:406:0
+#10 0x0000000002808e7e llvm::Value::replaceAllUsesWith(llvm::Value*) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/IR/Value.cpp:431:0
+#11 0x0000000003097cf7 llvm::ReplaceInstWithValue(llvm::SymbolTableList<llvm::Instruction>&, llvm::ilist_iterator<llvm::ilist_detail::node_options<llvm::Instruction, true, false, void>, false, false>&, llvm::Value*) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/Transforms/Utils/BasicBlockUtils.cpp:292:0
+#12 0x0000000003097e42 llvm::ReplaceInstWithInst(llvm::SymbolTableList<llvm::Instruction>&, llvm::ilist_iterator<llvm::ilist_detail::node_options<llvm::Instruction, true, false, void>, false, false>&, llvm::Instruction*) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/Transforms/Utils/BasicBlockUtils.cpp:316:0
+#13 0x0000000003097ec0 llvm::ReplaceInstWithInst(llvm::Instruction*, llvm::Instruction*) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/Transforms/Utils/BasicBlockUtils.cpp:322:0
+#14 0x00007f6d3093f267 (anonymous namespace)::CGT_CPU::codeGenLaunch(llvm::DFInternalNode*) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/tools/hpvm/lib/Transforms/DFG2LLVM_CPU/DFG2LLVM_CPU.cpp:852:0
+#15 0x00007f6d3093a5bd (anonymous namespace)::DFG2LLVM_CPU::runOnModule(llvm::Module&) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/tools/hpvm/lib/Transforms/DFG2LLVM_CPU/DFG2LLVM_CPU.cpp:147:0
+#16 0x000000000276b70b (anonymous namespace)::MPPassManager::runOnModule(llvm::Module&) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/IR/LegacyPassManager.cpp:1750:0
+#17 0x000000000276bead llvm::legacy::PassManagerImpl::run(llvm::Module&) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/IR/LegacyPassManager.cpp:1863:0
+#18 0x000000000276c0b3 llvm::legacy::PassManager::run(llvm::Module&) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/IR/LegacyPassManager.cpp:1895:0
+#19 0x000000000183dba7 main /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/tools/opt/opt.cpp:892:0
+#20 0x00007f6d30e12840 __libc_start_main /build/glibc-e6zv40/glibc-2.23/csu/../csu/libc-start.c:325:0
+#21 0x00000000017ffb89 _start (/shared/workspace/yingj4/HPVM/hpvm-release/hpvm/build/bin/opt+0x17ffb89)
+Makefile:115: recipe for target 'build/seq/audioEncoding-seq.host.ll' failed
+make: *** [build/seq/audioEncoding-seq.host.ll] Aborted
+[01;32myingj4@acadia[00m:[01;34m/shared/workspace/yingj4/HPVM/hpvm-release/hpvm/test/benchmarks/audioEncodingNoPara[00m$ exit
+exit
+
+Script done on Tue 28 Jul 2020 11:08:15 AM CDT

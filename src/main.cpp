@@ -686,25 +686,25 @@ void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ s
     void* sumBFNode = __hpvm__createNodeND(0, sumBF_fxp);
 
     // Bind-in for the normalization process
-    __hpvm__bindIn(normalizationNode, 0, 0, 0);
-    __hpvm__bindIn(normalizationNode, 1, 1, 0);
-    __hpvm__bindIn(normalizationNode, 2, 2, 0);
-    __hpvm__bindIn(normalizationNode, 3, 3, 0);
-    __hpvm__bindIn(normalizationNode, 4, 4, 0);
-    __hpvm__bindIn(normalizationNode, 7, 5, 0);
+    __hpvm__bindIn(normalizationNode, 0, 0, 1);
+    __hpvm__bindIn(normalizationNode, 1, 1, 1);
+    __hpvm__bindIn(normalizationNode, 2, 2, 1);
+    __hpvm__bindIn(normalizationNode, 3, 3, 1);
+    __hpvm__bindIn(normalizationNode, 4, 4, 1);
+    __hpvm__bindIn(normalizationNode, 7, 5, 1);
 
     // Bind-in for the encoder process
-    __hpvm__bindIn(encoderNode, 0, 0, 0);
-    __hpvm__edge(normalizationNode, encoderNode, 1, 0, 1, 0);
-    __hpvm__bindIn(encoderNode, 2, 2, 0);
-    __hpvm__bindIn(encoderNode, 3, 3, 0);
+    __hpvm__bindIn(encoderNode, 0, 0, 1);
+    __hpvm__edge(normalizationNode, encoderNode, 1, 0, 1, 1);
+    __hpvm__bindIn(encoderNode, 2, 2, 1);
+    __hpvm__bindIn(encoderNode, 3, 3, 1);
 
     // Bind-in for the sumBF process
-    __hpvm__bindIn(sumBFNode, 0, 0, 0);
-    __hpvm__edge(encoderNode, sumBFNode, 1, 0, 1, 0);
-    __hpvm__bindIn(sumBFNode, 5, 2, 0);
-    __hpvm__bindIn(sumBFNode, 6, 3, 0);
-    __hpvm__bindIn(sumBFNode, 3, 4, 0);
+    __hpvm__bindIn(sumBFNode, 0, 0, 1);
+    __hpvm__edge(encoderNode, sumBFNode, 1, 0, 1, 1);
+    __hpvm__bindIn(sumBFNode, 5, 2, 1);
+    __hpvm__bindIn(sumBFNode, 6, 3, 1);
+    __hpvm__bindIn(sumBFNode, 3, 4, 1);
 }
 }
 
@@ -742,58 +742,76 @@ int main(int argc, char const *argv[])
 
     RootIn* rootArgs = (RootIn*)malloc(sizeof(RootIn));
 
+    // The read-in process
+    for (int j = 0; j < soundSrcsSize; ++j) {
+        (*(audioAddr->soundSrcs))[j]->srcFile->read((char*)sampleTemp, BLOCK_SIZE * sizeof(short));
+    }
 
-    for (int i = 0; i < numBlocks; ++i) {
-        unsigned int soundSrcsSize = audioAddr->soundSrcs->size();
-    
-        CBFormat* sumBF = new CBFormat;
-        sumBF->Configure(NORDER, true, BLOCK_SIZE);
+    rootArgs->soundSrcs = audioAddr->soundSrcs;
+    rootArgs->bytes_soundSrcs = bytes_soundSrcs;
+    rootArgs->nSamples = BLOCK_SIZE;
+    rootArgs->soundSrcsSize = soundSrcsSize;
+    rootArgs->sampleTemp = sampleTemp;
+    rootArgs->sumBF = sumBF;
+    rootArgs->bytes_sumBF = bytes_sumBF;
+    rootArgs->bytes_sampleTemp = bytes_sampleTemp;
 
-        // The read-in process
-        for (int j = 0; j < soundSrcsSize; ++j) {
-            (*(audioAddr->soundSrcs))[j]->srcFile->read((char*)sampleTemp, BLOCK_SIZE * sizeof(short));
-        }    
+    // The launch of the root node
+    void* encodingDFG = __hpvm__launch(1, encoderPipeline, (void*) rootArgs);
 
-        rootArgs->soundSrcs = audioAddr->soundSrcs;
-        rootArgs->bytes_soundSrcs = bytes_soundSrcs;
-        rootArgs->nSamples = BLOCK_SIZE;
-        rootArgs->soundSrcsSize = soundSrcsSize;
-        rootArgs->sampleTemp = sampleTemp;
-        rootArgs->sumBF = sumBF;
-        rootArgs->bytes_sumBF = bytes_sumBF;
-        rootArgs->bytes_sampleTemp = bytes_sampleTemp;
+    if (numBlocks >= 2) {
+        for (int i = 0; i < numBlocks; ++i) {            
+            rootArgs->soundSrcs = audioAddr->soundSrcs;
+            rootArgs->sampleTemp = sampleTemp;
+            rootArgs->sumBF = sumBF;
 
-        // Memory tracking is required for pointer arguments, as specified by the HPVM-C instruction
-        llvm_hpvm_track_mem(audioAddr->soundSrcs, bytes_soundSrcs);
-        llvm_hpvm_track_mem(sumBF, bytes_sumBF);
-        llvm_hpvm_track_mem(sampleTemp, bytes_sampleTemp);
+            // Memory tracking is required for pointer arguments, as specified by the HPVM-C instruction
+            printf("tracking\n");
+            llvm_hpvm_track_mem(audioAddr->soundSrcs, bytes_soundSrcs);
+            printf("soundSrcs np\n");
+            llvm_hpvm_track_mem(sumBF, bytes_sumBF);
+            printf("sumBF np\n");
+            llvm_hpvm_track_mem(sampleTemp, bytes_sampleTemp);
+            printf("sampleTemp np\n");
 
-        // printf("\n\nLaunching audio encoding pipeline!\n");
+            // printf("\n\nLaunching audio encoding pipeline!\n");
 
-        // The launch of the root node
-        void* encodingDFG = __hpvm__launch(1, encoderPipeline, (void*) rootArgs);
+            __hpvm__push(encodingDFG, rootArgs);
+            printf("push np\n");
+            __hpvm__pop(encodingDFG); 
+            printf("pop np\n");           
 
-        __hpvm__push(encodingDFG, rootArgs);
-        __hpvm__pop(encodingDFG);            
+            // printf("\n\nPipeline execution completed!\n");
+            // printf("\n\nRequesting memory!\n");
 
-        // printf("\n\nPipeline execution completed!\n");
-        // printf("\n\nRequesting memory!\n");
-
-        // Request data from graph
-        llvm_hpvm_request_mem(audioAddr->soundSrcs, bytes_soundSrcs);
-        llvm_hpvm_request_mem(sumBF, bytes_sumBF);
-        llvm_hpvm_request_mem(sampleTemp, bytes_sampleTemp);
-
-        // printf("\n\nDone requesting memory!\n");
+            // Request data from graph
+            // llvm_hpvm_request_mem(audioAddr->soundSrcs, bytes_soundSrcs);
+            llvm_hpvm_request_mem(sumBF, bytes_sumBF);
+            // llvm_hpvm_request_mem(sampleTemp, bytes_sampleTemp);
             
-        llvm_hpvm_untrack_mem(audioAddr->soundSrcs);
-        llvm_hpvm_untrack_mem(sumBF);
-        llvm_hpvm_untrack_mem(sampleTemp);
-        // encodeProcess(audioAddr);
+            printf("\n\nDone requesting memory!\n");
+            
+            llvm_hpvm_untrack_mem(audioAddr->soundSrcs);
+            printf("soundSrcs nnp\n");
+            llvm_hpvm_untrack_mem(sumBF);
+            printf("sumBF nnp\n");
+            llvm_hpvm_untrack_mem(sampleTemp);
+            printf("sampleTemp nnp\n");
 
-        __hpvm__wait(encodingDFG);
+            sumBF->Configure(NORDER, true, BLOCK_SIZE);
+            for (int j = 0; j < soundSrcsSize; ++j) {
+                (*(audioAddr->soundSrcs))[j]->srcFile->read((char*)sampleTemp, BLOCK_SIZE * sizeof(short));
+            }
+            // printf("\n%i", i);
+        }
+    }
+    else {
+        __hpvm__push(encodingDFG, rootArgs);
+        __hpvm__pop(encodingDFG); 
     }
     
+
+    __hpvm__wait(encodingDFG);
 
     __hpvm__cleanup();
 
