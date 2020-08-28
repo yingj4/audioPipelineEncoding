@@ -2,7 +2,7 @@
 #include <iostream>
 #include <algorithm>
 
-// #include <../../include/hpvm.h>
+#include <../../include/hpvm.h>
 
 // #define SAMPLERATE 48000
 // #define BLOCK_SIZE 1024
@@ -625,16 +625,20 @@ void ILLIXR_AUDIO::ABAudio::generateWAVHeader(){
 
 extern "C" {
 // The structure needed for HPVM launching
-typedef struct __attribute__((__packed__)) {
+struct __attribute__((__packed__)) RootIn {
     std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs;
     size_t bytes_soundSrcs;
     unsigned nSamples;
     unsigned int soundSrcsSize;
     short* sampleTemp;
+    size_t bytes_sampleTemp;
     CBFormat* sumBF;
     size_t bytes_sumBF;
-    size_t bytes_sampleTemp;
-} RootIn;
+};
+
+struct __attribute__((__packed__)) RootOut {
+    size_t result;
+};
 
 // A leaf node function for the normalization
 void normalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize, /*4*/ short* sampleTemp, /*5*/ size_t bytes_sampleTemp) {
@@ -672,11 +676,13 @@ void sumBF_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t 
     for (int j = 0; j < soundSrcsSize; ++j) {
         (*sumBF) += *((*soundSrcs)[j]->BFormat);
     }
+
+    __hpvm__return(1, bytes_sumBF);
     
 }
 
 // A root node function for the whole pipeline
-void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize, /*4*/ short* sampleTemp, /*5*/ CBFormat* sumBF, /*6*/ size_t bytes_sumBF, /*7*/ size_t bytes_sampleTemp) {
+void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize, /*4*/ short* sampleTemp, /*5*/ size_t bytes_sampleTemp, /*6*/ CBFormat* sumBF, /*7*/ size_t bytes_sumBF) {
     __hpvm__hint(hpvm::CPU_TARGET);
     __hpvm__attributes(2, soundSrcs, sumBF, 2, soundSrcs, sumBF);
 
@@ -691,7 +697,7 @@ void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ s
     __hpvm__bindIn(normalizationNode, 2, 2, 1);
     __hpvm__bindIn(normalizationNode, 3, 3, 1);
     __hpvm__bindIn(normalizationNode, 4, 4, 1);
-    __hpvm__bindIn(normalizationNode, 7, 5, 1);
+    __hpvm__bindIn(normalizationNode, 5, 5, 1);
 
     // Bind-in for the encoder process
     __hpvm__bindIn(encoderNode, 0, 0, 1);
@@ -702,9 +708,12 @@ void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ s
     // Bind-in for the sumBF process
     __hpvm__bindIn(sumBFNode, 0, 0, 1);
     __hpvm__edge(encoderNode, sumBFNode, 1, 0, 1, 1);
-    __hpvm__bindIn(sumBFNode, 5, 2, 1);
-    __hpvm__bindIn(sumBFNode, 6, 3, 1);
+    __hpvm__bindIn(sumBFNode, 6, 2, 1);
+    __hpvm__bindIn(sumBFNode, 7, 3, 1);
     __hpvm__bindIn(sumBFNode, 3, 4, 1);
+
+    // Bind-out for the sumBF output
+    __hpvm__bindOut(sumBFNode, 0, 0, 1);
 }
 }
 
@@ -731,16 +740,16 @@ int main(int argc, char const *argv[])
     CBFormat* sumBF = new CBFormat;
     sumBF->Configure(NORDER, true, BLOCK_SIZE);
 
+    short sampleTemp[BLOCK_SIZE];
+
     // The HPVM part goes from here
     __hpvm__init();
-
-    short sampleTemp[BLOCK_SIZE];
     
     size_t bytes_soundSrcs = soundSrcsSize * sizeof(ILLIXR_AUDIO::Sound*);
     size_t bytes_sumBF = sizeof(CBFormat);
     size_t bytes_sampleTemp = BLOCK_SIZE * sizeof(short);
 
-    RootIn* rootArgs = (RootIn*)malloc(sizeof(RootIn));
+    struct RootIn *rootArgs = (struct RootIn*)malloc(sizeof(RootIn));
 
     // The read-in process
     for (int j = 0; j < soundSrcsSize; ++j) {
@@ -766,37 +775,38 @@ int main(int argc, char const *argv[])
             rootArgs->sumBF = sumBF;
 
             // Memory tracking is required for pointer arguments, as specified by the HPVM-C instruction
-            printf("tracking\n");
+            // printf("\n\ntracking\n\n");
             llvm_hpvm_track_mem(audioAddr->soundSrcs, bytes_soundSrcs);
-            printf("soundSrcs np\n");
+            // printf("\n\nsoundSrcs np\n\n");
             llvm_hpvm_track_mem(sumBF, bytes_sumBF);
-            printf("sumBF np\n");
+            // printf("\n\nsumBF np\n\n");
             llvm_hpvm_track_mem(sampleTemp, bytes_sampleTemp);
-            printf("sampleTemp np\n");
+            // printf("\n\nsampleTemp np\n\n");
 
             // printf("\n\nLaunching audio encoding pipeline!\n");
 
             __hpvm__push(encodingDFG, rootArgs);
-            printf("push np\n");
-            __hpvm__pop(encodingDFG); 
-            printf("pop np\n");           
+            // printf("\n\npush np\n\n");
+            void* ret = __hpvm__pop(encodingDFG);
+            size_t outSize = ((RootOut*) ret)->result;
+            // printf("\n\npop np\n\n");           
 
             // printf("\n\nPipeline execution completed!\n");
             // printf("\n\nRequesting memory!\n");
 
             // Request data from graph
-            // llvm_hpvm_request_mem(audioAddr->soundSrcs, bytes_soundSrcs);
+            llvm_hpvm_request_mem(audioAddr->soundSrcs, bytes_soundSrcs);
             llvm_hpvm_request_mem(sumBF, bytes_sumBF);
-            // llvm_hpvm_request_mem(sampleTemp, bytes_sampleTemp);
+            llvm_hpvm_request_mem(sampleTemp, bytes_sampleTemp);
             
-            printf("\n\nDone requesting memory!\n");
+            // printf("\n\nDone requesting memory!\n");
             
             llvm_hpvm_untrack_mem(audioAddr->soundSrcs);
-            printf("soundSrcs nnp\n");
+            // printf("\n\nsoundSrcs nnp\n\n");
             llvm_hpvm_untrack_mem(sumBF);
-            printf("sumBF nnp\n");
+            // printf("\n\nsumBF nnp\n\n");
             llvm_hpvm_untrack_mem(sampleTemp);
-            printf("sampleTemp nnp\n");
+            // printf("\n\nsampleTemp nnp\n\n");
 
             sumBF->Configure(NORDER, true, BLOCK_SIZE);
             for (int j = 0; j < soundSrcsSize; ++j) {
@@ -810,7 +820,7 @@ int main(int argc, char const *argv[])
         __hpvm__pop(encodingDFG); 
     }
     
-
+    llvm_hpvm_untrack_mem(audioAddr->soundSrcs);
     __hpvm__wait(encodingDFG);
 
     __hpvm__cleanup();
