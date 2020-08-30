@@ -53,8 +53,8 @@ LDFLAGS= $(APP_LDFLAGS) $(PLATFORM_LDFLAGS)
 HPVM_RT_PATH = $(LLVM_BUILD_DIR)/tools/hpvm/projects/hpvm-rt
 HPVM_RT_LIB = $(HPVM_RT_PATH)/hpvm-rt.bc
 
-# TESTGEN_OPTFLAGS = -debug -load LLVMGenHPVM.so -genhpvm -globaldce
-TESTGEN_OPTFLAGS = -load LLVMGenHPVM.so -genhpvm -globaldce
+TESTGEN_OPTFLAGS = -debug -load LLVMGenHPVM.so -genhpvm -globaldce
+# TESTGEN_OPTFLAGS = -load LLVMGenHPVM.so -genhpvm -globaldce
 
 ifeq ($(TARGET),seq)
   DEVICE = CPU_TARGET
