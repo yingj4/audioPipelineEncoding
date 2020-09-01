@@ -1,0 +1,161 @@
+Script started on Tue 01 Sep 2020 04:37:56 PM CDT
+[01;32myingj4@acadia[00m:[01;34m/shared/workspace/yingj4/HPVM/hpvm-release/hpvm/test/benchmarks/audioEncodingNoPara[00m$ ./audioEncoding-seq 500 encode
+Printing HPVM Timer: CPU_Timer
+IO                  : 0.000000000
+Kernel              : 0.000000000
+Copy                : 0.000000000
+Driver              : 0.000000000
+Copy Async          : 0.000000000
+Compute             : 0.000000000
+Overlap             : 0.000000000
+Init_Ctx            : 0.000000000
+Clear_Ctx           : 0.000000000
+Copy_Scalar         : 0.000000000
+Copy_Ptr            : 0.000000000
+Mem_Free            : 0.000000000
+Read_Output         : 0.000000000
+Setup               : 0.000000000
+Mem_Track           : 0.000000000
+Mem_Untrack         : 0.000000000
+Misc                : 0.000000000
+Pthread_Create      : 0.000000000
+Arg_Pack            : 0.000000000
+Arg_Unpack          : 0.000000000
+Computation         : 0.000000000
+Output_Pack         : 0.000000000
+Output_Unpack       : 0.000000000
+Timer Wall Time: 0.000025588
+WARNING: Trying to remove ID 0x1330480 not present in the MemTracker Table
+Printing HPVM Timer: GenHPVM_Timer
+IO                  : 0.000000000
+Kernel              : 0.000000000
+Copy                : 0.000000000
+Driver              : 0.000000000
+Copy Async          : 0.000000000
+Compute             : 0.000000000
+Overlap             : 0.000000000
+Init_Ctx            : 0.000000000
+Clear_Ctx           : 0.000000000
+Copy_Scalar         : 0.000000000
+Copy_Ptr            : 0.000000000
+Mem_Free            : 0.000000000
+Read_Output         : 0.000000000
+Setup               : 0.000000000
+Mem_Track           : 0.000000000
+Mem_Untrack         : 0.000000000
+Misc                : 0.000000000
+Pthread_Create      : 0.000000000
+Arg_Pack            : 0.000000000
+Arg_Unpack          : 0.000000000
+Computation         : 0.000000000
+Output_Pack         : 0.000000000
+Output_Unpack       : 0.000000000
+Timer Wall Time: 1.646066904
+[01;32myingj4@acadia[00m:[01;34m/shared/workspace/yingj4/HPVM/hpvm-release/hpvm/test/benchmarks/audioEncodingNoPara[00m$ ./audioEncoding-seq 500 encode
+Printing HPVM Timer: CPU_Timer
+IO                  : 0.000000000
+Kernel              : 0.000000000
+Copy                : 0.000000000
+Driver              : 0.000000000
+Copy Async          : 0.000000000
+Compute             : 0.000000000
+Overlap             : 0.000000000
+Init_Ctx            : 0.000000000
+Clear_Ctx           : 0.000000000
+Copy_Scalar         : 0.000000000
+Copy_Ptr            : 0.000000000
+Mem_Free            : 0.000000000
+Read_Output         : 0.000000000
+Setup               : 0.000000000
+Mem_Track           : 0.000000000
+Mem_Untrack         : 0.000000000
+Misc                : 0.000000000
+Pthread_Create      : 0.000000000
+Arg_Pack            : 0.000000000
+Arg_Unpack          : 0.000000000
+Computation         : 0.000000000
+Output_Pack         : 0.000000000
+Output_Unpack       : 0.000000000
+Timer Wall Time: 0.000018198
+WARNING: Trying to remove ID 0xc7bc60 not present in the MemTracker Table
+Printing HPVM Timer: GenHPVM_Timer
+IO                  : 0.000000000
+Kernel              : 0.000000000
+Copy                : 0.000000000
+Driver              : 0.000000000
+Copy Async          : 0.000000000
+Compute             : 0.000000000
+Overlap             : 0.000000000
+Init_Ctx            : 0.000000000
+Clear_Ctx           : 0.000000000
+Copy_Scalar         : 0.000000000
+Copy_Ptr            : 0.000000000
+Mem_Free            : 0.000000000
+Read_Output         : 0.000000000
+Setup               : 0.000000000
+Mem_Track           : 0.000000000
+Mem_Untrack         : 0.000000000
+Misc                : 0.000000000
+Pthread_Create      : 0.000000000
+Arg_Pack            : 0.000000000
+Arg_Unpack          : 0.000000000
+Computation         : 0.000000000
+Output_Pack         : 0.000000000
+Output_Unpack       : 0.000000000
+Timer Wall Time: 1.651455641
+[01;32myingj4@acadia[00m:[01;34m/shared/workspace/yingj4/HPVM/hpvm-release/hpvm/test/benchmarks/audioEncodingNoPara[00m$ ./audioEncoding-seq 500 encode
+Printing HPVM Timer: CPU_Timer
+IO                  : 0.000000000
+Kernel              : 0.000000000
+Copy                : 0.000000000
+Driver              : 0.000000000
+Copy Async          : 0.000000000
+Compute             : 0.000000000
+Overlap             : 0.000000000
+Init_Ctx            : 0.000000000
+Clear_Ctx           : 0.000000000
+Copy_Scalar         : 0.000000000
+Copy_Ptr            : 0.000000000
+Mem_Free            : 0.000000000
+Read_Output         : 0.000000000
+Setup               : 0.000000000
+Mem_Track           : 0.000000000
+Mem_Untrack         : 0.000000000
+Misc                : 0.000000000
+Pthread_Create      : 0.000000000
+Arg_Pack            : 0.000000000
+Arg_Unpack          : 0.000000000
+Computation         : 0.000000000
+Output_Pack         : 0.000000000
+Output_Unpack       : 0.000000000
+Timer Wall Time: 0.000016530
+WARNING: Trying to remove ID 0x1b012e0 not present in the MemTracker Table
+Printing HPVM Timer: GenHPVM_Timer
+IO                  : 0.000000000
+Kernel              : 0.000000000
+Copy                : 0.000000000
+Driver              : 0.000000000
+Copy Async          : 0.000000000
+Compute             : 0.000000000
+Overlap             : 0.000000000
+Init_Ctx            : 0.000000000
+Clear_Ctx           : 0.000000000
+Copy_Scalar         : 0.000000000
+Copy_Ptr            : 0.000000000
+Mem_Free            : 0.000000000
+Read_Output         : 0.000000000
+Setup               : 0.000000000
+Mem_Track           : 0.000000000
+Mem_Untrack         : 0.000000000
+Misc                : 0.000000000
+Pthread_Create      : 0.000000000
+Arg_Pack            : 0.000000000
+Arg_Unpack          : 0.000000000
+Computation         : 0.000000000
+Output_Pack         : 0.000000000
+Output_Unpack       : 0.000000000
+Timer Wall Time: 1.645228505
+[01;32myingj4@acadia[00m:[01;34m/shared/workspace/yingj4/HPVM/hpvm-release/hpvm/test/benchmarks/audioEncodingNoPara[00m$ exit
+exit
+
+Script done on Tue 01 Sep 2020 04:40:23 PM CDT
