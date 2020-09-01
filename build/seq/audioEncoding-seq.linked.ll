@@ -75,10 +75,10 @@ target triple = "x86_64-unknown-linux-gnu"
 %class.CAmbisonicBase = type <{ i32 (...)**, i32, i8, [3 x i8], i32, i8, [3 x i8] }>
 %"class.std::basic_istream" = type { i32 (...)**, i64, %"class.std::basic_ios" }
 %"struct.ILLIXR_AUDIO::WAVHeader_t" = type { i32, i32, i32, i32, i32, i16, i16, i32, i32, i16, i16, i32, i32 }
-%struct.thread.normalization_fxp_cloned = type <{ i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8* }>
-%struct.thread.encoder_fxp_cloned = type <{ i8*, i8*, i8*, i8*, i8*, i8* }>
-%struct.thread.sumBF_fxp_cloned = type <{ i8*, i8*, i8*, i8*, i8*, i8*, i8* }>
-%struct.out.sumBF_fxp = type <{ i64 }>
+%struct.thread.wrapperNormalization_fxp_cloned = type <{ i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8* }>
+%struct.thread.wrapperEncoder_fxp_cloned = type <{ i8*, i8*, i8*, i8*, i8*, i8* }>
+%struct.thread.wrapperSumBF_fxp_cloned = type <{ i8*, i8*, i8*, i8*, i8*, i8*, i8* }>
+%struct.out.wrapperSumBF_fxp = type <{ i64 }>
 %"struct.std::_Rb_tree_node" = type { %"struct.std::_Rb_tree_node_base", %"struct.__gnu_cxx::__aligned_membuf" }
 %"struct.__gnu_cxx::__aligned_membuf" = type { [16 x i8] }
 %"struct.std::pair" = type { i8*, %class.MemTrackerEntry* }
@@ -1092,10 +1092,10 @@ $_ZN15MemTrackerEntry5printEv = comdat any
 @.str.85 = private unnamed_addr constant [72 x i8] c"dim <= numDim && \22Error! Requested dimension instance is not specified\22\00", align 1
 @__PRETTY_FUNCTION__._ZNK8DFGDepth14getDimInstanceEj = private unnamed_addr constant [58 x i8] c"unsigned int DFGDepth::getDimInstance(unsigned int) const\00", align 1
 @_ZStL19piecewise_construct = internal constant %"class.std::ios_base::Init" undef, align 1, !dbg !4173
-@.str.9 = private unnamed_addr constant [30 x i8] c"WARNING: Trying to remove ID \00", align 1
-@.str.3.10 = private unnamed_addr constant [38 x i8] c" not present in the MemTracker Table\0A\00", align 1
-@.str.4.15 = private unnamed_addr constant [47 x i8] c"ERROR: Requesting memory not present in Table\0A\00", align 1
-@.str.5.16 = private unnamed_addr constant [37 x i8] c"[request mem] Failure to read output\00", align 1
+@.str.13 = private unnamed_addr constant [30 x i8] c"WARNING: Trying to remove ID \00", align 1
+@.str.3.14 = private unnamed_addr constant [38 x i8] c" not present in the MemTracker Table\0A\00", align 1
+@.str.4.19 = private unnamed_addr constant [47 x i8] c"ERROR: Requesting memory not present in Table\0A\00", align 1
+@.str.5.20 = private unnamed_addr constant [37 x i8] c"[request mem] Failure to read output\00", align 1
 @.str.86 = private unnamed_addr constant [8 x i8] c"ERROR: \00", align 1
 @.str.47 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
 @.str.87 = private unnamed_addr constant [12 x i8] c"ErrorCode: \00", align 1
@@ -1168,14 +1168,14 @@ $_ZN15MemTrackerEntry5printEv = comdat any
 @stdout = external global %struct._IO_FILE*, align 8
 @.str.154 = private unnamed_addr constant [28 x i8] c"Error Querying EventInfo1!\0A\00", align 1
 @stderr = external global %struct._IO_FILE*, align 8
-@.str.13 = private unnamed_addr constant [27 x i8] c"Error Waiting for Events!\0A\00", align 1
+@.str.13.21 = private unnamed_addr constant [27 x i8] c"Error Waiting for Events!\0A\00", align 1
 @.str.156 = private unnamed_addr constant [44 x i8] c"Error getting first EventProfilingInfo: %d\0A\00", align 1
 @.str.157 = private unnamed_addr constant [45 x i8] c"Error getting second EventProfilingInfo: %d\0A\00", align 1
 @.str.155 = private unnamed_addr constant [26 x i8] c"Error Enqueueing Marker!\0A\00", align 1
-@.str.8.17 = private unnamed_addr constant [32 x i8] c"Warning: Timer was not running\0A\00", align 1
-@.str.9.18 = private unnamed_addr constant [35 x i8] c"Warning: Subtimer was not running\0A\00", align 1
-@.str.6.19 = private unnamed_addr constant [32 x i8] c"Warning: Timer was not stopped\0A\00", align 1
-@.str.7.20 = private unnamed_addr constant [35 x i8] c"Warning: Subtimer was not stopped\0A\00", align 1
+@.str.8.22 = private unnamed_addr constant [32 x i8] c"Warning: Timer was not running\0A\00", align 1
+@.str.9 = private unnamed_addr constant [35 x i8] c"Warning: Subtimer was not running\0A\00", align 1
+@.str.6.23 = private unnamed_addr constant [32 x i8] c"Warning: Timer was not stopped\0A\00", align 1
+@.str.7.24 = private unnamed_addr constant [35 x i8] c"Warning: Subtimer was not stopped\0A\00", align 1
 @.str.10 = private unnamed_addr constant [49 x i8] c"Elapsed time from a running timer is inaccurate\0A\00", align 1
 @.str.11 = private unnamed_addr constant [3 x i8] c"%s\00", align 1
 @.str.12 = private unnamed_addr constant [28 x i8] c"Error Querying EventInfo2!\0A\00", align 1
@@ -6925,83 +6925,83 @@ entry:
   %nextArg6 = getelementptr i8*, i8** %sumBF_buffer.addr, i64 1
   %bytes_sumBF_buffer.addr = bitcast i8** %nextArg6 to i8**
   %bytes_sumBF_buffer = load i8*, i8** %bytes_sumBF_buffer.addr
-  %BindIn.normalization_fxp_cloned = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i32 0)
-  %BindIn.normalization_fxp_cloned7 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 1)
-  %BindIn.normalization_fxp_cloned8 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 2)
-  %BindIn.normalization_fxp_cloned9 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 3)
-  %BindIn.normalization_fxp_cloned10 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i32 4)
-  %BindIn.normalization_fxp_cloned11 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 5)
-  %BindIn.encoder_fxp_cloned = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i32 0)
-  %normalization_fxp_cloned.encoder_fxp_cloned = call i8* @llvm_hpvm_createEdgeBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64))
-  %BindIn.encoder_fxp_cloned12 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 2)
-  %BindIn.encoder_fxp_cloned13 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 3)
-  %BindIn.sumBF_fxp_cloned = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i32 0)
-  %encoder_fxp_cloned.sumBF_fxp_cloned = call i8* @llvm_hpvm_createEdgeBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64))
-  %BindIn.sumBF_fxp_cloned14 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i32 6)
-  %BindIn.sumBF_fxp_cloned15 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 7)
-  %BindIn.sumBF_fxp_cloned16 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 3)
-  %BindOut.sumBF_fxp_cloned = call i8* @llvm_hpvm_createBindOutBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64))
-  %BindIn.isLastInput.normalization_fxp_cloned = call i8* @llvm_hpvm_createLastInputBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64))
-  %BindIn.isLastInput.encoder_fxp_cloned = call i8* @llvm_hpvm_createLastInputBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64))
-  %BindIn.isLastInput.sumBF_fxp_cloned = call i8* @llvm_hpvm_createLastInputBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64))
-  %normalization_fxp_cloned.inputs = call i8* @malloc(i64 ptrtoint (%struct.thread.normalization_fxp_cloned* getelementptr (%struct.thread.normalization_fxp_cloned, %struct.thread.normalization_fxp_cloned* null, i32 1) to i64))
-  %normalization_fxp_cloned.inputs.i8ptr = bitcast i8* %normalization_fxp_cloned.inputs to %struct.thread.normalization_fxp_cloned*
-  %normalization_fxp_cloned.inputs.i8ptr.arg_0 = getelementptr %struct.thread.normalization_fxp_cloned, %struct.thread.normalization_fxp_cloned* %normalization_fxp_cloned.inputs.i8ptr, i32 0, i32 0
-  store i8* %BindIn.normalization_fxp_cloned, i8** %normalization_fxp_cloned.inputs.i8ptr.arg_0
-  %normalization_fxp_cloned.inputs.i8ptr.arg_1 = getelementptr %struct.thread.normalization_fxp_cloned, %struct.thread.normalization_fxp_cloned* %normalization_fxp_cloned.inputs.i8ptr, i32 0, i32 1
-  store i8* %BindIn.normalization_fxp_cloned7, i8** %normalization_fxp_cloned.inputs.i8ptr.arg_1
-  %normalization_fxp_cloned.inputs.i8ptr.arg_2 = getelementptr %struct.thread.normalization_fxp_cloned, %struct.thread.normalization_fxp_cloned* %normalization_fxp_cloned.inputs.i8ptr, i32 0, i32 2
-  store i8* %BindIn.normalization_fxp_cloned8, i8** %normalization_fxp_cloned.inputs.i8ptr.arg_2
-  %normalization_fxp_cloned.inputs.i8ptr.arg_3 = getelementptr %struct.thread.normalization_fxp_cloned, %struct.thread.normalization_fxp_cloned* %normalization_fxp_cloned.inputs.i8ptr, i32 0, i32 3
-  store i8* %BindIn.normalization_fxp_cloned9, i8** %normalization_fxp_cloned.inputs.i8ptr.arg_3
-  %normalization_fxp_cloned.inputs.i8ptr.arg_4 = getelementptr %struct.thread.normalization_fxp_cloned, %struct.thread.normalization_fxp_cloned* %normalization_fxp_cloned.inputs.i8ptr, i32 0, i32 4
-  store i8* %BindIn.normalization_fxp_cloned10, i8** %normalization_fxp_cloned.inputs.i8ptr.arg_4
-  %normalization_fxp_cloned.inputs.i8ptr.arg_5 = getelementptr %struct.thread.normalization_fxp_cloned, %struct.thread.normalization_fxp_cloned* %normalization_fxp_cloned.inputs.i8ptr, i32 0, i32 5
-  store i8* %BindIn.normalization_fxp_cloned11, i8** %normalization_fxp_cloned.inputs.i8ptr.arg_5
-  %normalization_fxp_cloned.inputs.i8ptr.out_0 = getelementptr %struct.thread.normalization_fxp_cloned, %struct.thread.normalization_fxp_cloned* %normalization_fxp_cloned.inputs.i8ptr, i32 0, i32 6
-  store i8* %normalization_fxp_cloned.encoder_fxp_cloned, i8** %normalization_fxp_cloned.inputs.i8ptr.out_0
-  %normalization_fxp_cloned.inputs.i8ptr.isLastInput = getelementptr %struct.thread.normalization_fxp_cloned, %struct.thread.normalization_fxp_cloned* %normalization_fxp_cloned.inputs.i8ptr, i32 0, i32 7
-  store i8* %BindIn.isLastInput.normalization_fxp_cloned, i8** %normalization_fxp_cloned.inputs.i8ptr.isLastInput
-  %normalization_fxp_cloned.inputs.i8ptr17 = bitcast %struct.thread.normalization_fxp_cloned* %normalization_fxp_cloned.inputs.i8ptr to i8*
-  call void @llvm_hpvm_createThread(i8* %graphID, i8* (i8*)* @normalization_fxp_cloned_Pipeline, i8* %normalization_fxp_cloned.inputs.i8ptr17)
-  %encoder_fxp_cloned.inputs = call i8* @malloc(i64 ptrtoint (%struct.thread.encoder_fxp_cloned* getelementptr (%struct.thread.encoder_fxp_cloned, %struct.thread.encoder_fxp_cloned* null, i32 1) to i64))
-  %encoder_fxp_cloned.inputs.i8ptr = bitcast i8* %encoder_fxp_cloned.inputs to %struct.thread.encoder_fxp_cloned*
-  %encoder_fxp_cloned.inputs.i8ptr.arg_0 = getelementptr %struct.thread.encoder_fxp_cloned, %struct.thread.encoder_fxp_cloned* %encoder_fxp_cloned.inputs.i8ptr, i32 0, i32 0
-  store i8* %BindIn.encoder_fxp_cloned, i8** %encoder_fxp_cloned.inputs.i8ptr.arg_0
-  %encoder_fxp_cloned.inputs.i8ptr.arg_1 = getelementptr %struct.thread.encoder_fxp_cloned, %struct.thread.encoder_fxp_cloned* %encoder_fxp_cloned.inputs.i8ptr, i32 0, i32 1
-  store i8* %normalization_fxp_cloned.encoder_fxp_cloned, i8** %encoder_fxp_cloned.inputs.i8ptr.arg_1
-  %encoder_fxp_cloned.inputs.i8ptr.arg_2 = getelementptr %struct.thread.encoder_fxp_cloned, %struct.thread.encoder_fxp_cloned* %encoder_fxp_cloned.inputs.i8ptr, i32 0, i32 2
-  store i8* %BindIn.encoder_fxp_cloned12, i8** %encoder_fxp_cloned.inputs.i8ptr.arg_2
-  %encoder_fxp_cloned.inputs.i8ptr.arg_3 = getelementptr %struct.thread.encoder_fxp_cloned, %struct.thread.encoder_fxp_cloned* %encoder_fxp_cloned.inputs.i8ptr, i32 0, i32 3
-  store i8* %BindIn.encoder_fxp_cloned13, i8** %encoder_fxp_cloned.inputs.i8ptr.arg_3
-  %encoder_fxp_cloned.inputs.i8ptr.out_0 = getelementptr %struct.thread.encoder_fxp_cloned, %struct.thread.encoder_fxp_cloned* %encoder_fxp_cloned.inputs.i8ptr, i32 0, i32 4
-  store i8* %encoder_fxp_cloned.sumBF_fxp_cloned, i8** %encoder_fxp_cloned.inputs.i8ptr.out_0
-  %encoder_fxp_cloned.inputs.i8ptr.isLastInput = getelementptr %struct.thread.encoder_fxp_cloned, %struct.thread.encoder_fxp_cloned* %encoder_fxp_cloned.inputs.i8ptr, i32 0, i32 5
-  store i8* %BindIn.isLastInput.encoder_fxp_cloned, i8** %encoder_fxp_cloned.inputs.i8ptr.isLastInput
-  %encoder_fxp_cloned.inputs.i8ptr18 = bitcast %struct.thread.encoder_fxp_cloned* %encoder_fxp_cloned.inputs.i8ptr to i8*
-  call void @llvm_hpvm_createThread(i8* %graphID, i8* (i8*)* @encoder_fxp_cloned_Pipeline, i8* %encoder_fxp_cloned.inputs.i8ptr18)
-  %sumBF_fxp_cloned.inputs = call i8* @malloc(i64 ptrtoint (%struct.thread.sumBF_fxp_cloned* getelementptr (%struct.thread.sumBF_fxp_cloned, %struct.thread.sumBF_fxp_cloned* null, i32 1) to i64))
-  %sumBF_fxp_cloned.inputs.i8ptr = bitcast i8* %sumBF_fxp_cloned.inputs to %struct.thread.sumBF_fxp_cloned*
-  %sumBF_fxp_cloned.inputs.i8ptr.arg_0 = getelementptr %struct.thread.sumBF_fxp_cloned, %struct.thread.sumBF_fxp_cloned* %sumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 0
-  store i8* %BindIn.sumBF_fxp_cloned, i8** %sumBF_fxp_cloned.inputs.i8ptr.arg_0
-  %sumBF_fxp_cloned.inputs.i8ptr.arg_1 = getelementptr %struct.thread.sumBF_fxp_cloned, %struct.thread.sumBF_fxp_cloned* %sumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 1
-  store i8* %encoder_fxp_cloned.sumBF_fxp_cloned, i8** %sumBF_fxp_cloned.inputs.i8ptr.arg_1
-  %sumBF_fxp_cloned.inputs.i8ptr.arg_2 = getelementptr %struct.thread.sumBF_fxp_cloned, %struct.thread.sumBF_fxp_cloned* %sumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 2
-  store i8* %BindIn.sumBF_fxp_cloned14, i8** %sumBF_fxp_cloned.inputs.i8ptr.arg_2
-  %sumBF_fxp_cloned.inputs.i8ptr.arg_3 = getelementptr %struct.thread.sumBF_fxp_cloned, %struct.thread.sumBF_fxp_cloned* %sumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 3
-  store i8* %BindIn.sumBF_fxp_cloned15, i8** %sumBF_fxp_cloned.inputs.i8ptr.arg_3
-  %sumBF_fxp_cloned.inputs.i8ptr.arg_4 = getelementptr %struct.thread.sumBF_fxp_cloned, %struct.thread.sumBF_fxp_cloned* %sumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 4
-  store i8* %BindIn.sumBF_fxp_cloned16, i8** %sumBF_fxp_cloned.inputs.i8ptr.arg_4
-  %sumBF_fxp_cloned.inputs.i8ptr.out_0 = getelementptr %struct.thread.sumBF_fxp_cloned, %struct.thread.sumBF_fxp_cloned* %sumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 5
-  store i8* %BindOut.sumBF_fxp_cloned, i8** %sumBF_fxp_cloned.inputs.i8ptr.out_0
-  %sumBF_fxp_cloned.inputs.i8ptr.isLastInput = getelementptr %struct.thread.sumBF_fxp_cloned, %struct.thread.sumBF_fxp_cloned* %sumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 6
-  store i8* %BindIn.isLastInput.sumBF_fxp_cloned, i8** %sumBF_fxp_cloned.inputs.i8ptr.isLastInput
-  %sumBF_fxp_cloned.inputs.i8ptr19 = bitcast %struct.thread.sumBF_fxp_cloned* %sumBF_fxp_cloned.inputs.i8ptr to i8*
-  call void @llvm_hpvm_createThread(i8* %graphID, i8* (i8*)* @sumBF_fxp_cloned_Pipeline, i8* %sumBF_fxp_cloned.inputs.i8ptr19)
+  %BindIn.wrapperNormalization_fxp_cloned = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i32 0)
+  %BindIn.wrapperNormalization_fxp_cloned7 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 1)
+  %BindIn.wrapperNormalization_fxp_cloned8 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 2)
+  %BindIn.wrapperNormalization_fxp_cloned9 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 3)
+  %BindIn.wrapperNormalization_fxp_cloned10 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i32 4)
+  %BindIn.wrapperNormalization_fxp_cloned11 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 5)
+  %BindIn.wrapperEncoder_fxp_cloned = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i32 0)
+  %wrapperNormalization_fxp_cloned.wrapperEncoder_fxp_cloned = call i8* @llvm_hpvm_createEdgeBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64))
+  %BindIn.wrapperEncoder_fxp_cloned12 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 2)
+  %BindIn.wrapperEncoder_fxp_cloned13 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 3)
+  %BindIn.wrapperSumBF_fxp_cloned = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i32 0)
+  %wrapperEncoder_fxp_cloned.wrapperSumBF_fxp_cloned = call i8* @llvm_hpvm_createEdgeBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64))
+  %BindIn.wrapperSumBF_fxp_cloned14 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i32 6)
+  %BindIn.wrapperSumBF_fxp_cloned15 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 7)
+  %BindIn.wrapperSumBF_fxp_cloned16 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 3)
+  %BindOut.wrapperSumBF_fxp_cloned = call i8* @llvm_hpvm_createBindOutBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64))
+  %BindIn.isLastInput.wrapperNormalization_fxp_cloned = call i8* @llvm_hpvm_createLastInputBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64))
+  %BindIn.isLastInput.wrapperEncoder_fxp_cloned = call i8* @llvm_hpvm_createLastInputBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64))
+  %BindIn.isLastInput.wrapperSumBF_fxp_cloned = call i8* @llvm_hpvm_createLastInputBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64))
+  %wrapperNormalization_fxp_cloned.inputs = call i8* @malloc(i64 ptrtoint (%struct.thread.wrapperNormalization_fxp_cloned* getelementptr (%struct.thread.wrapperNormalization_fxp_cloned, %struct.thread.wrapperNormalization_fxp_cloned* null, i32 1) to i64))
+  %wrapperNormalization_fxp_cloned.inputs.i8ptr = bitcast i8* %wrapperNormalization_fxp_cloned.inputs to %struct.thread.wrapperNormalization_fxp_cloned*
+  %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_0 = getelementptr %struct.thread.wrapperNormalization_fxp_cloned, %struct.thread.wrapperNormalization_fxp_cloned* %wrapperNormalization_fxp_cloned.inputs.i8ptr, i32 0, i32 0
+  store i8* %BindIn.wrapperNormalization_fxp_cloned, i8** %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_0
+  %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_1 = getelementptr %struct.thread.wrapperNormalization_fxp_cloned, %struct.thread.wrapperNormalization_fxp_cloned* %wrapperNormalization_fxp_cloned.inputs.i8ptr, i32 0, i32 1
+  store i8* %BindIn.wrapperNormalization_fxp_cloned7, i8** %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_1
+  %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_2 = getelementptr %struct.thread.wrapperNormalization_fxp_cloned, %struct.thread.wrapperNormalization_fxp_cloned* %wrapperNormalization_fxp_cloned.inputs.i8ptr, i32 0, i32 2
+  store i8* %BindIn.wrapperNormalization_fxp_cloned8, i8** %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_2
+  %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_3 = getelementptr %struct.thread.wrapperNormalization_fxp_cloned, %struct.thread.wrapperNormalization_fxp_cloned* %wrapperNormalization_fxp_cloned.inputs.i8ptr, i32 0, i32 3
+  store i8* %BindIn.wrapperNormalization_fxp_cloned9, i8** %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_3
+  %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_4 = getelementptr %struct.thread.wrapperNormalization_fxp_cloned, %struct.thread.wrapperNormalization_fxp_cloned* %wrapperNormalization_fxp_cloned.inputs.i8ptr, i32 0, i32 4
+  store i8* %BindIn.wrapperNormalization_fxp_cloned10, i8** %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_4
+  %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_5 = getelementptr %struct.thread.wrapperNormalization_fxp_cloned, %struct.thread.wrapperNormalization_fxp_cloned* %wrapperNormalization_fxp_cloned.inputs.i8ptr, i32 0, i32 5
+  store i8* %BindIn.wrapperNormalization_fxp_cloned11, i8** %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_5
+  %wrapperNormalization_fxp_cloned.inputs.i8ptr.out_0 = getelementptr %struct.thread.wrapperNormalization_fxp_cloned, %struct.thread.wrapperNormalization_fxp_cloned* %wrapperNormalization_fxp_cloned.inputs.i8ptr, i32 0, i32 6
+  store i8* %wrapperNormalization_fxp_cloned.wrapperEncoder_fxp_cloned, i8** %wrapperNormalization_fxp_cloned.inputs.i8ptr.out_0
+  %wrapperNormalization_fxp_cloned.inputs.i8ptr.isLastInput = getelementptr %struct.thread.wrapperNormalization_fxp_cloned, %struct.thread.wrapperNormalization_fxp_cloned* %wrapperNormalization_fxp_cloned.inputs.i8ptr, i32 0, i32 7
+  store i8* %BindIn.isLastInput.wrapperNormalization_fxp_cloned, i8** %wrapperNormalization_fxp_cloned.inputs.i8ptr.isLastInput
+  %wrapperNormalization_fxp_cloned.inputs.i8ptr17 = bitcast %struct.thread.wrapperNormalization_fxp_cloned* %wrapperNormalization_fxp_cloned.inputs.i8ptr to i8*
+  call void @llvm_hpvm_createThread(i8* %graphID, i8* (i8*)* @wrapperNormalization_fxp_cloned_Pipeline, i8* %wrapperNormalization_fxp_cloned.inputs.i8ptr17)
+  %wrapperEncoder_fxp_cloned.inputs = call i8* @malloc(i64 ptrtoint (%struct.thread.wrapperEncoder_fxp_cloned* getelementptr (%struct.thread.wrapperEncoder_fxp_cloned, %struct.thread.wrapperEncoder_fxp_cloned* null, i32 1) to i64))
+  %wrapperEncoder_fxp_cloned.inputs.i8ptr = bitcast i8* %wrapperEncoder_fxp_cloned.inputs to %struct.thread.wrapperEncoder_fxp_cloned*
+  %wrapperEncoder_fxp_cloned.inputs.i8ptr.arg_0 = getelementptr %struct.thread.wrapperEncoder_fxp_cloned, %struct.thread.wrapperEncoder_fxp_cloned* %wrapperEncoder_fxp_cloned.inputs.i8ptr, i32 0, i32 0
+  store i8* %BindIn.wrapperEncoder_fxp_cloned, i8** %wrapperEncoder_fxp_cloned.inputs.i8ptr.arg_0
+  %wrapperEncoder_fxp_cloned.inputs.i8ptr.arg_1 = getelementptr %struct.thread.wrapperEncoder_fxp_cloned, %struct.thread.wrapperEncoder_fxp_cloned* %wrapperEncoder_fxp_cloned.inputs.i8ptr, i32 0, i32 1
+  store i8* %wrapperNormalization_fxp_cloned.wrapperEncoder_fxp_cloned, i8** %wrapperEncoder_fxp_cloned.inputs.i8ptr.arg_1
+  %wrapperEncoder_fxp_cloned.inputs.i8ptr.arg_2 = getelementptr %struct.thread.wrapperEncoder_fxp_cloned, %struct.thread.wrapperEncoder_fxp_cloned* %wrapperEncoder_fxp_cloned.inputs.i8ptr, i32 0, i32 2
+  store i8* %BindIn.wrapperEncoder_fxp_cloned12, i8** %wrapperEncoder_fxp_cloned.inputs.i8ptr.arg_2
+  %wrapperEncoder_fxp_cloned.inputs.i8ptr.arg_3 = getelementptr %struct.thread.wrapperEncoder_fxp_cloned, %struct.thread.wrapperEncoder_fxp_cloned* %wrapperEncoder_fxp_cloned.inputs.i8ptr, i32 0, i32 3
+  store i8* %BindIn.wrapperEncoder_fxp_cloned13, i8** %wrapperEncoder_fxp_cloned.inputs.i8ptr.arg_3
+  %wrapperEncoder_fxp_cloned.inputs.i8ptr.out_0 = getelementptr %struct.thread.wrapperEncoder_fxp_cloned, %struct.thread.wrapperEncoder_fxp_cloned* %wrapperEncoder_fxp_cloned.inputs.i8ptr, i32 0, i32 4
+  store i8* %wrapperEncoder_fxp_cloned.wrapperSumBF_fxp_cloned, i8** %wrapperEncoder_fxp_cloned.inputs.i8ptr.out_0
+  %wrapperEncoder_fxp_cloned.inputs.i8ptr.isLastInput = getelementptr %struct.thread.wrapperEncoder_fxp_cloned, %struct.thread.wrapperEncoder_fxp_cloned* %wrapperEncoder_fxp_cloned.inputs.i8ptr, i32 0, i32 5
+  store i8* %BindIn.isLastInput.wrapperEncoder_fxp_cloned, i8** %wrapperEncoder_fxp_cloned.inputs.i8ptr.isLastInput
+  %wrapperEncoder_fxp_cloned.inputs.i8ptr18 = bitcast %struct.thread.wrapperEncoder_fxp_cloned* %wrapperEncoder_fxp_cloned.inputs.i8ptr to i8*
+  call void @llvm_hpvm_createThread(i8* %graphID, i8* (i8*)* @wrapperEncoder_fxp_cloned_Pipeline, i8* %wrapperEncoder_fxp_cloned.inputs.i8ptr18)
+  %wrapperSumBF_fxp_cloned.inputs = call i8* @malloc(i64 ptrtoint (%struct.thread.wrapperSumBF_fxp_cloned* getelementptr (%struct.thread.wrapperSumBF_fxp_cloned, %struct.thread.wrapperSumBF_fxp_cloned* null, i32 1) to i64))
+  %wrapperSumBF_fxp_cloned.inputs.i8ptr = bitcast i8* %wrapperSumBF_fxp_cloned.inputs to %struct.thread.wrapperSumBF_fxp_cloned*
+  %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_0 = getelementptr %struct.thread.wrapperSumBF_fxp_cloned, %struct.thread.wrapperSumBF_fxp_cloned* %wrapperSumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 0
+  store i8* %BindIn.wrapperSumBF_fxp_cloned, i8** %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_0
+  %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_1 = getelementptr %struct.thread.wrapperSumBF_fxp_cloned, %struct.thread.wrapperSumBF_fxp_cloned* %wrapperSumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 1
+  store i8* %wrapperEncoder_fxp_cloned.wrapperSumBF_fxp_cloned, i8** %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_1
+  %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_2 = getelementptr %struct.thread.wrapperSumBF_fxp_cloned, %struct.thread.wrapperSumBF_fxp_cloned* %wrapperSumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 2
+  store i8* %BindIn.wrapperSumBF_fxp_cloned14, i8** %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_2
+  %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_3 = getelementptr %struct.thread.wrapperSumBF_fxp_cloned, %struct.thread.wrapperSumBF_fxp_cloned* %wrapperSumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 3
+  store i8* %BindIn.wrapperSumBF_fxp_cloned15, i8** %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_3
+  %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_4 = getelementptr %struct.thread.wrapperSumBF_fxp_cloned, %struct.thread.wrapperSumBF_fxp_cloned* %wrapperSumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 4
+  store i8* %BindIn.wrapperSumBF_fxp_cloned16, i8** %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_4
+  %wrapperSumBF_fxp_cloned.inputs.i8ptr.out_0 = getelementptr %struct.thread.wrapperSumBF_fxp_cloned, %struct.thread.wrapperSumBF_fxp_cloned* %wrapperSumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 5
+  store i8* %BindOut.wrapperSumBF_fxp_cloned, i8** %wrapperSumBF_fxp_cloned.inputs.i8ptr.out_0
+  %wrapperSumBF_fxp_cloned.inputs.i8ptr.isLastInput = getelementptr %struct.thread.wrapperSumBF_fxp_cloned, %struct.thread.wrapperSumBF_fxp_cloned* %wrapperSumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 6
+  store i8* %BindIn.isLastInput.wrapperSumBF_fxp_cloned, i8** %wrapperSumBF_fxp_cloned.inputs.i8ptr.isLastInput
+  %wrapperSumBF_fxp_cloned.inputs.i8ptr19 = bitcast %struct.thread.wrapperSumBF_fxp_cloned* %wrapperSumBF_fxp_cloned.inputs.i8ptr to i8*
+  call void @llvm_hpvm_createThread(i8* %graphID, i8* (i8*)* @wrapperSumBF_fxp_cloned_Pipeline, i8* %wrapperSumBF_fxp_cloned.inputs.i8ptr19)
   ret void
 }
 
-define i8* @normalization_fxp_cloned_Pipeline(i8* %data.addr) {
+define i8* @wrapperNormalization_fxp_cloned_Pipeline(i8* %data.addr) {
 entry:
   %soundSrcs_buffer.addr = bitcast i8* %data.addr to i8**
   %soundSrcs_buffer = load i8*, i8** %soundSrcs_buffer.addr
@@ -7047,8 +7047,8 @@ while.body:                                       ; preds = %condition
   %sampleTemp.addr = inttoptr i64 %5 to i16*
   %6 = call i64 @llvm_hpvm_bufferPop(i8* %bytes_sampleTemp_buffer)
   %bytes_sampleTemp.addr = bitcast i64 %6 to i64
-  %normalization_fxp_cloned.1.output = call %struct.out.sumBF_fxp @normalization_fxp_cloned.1(%"class.std::vector.6"* %soundSrcs.addr, i64 %bytes_soundSrcs.addr, i64 %nSamples.addr, i64 %soundSrcsSize.addr, i16* %sampleTemp.addr, i64 %bytes_sampleTemp.addr)
-  %7 = extractvalue %struct.out.sumBF_fxp %normalization_fxp_cloned.1.output, 0
+  %wrapperNormalization_fxp_cloned.2.output = call %struct.out.wrapperSumBF_fxp @wrapperNormalization_fxp_cloned.2(%"class.std::vector.6"* %soundSrcs.addr, i64 %bytes_soundSrcs.addr, i64 %nSamples.addr, i64 %soundSrcsSize.addr, i16* %sampleTemp.addr, i64 %bytes_sampleTemp.addr)
+  %7 = extractvalue %struct.out.wrapperSumBF_fxp %wrapperNormalization_fxp_cloned.2.output, 0
   %8 = bitcast i64 %7 to i64
   call void @llvm_hpvm_bufferPush(i8* %out, i64 %8)
   br label %condition
@@ -7057,7 +7057,7 @@ while.end:                                        ; preds = %condition
   ret i8* undef
 }
 
-define i8* @encoder_fxp_cloned_Pipeline(i8* %data.addr) {
+define i8* @wrapperEncoder_fxp_cloned_Pipeline(i8* %data.addr) {
 entry:
   %soundSrcs_buffer.addr = bitcast i8* %data.addr to i8**
   %soundSrcs_buffer = load i8*, i8** %soundSrcs_buffer.addr
@@ -7093,8 +7093,8 @@ while.body:                                       ; preds = %condition
   %nSamples.addr = bitcast i64 %3 to i64
   %4 = call i64 @llvm_hpvm_bufferPop(i8* %soundSrcsSize_buffer)
   %soundSrcsSize.addr = bitcast i64 %4 to i64
-  %encoder_fxp_cloned.2.output = call %struct.out.sumBF_fxp @encoder_fxp_cloned.2(%"class.std::vector.6"* %soundSrcs.addr, i64 %bytes_soundSrcs.addr, i64 %nSamples.addr, i64 %soundSrcsSize.addr)
-  %5 = extractvalue %struct.out.sumBF_fxp %encoder_fxp_cloned.2.output, 0
+  %wrapperEncoder_fxp_cloned.4.output = call %struct.out.wrapperSumBF_fxp @wrapperEncoder_fxp_cloned.4(%"class.std::vector.6"* %soundSrcs.addr, i64 %bytes_soundSrcs.addr, i64 %nSamples.addr, i64 %soundSrcsSize.addr)
+  %5 = extractvalue %struct.out.wrapperSumBF_fxp %wrapperEncoder_fxp_cloned.4.output, 0
   %6 = bitcast i64 %5 to i64
   call void @llvm_hpvm_bufferPush(i8* %out, i64 %6)
   br label %condition
@@ -7103,7 +7103,7 @@ while.end:                                        ; preds = %condition
   ret i8* undef
 }
 
-define i8* @sumBF_fxp_cloned_Pipeline(i8* %data.addr) {
+define i8* @wrapperSumBF_fxp_cloned_Pipeline(i8* %data.addr) {
 entry:
   %soundSrcs_buffer.addr = bitcast i8* %data.addr to i8**
   %soundSrcs_buffer = load i8*, i8** %soundSrcs_buffer.addr
@@ -7144,8 +7144,8 @@ while.body:                                       ; preds = %condition
   %bytes_sumBF.addr = bitcast i64 %4 to i64
   %5 = call i64 @llvm_hpvm_bufferPop(i8* %soundSrcsSize_buffer)
   %soundSrcsSize.addr = bitcast i64 %5 to i64
-  %sumBF_fxp_cloned.3.output = call %struct.out.sumBF_fxp @sumBF_fxp_cloned.3(%"class.std::vector.6"* %soundSrcs.addr, i64 %bytes_soundSrcs.addr, %class.CBFormat* %sumBF.addr, i64 %bytes_sumBF.addr, i64 %soundSrcsSize.addr)
-  %6 = extractvalue %struct.out.sumBF_fxp %sumBF_fxp_cloned.3.output, 0
+  %wrapperSumBF_fxp_cloned.6.output = call %struct.out.wrapperSumBF_fxp @wrapperSumBF_fxp_cloned.6(%"class.std::vector.6"* %soundSrcs.addr, i64 %bytes_soundSrcs.addr, %class.CBFormat* %sumBF.addr, i64 %bytes_sumBF.addr, i64 %soundSrcsSize.addr)
+  %6 = extractvalue %struct.out.wrapperSumBF_fxp %wrapperSumBF_fxp_cloned.6.output, 0
   %7 = bitcast i64 %6 to i64
   call void @llvm_hpvm_bufferPush(i8* %out, i64 %7)
   br label %condition
@@ -7154,8 +7154,18 @@ while.end:                                        ; preds = %condition
   ret i8* undef
 }
 
+define %struct.out.wrapperSumBF_fxp @wrapperSumBF_fxp_cloned.6(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* %sumBF, i64 %bytes_sumBF, i64 %soundSrcsSize) {
+entry:
+  call void @llvm_hpvm_cpu_dstack_push(i32 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  %sumBF_fxp_cloned.5_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.wrapperSumBF_fxp @sumBF_fxp_cloned.5_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* %sumBF, i64 %bytes_sumBF, i64 %soundSrcsSize, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  call void @llvm_hpvm_cpu_dstack_pop()
+  %0 = extractvalue %struct.out.wrapperSumBF_fxp %sumBF_fxp_cloned.5_cloned_cloned_cloned_cloned_cloned_cloned_output, 0
+  %output = insertvalue %struct.out.wrapperSumBF_fxp undef, i64 %0, 0
+  ret %struct.out.wrapperSumBF_fxp %output
+}
+
 ; Function Attrs: nounwind uwtable
-define %struct.out.sumBF_fxp @sumBF_fxp_cloned.3(%"class.std::vector.6"* in %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* in out %sumBF, i64 %bytes_sumBF, i64 %soundSrcsSize) #0 {
+define %struct.out.wrapperSumBF_fxp @sumBF_fxp_cloned.5_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* in %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* in out %sumBF, i64 %bytes_sumBF, i64 %soundSrcsSize, i64 %idx_x, i64 %idx_y, i64 %idx_z, i64 %dim_x, i64 %dim_y, i64 %dim_z) #0 {
 getHPVMPtrArgs:
   %soundSrcs.i8ptr = bitcast %"class.std::vector.6"* %soundSrcs to i8*
   %0 = call i8* @llvm_hpvm_cpu_argument_ptr(i8* %soundSrcs.i8ptr, i64 %bytes_soundSrcs)
@@ -7178,8 +7188,8 @@ for.body.lr.ph:                                   ; preds = %entry
   br label %for.body
 
 for.cond.cleanup:                                 ; preds = %_ZN8CBFormatpLERKS_.exit, %entry
-  %returnStruct = insertvalue %struct.out.sumBF_fxp undef, i64 %bytes_sumBF, 0
-  ret %struct.out.sumBF_fxp %returnStruct
+  %returnStruct = insertvalue %struct.out.wrapperSumBF_fxp undef, i64 %bytes_sumBF, 0
+  ret %struct.out.wrapperSumBF_fxp %returnStruct
 
 for.body:                                         ; preds = %_ZN8CBFormatpLERKS_.exit, %for.body.lr.ph
   %indvars.iv = phi i64 [ 0, %for.body.lr.ph ], [ %indvars.iv.next, %_ZN8CBFormatpLERKS_.exit ]
@@ -7376,125 +7386,108 @@ _ZN8CBFormatpLERKS_.exit:                         ; preds = %for.cond2.for.inc10
   br i1 %exitcond13, label %for.cond.cleanup, label %for.body
 }
 
+define %struct.out.wrapperSumBF_fxp @wrapperEncoder_fxp_cloned.4(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize) {
+entry:
+  call void @llvm_hpvm_cpu_dstack_push(i32 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  %encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.wrapperSumBF_fxp @encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  call void @llvm_hpvm_cpu_dstack_pop()
+  %0 = extractvalue %struct.out.wrapperSumBF_fxp %encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned_output, 0
+  %output = insertvalue %struct.out.wrapperSumBF_fxp undef, i64 %0, 0
+  ret %struct.out.wrapperSumBF_fxp %output
+}
+
 ; Function Attrs: nounwind uwtable
-define %struct.out.sumBF_fxp @encoder_fxp_cloned.2(%"class.std::vector.6"* in out %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize) #0 {
+define %struct.out.wrapperSumBF_fxp @encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* in out %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i64 %idx_x, i64 %idx_y, i64 %idx_z, i64 %dim_x, i64 %dim_y, i64 %dim_z) #0 {
 getHPVMPtrArgs:
   %soundSrcs.i8ptr = bitcast %"class.std::vector.6"* %soundSrcs to i8*
   %0 = call i8* @llvm_hpvm_cpu_argument_ptr(i8* %soundSrcs.i8ptr, i64 %bytes_soundSrcs)
   br label %entry
 
 entry:                                            ; preds = %getHPVMPtrArgs
-  %cmp20 = icmp sgt i64 %soundSrcsSize, 0
-  br i1 %cmp20, label %for.body.lr.ph, label %for.cond.cleanup
+  %cmp = icmp slt i64 %idx_x, %soundSrcsSize
+  br i1 %cmp, label %if.then, label %if.end
 
-for.body.lr.ph:                                   ; preds = %entry
+if.then:                                          ; preds = %entry
   %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %soundSrcs, i64 0, i32 0, i32 0, i32 0
-  %conv4 = trunc i64 %nSamples to i32
-  br label %for.body
-
-for.cond.cleanup:                                 ; preds = %for.body, %entry
-  %returnStruct = insertvalue %struct.out.sumBF_fxp undef, i64 %bytes_soundSrcs, 0
-  ret %struct.out.sumBF_fxp %returnStruct
-
-for.body:                                         ; preds = %for.body, %for.body.lr.ph
-  %indvars.iv = phi i64 [ 0, %for.body.lr.ph ], [ %indvars.iv.next, %for.body ]
   %1 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !tbaa !5655
-  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %1, i64 %indvars.iv
+  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %1, i64 %idx_x
   %2 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i, align 8, !tbaa !5488
   %BEncoder = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 3
   %3 = load %class.CAmbisonicEncoderDist*, %class.CAmbisonicEncoderDist** %BEncoder, align 8, !tbaa !5621
   %arraydecay = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 1, i64 0
+  %conv = trunc i64 %nSamples to i32
   %BFormat = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 2
   %4 = load %class.CBFormat*, %class.CBFormat** %BFormat, align 8, !tbaa !5620
-  tail call void @_ZN21CAmbisonicEncoderDist7ProcessEPfjP8CBFormat(%class.CAmbisonicEncoderDist* %3, float* nonnull %arraydecay, i32 %conv4, %class.CBFormat* %4)
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %exitcond = icmp eq i64 %indvars.iv.next, %soundSrcsSize
-  br i1 %exitcond, label %for.cond.cleanup, label %for.body
+  tail call void @_ZN21CAmbisonicEncoderDist7ProcessEPfjP8CBFormat(%class.CAmbisonicEncoderDist* %3, float* nonnull %arraydecay, i32 %conv, %class.CBFormat* %4)
+  br label %if.end
+
+if.end:                                           ; preds = %if.then, %entry
+  %returnStruct = insertvalue %struct.out.wrapperSumBF_fxp undef, i64 %bytes_soundSrcs, 0
+  ret %struct.out.wrapperSumBF_fxp %returnStruct
+}
+
+define %struct.out.wrapperSumBF_fxp @wrapperNormalization_fxp_cloned.2(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* %sampleTemp, i64 %bytes_sampleTemp) {
+entry:
+  br label %for.body
+
+for.body:                                         ; preds = %for.end2, %entry
+  %index.x = phi i64 [ 0, %entry ], [ %index.x.inc, %for.end2 ]
+  br label %for.body1
+
+for.body1:                                        ; preds = %for.body1, %for.body
+  %index.y = phi i64 [ 0, %for.body ], [ %index.y.inc, %for.body1 ]
+  call void @llvm_hpvm_cpu_dstack_push(i32 2, i64 %soundSrcsSize, i64 %index.x, i64 %nSamples, i64 %index.y, i64 0, i64 0)
+  %normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.wrapperSumBF_fxp @normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* %sampleTemp, i64 %bytes_sampleTemp, i64 %index.x, i64 %index.y, i64 0, i64 %soundSrcsSize, i64 %nSamples, i64 0)
+  call void @llvm_hpvm_cpu_dstack_pop()
+  %index.y.inc = add i64 %index.y, 1
+  %cond.y = icmp ult i64 %index.y.inc, %nSamples
+  br i1 %cond.y, label %for.body1, label %for.end2
+
+for.end2:                                         ; preds = %for.body1
+  %index.x.inc = add i64 %index.x, 1
+  %cond.x = icmp ult i64 %index.x.inc, %soundSrcsSize
+  br i1 %cond.x, label %for.body, label %for.end
+
+for.end:                                          ; preds = %for.end2
+  %0 = extractvalue %struct.out.wrapperSumBF_fxp %normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned_output, 0
+  %output = insertvalue %struct.out.wrapperSumBF_fxp undef, i64 %0, 0
+  ret %struct.out.wrapperSumBF_fxp %output
 }
 
 ; Function Attrs: nounwind uwtable
-define %struct.out.sumBF_fxp @normalization_fxp_cloned.1(%"class.std::vector.6"* in out %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* nocapture readonly %sampleTemp, i64 %bytes_sampleTemp) #0 {
+define %struct.out.wrapperSumBF_fxp @normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* in out %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* nocapture readonly %sampleTemp, i64 %bytes_sampleTemp, i64 %idx_x, i64 %idx_y, i64 %idx_z, i64 %dim_x, i64 %dim_y, i64 %dim_z) #0 {
 getHPVMPtrArgs:
   %soundSrcs.i8ptr = bitcast %"class.std::vector.6"* %soundSrcs to i8*
   %0 = call i8* @llvm_hpvm_cpu_argument_ptr(i8* %soundSrcs.i8ptr, i64 %bytes_soundSrcs)
   br label %entry
 
 entry:                                            ; preds = %getHPVMPtrArgs
-  %cmp34 = icmp sgt i64 %soundSrcsSize, 0
-  %cmp331 = icmp sgt i64 %nSamples, 0
-  %or.cond = and i1 %cmp34, %cmp331
-  br i1 %or.cond, label %for.cond1.preheader.us.preheader, label %for.cond.cleanup
+  %cmp = icmp slt i64 %idx_x, %soundSrcsSize
+  %cmp3 = icmp slt i64 %idx_y, %nSamples
+  %or.cond = and i1 %cmp, %cmp3
+  br i1 %or.cond, label %if.then, label %if.end
 
-for.cond1.preheader.us.preheader:                 ; preds = %entry
+if.then:                                          ; preds = %entry
   %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %soundSrcs, i64 0, i32 0, i32 0, i32 0
-  %.pre = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !tbaa !5655
-  %xtraiter = and i64 %nSamples, 1
-  %1 = icmp eq i64 %nSamples, 1
-  %unroll_iter = sub i64 %nSamples, %xtraiter
-  %lcmp.mod = icmp eq i64 %xtraiter, 0
-  br label %for.cond1.preheader.us
+  %1 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !tbaa !5655
+  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %1, i64 %idx_x
+  %2 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i, align 8, !tbaa !5488
+  %amp = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 5
+  %3 = load float, float* %amp, align 4, !tbaa !5617
+  %conv = fpext float %3 to double
+  %arrayidx = getelementptr inbounds i16, i16* %sampleTemp, i64 %idx_y
+  %4 = load i16, i16* %arrayidx, align 2, !tbaa !5681
+  %conv6 = sitofp i16 %4 to double
+  %div = fdiv double %conv6, 3.276700e+04
+  %mul = fmul double %div, %conv
+  %conv7 = fptrunc double %mul to float
+  %arrayidx9 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 1, i64 %idx_y
+  store float %conv7, float* %arrayidx9, align 4, !tbaa !5503
+  br label %if.end
 
-for.cond1.preheader.us:                           ; preds = %for.cond1.for.cond.cleanup4_crit_edge.us, %for.cond1.preheader.us.preheader
-  %indvars.iv38 = phi i64 [ 0, %for.cond1.preheader.us.preheader ], [ %indvars.iv.next39, %for.cond1.for.cond.cleanup4_crit_edge.us ]
-  %add.ptr.i.us = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %.pre, i64 %indvars.iv38
-  %2 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i.us, align 8, !tbaa !5488
-  %amp.us = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 5
-  br i1 %1, label %for.cond1.for.cond.cleanup4_crit_edge.us.unr-lcssa, label %for.body5.us
-
-for.body5.us:                                     ; preds = %for.body5.us, %for.cond1.preheader.us
-  %indvars.iv = phi i64 [ %indvars.iv.next.1, %for.body5.us ], [ 0, %for.cond1.preheader.us ]
-  %niter = phi i64 [ %niter.nsub.1, %for.body5.us ], [ %unroll_iter, %for.cond1.preheader.us ]
-  %3 = load float, float* %amp.us, align 4, !tbaa !5617
-  %conv7.us = fpext float %3 to double
-  %arrayidx.us = getelementptr inbounds i16, i16* %sampleTemp, i64 %indvars.iv
-  %4 = load i16, i16* %arrayidx.us, align 2, !tbaa !5681
-  %conv9.us = sitofp i16 %4 to double
-  %div.us = fdiv double %conv9.us, 3.276700e+04
-  %mul.us = fmul double %div.us, %conv7.us
-  %conv10.us = fptrunc double %mul.us to float
-  %arrayidx14.us = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 1, i64 %indvars.iv
-  store float %conv10.us, float* %arrayidx14.us, align 4, !tbaa !5503
-  %indvars.iv.next = or i64 %indvars.iv, 1
-  %5 = load float, float* %amp.us, align 4, !tbaa !5617
-  %conv7.us.1 = fpext float %5 to double
-  %arrayidx.us.1 = getelementptr inbounds i16, i16* %sampleTemp, i64 %indvars.iv.next
-  %6 = load i16, i16* %arrayidx.us.1, align 2, !tbaa !5681
-  %conv9.us.1 = sitofp i16 %6 to double
-  %div.us.1 = fdiv double %conv9.us.1, 3.276700e+04
-  %mul.us.1 = fmul double %div.us.1, %conv7.us.1
-  %conv10.us.1 = fptrunc double %mul.us.1 to float
-  %arrayidx14.us.1 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 1, i64 %indvars.iv.next
-  store float %conv10.us.1, float* %arrayidx14.us.1, align 4, !tbaa !5503
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2
-  %niter.nsub.1 = add i64 %niter, -2
-  %niter.ncmp.1 = icmp eq i64 %niter.nsub.1, 0
-  br i1 %niter.ncmp.1, label %for.cond1.for.cond.cleanup4_crit_edge.us.unr-lcssa, label %for.body5.us
-
-for.cond1.for.cond.cleanup4_crit_edge.us.unr-lcssa: ; preds = %for.body5.us, %for.cond1.preheader.us
-  %indvars.iv.unr = phi i64 [ 0, %for.cond1.preheader.us ], [ %indvars.iv.next.1, %for.body5.us ]
-  br i1 %lcmp.mod, label %for.cond1.for.cond.cleanup4_crit_edge.us, label %for.body5.us.epil
-
-for.body5.us.epil:                                ; preds = %for.cond1.for.cond.cleanup4_crit_edge.us.unr-lcssa
-  %7 = load float, float* %amp.us, align 4, !tbaa !5617
-  %conv7.us.epil = fpext float %7 to double
-  %arrayidx.us.epil = getelementptr inbounds i16, i16* %sampleTemp, i64 %indvars.iv.unr
-  %8 = load i16, i16* %arrayidx.us.epil, align 2, !tbaa !5681
-  %conv9.us.epil = sitofp i16 %8 to double
-  %div.us.epil = fdiv double %conv9.us.epil, 3.276700e+04
-  %mul.us.epil = fmul double %div.us.epil, %conv7.us.epil
-  %conv10.us.epil = fptrunc double %mul.us.epil to float
-  %arrayidx14.us.epil = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 1, i64 %indvars.iv.unr
-  store float %conv10.us.epil, float* %arrayidx14.us.epil, align 4, !tbaa !5503
-  br label %for.cond1.for.cond.cleanup4_crit_edge.us
-
-for.cond1.for.cond.cleanup4_crit_edge.us:         ; preds = %for.body5.us.epil, %for.cond1.for.cond.cleanup4_crit_edge.us.unr-lcssa
-  %indvars.iv.next39 = add nuw nsw i64 %indvars.iv38, 1
-  %exitcond40 = icmp eq i64 %indvars.iv.next39, %soundSrcsSize
-  br i1 %exitcond40, label %for.cond.cleanup, label %for.cond1.preheader.us
-
-for.cond.cleanup:                                 ; preds = %for.cond1.for.cond.cleanup4_crit_edge.us, %entry
-  %returnStruct = insertvalue %struct.out.sumBF_fxp undef, i64 %bytes_soundSrcs, 0
-  ret %struct.out.sumBF_fxp %returnStruct
+if.end:                                           ; preds = %if.then, %entry
+  %returnStruct = insertvalue %struct.out.wrapperSumBF_fxp undef, i64 %bytes_soundSrcs, 0
+  ret %struct.out.wrapperSumBF_fxp %returnStruct
 }
 
 ; Function Attrs: norecurse nounwind readnone uwtable
@@ -11888,10 +11881,10 @@ entry:
   br i1 %cmp, label %if.then, label %if.end, !dbg !8366
 
 if.then:                                          ; preds = %entry
-  %call1 = call dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* dereferenceable(272) @_ZSt4cout, i8* getelementptr inbounds ([30 x i8], [30 x i8]* @.str.9, i64 0, i64 0)), !dbg !8367
+  %call1 = call dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* dereferenceable(272) @_ZSt4cout, i8* getelementptr inbounds ([30 x i8], [30 x i8]* @.str.13, i64 0, i64 0)), !dbg !8367
   %2 = load i8*, i8** %ptr.addr, align 8, !dbg !8369
   %call2 = call dereferenceable(272) %"class.std::basic_ostream"* @_ZNSolsEPKv(%"class.std::basic_ostream"* %call1, i8* %2), !dbg !8370
-  %call3 = call dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* dereferenceable(272) %call2, i8* getelementptr inbounds ([38 x i8], [38 x i8]* @.str.3.10, i64 0, i64 0)), !dbg !8371
+  %call3 = call dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* dereferenceable(272) %call2, i8* getelementptr inbounds ([38 x i8], [38 x i8]* @.str.3.14, i64 0, i64 0)), !dbg !8371
   br label %return, !dbg !8372
 
 if.end:                                           ; preds = %entry
@@ -12548,7 +12541,7 @@ entry:
   br i1 %cmp, label %if.then, label %if.end, !dbg !8710
 
 if.then:                                          ; preds = %entry
-  %call2 = call dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* dereferenceable(272) @_ZSt4cout, i8* getelementptr inbounds ([47 x i8], [47 x i8]* @.str.4.15, i64 0, i64 0)), !dbg !8711
+  %call2 = call dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* dereferenceable(272) @_ZSt4cout, i8* getelementptr inbounds ([47 x i8], [47 x i8]* @.str.4.19, i64 0, i64 0)), !dbg !8711
   %call3 = call i32 @pthread_mutex_unlock(%union.pthread_mutex_t* @ocl_mtx) #33, !dbg !8713
   call void @exit(i32 1) #31, !dbg !8714
   unreachable, !dbg !8714
@@ -12583,7 +12576,7 @@ if.end9:                                          ; preds = %if.end
   store i32 %call12, i32* %errcode, align 4, !dbg !8729
   call void @hpvm_SwitchToTimer(%struct.hpvm_TimerSet* @kernel_timer, i32 0), !dbg !8740
   %11 = load i32, i32* %errcode, align 4, !dbg !8741
-  call void @_ZL8checkErriiPKc(i32 %11, i32 0, i8* getelementptr inbounds ([37 x i8], [37 x i8]* @.str.5.16, i64 0, i64 0)), !dbg !8742
+  call void @_ZL8checkErriiPKc(i32 %11, i32 0, i8* getelementptr inbounds ([37 x i8], [37 x i8]* @.str.5.20, i64 0, i64 0)), !dbg !8742
   %12 = load %class.MemTrackerEntry*, %class.MemTrackerEntry** %MTE, align 8, !dbg !8743
   %call13 = call i8* @_ZNK15MemTrackerEntry10getAddressEv(%class.MemTrackerEntry* %12), !dbg !8744
   %13 = bitcast i8* %call13 to %struct._cl_mem*, !dbg !8745
@@ -12826,7 +12819,7 @@ if.end57:                                         ; preds = %if.then54, %if.then
 
 if.then61:                                        ; preds = %if.end57
   %50 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !dbg !8903
-  %call62 = call i32 (%struct._IO_FILE*, i8*, ...) @fprintf(%struct._IO_FILE* %50, i8* getelementptr inbounds ([27 x i8], [27 x i8]* @.str.13, i64 0, i64 0)), !dbg !8905
+  %call62 = call i32 (%struct._IO_FILE*, i8*, ...) @fprintf(%struct._IO_FILE* %50, i8* getelementptr inbounds ([27 x i8], [27 x i8]* @.str.13.21, i64 0, i64 0)), !dbg !8905
   br label %if.end63, !dbg !8906
 
 if.end63:                                         ; preds = %if.then61, %if.end57
@@ -13436,7 +13429,7 @@ entry:
 
 if.then:                                          ; preds = %entry
   %2 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !dbg !9155
-  %call = call i32 @fputs(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.8.17, i64 0, i64 0), %struct._IO_FILE* %2), !dbg !9157
+  %call = call i32 @fputs(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.8.22, i64 0, i64 0), %struct._IO_FILE* %2), !dbg !9157
   %3 = load i32, i32* %numNotRunning, align 4, !dbg !9158
   %and = and i32 %3, 1, !dbg !9158
   store i32 %and, i32* %numNotRunning, align 4, !dbg !9158
@@ -13451,7 +13444,7 @@ if.end:                                           ; preds = %if.then, %entry
 
 if.then3:                                         ; preds = %if.end
   %6 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !dbg !9165
-  %call4 = call i32 @fputs(i8* getelementptr inbounds ([35 x i8], [35 x i8]* @.str.9.18, i64 0, i64 0), %struct._IO_FILE* %6), !dbg !9167
+  %call4 = call i32 @fputs(i8* getelementptr inbounds ([35 x i8], [35 x i8]* @.str.9, i64 0, i64 0), %struct._IO_FILE* %6), !dbg !9167
   %7 = load i32, i32* %numNotRunning, align 4, !dbg !9168
   %and5 = and i32 %7, 2, !dbg !9168
   store i32 %and5, i32* %numNotRunning, align 4, !dbg !9168
@@ -14106,7 +14099,7 @@ entry:
 
 if.then:                                          ; preds = %entry
   %2 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !dbg !9613
-  %call = call i32 @fputs(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.6.19, i64 0, i64 0), %struct._IO_FILE* %2), !dbg !9615
+  %call = call i32 @fputs(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.6.23, i64 0, i64 0), %struct._IO_FILE* %2), !dbg !9615
   %3 = load i32, i32* %numNotStopped, align 4, !dbg !9616
   %and = and i32 %3, 1, !dbg !9616
   store i32 %and, i32* %numNotStopped, align 4, !dbg !9616
@@ -14121,7 +14114,7 @@ if.end:                                           ; preds = %if.then, %entry
 
 if.then3:                                         ; preds = %if.end
   %6 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !dbg !9623
-  %call4 = call i32 @fputs(i8* getelementptr inbounds ([35 x i8], [35 x i8]* @.str.7.20, i64 0, i64 0), %struct._IO_FILE* %6), !dbg !9625
+  %call4 = call i32 @fputs(i8* getelementptr inbounds ([35 x i8], [35 x i8]* @.str.7.24, i64 0, i64 0), %struct._IO_FILE* %6), !dbg !9625
   %7 = load i32, i32* %numNotStopped, align 4, !dbg !9626
   %and5 = and i32 %7, 2, !dbg !9626
   store i32 %and5, i32* %numNotStopped, align 4, !dbg !9626
@@ -14600,7 +14593,7 @@ if.end56:                                         ; preds = %if.then53, %if.then
 
 if.then60:                                        ; preds = %if.end56
   %51 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !dbg !9958
-  %call61 = call i32 (%struct._IO_FILE*, i8*, ...) @fprintf(%struct._IO_FILE* %51, i8* getelementptr inbounds ([27 x i8], [27 x i8]* @.str.13, i64 0, i64 0)), !dbg !9960
+  %call61 = call i32 (%struct._IO_FILE*, i8*, ...) @fprintf(%struct._IO_FILE* %51, i8* getelementptr inbounds ([27 x i8], [27 x i8]* @.str.13.21, i64 0, i64 0)), !dbg !9960
   br label %if.end62, !dbg !9961
 
 if.end62:                                         ; preds = %if.then60, %if.end56
@@ -22726,7 +22719,7 @@ entry:
 
 if.then:                                          ; preds = %entry
   call void @_ZN10MemTracker5printEv(%class.MemTracker* @MTracker), !dbg !14903
-  %call3 = call dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* dereferenceable(272) @_ZSt4cout, i8* getelementptr inbounds ([47 x i8], [47 x i8]* @.str.4.15, i64 0, i64 0)), !dbg !14905
+  %call3 = call dereferenceable(272) %"class.std::basic_ostream"* @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(%"class.std::basic_ostream"* dereferenceable(272) @_ZSt4cout, i8* getelementptr inbounds ([47 x i8], [47 x i8]* @.str.4.19, i64 0, i64 0)), !dbg !14905
   call void @exit(i32 1) #31, !dbg !14906
   unreachable, !dbg !14906
 
@@ -23644,7 +23637,7 @@ attributes #35 = { noreturn }
 attributes #36 = { nounwind readonly }
 
 !llvm.ident = !{!5467, !5467, !5467}
-!hpvm_hint_cpu = !{!5468, !5469, !5470, !5471}
+!hpvm_hint_cpu = !{!5468, !5468, !5469, !5469, !5470, !5470, !5471}
 !hpvm_hint_gpu = !{}
 !hpvm_hint_cpu_gpu = !{}
 !hpvm_hint_cpu_spir = !{}
@@ -29119,10 +29112,10 @@ attributes #36 = { nounwind readonly }
 !5465 = !{!10, !4314, !10, !4271, !4900}
 !5466 = !DIImportedEntity(tag: DW_TAG_imported_module, scope: !2, entity: !45, file: !6, line: 25)
 !5467 = !{!"clang version 9.0.0 (https://gitlab.engr.illinois.edu/llvm/hpvm-release.git f83c355d11be7d011508763fedc67e76d592a636)"}
-!5468 = !{%struct.out.sumBF_fxp (%"class.std::vector.6"*, i64, i64, i64, i16*, i64)* undef}
-!5469 = !{%struct.out.sumBF_fxp (%"class.std::vector.6"*, i64, i64, i64)* undef}
-!5470 = !{%struct.out.sumBF_fxp (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i64)* undef}
-!5471 = !{%struct.out.sumBF_fxp (%"class.std::vector.6"*, i64, i64, i64, i16*, i64, %class.CBFormat*, i64)* undef}
+!5468 = !{%struct.out.wrapperSumBF_fxp (%"class.std::vector.6"*, i64, i64, i64, i16*, i64)* undef}
+!5469 = !{%struct.out.wrapperSumBF_fxp (%"class.std::vector.6"*, i64, i64, i64)* undef}
+!5470 = !{%struct.out.wrapperSumBF_fxp (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i64)* undef}
+!5471 = !{%struct.out.wrapperSumBF_fxp (%"class.std::vector.6"*, i64, i64, i64, i16*, i64, %class.CBFormat*, i64)* undef}
 !5472 = !{i32 1, !"wchar_size", i32 4}
 !5473 = !{i32 7, !"PIC Level", i32 2}
 !5474 = !{i32 2, !"Dwarf Version", i32 4}
