@@ -6186,16 +6186,16 @@ attributes #28 = { noreturn }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
-!hpvm_hint_gpu = !{!3, !4, !5, !6}
-!hpvm_hint_cpu = !{!7, !8, !9}
+!hpvm_hint_gpu = !{!3, !4}
+!hpvm_hint_cpu = !{!5, !6, !7, !8, !9}
 !hpvm_hint_cpu_gpu = !{}
 
 !0 = !{i32 1, !"wchar_size", i32 4}
 !1 = !{i32 7, !"PIC Level", i32 2}
 !2 = !{!"clang version 9.0.0 (https://gitlab.engr.illinois.edu/llvm/hpvm-release.git f83c355d11be7d011508763fedc67e76d592a636)"}
 !3 = !{%struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i64, i64, i16*, i64)* @normalization_fxp_cloned}
-!4 = !{%struct.out.wrapperNormalization_fxp (%"class.std::vector.6"*, i64, i64, i64, i16*, i64)* @wrapperNormalization_fxp_cloned}
-!5 = !{%struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i64, i64)* @encoder_fxp_cloned}
+!4 = !{%struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i64, i64)* @encoder_fxp_cloned}
+!5 = !{%struct.out.wrapperNormalization_fxp (%"class.std::vector.6"*, i64, i64, i64, i16*, i64)* @wrapperNormalization_fxp_cloned}
 !6 = !{%struct.out.wrapperEncoder_fxp (%"class.std::vector.6"*, i64, i64, i64)* @wrapperEncoder_fxp_cloned}
 !7 = !{%struct.out.sumBF_fxp (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i64)* @sumBF_fxp_cloned}
 !8 = !{%struct.out.wrapperSumBF_fxp (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i64)* @wrapperSumBF_fxp_cloned}

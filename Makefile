@@ -63,7 +63,7 @@ ifeq ($(TARGET),seq)
   HPVM_OPTFLAGS += -hpvm-timers-cpu
 else
   DEVICE = GPU_TARGET
-  HPVM_OPTFLAGS = -debug -load LLVMBuildDFG.so -load LLVMLocalMem.so -load LLVMDFG2LLVM_OpenCL.so -load LLVMDFG2LLVM_CPU.so -load LLVMClearDFG.so -localmem -dfg2llvm-opencl -dfg2llvm-cpu -clearDFG
+  # HPVM_OPTFLAGS = -debug -load LLVMBuildDFG.so -load LLVMLocalMem.so -load LLVMDFG2LLVM_OpenCL.so -load LLVMDFG2LLVM_CPU.so -load LLVMClearDFG.so -localmem -dfg2llvm-opencl -dfg2llvm-cpu -clearDFG
   # HPVM_OPTFLAGS = -load LLVMBuildDFG.so -load LLVMLocalMem.so -load LLVMDFG2LLVM_OpenCL.so -load LLVMDFG2LLVM_CPU.so -load LLVMClearDFG.so -localmem -dfg2llvm-opencl -dfg2llvm-cpu -clearDFG
   HPVM_OPTFLAGS += -hpvm-timers-cpu -hpvm-timers-ptx
 endif
