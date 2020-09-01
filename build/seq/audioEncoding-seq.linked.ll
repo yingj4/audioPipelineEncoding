@@ -7388,9 +7388,18 @@ _ZN8CBFormatpLERKS_.exit:                         ; preds = %for.cond2.for.inc10
 
 define %struct.out.wrapperSumBF_fxp @wrapperEncoder_fxp_cloned.4(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize) {
 entry:
-  call void @llvm_hpvm_cpu_dstack_push(i32 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
-  %encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.wrapperSumBF_fxp @encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  br label %for.body
+
+for.body:                                         ; preds = %for.body, %entry
+  %index.x = phi i64 [ 0, %entry ], [ %index.x.inc, %for.body ]
+  call void @llvm_hpvm_cpu_dstack_push(i32 1, i64 %soundSrcsSize, i64 %index.x, i64 0, i64 0, i64 0, i64 0)
+  %encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.wrapperSumBF_fxp @encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i64 %index.x, i64 0, i64 0, i64 %soundSrcsSize, i64 0, i64 0)
   call void @llvm_hpvm_cpu_dstack_pop()
+  %index.x.inc = add i64 %index.x, 1
+  %cond.x = icmp ult i64 %index.x.inc, %soundSrcsSize
+  br i1 %cond.x, label %for.body, label %for.end
+
+for.end:                                          ; preds = %for.body
   %0 = extractvalue %struct.out.wrapperSumBF_fxp %encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned_output, 0
   %output = insertvalue %struct.out.wrapperSumBF_fxp undef, i64 %0, 0
   ret %struct.out.wrapperSumBF_fxp %output

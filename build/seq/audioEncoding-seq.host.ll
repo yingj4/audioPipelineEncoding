@@ -5796,6 +5796,9 @@ declare void @llvm.hpvm.bind.input(i8*, i32, i32, i1) #24
 declare void @llvm.hpvm.bind.output(i8*, i32, i32, i1) #24
 
 ; Function Attrs: nounwind
+declare i8* @llvm.hpvm.createNode1D(i8*, i64) #24
+
+; Function Attrs: nounwind
 declare i8* @llvm.hpvm.createNode(i8*) #24
 
 ; Function Attrs: nounwind
@@ -5945,9 +5948,18 @@ if.end:                                           ; preds = %if.then, %entry
 
 define %struct.out.wrapperEncoder_fxp @wrapperEncoder_fxp_cloned.4(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize) {
 entry:
-  call void @llvm_hpvm_cpu_dstack_push(i32 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
-  %encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.encoder_fxp @encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  br label %for.body
+
+for.body:                                         ; preds = %for.body, %entry
+  %index.x = phi i64 [ 0, %entry ], [ %index.x.inc, %for.body ]
+  call void @llvm_hpvm_cpu_dstack_push(i32 1, i64 %soundSrcsSize, i64 %index.x, i64 0, i64 0, i64 0, i64 0)
+  %encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.encoder_fxp @encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i64 %index.x, i64 0, i64 0, i64 %soundSrcsSize, i64 0, i64 0)
   call void @llvm_hpvm_cpu_dstack_pop()
+  %index.x.inc = add i64 %index.x, 1
+  %cond.x = icmp ult i64 %index.x.inc, %soundSrcsSize
+  br i1 %cond.x, label %for.body, label %for.end
+
+for.end:                                          ; preds = %for.body
   %0 = extractvalue %struct.out.encoder_fxp %encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned_output, 0
   %output = insertvalue %struct.out.wrapperEncoder_fxp undef, i64 %0, 0
   ret %struct.out.wrapperEncoder_fxp %output

@@ -4535,7 +4535,7 @@ define void @wrapperEncoder_fxp(%"class.std::vector.6"* %soundSrcs, i64 %bytes_s
 entry:
   tail call void @__hpvm__hint(i32 1) #25
   tail call void (i32, ...) @__hpvm__attributes(i32 1, %"class.std::vector.6"* %soundSrcs, i32 1, %"class.std::vector.6"* %soundSrcs) #25
-  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, i64, i64)* nonnull @encoder_fxp) #25
+  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 1, void (%"class.std::vector.6"*, i64, i64, i64)* nonnull @encoder_fxp, i64 %soundSrcsSize) #25
   tail call void @__hpvm__bindIn(i8* %call, i32 0, i32 0, i32 0) #25
   tail call void @__hpvm__bindIn(i8* %call, i32 1, i32 1, i32 0) #25
   tail call void @__hpvm__bindIn(i8* %call, i32 2, i32 2, i32 0) #25

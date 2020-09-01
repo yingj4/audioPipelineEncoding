@@ -1,0 +1,25 @@
+digraph "encoderPipeline_cloned" {
+	label="encoderPipeline_cloned";
+	compound=true;
+	Node0x675f720 [shape=record,shape=oval,label="{Entry}"];
+	Node0x675f720 -> Node0x67b2cf0[lhead=cluster0x67b2cf0];
+	Node0x675f720 -> Node0x67b2cf0[lhead=cluster0x67b2cf0];
+	Node0x675f720 -> Node0x67b2cf0[lhead=cluster0x67b2cf0];
+	Node0x675f720 -> Node0x67b2cf0[lhead=cluster0x67b2cf0];
+	Node0x675f720 -> Node0x67b2cf0[lhead=cluster0x67b2cf0];
+	Node0x675f720 -> Node0x67b2cf0[lhead=cluster0x67b2cf0];
+	Node0x675f720 -> Node0x6851c20[lhead=cluster0x6851c20];
+	Node0x675f720 -> Node0x6851c20[lhead=cluster0x6851c20];
+	Node0x675f720 -> Node0x6851c20[lhead=cluster0x6851c20];
+	Node0x675f720 -> Node0x67e2fc0[lhead=cluster0x67e2fc0];
+	Node0x675f720 -> Node0x67e2fc0[lhead=cluster0x67e2fc0];
+	Node0x675f720 -> Node0x67e2fc0[lhead=cluster0x67e2fc0];
+	Node0x675f720 -> Node0x67e2fc0[lhead=cluster0x67e2fc0];
+	Node0x67b2cf0 [shape=record,shape=oval,label="{wrapperNormalization_fxp_cloned}"];
+	Node0x67b2cf0 -> Node0x6851c20[ltail=cluster0x67b2cf0, lhead=cluster0x6851c20];
+	Node0x6851c20 [shape=record,shape=oval,label="{wrapperEncoder_fxp_cloned}"];
+	Node0x6851c20 -> Node0x67e2fc0[ltail=cluster0x6851c20, lhead=cluster0x67e2fc0];
+	Node0x67e2fc0 [shape=record,shape=oval,label="{wrapperSumBF_fxp_cloned}"];
+	Node0x67e2fc0 -> Node0x67908f0[ltail=cluster0x67e2fc0];
+	Node0x67908f0 [shape=record,shape=oval,label="{Exit}"];
+}
