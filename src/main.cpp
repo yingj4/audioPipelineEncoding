@@ -639,7 +639,7 @@ void ILLIXR_AUDIO::ABAudio::generateWAVHeader(){
 
 // A leaf node function for the normalization
 void normalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize, /*4*/ short* sampleTemp) {
-    __hpvm__hint(hpvm::CPU_TARGET);
+    __hpvm__hint(hpvm::DEVICE);
     __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
 
     // normalize samples to -1 to 1 float, with amplitude scale
@@ -654,7 +654,7 @@ void normalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/
 
 // A leaf node function for the encoding process
 void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ unsigned nSamples, /*3*/ unsigned int soundSrcsSize) {
-    __hpvm__hint(hpvm::CPU_TARGET);
+    __hpvm__hint(hpvm::DEVICE);
     __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
 
     for (int j = 0; j < soundSrcsSize; ++j) {

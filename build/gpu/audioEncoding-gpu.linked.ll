@@ -1059,11 +1059,13 @@ $_ZN15MemTrackerEntry5printEv = comdat any
 @_ZStL8__ioinit = internal global %"class.std::ios_base::Init" zeroinitializer, align 1
 @__dso_handle = external hidden global i8
 @hpvmTimerSet_GenHPVM = common global i8* null
+@hpvmTimerSet_OpenCL = common global i8* null
 @hpvmTimerSet_CPU = common global i8* null
 @.str = private unnamed_addr constant [26 x i8] c"samples/lectureSample.wav\00", align 1
 @.str.1 = private unnamed_addr constant [29 x i8] c"samples/radioMusicSample.wav\00", align 1
 @0 = internal constant [10 x i8] c"CPU_Timer\00"
 @1 = internal constant [14 x i8] c"GenHPVM_Timer\00"
+@2 = internal constant [13 x i8] c"OpenCL_Timer\00"
 @_ZSt4cout = external global %"class.std::basic_ostream", align 8
 @.str.2 = private unnamed_addr constant [8 x i8] c"Usage: \00", align 1
 @.str.3 = private unnamed_addr constant [42 x i8] c" <number of size 1024 blocks to process> \00", align 1
@@ -6562,62 +6564,69 @@ for.cond.cleanup:                                 ; preds = %for.body, %entry
   store i8* %15, i8** @hpvmTimerSet_GenHPVM
   call void @llvm_hpvm_switchToTimer(i8** @hpvmTimerSet_GenHPVM, i32 0)
   %16 = call i8* @llvm_hpvm_initializeTimerSet()
-  store i8* %16, i8** @hpvmTimerSet_CPU
+  store i8* %16, i8** @hpvmTimerSet_OpenCL
+  call void @llvm_hpvm_switchToTimer(i8** @hpvmTimerSet_OpenCL, i32 8)
+  %17 = call i8* @llvm_hpvm_ocl_initContext(i32 2)
+  call void @llvm_hpvm_switchToTimer(i8** @hpvmTimerSet_OpenCL, i32 0)
+  %18 = call i8* @llvm_hpvm_initializeTimerSet()
+  store i8* %18, i8** @hpvmTimerSet_CPU
   call void @llvm_hpvm_switchToTimer(i8** @hpvmTimerSet_CPU, i32 0)
-  %Ptr1 = getelementptr [10 x i8], [10 x i8]* @0, i64 0, i64 0
-  call void @llvm_hpvm_printTimerSet(i8** @hpvmTimerSet_CPU, i8* %Ptr1)
+  %Ptr2 = getelementptr [10 x i8], [10 x i8]* @0, i64 0, i64 0
+  call void @llvm_hpvm_printTimerSet(i8** @hpvmTimerSet_CPU, i8* %Ptr2)
   %call8 = call noalias i8* @malloc(i64 48) #33
-  %17 = bitcast %"class.std::vector.6"** %soundSrcs to i64*
-  %18 = load i64, i64* %17, align 8, !tbaa !5651
-  %19 = bitcast i8* %call8 to i64*
-  store i64 %18, i64* %19, align 1, !tbaa !5664
+  %19 = bitcast %"class.std::vector.6"** %soundSrcs to i64*
+  %20 = load i64, i64* %19, align 8, !tbaa !5651
+  %21 = bitcast i8* %call8 to i64*
+  store i64 %20, i64* %21, align 1, !tbaa !5664
   %bytes_soundSrcs11 = getelementptr inbounds i8, i8* %call8, i64 8
-  %20 = bitcast i8* %bytes_soundSrcs11 to i64*
-  store i64 %mul, i64* %20, align 1, !tbaa !5666
+  %22 = bitcast i8* %bytes_soundSrcs11 to i64*
+  store i64 %mul, i64* %22, align 1, !tbaa !5666
   %nSamples = getelementptr inbounds i8, i8* %call8, i64 16
-  %21 = bitcast i8* %nSamples to i32*
-  store i32 1024, i32* %21, align 1, !tbaa !5667
+  %23 = bitcast i8* %nSamples to i32*
+  store i32 1024, i32* %23, align 1, !tbaa !5667
   %soundSrcsSize12 = getelementptr inbounds i8, i8* %call8, i64 20
-  %22 = bitcast i8* %soundSrcsSize12 to i32*
-  store i32 %conv, i32* %22, align 1, !tbaa !5668
+  %24 = bitcast i8* %soundSrcsSize12 to i32*
+  store i32 %conv, i32* %24, align 1, !tbaa !5668
   %arraydecay13 = getelementptr inbounds [1024 x i16], [1024 x i16]* %sampleTemp, i64 0, i64 0
   %sampleTemp14 = getelementptr inbounds i8, i8* %call8, i64 24
-  %23 = bitcast i8* %sampleTemp14 to i16**
-  store i16* %arraydecay13, i16** %23, align 1, !tbaa !5669
+  %25 = bitcast i8* %sampleTemp14 to i16**
+  store i16* %arraydecay13, i16** %25, align 1, !tbaa !5669
   %sumBF15 = getelementptr inbounds i8, i8* %call8, i64 32
-  %24 = bitcast i8* %sumBF15 to i8**
-  store i8* %call1, i8** %24, align 1, !tbaa !5670
+  %26 = bitcast i8* %sumBF15 to i8**
+  store i8* %call1, i8** %26, align 1, !tbaa !5670
   %bytes_sumBF16 = getelementptr inbounds i8, i8* %call8, i64 40
-  %25 = bitcast i8* %bytes_sumBF16 to i64*
-  store i64 64, i64* %25, align 1, !tbaa !5671
-  %26 = bitcast %"class.std::vector.6"** %soundSrcs to i8**
-  %27 = inttoptr i64 %18 to i8*
-  call void @llvm_hpvm_track_mem(i8* %27, i64 %mul) #33
+  %27 = bitcast i8* %bytes_sumBF16 to i64*
+  store i64 64, i64* %27, align 1, !tbaa !5671
+  %28 = bitcast %"class.std::vector.6"** %soundSrcs to i8**
+  %29 = inttoptr i64 %20 to i8*
+  call void @llvm_hpvm_track_mem(i8* %29, i64 %mul) #33
   call void @llvm_hpvm_track_mem(i8* nonnull %call1, i64 64) #33
   call void @llvm_hpvm_switchToTimer(i8** @hpvmTimerSet_CPU, i32 18)
   %graph_Z15encoderPipelinePSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEmjjPsP8CBFormatm_cloned = call i8* @llvm_hpvm_cpu_launch(i8* (i8*)* @LaunchDataflowGraph, i8* %call8)
   call void @llvm_hpvm_cpu_wait(i8* %graph_Z15encoderPipelinePSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEmjjPsP8CBFormatm_cloned)
-  %28 = load i8*, i8** %26, align 8, !tbaa !5651
-  call void bitcast (i8* (i8*, i64)* @llvm_hpvm_request_mem to void (i8*, i64)*)(i8* %28, i64 %mul) #33
+  %30 = load i8*, i8** %28, align 8, !tbaa !5651
+  call void bitcast (i8* (i8*, i64)* @llvm_hpvm_request_mem to void (i8*, i64)*)(i8* %30, i64 %mul) #33
   call void bitcast (i8* (i8*, i64)* @llvm_hpvm_request_mem to void (i8*, i64)*)(i8* nonnull %call1, i64 64) #33
-  %29 = load i8*, i8** %26, align 8, !tbaa !5651
-  call void @llvm_hpvm_untrack_mem(i8* %29) #33
+  %31 = load i8*, i8** %28, align 8, !tbaa !5651
+  call void @llvm_hpvm_untrack_mem(i8* %31) #33
   call void @llvm_hpvm_untrack_mem(i8* nonnull %call1) #33
   %Ptr = getelementptr [14 x i8], [14 x i8]* @1, i64 0, i64 0
   call void @llvm_hpvm_printTimerSet(i8** @hpvmTimerSet_GenHPVM, i8* %Ptr)
+  %Ptr1 = getelementptr [13 x i8], [13 x i8]* @2, i64 0, i64 0
+  call void @llvm_hpvm_printTimerSet(i8** @hpvmTimerSet_OpenCL, i8* %Ptr1)
   call void @llvm.lifetime.end.p0i8(i64 2048, i8* nonnull %14) #33
   ret void
 
 for.body:                                         ; preds = %for.body, %for.body.preheader
   %indvars.iv = phi i64 [ 0, %for.body.preheader ], [ %indvars.iv.next, %for.body ]
-  %30 = load %"class.std::vector.6"*, %"class.std::vector.6"** %soundSrcs, align 8, !tbaa !5651
-  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %30, i64 0, i32 0, i32 0, i32 0
-  %31 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !tbaa !5655
-  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %31, i64 %indvars.iv
-  %32 = bitcast %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i to %"class.std::basic_istream"***
-  %33 = load %"class.std::basic_istream"**, %"class.std::basic_istream"*** %32, align 8, !tbaa !5488
-  %34 = load %"class.std::basic_istream"*, %"class.std::basic_istream"** %33, align 8, !tbaa !5619
-  %call6 = call dereferenceable(280) %"class.std::basic_istream"* @_ZNSi4readEPcl(%"class.std::basic_istream"* %34, i8* nonnull %14, i64 2048)
+  %32 = load %"class.std::vector.6"*, %"class.std::vector.6"** %soundSrcs, align 8, !tbaa !5651
+  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %32, i64 0, i32 0, i32 0, i32 0
+  %33 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !tbaa !5655
+  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %33, i64 %indvars.iv
+  %34 = bitcast %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i to %"class.std::basic_istream"***
+  %35 = load %"class.std::basic_istream"**, %"class.std::basic_istream"*** %34, align 8, !tbaa !5488
+  %36 = load %"class.std::basic_istream"*, %"class.std::basic_istream"** %35, align 8, !tbaa !5619
+  %call6 = call dereferenceable(280) %"class.std::basic_istream"* @_ZNSi4readEPcl(%"class.std::basic_istream"* %36, i8* nonnull %14, i64 2048)
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond, label %for.cond.cleanup, label %for.body
@@ -28827,10 +28836,10 @@ attributes #36 = { nounwind readonly }
 !5465 = !{!10, !4314, !10, !4271, !4900}
 !5466 = !DIImportedEntity(tag: DW_TAG_imported_module, scope: !2, entity: !45, file: !6, line: 25)
 !5467 = !{!"clang version 9.0.0 (https://gitlab.engr.illinois.edu/llvm/hpvm-release.git f83c355d11be7d011508763fedc67e76d592a636)"}
-!5468 = !{%struct.out._Z17normalization_fxpPSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEmjjPs (%"class.std::vector.6"*, i64, i32, i32, i16*)* undef}
-!5469 = !{%struct.out._Z17normalization_fxpPSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEmjjPs (%"class.std::vector.6"*, i64, i32, i32)* undef}
-!5470 = !{%emptyStruct.28 (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32)* undef}
-!5471 = !{%emptyStruct.28 (%"class.std::vector.6"*, i64, i32, i32, i16*, %class.CBFormat*, i64)* undef}
+!5468 = distinct !{%struct.out._Z17normalization_fxpPSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEmjjPs (%"class.std::vector.6"*, i64, i32, i32, i16*)* undef}
+!5469 = distinct !{%struct.out._Z17normalization_fxpPSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEmjjPs (%"class.std::vector.6"*, i64, i32, i32)* undef}
+!5470 = distinct !{%emptyStruct.28 (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32)* undef}
+!5471 = distinct !{%emptyStruct.28 (%"class.std::vector.6"*, i64, i32, i32, i16*, %class.CBFormat*, i64)* undef}
 !5472 = !{i32 1, !"wchar_size", i32 4}
 !5473 = !{i32 7, !"PIC Level", i32 2}
 !5474 = !{i32 2, !"Dwarf Version", i32 4}
