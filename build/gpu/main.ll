@@ -4423,85 +4423,83 @@ ehcleanup52:                                      ; preds = %lpad29, %lpad31, %i
 declare dereferenceable(272) %"class.std::basic_ostream"* @_ZNSo5writeEPKcl(%"class.std::basic_ostream"*, i8*, i64) local_unnamed_addr #0
 
 ; Function Attrs: nounwind uwtable
-define void @_Z17normalization_fxpPSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEmjjPs(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i32 %nSamples, i32 %soundSrcsSize, i16* nocapture readonly %sampleTemp) #6 {
+define void @normalization_fxp(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* nocapture readonly %sampleTemp) #6 {
 entry:
   tail call void @__hpvm__hint(i32 2) #25
   tail call void (i32, ...) @__hpvm__attributes(i32 1, %"class.std::vector.6"* %soundSrcs, i32 1, %"class.std::vector.6"* %soundSrcs) #25
-  %cmp31 = icmp eq i32 %soundSrcsSize, 0
-  %cmp229 = icmp eq i32 %nSamples, 0
-  %or.cond = or i1 %cmp31, %cmp229
-  br i1 %or.cond, label %for.cond.cleanup, label %for.cond1.preheader.us.preheader
+  %cmp34 = icmp sgt i64 %soundSrcsSize, 0
+  %cmp331 = icmp sgt i64 %nSamples, 0
+  %or.cond = and i1 %cmp34, %cmp331
+  br i1 %or.cond, label %for.cond1.preheader.us.preheader, label %for.cond.cleanup
 
 for.cond1.preheader.us.preheader:                 ; preds = %entry
   %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %soundSrcs, i64 0, i32 0, i32 0, i32 0
-  %wide.trip.count37 = zext i32 %soundSrcsSize to i64
   %.pre = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !tbaa !167
-  %wide.trip.count = zext i32 %nSamples to i64
-  %xtraiter = and i64 %wide.trip.count, 1
-  %0 = icmp eq i32 %nSamples, 1
-  %unroll_iter = sub nsw i64 %wide.trip.count, %xtraiter
+  %xtraiter = and i64 %nSamples, 1
+  %0 = icmp eq i64 %nSamples, 1
+  %unroll_iter = sub i64 %nSamples, %xtraiter
   %lcmp.mod = icmp eq i64 %xtraiter, 0
   br label %for.cond1.preheader.us
 
-for.cond1.preheader.us:                           ; preds = %for.cond1.for.cond.cleanup3_crit_edge.us, %for.cond1.preheader.us.preheader
-  %indvars.iv35 = phi i64 [ 0, %for.cond1.preheader.us.preheader ], [ %indvars.iv.next36, %for.cond1.for.cond.cleanup3_crit_edge.us ]
-  %add.ptr.i.us = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %.pre, i64 %indvars.iv35
+for.cond1.preheader.us:                           ; preds = %for.cond1.for.cond.cleanup4_crit_edge.us, %for.cond1.preheader.us.preheader
+  %indvars.iv38 = phi i64 [ 0, %for.cond1.preheader.us.preheader ], [ %indvars.iv.next39, %for.cond1.for.cond.cleanup4_crit_edge.us ]
+  %add.ptr.i.us = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %.pre, i64 %indvars.iv38
   %1 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i.us, align 8, !tbaa !26
   %amp.us = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %1, i64 0, i32 5
-  br i1 %0, label %for.cond1.for.cond.cleanup3_crit_edge.us.unr-lcssa, label %for.body4.us
+  br i1 %0, label %for.cond1.for.cond.cleanup4_crit_edge.us.unr-lcssa, label %for.body5.us
 
-for.body4.us:                                     ; preds = %for.cond1.preheader.us, %for.body4.us
-  %indvars.iv = phi i64 [ %indvars.iv.next.1, %for.body4.us ], [ 0, %for.cond1.preheader.us ]
-  %niter = phi i64 [ %niter.nsub.1, %for.body4.us ], [ %unroll_iter, %for.cond1.preheader.us ]
+for.body5.us:                                     ; preds = %for.cond1.preheader.us, %for.body5.us
+  %indvars.iv = phi i64 [ %indvars.iv.next.1, %for.body5.us ], [ 0, %for.cond1.preheader.us ]
+  %niter = phi i64 [ %niter.nsub.1, %for.body5.us ], [ %unroll_iter, %for.cond1.preheader.us ]
   %2 = load float, float* %amp.us, align 4, !tbaa !129
-  %conv5.us = fpext float %2 to double
+  %conv7.us = fpext float %2 to double
   %arrayidx.us = getelementptr inbounds i16, i16* %sampleTemp, i64 %indvars.iv
   %3 = load i16, i16* %arrayidx.us, align 2, !tbaa !176
-  %conv7.us = sitofp i16 %3 to double
-  %div.us = fdiv double %conv7.us, 3.276700e+04
-  %mul.us = fmul double %div.us, %conv5.us
-  %conv8.us = fptrunc double %mul.us to float
-  %arrayidx12.us = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %1, i64 0, i32 1, i64 %indvars.iv
-  store float %conv8.us, float* %arrayidx12.us, align 4, !tbaa !29
+  %conv9.us = sitofp i16 %3 to double
+  %div.us = fdiv double %conv9.us, 3.276700e+04
+  %mul.us = fmul double %div.us, %conv7.us
+  %conv10.us = fptrunc double %mul.us to float
+  %arrayidx14.us = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %1, i64 0, i32 1, i64 %indvars.iv
+  store float %conv10.us, float* %arrayidx14.us, align 4, !tbaa !29
   %indvars.iv.next = or i64 %indvars.iv, 1
   %4 = load float, float* %amp.us, align 4, !tbaa !129
-  %conv5.us.1 = fpext float %4 to double
+  %conv7.us.1 = fpext float %4 to double
   %arrayidx.us.1 = getelementptr inbounds i16, i16* %sampleTemp, i64 %indvars.iv.next
   %5 = load i16, i16* %arrayidx.us.1, align 2, !tbaa !176
-  %conv7.us.1 = sitofp i16 %5 to double
-  %div.us.1 = fdiv double %conv7.us.1, 3.276700e+04
-  %mul.us.1 = fmul double %div.us.1, %conv5.us.1
-  %conv8.us.1 = fptrunc double %mul.us.1 to float
-  %arrayidx12.us.1 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %1, i64 0, i32 1, i64 %indvars.iv.next
-  store float %conv8.us.1, float* %arrayidx12.us.1, align 4, !tbaa !29
+  %conv9.us.1 = sitofp i16 %5 to double
+  %div.us.1 = fdiv double %conv9.us.1, 3.276700e+04
+  %mul.us.1 = fmul double %div.us.1, %conv7.us.1
+  %conv10.us.1 = fptrunc double %mul.us.1 to float
+  %arrayidx14.us.1 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %1, i64 0, i32 1, i64 %indvars.iv.next
+  store float %conv10.us.1, float* %arrayidx14.us.1, align 4, !tbaa !29
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2
   %niter.nsub.1 = add i64 %niter, -2
   %niter.ncmp.1 = icmp eq i64 %niter.nsub.1, 0
-  br i1 %niter.ncmp.1, label %for.cond1.for.cond.cleanup3_crit_edge.us.unr-lcssa, label %for.body4.us
+  br i1 %niter.ncmp.1, label %for.cond1.for.cond.cleanup4_crit_edge.us.unr-lcssa, label %for.body5.us
 
-for.cond1.for.cond.cleanup3_crit_edge.us.unr-lcssa: ; preds = %for.body4.us, %for.cond1.preheader.us
-  %indvars.iv.unr = phi i64 [ 0, %for.cond1.preheader.us ], [ %indvars.iv.next.1, %for.body4.us ]
-  br i1 %lcmp.mod, label %for.cond1.for.cond.cleanup3_crit_edge.us, label %for.body4.us.epil
+for.cond1.for.cond.cleanup4_crit_edge.us.unr-lcssa: ; preds = %for.body5.us, %for.cond1.preheader.us
+  %indvars.iv.unr = phi i64 [ 0, %for.cond1.preheader.us ], [ %indvars.iv.next.1, %for.body5.us ]
+  br i1 %lcmp.mod, label %for.cond1.for.cond.cleanup4_crit_edge.us, label %for.body5.us.epil
 
-for.body4.us.epil:                                ; preds = %for.cond1.for.cond.cleanup3_crit_edge.us.unr-lcssa
+for.body5.us.epil:                                ; preds = %for.cond1.for.cond.cleanup4_crit_edge.us.unr-lcssa
   %6 = load float, float* %amp.us, align 4, !tbaa !129
-  %conv5.us.epil = fpext float %6 to double
+  %conv7.us.epil = fpext float %6 to double
   %arrayidx.us.epil = getelementptr inbounds i16, i16* %sampleTemp, i64 %indvars.iv.unr
   %7 = load i16, i16* %arrayidx.us.epil, align 2, !tbaa !176
-  %conv7.us.epil = sitofp i16 %7 to double
-  %div.us.epil = fdiv double %conv7.us.epil, 3.276700e+04
-  %mul.us.epil = fmul double %div.us.epil, %conv5.us.epil
-  %conv8.us.epil = fptrunc double %mul.us.epil to float
-  %arrayidx12.us.epil = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %1, i64 0, i32 1, i64 %indvars.iv.unr
-  store float %conv8.us.epil, float* %arrayidx12.us.epil, align 4, !tbaa !29
-  br label %for.cond1.for.cond.cleanup3_crit_edge.us
+  %conv9.us.epil = sitofp i16 %7 to double
+  %div.us.epil = fdiv double %conv9.us.epil, 3.276700e+04
+  %mul.us.epil = fmul double %div.us.epil, %conv7.us.epil
+  %conv10.us.epil = fptrunc double %mul.us.epil to float
+  %arrayidx14.us.epil = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %1, i64 0, i32 1, i64 %indvars.iv.unr
+  store float %conv10.us.epil, float* %arrayidx14.us.epil, align 4, !tbaa !29
+  br label %for.cond1.for.cond.cleanup4_crit_edge.us
 
-for.cond1.for.cond.cleanup3_crit_edge.us:         ; preds = %for.cond1.for.cond.cleanup3_crit_edge.us.unr-lcssa, %for.body4.us.epil
-  %indvars.iv.next36 = add nuw nsw i64 %indvars.iv35, 1
-  %exitcond38 = icmp eq i64 %indvars.iv.next36, %wide.trip.count37
-  br i1 %exitcond38, label %for.cond.cleanup, label %for.cond1.preheader.us
+for.cond1.for.cond.cleanup4_crit_edge.us:         ; preds = %for.cond1.for.cond.cleanup4_crit_edge.us.unr-lcssa, %for.body5.us.epil
+  %indvars.iv.next39 = add nuw nsw i64 %indvars.iv38, 1
+  %exitcond40 = icmp eq i64 %indvars.iv.next39, %soundSrcsSize
+  br i1 %exitcond40, label %for.cond.cleanup, label %for.cond1.preheader.us
 
-for.cond.cleanup:                                 ; preds = %for.cond1.for.cond.cleanup3_crit_edge.us, %entry
+for.cond.cleanup:                                 ; preds = %for.cond1.for.cond.cleanup4_crit_edge.us, %entry
   tail call void (i32, ...) @__hpvm__return(i32 1, i64 %bytes_soundSrcs) #25
   ret void
 }
@@ -4516,16 +4514,40 @@ declare void @__hpvm__attributes(i32, ...) local_unnamed_addr #1
 declare void @__hpvm__return(i32, ...) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define void @_Z11encoder_fxpPSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEmjj(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i32 %nSamples, i32 %soundSrcsSize) #6 {
+define void @wrapperNormalization_fxp(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* nocapture readnone %sampleTemp) #6 {
+entry:
+  tail call void @__hpvm__hint(i32 1) #25
+  tail call void (i32, ...) @__hpvm__attributes(i32 1, %"class.std::vector.6"* %soundSrcs, i32 1, %"class.std::vector.6"* %soundSrcs) #25
+  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, i64, i64, i16*)* nonnull @normalization_fxp) #25
+  tail call void @__hpvm__bindIn(i8* %call, i32 0, i32 0, i32 0) #25
+  tail call void @__hpvm__bindIn(i8* %call, i32 1, i32 1, i32 0) #25
+  tail call void @__hpvm__bindIn(i8* %call, i32 2, i32 2, i32 0) #25
+  tail call void @__hpvm__bindIn(i8* %call, i32 3, i32 3, i32 0) #25
+  tail call void @__hpvm__bindIn(i8* %call, i32 4, i32 4, i32 0) #25
+  tail call void @__hpvm__bindOut(i8* %call, i32 0, i32 0, i32 0) #25
+  ret void
+}
+
+; Function Attrs: nounwind
+declare i8* @__hpvm__createNodeND(i32, ...) local_unnamed_addr #1
+
+; Function Attrs: nounwind
+declare void @__hpvm__bindIn(i8*, i32, i32, i32) local_unnamed_addr #1
+
+; Function Attrs: nounwind
+declare void @__hpvm__bindOut(i8*, i32, i32, i32) local_unnamed_addr #1
+
+; Function Attrs: nounwind uwtable
+define void @encoder_fxp(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize) #6 {
 entry:
   tail call void @__hpvm__hint(i32 2) #25
   tail call void (i32, ...) @__hpvm__attributes(i32 1, %"class.std::vector.6"* %soundSrcs, i32 1, %"class.std::vector.6"* %soundSrcs) #25
-  %cmp18 = icmp eq i32 %soundSrcsSize, 0
-  br i1 %cmp18, label %for.cond.cleanup, label %for.body.lr.ph
+  %cmp20 = icmp sgt i64 %soundSrcsSize, 0
+  br i1 %cmp20, label %for.body.lr.ph, label %for.cond.cleanup
 
 for.body.lr.ph:                                   ; preds = %entry
   %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %soundSrcs, i64 0, i32 0, i32 0, i32 0
-  %wide.trip.count = zext i32 %soundSrcsSize to i64
+  %conv4 = trunc i64 %nSamples to i32
   br label %for.body
 
 for.cond.cleanup:                                 ; preds = %for.body, %entry
@@ -4542,26 +4564,39 @@ for.body:                                         ; preds = %for.body, %for.body
   %arraydecay = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %1, i64 0, i32 1, i64 0
   %BFormat = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %1, i64 0, i32 2
   %3 = load %class.CBFormat*, %class.CBFormat** %BFormat, align 8, !tbaa !132
-  tail call void @_ZN21CAmbisonicEncoderDist7ProcessEPfjP8CBFormat(%class.CAmbisonicEncoderDist* %2, float* nonnull %arraydecay, i32 %nSamples, %class.CBFormat* %3)
+  tail call void @_ZN21CAmbisonicEncoderDist7ProcessEPfjP8CBFormat(%class.CAmbisonicEncoderDist* %2, float* nonnull %arraydecay, i32 %conv4, %class.CBFormat* %3)
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond = icmp eq i64 %indvars.iv.next, %soundSrcsSize
   br i1 %exitcond, label %for.cond.cleanup, label %for.body
 }
 
 ; Function Attrs: nounwind uwtable
-define void @_Z9sumBF_fxpPSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEmP8CBFormatmj(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* %sumBF, i64 %bytes_sumBF, i32 %soundSrcsSize) #6 {
+define void @wrapperEncoder_fxp(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize) #6 {
+entry:
+  tail call void @__hpvm__hint(i32 1) #25
+  tail call void (i32, ...) @__hpvm__attributes(i32 1, %"class.std::vector.6"* %soundSrcs, i32 1, %"class.std::vector.6"* %soundSrcs) #25
+  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, i64, i64)* nonnull @encoder_fxp) #25
+  tail call void @__hpvm__bindIn(i8* %call, i32 0, i32 0, i32 0) #25
+  tail call void @__hpvm__bindIn(i8* %call, i32 1, i32 1, i32 0) #25
+  tail call void @__hpvm__bindIn(i8* %call, i32 2, i32 2, i32 0) #25
+  tail call void @__hpvm__bindIn(i8* %call, i32 3, i32 3, i32 0) #25
+  tail call void @__hpvm__bindOut(i8* %call, i32 0, i32 0, i32 0) #25
+  ret void
+}
+
+; Function Attrs: nounwind uwtable
+define void @sumBF_fxp(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* %sumBF, i64 %bytes_sumBF, i64 %soundSrcsSize) #6 {
 entry:
   tail call void @__hpvm__hint(i32 1) #25
   tail call void (i32, ...) @__hpvm__attributes(i32 2, %"class.std::vector.6"* %soundSrcs, %class.CBFormat* %sumBF, i32 1, %class.CBFormat* %sumBF) #25
-  %cmp8 = icmp eq i32 %soundSrcsSize, 0
-  br i1 %cmp8, label %for.cond.cleanup, label %for.body.lr.ph
+  %cmp9 = icmp sgt i64 %soundSrcsSize, 0
+  br i1 %cmp9, label %for.body.lr.ph, label %for.cond.cleanup
 
 for.body.lr.ph:                                   ; preds = %entry
   %0 = getelementptr inbounds %class.CBFormat, %class.CBFormat* %sumBF, i64 0, i32 0, i32 4
   %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %soundSrcs, i64 0, i32 0, i32 0, i32 0
   %m_nSamples.i = getelementptr inbounds %class.CBFormat, %class.CBFormat* %sumBF, i64 0, i32 1
   %_M_head_impl.i.i.i.i.i.i21.i = getelementptr inbounds %class.CBFormat, %class.CBFormat* %sumBF, i64 0, i32 4, i32 0, i32 0, i32 0, i32 0
-  %wide.trip.count = zext i32 %soundSrcsSize to i64
   %.pre = load i32, i32* %0, align 8, !tbaa !12
   %cmp25.i = icmp eq i32 %.pre, 0
   %1 = zext i32 %.pre to i64
@@ -4600,8 +4635,8 @@ for.cond2.preheader.us.preheader.i:               ; preds = %for.cond2.preheader
   %unroll_iter = sub nuw nsw i64 %11, %xtraiter
   %lcmp.mod = icmp eq i64 %xtraiter, 0
   %cmp.n = icmp eq i64 %n.vec, %7
-  %xtraiter20 = and i64 %7, 3
-  %lcmp.mod21 = icmp eq i64 %xtraiter20, 0
+  %xtraiter21 = and i64 %7, 3
+  %lcmp.mod22 = icmp eq i64 %xtraiter21, 0
   br label %for.cond2.preheader.us.i
 
 for.cond2.preheader.us.i:                         ; preds = %for.cond2.for.inc10_crit_edge.us.i, %for.cond2.preheader.us.preheader.i
@@ -4614,8 +4649,8 @@ for.cond2.preheader.us.i:                         ; preds = %for.cond2.for.inc10
 
 vector.memcheck:                                  ; preds = %for.cond2.preheader.us.i
   %scevgep = getelementptr float, float* %14, i64 %7
-  %scevgep14 = getelementptr float, float* %13, i64 %7
-  %bound0 = icmp ult float* %14, %scevgep14
+  %scevgep15 = getelementptr float, float* %13, i64 %7
+  %bound0 = icmp ult float* %14, %scevgep15
   %bound1 = icmp ult float* %13, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %for.body4.us.i.preheader, label %vector.ph
@@ -4631,15 +4666,15 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %wide.load = load <4 x float>, <4 x float>* %16, align 4, !tbaa !29, !alias.scope !177
   %17 = getelementptr inbounds float, float* %15, i64 4
   %18 = bitcast float* %17 to <4 x float>*
-  %wide.load17 = load <4 x float>, <4 x float>* %18, align 4, !tbaa !29, !alias.scope !177
+  %wide.load18 = load <4 x float>, <4 x float>* %18, align 4, !tbaa !29, !alias.scope !177
   %19 = getelementptr inbounds float, float* %14, i64 %index
   %20 = bitcast float* %19 to <4 x float>*
-  %wide.load18 = load <4 x float>, <4 x float>* %20, align 4, !tbaa !29, !alias.scope !180, !noalias !177
+  %wide.load19 = load <4 x float>, <4 x float>* %20, align 4, !tbaa !29, !alias.scope !180, !noalias !177
   %21 = getelementptr inbounds float, float* %19, i64 4
   %22 = bitcast float* %21 to <4 x float>*
-  %wide.load19 = load <4 x float>, <4 x float>* %22, align 4, !tbaa !29, !alias.scope !180, !noalias !177
-  %23 = fadd <4 x float> %wide.load, %wide.load18
-  %24 = fadd <4 x float> %wide.load17, %wide.load19
+  %wide.load20 = load <4 x float>, <4 x float>* %22, align 4, !tbaa !29, !alias.scope !180, !noalias !177
+  %23 = fadd <4 x float> %wide.load, %wide.load19
+  %24 = fadd <4 x float> %wide.load18, %wide.load20
   %25 = bitcast float* %19 to <4 x float>*
   store <4 x float> %23, <4 x float>* %25, align 4, !tbaa !29, !alias.scope !180, !noalias !177
   %26 = bitcast float* %21 to <4 x float>*
@@ -4650,15 +4685,15 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %wide.load.1 = load <4 x float>, <4 x float>* %28, align 4, !tbaa !29, !alias.scope !177
   %29 = getelementptr inbounds float, float* %27, i64 4
   %30 = bitcast float* %29 to <4 x float>*
-  %wide.load17.1 = load <4 x float>, <4 x float>* %30, align 4, !tbaa !29, !alias.scope !177
+  %wide.load18.1 = load <4 x float>, <4 x float>* %30, align 4, !tbaa !29, !alias.scope !177
   %31 = getelementptr inbounds float, float* %14, i64 %index.next
   %32 = bitcast float* %31 to <4 x float>*
-  %wide.load18.1 = load <4 x float>, <4 x float>* %32, align 4, !tbaa !29, !alias.scope !180, !noalias !177
+  %wide.load19.1 = load <4 x float>, <4 x float>* %32, align 4, !tbaa !29, !alias.scope !180, !noalias !177
   %33 = getelementptr inbounds float, float* %31, i64 4
   %34 = bitcast float* %33 to <4 x float>*
-  %wide.load19.1 = load <4 x float>, <4 x float>* %34, align 4, !tbaa !29, !alias.scope !180, !noalias !177
-  %35 = fadd <4 x float> %wide.load.1, %wide.load18.1
-  %36 = fadd <4 x float> %wide.load17.1, %wide.load19.1
+  %wide.load20.1 = load <4 x float>, <4 x float>* %34, align 4, !tbaa !29, !alias.scope !180, !noalias !177
+  %35 = fadd <4 x float> %wide.load.1, %wide.load19.1
+  %36 = fadd <4 x float> %wide.load18.1, %wide.load20.1
   %37 = bitcast float* %31 to <4 x float>*
   store <4 x float> %35, <4 x float>* %37, align 4, !tbaa !29, !alias.scope !180, !noalias !177
   %38 = bitcast float* %33 to <4 x float>*
@@ -4678,15 +4713,15 @@ vector.body.epil:                                 ; preds = %middle.block.unr-lc
   %wide.load.epil = load <4 x float>, <4 x float>* %40, align 4, !tbaa !29, !alias.scope !177
   %41 = getelementptr inbounds float, float* %39, i64 4
   %42 = bitcast float* %41 to <4 x float>*
-  %wide.load17.epil = load <4 x float>, <4 x float>* %42, align 4, !tbaa !29, !alias.scope !177
+  %wide.load18.epil = load <4 x float>, <4 x float>* %42, align 4, !tbaa !29, !alias.scope !177
   %43 = getelementptr inbounds float, float* %14, i64 %index.unr
   %44 = bitcast float* %43 to <4 x float>*
-  %wide.load18.epil = load <4 x float>, <4 x float>* %44, align 4, !tbaa !29, !alias.scope !180, !noalias !177
+  %wide.load19.epil = load <4 x float>, <4 x float>* %44, align 4, !tbaa !29, !alias.scope !180, !noalias !177
   %45 = getelementptr inbounds float, float* %43, i64 4
   %46 = bitcast float* %45 to <4 x float>*
-  %wide.load19.epil = load <4 x float>, <4 x float>* %46, align 4, !tbaa !29, !alias.scope !180, !noalias !177
-  %47 = fadd <4 x float> %wide.load.epil, %wide.load18.epil
-  %48 = fadd <4 x float> %wide.load17.epil, %wide.load19.epil
+  %wide.load20.epil = load <4 x float>, <4 x float>* %46, align 4, !tbaa !29, !alias.scope !180, !noalias !177
+  %47 = fadd <4 x float> %wide.load.epil, %wide.load19.epil
+  %48 = fadd <4 x float> %wide.load18.epil, %wide.load20.epil
   %49 = bitcast float* %43 to <4 x float>*
   store <4 x float> %47, <4 x float>* %49, align 4, !tbaa !29, !alias.scope !180, !noalias !177
   %50 = bitcast float* %45 to <4 x float>*
@@ -4700,11 +4735,11 @@ for.body4.us.i.preheader:                         ; preds = %middle.block, %vect
   %indvars.iv.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %for.cond2.preheader.us.i ], [ %n.vec, %middle.block ]
   %51 = xor i64 %indvars.iv.i.ph, -1
   %52 = add nsw i64 %51, %7
-  br i1 %lcmp.mod21, label %for.body4.us.i.prol.loopexit, label %for.body4.us.i.prol
+  br i1 %lcmp.mod22, label %for.body4.us.i.prol.loopexit, label %for.body4.us.i.prol
 
 for.body4.us.i.prol:                              ; preds = %for.body4.us.i.preheader, %for.body4.us.i.prol
   %indvars.iv.i.prol = phi i64 [ %indvars.iv.next.i.prol, %for.body4.us.i.prol ], [ %indvars.iv.i.ph, %for.body4.us.i.preheader ]
-  %prol.iter = phi i64 [ %prol.iter.sub, %for.body4.us.i.prol ], [ %xtraiter20, %for.body4.us.i.preheader ]
+  %prol.iter = phi i64 [ %prol.iter.sub, %for.body4.us.i.prol ], [ %xtraiter21, %for.body4.us.i.preheader ]
   %arrayidx.us.i.prol = getelementptr inbounds float, float* %13, i64 %indvars.iv.i.prol
   %53 = load float, float* %arrayidx.us.i.prol, align 4, !tbaa !29
   %arrayidx9.us.i.prol = getelementptr inbounds float, float* %14, i64 %indvars.iv.i.prol
@@ -4756,23 +4791,37 @@ for.body4.us.i:                                   ; preds = %for.body4.us.i.prol
 
 for.cond2.for.inc10_crit_edge.us.i:               ; preds = %for.body4.us.i.prol.loopexit, %for.body4.us.i, %middle.block
   %indvars.iv.next30.i = add nuw nsw i64 %indvars.iv29.i, 1
-  %exitcond11 = icmp eq i64 %indvars.iv.next30.i, %1
-  br i1 %exitcond11, label %_ZN8CBFormatpLERKS_.exit, label %for.cond2.preheader.us.i
+  %exitcond12 = icmp eq i64 %indvars.iv.next30.i, %1
+  br i1 %exitcond12, label %_ZN8CBFormatpLERKS_.exit, label %for.cond2.preheader.us.i
 
 _ZN8CBFormatpLERKS_.exit:                         ; preds = %for.cond2.for.inc10_crit_edge.us.i, %for.body, %for.cond2.preheader.lr.ph.i
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %exitcond12 = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond12, label %for.cond.cleanup, label %for.body
+  %exitcond13 = icmp eq i64 %indvars.iv.next, %soundSrcsSize
+  br i1 %exitcond13, label %for.cond.cleanup, label %for.body
 }
 
 ; Function Attrs: nounwind uwtable
-define void @_Z15encoderPipelinePSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEmjjPsP8CBFormatm(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i32 %nSamples, i32 %soundSrcsSize, i16* nocapture readnone %sampleTemp, %class.CBFormat* %sumBF, i64 %bytes_sumBF) #6 {
+define void @wrapperSumBF_fxp(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* %sumBF, i64 %bytes_sumBF, i64 %soundSrcsSize) #6 {
+entry:
+  tail call void @__hpvm__hint(i32 1) #25
+  tail call void (i32, ...) @__hpvm__attributes(i32 2, %"class.std::vector.6"* %soundSrcs, %class.CBFormat* %sumBF, i32 1, %class.CBFormat* %sumBF) #25
+  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i64)* nonnull @sumBF_fxp) #25
+  tail call void @__hpvm__bindIn(i8* %call, i32 0, i32 0, i32 0) #25
+  tail call void @__hpvm__bindIn(i8* %call, i32 1, i32 1, i32 0) #25
+  tail call void @__hpvm__bindIn(i8* %call, i32 2, i32 2, i32 0) #25
+  tail call void @__hpvm__bindIn(i8* %call, i32 3, i32 3, i32 0) #25
+  tail call void @__hpvm__bindIn(i8* %call, i32 4, i32 4, i32 0) #25
+  ret void
+}
+
+; Function Attrs: nounwind uwtable
+define void @encoderPipeline(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* nocapture readnone %sampleTemp, %class.CBFormat* %sumBF, i64 %bytes_sumBF) #6 {
 entry:
   tail call void @__hpvm__hint(i32 1) #25
   tail call void (i32, ...) @__hpvm__attributes(i32 2, %"class.std::vector.6"* %soundSrcs, %class.CBFormat* %sumBF, i32 2, %"class.std::vector.6"* %soundSrcs, %class.CBFormat* %sumBF) #25
-  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, i32, i32, i16*)* nonnull @_Z17normalization_fxpPSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEmjjPs) #25
-  %call1 = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, i32, i32)* nonnull @_Z11encoder_fxpPSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEmjj) #25
-  %call2 = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i32)* nonnull @_Z9sumBF_fxpPSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEmP8CBFormatmj) #25
+  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, i64, i64, i16*)* nonnull @wrapperNormalization_fxp) #25
+  %call1 = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, i64, i64)* nonnull @wrapperEncoder_fxp) #25
+  %call2 = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i64)* nonnull @wrapperSumBF_fxp) #25
   tail call void @__hpvm__bindIn(i8* %call, i32 0, i32 0, i32 0) #25
   tail call void @__hpvm__bindIn(i8* %call, i32 1, i32 1, i32 0) #25
   tail call void @__hpvm__bindIn(i8* %call, i32 2, i32 2, i32 0) #25
@@ -4791,16 +4840,10 @@ entry:
 }
 
 ; Function Attrs: nounwind
-declare i8* @__hpvm__createNodeND(i32, ...) local_unnamed_addr #1
-
-; Function Attrs: nounwind
-declare void @__hpvm__bindIn(i8*, i32, i32, i32) local_unnamed_addr #1
-
-; Function Attrs: nounwind
 declare i8* @__hpvm__edge(i8*, i8*, i32, i32, i32, i32) local_unnamed_addr #1
 
 ; Function Attrs: uwtable
-define void @_Z13encodeProcessPN12ILLIXR_AUDIO7ABAudioE(%"class.ILLIXR_AUDIO::ABAudio"* nocapture readonly %audioAddr) local_unnamed_addr #5 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) {
+define void @encodeProcess(%"class.ILLIXR_AUDIO::ABAudio"* nocapture readonly %audioAddr) local_unnamed_addr #5 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) {
 entry:
   %sampleTemp = alloca [1024 x i16], align 16
   %soundSrcs = getelementptr inbounds %"class.ILLIXR_AUDIO::ABAudio", %"class.ILLIXR_AUDIO::ABAudio"* %audioAddr, i64 0, i32 1
@@ -4811,90 +4854,84 @@ entry:
   %3 = bitcast %"class.std::vector.6"* %0 to i64*
   %4 = load i64, i64* %3, align 8, !tbaa !167
   %sub.ptr.sub.i = sub i64 %2, %4
-  %5 = lshr exact i64 %sub.ptr.sub.i, 3
-  %conv = trunc i64 %5 to i32
+  %sub.ptr.div.i = ashr exact i64 %sub.ptr.sub.i, 3
   %call1 = tail call i8* @_Znwm(i64 64) #23
-  %6 = bitcast i8* %call1 to %class.CBFormat*
-  %7 = bitcast i8* %call1 to i32 (...)***
-  %8 = getelementptr inbounds i8, i8* %call1, i64 8
-  %9 = bitcast i8* %8 to i32*
-  store i32 0, i32* %9, align 8, !tbaa !6
-  %10 = getelementptr inbounds i8, i8* %call1, i64 12
-  store i8 0, i8* %10, align 4, !tbaa !11
-  %11 = getelementptr inbounds i8, i8* %call1, i64 16
-  %12 = bitcast i8* %11 to i32*
-  store i32 0, i32* %12, align 8, !tbaa !12
-  %13 = getelementptr inbounds i8, i8* %call1, i64 20
-  store i8 0, i8* %13, align 4, !tbaa !13
-  store i32 (...)** bitcast (i8** getelementptr inbounds ({ [7 x i8*] }, { [7 x i8*] }* @_ZTV8CBFormat, i64 0, inrange i32 0, i64 2) to i32 (...)**), i32 (...)*** %7, align 8, !tbaa !3
+  %5 = bitcast i8* %call1 to %class.CBFormat*
+  %6 = bitcast i8* %call1 to i32 (...)***
+  %7 = getelementptr inbounds i8, i8* %call1, i64 8
+  %8 = bitcast i8* %7 to i32*
+  store i32 0, i32* %8, align 8, !tbaa !6
+  %9 = getelementptr inbounds i8, i8* %call1, i64 12
+  store i8 0, i8* %9, align 4, !tbaa !11
+  %10 = getelementptr inbounds i8, i8* %call1, i64 16
+  %11 = bitcast i8* %10 to i32*
+  store i32 0, i32* %11, align 8, !tbaa !12
+  %12 = getelementptr inbounds i8, i8* %call1, i64 20
+  store i8 0, i8* %12, align 4, !tbaa !13
+  store i32 (...)** bitcast (i8** getelementptr inbounds ({ [7 x i8*] }, { [7 x i8*] }* @_ZTV8CBFormat, i64 0, inrange i32 0, i64 2) to i32 (...)**), i32 (...)*** %6, align 8, !tbaa !3
   %m_nSamples.i = getelementptr inbounds i8, i8* %call1, i64 24
   tail call void @llvm.memset.p0i8.i64(i8* nonnull align 8 %m_nSamples.i, i8 0, i64 40, i1 false) #25
-  %call2 = tail call zeroext i1 @_ZN8CBFormat9ConfigureEjbj(%class.CBFormat* nonnull %6, i32 3, i1 zeroext true, i32 1024)
-  %14 = bitcast [1024 x i16]* %sampleTemp to i8*
-  call void @llvm.lifetime.start.p0i8(i64 2048, i8* nonnull %14) #25
-  %cmp55 = icmp eq i32 %conv, 0
-  br i1 %cmp55, label %for.cond.cleanup, label %for.body.preheader
-
-for.body.preheader:                               ; preds = %entry
-  %wide.trip.count = and i64 %5, 4294967295
-  br label %for.body
+  %call2 = tail call zeroext i1 @_ZN8CBFormat9ConfigureEjbj(%class.CBFormat* nonnull %5, i32 3, i1 zeroext true, i32 1024)
+  %13 = bitcast [1024 x i16]* %sampleTemp to i8*
+  call void @llvm.lifetime.start.p0i8(i64 2048, i8* nonnull %13) #25
+  %cmp54 = icmp sgt i64 %sub.ptr.sub.i, 0
+  br i1 %cmp54, label %for.body, label %for.cond.cleanup
 
 for.cond.cleanup:                                 ; preds = %for.body, %entry
-  %mul = and i64 %sub.ptr.sub.i, 34359738360
   call void @__hpvm__init() #25
-  %call8 = call noalias i8* @malloc(i64 48) #25
-  %15 = bitcast %"class.std::vector.6"** %soundSrcs to i64*
-  %16 = load i64, i64* %15, align 8, !tbaa !163
-  %17 = bitcast i8* %call8 to i64*
-  store i64 %16, i64* %17, align 1, !tbaa !185
-  %bytes_soundSrcs11 = getelementptr inbounds i8, i8* %call8, i64 8
-  %18 = bitcast i8* %bytes_soundSrcs11 to i64*
-  store i64 %mul, i64* %18, align 1, !tbaa !187
-  %nSamples = getelementptr inbounds i8, i8* %call8, i64 16
-  %19 = bitcast i8* %nSamples to i32*
-  store i32 1024, i32* %19, align 1, !tbaa !188
-  %soundSrcsSize12 = getelementptr inbounds i8, i8* %call8, i64 20
-  %20 = bitcast i8* %soundSrcsSize12 to i32*
-  store i32 %conv, i32* %20, align 1, !tbaa !189
-  %arraydecay13 = getelementptr inbounds [1024 x i16], [1024 x i16]* %sampleTemp, i64 0, i64 0
-  %sampleTemp14 = getelementptr inbounds i8, i8* %call8, i64 24
-  %21 = bitcast i8* %sampleTemp14 to i16**
-  store i16* %arraydecay13, i16** %21, align 1, !tbaa !190
-  %sumBF15 = getelementptr inbounds i8, i8* %call8, i64 32
-  %22 = bitcast i8* %sumBF15 to i8**
-  store i8* %call1, i8** %22, align 1, !tbaa !191
-  %bytes_sumBF16 = getelementptr inbounds i8, i8* %call8, i64 40
-  %23 = bitcast i8* %bytes_sumBF16 to i64*
-  store i64 64, i64* %23, align 1, !tbaa !192
-  %24 = bitcast %"class.std::vector.6"** %soundSrcs to i8**
-  %25 = inttoptr i64 %16 to i8*
-  call void @llvm_hpvm_track_mem(i8* %25, i64 %mul) #25
+  %call7 = call noalias i8* @malloc(i64 56) #25
+  %14 = bitcast %"class.std::vector.6"** %soundSrcs to i64*
+  %15 = load i64, i64* %14, align 8, !tbaa !163
+  %16 = bitcast i8* %call7 to i64*
+  store i64 %15, i64* %16, align 1, !tbaa !185
+  %bytes_soundSrcs10 = getelementptr inbounds i8, i8* %call7, i64 8
+  %17 = bitcast i8* %bytes_soundSrcs10 to i64*
+  store i64 %sub.ptr.sub.i, i64* %17, align 1, !tbaa !187
+  %nSamples = getelementptr inbounds i8, i8* %call7, i64 16
+  %18 = bitcast i8* %nSamples to i64*
+  store i64 1024, i64* %18, align 1, !tbaa !188
+  %soundSrcsSize11 = getelementptr inbounds i8, i8* %call7, i64 24
+  %19 = bitcast i8* %soundSrcsSize11 to i64*
+  store i64 %sub.ptr.div.i, i64* %19, align 1, !tbaa !189
+  %arraydecay12 = getelementptr inbounds [1024 x i16], [1024 x i16]* %sampleTemp, i64 0, i64 0
+  %sampleTemp13 = getelementptr inbounds i8, i8* %call7, i64 32
+  %20 = bitcast i8* %sampleTemp13 to i16**
+  store i16* %arraydecay12, i16** %20, align 1, !tbaa !190
+  %sumBF14 = getelementptr inbounds i8, i8* %call7, i64 40
+  %21 = bitcast i8* %sumBF14 to i8**
+  store i8* %call1, i8** %21, align 1, !tbaa !191
+  %bytes_sumBF15 = getelementptr inbounds i8, i8* %call7, i64 48
+  %22 = bitcast i8* %bytes_sumBF15 to i64*
+  store i64 64, i64* %22, align 1, !tbaa !192
+  %23 = bitcast %"class.std::vector.6"** %soundSrcs to i8**
+  %24 = inttoptr i64 %15 to i8*
+  call void @llvm_hpvm_track_mem(i8* %24, i64 %sub.ptr.sub.i) #25
   call void @llvm_hpvm_track_mem(i8* nonnull %call1, i64 64) #25
-  %call18 = call i8* (i32, ...) @__hpvm__launch(i32 0, void (%"class.std::vector.6"*, i64, i32, i32, i16*, %class.CBFormat*, i64)* nonnull @_Z15encoderPipelinePSt6vectorIPN12ILLIXR_AUDIO5SoundESaIS2_EEmjjPsP8CBFormatm, i8* %call8) #25
-  call void @__hpvm__wait(i8* %call18) #25
-  %26 = load i8*, i8** %24, align 8, !tbaa !163
-  call void @llvm_hpvm_request_mem(i8* %26, i64 %mul) #25
+  %call17 = call i8* (i32, ...) @__hpvm__launch(i32 0, void (%"class.std::vector.6"*, i64, i64, i64, i16*, %class.CBFormat*, i64)* nonnull @encoderPipeline, i8* %call7) #25
+  call void @__hpvm__wait(i8* %call17) #25
+  %25 = load i8*, i8** %23, align 8, !tbaa !163
+  call void @llvm_hpvm_request_mem(i8* %25, i64 %sub.ptr.sub.i) #25
   call void @llvm_hpvm_request_mem(i8* nonnull %call1, i64 64) #25
-  %27 = load i8*, i8** %24, align 8, !tbaa !163
-  call void @llvm_hpvm_untrack_mem(i8* %27) #25
+  %26 = load i8*, i8** %23, align 8, !tbaa !163
+  call void @llvm_hpvm_untrack_mem(i8* %26) #25
   call void @llvm_hpvm_untrack_mem(i8* nonnull %call1) #25
   call void @__hpvm__cleanup() #25
-  call void @llvm.lifetime.end.p0i8(i64 2048, i8* nonnull %14) #25
+  call void @llvm.lifetime.end.p0i8(i64 2048, i8* nonnull %13) #25
   ret void
 
-for.body:                                         ; preds = %for.body, %for.body.preheader
-  %indvars.iv = phi i64 [ 0, %for.body.preheader ], [ %indvars.iv.next, %for.body ]
-  %28 = load %"class.std::vector.6"*, %"class.std::vector.6"** %soundSrcs, align 8, !tbaa !163
-  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %28, i64 0, i32 0, i32 0, i32 0
-  %29 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !tbaa !167
-  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %29, i64 %indvars.iv
-  %30 = bitcast %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i to %"class.std::basic_istream"***
-  %31 = load %"class.std::basic_istream"**, %"class.std::basic_istream"*** %30, align 8, !tbaa !26
-  %32 = load %"class.std::basic_istream"*, %"class.std::basic_istream"** %31, align 8, !tbaa !131
-  %call6 = call dereferenceable(280) %"class.std::basic_istream"* @_ZNSi4readEPcl(%"class.std::basic_istream"* %32, i8* nonnull %14, i64 2048)
+for.body:                                         ; preds = %entry, %for.body
+  %indvars.iv = phi i64 [ %indvars.iv.next, %for.body ], [ 0, %entry ]
+  %27 = load %"class.std::vector.6"*, %"class.std::vector.6"** %soundSrcs, align 8, !tbaa !163
+  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %27, i64 0, i32 0, i32 0, i32 0
+  %28 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !tbaa !167
+  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %28, i64 %indvars.iv
+  %29 = bitcast %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i to %"class.std::basic_istream"***
+  %30 = load %"class.std::basic_istream"**, %"class.std::basic_istream"*** %29, align 8, !tbaa !26
+  %31 = load %"class.std::basic_istream"*, %"class.std::basic_istream"** %30, align 8, !tbaa !131
+  %call6 = call dereferenceable(280) %"class.std::basic_istream"* @_ZNSi4readEPcl(%"class.std::basic_istream"* %31, i8* nonnull %13, i64 2048)
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond, label %for.cond.cleanup, label %for.body
+  %cmp = icmp sgt i64 %sub.ptr.div.i, %indvars.iv.next
+  br i1 %cmp, label %for.body, label %for.cond.cleanup
 }
 
 ; Function Attrs: nounwind
@@ -5039,7 +5076,7 @@ lpad10:                                           ; preds = %_ZNSt7__cxx1112basi
 
 for.body:                                         ; preds = %for.cond.preheader, %for.inc
   %i.074 = phi i32 [ %inc, %for.inc ], [ 0, %for.cond.preheader ]
-  invoke void @_Z13encodeProcessPN12ILLIXR_AUDIO7ABAudioE(%"class.ILLIXR_AUDIO::ABAudio"* nonnull %audio)
+  invoke void @encodeProcess(%"class.ILLIXR_AUDIO::ABAudio"* nonnull %audio)
           to label %for.inc unwind label %lpad13
 
 for.inc:                                          ; preds = %for.body
@@ -6269,13 +6306,13 @@ attributes #27 = { noreturn }
 !183 = distinct !{!183, !28}
 !184 = distinct !{!184, !37}
 !185 = !{!186, !24, i64 0}
-!186 = !{!"_ZTS6RootIn", !24, i64 0, !142, i64 8, !8, i64 16, !8, i64 20, !24, i64 24, !24, i64 32, !142, i64 40}
+!186 = !{!"_ZTS6RootIn", !24, i64 0, !142, i64 8, !142, i64 16, !142, i64 24, !24, i64 32, !24, i64 40, !142, i64 48}
 !187 = !{!186, !142, i64 8}
-!188 = !{!186, !8, i64 16}
-!189 = !{!186, !8, i64 20}
-!190 = !{!186, !24, i64 24}
-!191 = !{!186, !24, i64 32}
-!192 = !{!186, !142, i64 40}
+!188 = !{!186, !142, i64 16}
+!189 = !{!186, !142, i64 24}
+!190 = !{!186, !24, i64 32}
+!191 = !{!186, !24, i64 40}
+!192 = !{!186, !142, i64 48}
 !193 = !{!22, !24, i64 16}
 !194 = distinct !{!194, !37}
 !195 = distinct !{!195, !28}
