@@ -652,7 +652,7 @@ void normalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/
             (*soundSrcs)[j]->sample[k] = (*soundSrcs)[j]->amp * (sampleTemp[k] / 32767.0);
         }
     }  
-    
+
     // this is the parallel version
     // void* thisNode = __hpvm__getNode();
     // long j = __hpvm__getNodeInstanceID_x(thisNode);
@@ -669,7 +669,8 @@ void normalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/
 void wrapperNormalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ long nSamples, /*3*/ long soundSrcsSize, /*4*/ short* sampleTemp, /*5*/ size_t bytes_sampleTemp) {
     __hpvm__hint(hpvm::CPU_TARGET);
     __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
-    void* normalNode = __hpvm__createNodeND(2, normalization_fxp, soundSrcsSize, nSamples);
+    // void* normalNode = __hpvm__createNodeND(2, normalization_fxp, soundSrcsSize, nSamples);
+    void* normalNode = __hpvm__createNodeND(0, normalization_fxp);
 
     __hpvm__bindIn(normalNode, 0, 0, 0);
     __hpvm__bindIn(normalNode, 1, 1, 0);
@@ -706,7 +707,8 @@ void wrapperEncoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*
     __hpvm__hint(hpvm::CPU_TARGET);
     __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
 
-    void* encodeNode = __hpvm__createNodeND(1, encoder_fxp, soundSrcsSize);
+    // void* encodeNode = __hpvm__createNodeND(1, encoder_fxp, soundSrcsSize);
+    void* encodeNode = __hpvm__createNodeND(0, encoder_fxp);
 
     __hpvm__bindIn(encodeNode, 0, 0, 0);
     __hpvm__bindIn(encodeNode, 1, 1, 0);
