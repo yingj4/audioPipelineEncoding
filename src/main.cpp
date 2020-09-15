@@ -644,19 +644,19 @@ void normalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/
     __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
 
     // normalize samples to -1 to 1 float, with amplitude scale
-    // for (int j = 0; j < soundSrcsSize; ++j) {            
-    //     for (int k = 0; k < nSamples; ++k) {
-    //         (*soundSrcs)[j]->sample[k] = (*soundSrcs)[j]->amp * (sampleTemp[k] / 32767.0);
-    //     }
-    // }
-
-    void* thisNode = __hpvm__getNode();
-    long j = __hpvm__getNodeInstanceID_x(thisNode);
-    long k = __hpvm__getNodeInstanceID_y(thisNode);
-
-    if (j < soundSrcsSize && k < nSamples) {
-        (*soundSrcs)[j]->sample[k] = (*soundSrcs)[j]->amp * (sampleTemp[k] / 32767.0);
+    for (int j = 0; j < soundSrcsSize; ++j) {            
+        for (int k = 0; k < nSamples; ++k) {
+            (*soundSrcs)[j]->sample[k] = (*soundSrcs)[j]->amp * (sampleTemp[k] / 32767.0);
+        }
     }
+
+    // void* thisNode = __hpvm__getNode();
+    // long j = __hpvm__getNodeInstanceID_x(thisNode);
+    // long k = __hpvm__getNodeInstanceID_y(thisNode);
+
+    // if (j < soundSrcsSize && k < nSamples) {
+    //     (*soundSrcs)[j]->sample[k] = (*soundSrcs)[j]->amp * (sampleTemp[k] / 32767.0);
+    // }
 
     __hpvm__return(1, bytes_soundSrcs);
 }
@@ -682,16 +682,16 @@ void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_
     __hpvm__hint(hpvm::DEVICE);
     __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
 
-    // for (int j = 0; j < soundSrcsSize; ++j) {
-    //     (*soundSrcs)[j]->BEncoder->Process((*soundSrcs)[j]->sample, nSamples, (*soundSrcs)[j]->BFormat);
-    // }
-
-    void* thisNode = __hpvm__getNode();
-    long j = __hpvm__getNodeInstanceID_x(thisNode);
-
-    if (j < soundSrcsSize) {
+    for (int j = 0; j < soundSrcsSize; ++j) {
         (*soundSrcs)[j]->BEncoder->Process((*soundSrcs)[j]->sample, nSamples, (*soundSrcs)[j]->BFormat);
     }
+
+    // void* thisNode = __hpvm__getNode();
+    // long j = __hpvm__getNodeInstanceID_x(thisNode);
+
+    // if (j < soundSrcsSize) {
+    //     (*soundSrcs)[j]->BEncoder->Process((*soundSrcs)[j]->sample, nSamples, (*soundSrcs)[j]->BFormat);
+    // }
 
     __hpvm__return(1, bytes_soundSrcs);
     
