@@ -645,15 +645,15 @@ void normalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/
     __hpvm__hint(hpvm::DEVICE);
     __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
 
-    // normalize samples to -1 to 1 float, with amplitude scale
-    // this is the non-parallel version
-    for (int j = 0; j < soundSrcsSize; ++j) {            
-        for (int k = 0; k < nSamples; ++k) {
-            (*soundSrcs)[j]->sample[k] = (*soundSrcs)[j]->amp * (sampleTemp[k] / 32767.0);
-        }
-    }  
+    // Normalize samples to -1 to 1 float, with amplitude scale
+    // This is the non-parallel version
+    // for (int j = 0; j < soundSrcsSize; ++j) {            
+    //     for (int k = 0; k < nSamples; ++k) {
+    //         (*soundSrcs)[j]->sample[k] = (*soundSrcs)[j]->amp * (sampleTemp[k] / 32767.0);
+    //     }
+    // }  
 
-    // this is the parallel version
+    // This is the parallel version
     // void* thisNode = __hpvm__getNode();
     // long j = __hpvm__getNodeInstanceID_x(thisNode);
     // long k = __hpvm__getNodeInstanceID_y(thisNode);
@@ -687,9 +687,12 @@ void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_
     __hpvm__hint(hpvm::DEVICE);
     __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
 
+    // This is the non-parallel part
     for (int j = 0; j < soundSrcsSize; ++j) {
         (*soundSrcs)[j]->BEncoder->Process((*soundSrcs)[j]->sample, nSamples, (*soundSrcs)[j]->BFormat);
     }
+
+    // This is the paralle part
     // void* thisNode = __hpvm__getNode();
     // long j = __hpvm__getNodeInstanceID_x(thisNode);
 
@@ -874,11 +877,24 @@ int main(int argc, char const *argv[])
             llvm_hpvm_untrack_mem(sampleTemp);
             // printf("\n\nsampleTemp nnp\n\n");
 
+            // unsigned niChannel = 0;
+            // unsigned niSample = 0;
+            // for(niChannel = 0; niChannel < sumBF->m_nChannelCount; niChannel++)
+            // {
+            //     for(niSample = 0; niSample < sumBF->m_nSamples; niSample++)
+            //     {
+            //         std::cout << sumBF->m_ppfChannels[niChannel][niSample] << ' ';
+            //     }
+            //     std::cout << std::endl;
+            // }
+            // std::cout << std::endl;
+
             sumBF->Configure(NORDER, true, BLOCK_SIZE);
             for (int j = 0; j < soundSrcsSize; ++j) {
                 (*(audioAddr->soundSrcs))[j]->srcFile->read((char*)sampleTemp, BLOCK_SIZE * sizeof(short));
             }
             // printf("\n%i", i);
+            
         }
     }
     else {
@@ -890,6 +906,8 @@ int main(int argc, char const *argv[])
     __hpvm__wait(encodingDFG);
 
     __hpvm__cleanup();
+
+    
 
     return 0;
 }
