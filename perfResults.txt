@@ -1,0 +1,12 @@
+ Performance counter stats for './audioEncoding-seq 500 encode' (10 runs):
+
+     129339.599772      task-clock (msec)         #    1.000 CPUs utilized            ( +-  0.08% )
+               196      context-switches          #    0.002 K/sec                    ( +-  1.01% )
+                 0      cpu-migrations            #    0.000 K/sec                    ( +- 53.75% )
+            12,290      page-faults               #    0.095 K/sec                    ( +-  0.02% )
+   606,748,422,987      cycles                    #    4.691 GHz                      ( +-  0.04% )
+ 1,571,079,787,793      instructions              #    2.59  insn per cycle           ( +-  0.00% )
+    70,340,429,655      branches                  #  543.843 M/sec                    ( +-  0.00% )
+       150,195,586      branch-misses             #    0.21% of all branches          ( +-  0.01% )
+
+     129.356629517 seconds time elapsed                                          ( +-  0.08% )
