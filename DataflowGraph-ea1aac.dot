@@ -1,0 +1,23 @@
+digraph "encoderPipeline_cloned" {
+	label="encoderPipeline_cloned";
+	compound=true;
+	Node0x6e1fe00 [shape=record,shape=oval,label="{Entry}"];
+	Node0x6e1fe00 -> Node0x6ec2c80[lhead=cluster0x6ec2c80];
+	Node0x6e1fe00 -> Node0x6ec2c80[lhead=cluster0x6ec2c80];
+	Node0x6e1fe00 -> Node0x6ec2c80[lhead=cluster0x6ec2c80];
+	Node0x6e1fe00 -> Node0x6ec2c80[lhead=cluster0x6ec2c80];
+	Node0x6e1fe00 -> Node0x6ec2c80[lhead=cluster0x6ec2c80];
+	Node0x6e1fe00 -> Node0x6e5bc30[lhead=cluster0x6e5bc30];
+	Node0x6e1fe00 -> Node0x6e5bc30[lhead=cluster0x6e5bc30];
+	Node0x6e1fe00 -> Node0x6e5bc30[lhead=cluster0x6e5bc30];
+	Node0x6e1fe00 -> Node0x6e88d30[lhead=cluster0x6e88d30];
+	Node0x6e1fe00 -> Node0x6e88d30[lhead=cluster0x6e88d30];
+	Node0x6e1fe00 -> Node0x6e88d30[lhead=cluster0x6e88d30];
+	Node0x6e1fe00 -> Node0x6e88d30[lhead=cluster0x6e88d30];
+	Node0x6e5c0f0 [shape=record,shape=oval,label="{Exit}"];
+	Node0x6ec2c80 [shape=record,shape=oval,label="{wrapperNormalization_fxp_cloned}"];
+	Node0x6ec2c80 -> Node0x6e5bc30[ltail=cluster0x6ec2c80, lhead=cluster0x6e5bc30];
+	Node0x6e5bc30 [shape=record,shape=oval,label="{wrapperEncoder_fxp_cloned}"];
+	Node0x6e5bc30 -> Node0x6e88d30[ltail=cluster0x6e5bc30, lhead=cluster0x6e88d30];
+	Node0x6e88d30 [shape=record,shape=oval,label="{wrapperSumBF_fxp_cloned}"];
+}
