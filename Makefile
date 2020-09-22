@@ -59,13 +59,13 @@ TESTGEN_OPTFLAGS = -load LLVMGenHPVM.so -genhpvm -globaldce
 ifeq ($(TARGET),seq)
   DEVICE = CPU_TARGET
   HPVM_OPTFLAGS = -load LLVMBuildDFG.so -load LLVMDFG2LLVM_CPU.so -load LLVMClearDFG.so -dfg2llvm-cpu -clearDFG
-  HPVM_OPTFLAGS += -hpvm-timers-cpu
+  # HPVM_OPTFLAGS += -hpvm-timers-cpu
 else
   DEVICE = GPU_TARGET
   HPVM_OPTFLAGS = -load LLVMBuildDFG.so -load LLVMLocalMem.so -load LLVMDFG2LLVM_OpenCL.so -load LLVMDFG2LLVM_CPU.so -load LLVMClearDFG.so -localmem -dfg2llvm-opencl -dfg2llvm-cpu -clearDFG
   HPVM_OPTFLAGS += -hpvm-timers-cpu -hpvm-timers-ptx
 endif
-  TESTGEN_OPTFLAGS += -hpvm-timers-gen
+  # TESTGEN_OPTFLAGS += -hpvm-timers-gen
 
 CFLAGS += -DDEVICE=$(DEVICE)
 CXXFLAGS += -DDEVICE=$(DEVICE)
