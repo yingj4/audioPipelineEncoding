@@ -1,0 +1,151 @@
+Script started on Mon 28 Sep 2020 04:53:44 PM CDT
+[01;32myingj4@acadia[00m:[01;34m/shared/workspace/yingj4/HPVM/hpvm-release/hpvm/test/benchmarks/audioEncodingNoPara[00m$ make -j2[Kmake TARGET=seq[K[K[Kgpu
+/shared/workspace/yingj4/HPVM/hpvm-release/hpvm/build/bin/opt -load LLVMBuildDFG.so -load LLVMLocalMem.so -load LLVMDFG2LLVM_OpenCL.so -load LLVMDFG2LLVM_CPU.so -load LLVMClearDFG.so -localmem -dfg2llvm-opencl -dfg2llvm-cpu -clearDFG -hpvm-timers-cpu -hpvm-timers-ptx -S build/gpu/main.hpvm.ll -o build/gpu/audioEncoding-gpu.host.ll
+Writing '/tmp/DataflowGraph-984733.dot'...  done. 
+
+; Function Attrs: nounwind uwtable
+define %struct.out.normalization_fxp @normalization_fxp_cloned_opencl(%"class.std::vector.6"* in out, i64, i64, i64, i16* nocapture readonly, i64) #0 {
+entry:
+  %call3 = call i8* @llvm.hpvm.getNode()
+  %call14 = call i64 @llvm.hpvm.getNodeInstanceID.x(i8* %call3)
+  %call25 = call i64 @llvm.hpvm.getNodeInstanceID.y(i8* %call3)
+  %cmp = icmp slt i64 %call14, %3
+  %cmp3 = icmp slt i64 %call25, %2
+  %or.cond = and i1 %cmp, %cmp3
+  br i1 %or.cond, label %if.then, label %if.end
+
+if.then:                                          ; preds = %entry
+  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %0, i64 0, i32 0, i32 0, i32 0
+  %6 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !tbaa !10
+  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %6, i64 %call14
+  %7 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i, align 8, !tbaa !16
+  %amp = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %7, i64 0, i32 5
+  %8 = load float, float* %amp, align 4, !tbaa !17
+  %conv = fpext float %8 to double
+  %arrayidx = getelementptr inbounds i16, i16* %4, i64 %call25
+  %9 = load i16, i16* %arrayidx, align 2, !tbaa !21
+  %conv6 = sitofp i16 %9 to double
+  %div = fdiv double %conv6, 3.276700e+04
+  %mul = fmul double %div, %conv
+  %conv7 = fptrunc double %mul to float
+  %arrayidx9 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %7, i64 0, i32 1, i64 %call25
+  store float %conv7, float* %arrayidx9, align 4, !tbaa !23
+  br label %if.end
+
+if.end:                                           ; preds = %if.then, %entry
+  %returnStruct = insertvalue %struct.out.normalization_fxp undef, i64 %1, 0
+  %ret_arg.val = extractvalue %struct.out.normalization_fxp %returnStruct, 0
+  store i64 %ret_arg.val, i64* <badref>
+  ret void
+}
+
+; Function Attrs: nounwind uwtable
+define void @normalization_fxp_cloned_opencl_cloned(%"class.std::vector.6"* in out %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* nocapture readonly %sampleTemp, i64 %bytes_sampleTemp, i64* %ret_arg) #0 {
+entry:
+  %call3 = call i8* @llvm.hpvm.getNode()
+  %call14 = call i64 @llvm.hpvm.getNodeInstanceID.x(i8* %call3)
+  %call25 = call i64 @llvm.hpvm.getNodeInstanceID.y(i8* %call3)
+  %cmp = icmp slt i64 %call14, %soundSrcsSize
+  %cmp3 = icmp slt i64 %call25, %nSamples
+  %or.cond = and i1 %cmp, %cmp3
+  br i1 %or.cond, label %if.then, label %if.end
+
+if.then:                                          ; preds = %entry
+  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %soundSrcs, i64 0, i32 0, i32 0, i32 0
+  %0 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !tbaa !10
+  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %0, i64 %call14
+  %1 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i, align 8, !tbaa !16
+  %amp = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %1, i64 0, i32 5
+  %2 = load float, float* %amp, align 4, !tbaa !17
+  %conv = fpext float %2 to double
+  %arrayidx = getelementptr inbounds i16, i16* %sampleTemp, i64 %call25
+  %3 = load i16, i16* %arrayidx, align 2, !tbaa !21
+  %conv6 = sitofp i16 %3 to double
+  %div = fdiv double %conv6, 3.276700e+04
+  %mul = fmul double %div, %conv
+  %conv7 = fptrunc double %mul to float
+  %arrayidx9 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %1, i64 0, i32 1, i64 %call25
+  store float %conv7, float* %arrayidx9, align 4, !tbaa !23
+  br label %if.end
+
+if.end:                                           ; preds = %if.then, %entry
+  %returnStruct = insertvalue %struct.out.normalization_fxp undef, i64 %bytes_soundSrcs, 0
+  %ret_arg.val = extractvalue %struct.out.normalization_fxp %returnStruct, 0
+  store i64 %ret_arg.val, i64* %ret_arg
+  ret void
+}
+
+; Function Attrs: nounwind
+define void @normalization_fxp_cloned_opencl_cloned(%"class.std::vector.6" addrspace(1)* in out, i64, i64, i64, i16* nocapture readonly, i64, i64*) #0 {
+entry:
+  %call3 = call i8* @llvm.hpvm.getNode()
+  %call14 = call i64 @llvm.hpvm.getNodeInstanceID.x(i8* %call3)
+  %call25 = call i64 @llvm.hpvm.getNodeInstanceID.y(i8* %call3)
+  %cmp = icmp slt i64 %call14, %3
+  %cmp3 = icmp slt i64 %call25, %2
+  %or.cond = and i1 %cmp, %cmp3
+  br i1 %or.cond, label %if.then, label %if.end
+
+if.then:                                          ; preds = %entry
+  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6" addrspace(1)* %0, i64 0, i32 0, i32 0, i32 0
+  %7 = load %"class.ILLIXR_AUDIO::Sound"* addrspace(1)*, %"class.ILLIXR_AUDIO::Sound"** addrspace(1)* %_M_start.i, align 8, !tbaa !10
+  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"* addrspace(1)* %7, i64 %call14
+  %8 = load %"class.ILLIXR_AUDIO::Sound" addrspace(1)*, %"class.ILLIXR_AUDIO::Sound"* addrspace(1)* %add.ptr.i, align 8, !tbaa !16
+  %amp = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound" addrspace(1)* %8, i64 0, i32 5
+  %9 = load float, float addrspace(1)* %amp, align 4, !tbaa !17
+  %conv = fpext float %9 to double
+  %arrayidx = getelementptr inbounds i16, i16* %4, i64 %call25
+  %10 = load i16, i16* %arrayidx, align 2, !tbaa !21
+  %conv6 = sitofp i16 %10 to double
+  %div = fdiv double %conv6, 3.276700e+04
+  %mul = fmul double %div, %conv
+  %conv7 = fptrunc double %mul to float
+  %arrayidx9 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound" addrspace(1)* %8, i64 0, i32 1, i64 %call25
+  store float %conv7, float addrspace(1)* %arrayidx9, align 4, !tbaa !23
+  br label %if.end
+
+if.end:                                           ; preds = %if.then, %entry
+  %returnStruct = insertvalue %struct.out.normalization_fxp undef, i64 %1, 0
+  %ret_arg.val = extractvalue %struct.out.normalization_fxp %returnStruct, 0
+  store i64 %ret_arg.val, i64* %6
+  ret void
+}
+opt: /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/IR/Instructions.cpp:1321: llvm::LoadInst::LoadInst(llvm::Type*, llvm::Value*, const llvm::Twine&, bool, unsigned int, llvm::AtomicOrdering, llvm::SyncScope::ID, llvm::Instruction*): Assertion `Ty == cast<PointerType>(Ptr->getType())->getElementType()' failed.
+Stack dump:
+0.	Program arguments: /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/build/bin/opt -load LLVMBuildDFG.so -load LLVMLocalMem.so -load LLVMDFG2LLVM_OpenCL.so -load LLVMDFG2LLVM_CPU.so -load LLVMClearDFG.so -localmem -dfg2llvm-opencl -dfg2llvm-cpu -clearDFG -hpvm-timers-cpu -hpvm-timers-ptx -S build/gpu/main.hpvm.ll -o build/gpu/audioEncoding-gpu.host.ll 
+1.	Running pass 'Unnamed pass: implement Pass::getPassName()' on module 'build/gpu/main.hpvm.ll'.
+ #0 0x0000000003067291 llvm::sys::PrintStackTrace(llvm::raw_ostream&) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/Support/Unix/Signals.inc:533:0
+ #1 0x0000000003067324 PrintStackTraceSignalHandler(void*) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/Support/Unix/Signals.inc:594:0
+ #2 0x00000000030651f8 llvm::sys::RunSignalHandlers() /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/Support/Signals.cpp:68:0
+ #3 0x0000000003066c46 SignalHandler(int) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/Support/Unix/Signals.inc:385:0
+ #4 0x00007fa865002390 __restore_rt (/lib/x86_64-linux-gnu/libpthread.so.0+0x11390)
+ #5 0x00007fa863d74438 raise /build/glibc-e6zv40/glibc-2.23/signal/../sysdeps/unix/sysv/linux/raise.c:54:0
+ #6 0x00007fa863d7603a abort /build/glibc-e6zv40/glibc-2.23/stdlib/abort.c:91:0
+ #7 0x00007fa863d6cbe7 __assert_fail_base /build/glibc-e6zv40/glibc-2.23/assert/assert.c:92:0
+ #8 0x00007fa863d6cc92 (/lib/x86_64-linux-gnu/libc.so.6+0x2dc92)
+ #9 0x0000000002730ce6 llvm::LoadInst::LoadInst(llvm::Type*, llvm::Value*, llvm::Twine const&, bool, unsigned int, llvm::AtomicOrdering, unsigned char, llvm::Instruction*) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/IR/Instructions.cpp:1322:0
+#10 0x000000000273b4de llvm::LoadInst::cloneImpl() const /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/IR/Instructions.cpp:4150:0
+#11 0x0000000002728ac2 llvm::Instruction::clone() const /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/include/llvm/IR/Instruction.def:172:0
+#12 0x00000000030abf66 llvm::CloneBasicBlock(llvm::BasicBlock const*, llvm::ValueMap<llvm::Value const*, llvm::WeakTrackingVH, llvm::ValueMapConfig<llvm::Value const*, llvm::sys::SmartMutex<false> > >&, llvm::Twine const&, llvm::Function*, llvm::ClonedCodeInfo*, llvm::DebugInfoFinder*) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/Transforms/Utils/CloneFunction.cpp:57:0
+#13 0x00000000030ac96a llvm::CloneFunctionInto(llvm::Function*, llvm::Function const*, llvm::ValueMap<llvm::Value const*, llvm::WeakTrackingVH, llvm::ValueMapConfig<llvm::Value const*, llvm::sys::SmartMutex<false> > >&, bool, llvm::SmallVectorImpl<llvm::ReturnInst*>&, char const*, llvm::ClonedCodeInfo*, llvm::ValueMapTypeRemapper*, llvm::ValueMaterializer*) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/Transforms/Utils/CloneFunction.cpp:170:0
+#14 0x00007fa863b0067f hpvmUtils::cloneFunction(llvm::Function*, llvm::FunctionType*, bool, llvm::SmallVectorImpl<llvm::ReturnInst*>*, std::vector<llvm::Argument*, std::allocator<llvm::Argument*> >*) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/tools/hpvm/./include/SupportHPVM/HPVMUtils.h:308:0
+#15 0x00007fa863606857 (anonymous namespace)::CGT_OpenCL::changeArgAddrspace(llvm::Function*, std::vector<unsigned int, std::allocator<unsigned int> >&, unsigned int) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/tools/hpvm/lib/Transforms/DFG2LLVM_OpenCL/DFG2LLVM_OpenCL.cpp:1978:0
+#16 0x00007fa863601836 (anonymous namespace)::CGT_OpenCL::codeGen(llvm::DFLeafNode*) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/tools/hpvm/lib/Transforms/DFG2LLVM_OpenCL/DFG2LLVM_OpenCL.cpp:1143:0
+#17 0x00007fa863611159 dfg2llvm::CodeGenTraversal::visit(llvm::DFLeafNode*) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/tools/hpvm/./include/SupportHPVM/DFG2LLVM.h:156:0
+#18 0x00007fa863b02964 llvm::DFLeafNode::applyDFNodeVisitor(llvm::DFNodeVisitor&) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/tools/hpvm/./include/SupportHPVM/DFGraph.h:914:0
+#19 0x00007fa863610fc8 dfg2llvm::CodeGenTraversal::visit(llvm::DFInternalNode*) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/tools/hpvm/./include/SupportHPVM/DFG2LLVM.h:139:0
+#20 0x00007fa863b02932 llvm::DFInternalNode::applyDFNodeVisitor(llvm::DFNodeVisitor&) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/tools/hpvm/./include/SupportHPVM/DFGraph.h:912:0
+#21 0x00007fa863610fc8 dfg2llvm::CodeGenTraversal::visit(llvm::DFInternalNode*) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/tools/hpvm/./include/SupportHPVM/DFG2LLVM.h:139:0
+#22 0x00007fa863606210 (anonymous namespace)::DFG2LLVM_OpenCL::runOnModule(llvm::Module&) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/tools/hpvm/lib/Transforms/DFG2LLVM_OpenCL/DFG2LLVM_OpenCL.cpp:1899:0
+#23 0x000000000276b70b (anonymous namespace)::MPPassManager::runOnModule(llvm::Module&) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/IR/LegacyPassManager.cpp:1750:0
+#24 0x000000000276bead llvm::legacy::PassManagerImpl::run(llvm::Module&) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/IR/LegacyPassManager.cpp:1863:0
+#25 0x000000000276c0b3 llvm::legacy::PassManager::run(llvm::Module&) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/IR/LegacyPassManager.cpp:1895:0
+#26 0x000000000183dba7 main /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/tools/opt/opt.cpp:892:0
+#27 0x00007fa863d5f840 __libc_start_main /build/glibc-e6zv40/glibc-2.23/csu/../csu/libc-start.c:325:0
+#28 0x00000000017ffb89 _start (/shared/workspace/yingj4/HPVM/hpvm-release/hpvm/build/bin/opt+0x17ffb89)
+Makefile:117: recipe for target 'build/gpu/main.hpvm.ll.kernels.ll' failed
+make: *** [build/gpu/main.hpvm.ll.kernels.ll] Aborted
+[01;32myingj4@acadia[00m:[01;34m/shared/workspace/yingj4/HPVM/hpvm-release/hpvm/test/benchmarks/audioEncodingNoPara[00m$ exit
+exit
+
+Script done on Mon 28 Sep 2020 04:53:57 PM CDT
