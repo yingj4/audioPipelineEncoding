@@ -108,7 +108,7 @@ $(KERNEL_OCL) : $(KERNEL)
 	$(OCLBE) $< -o $@
 
 $(EXE) : $(HOST_LINKED)
-	$(CXX) -O3 $(LDFLAGS) $< -o $@
+	$(CXX) -O3 -g $(LDFLAGS) $< -o $@
 
 $(HOST_LINKED) : $(HOST) $(OBJS) $(HPVM_RT_LIB)
 	$(LLVM_LINK) $^ -S -o $@
@@ -123,7 +123,7 @@ $(BUILD_DIR)/%.ll : $(SRC_DIR)/%.cpp
 	$(CC) $(OBJS_CFLAGS) -emit-llvm -S -o $@ $<
 
 $(BUILD_DIR)/main.ll : $(SRC_DIR)/main.cpp
-	$(CC) $(CXXFLAGS) -emit-llvm -S -o $@ $<
+	$(CC) $(CXXFLAGS) -g -emit-llvm -S -o $@ $<
 
 $(BUILD_DIR)/main.hpvm.ll : $(BUILD_DIR)/main.ll
 	$(OPT) $(TESTGEN_OPTFLAGS) $< -S -o $@
