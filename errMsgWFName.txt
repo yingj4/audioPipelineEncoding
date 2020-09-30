@@ -1,0 +1,78 @@
+Script started on Tue 29 Sep 2020 09:02:00 PM CDT
+[01;32myingj4@acadia[00m:[01;34m/shared/workspace/yingj4/HPVM/hpvm-release/hpvm/test/benchmarks/audioEncodingNoPara[00m$ make TARGET=gpu
+/shared/workspace/yingj4/HPVM/hpvm-release/hpvm/build/bin/opt -load LLVMGenHPVM.so -genhpvm -globaldce build/gpu/main.ll -S -o build/gpu/main.hpvm.ll
+normalization_fxp_cloned
+; Function Attrs: nounwind uwtable
+define void @normalization_fxp(%"class.std::vector.6"* in out, i64, i64, i64, i16* nocapture readonly, i64) #7 !dbg !3036 {
+entry:
+  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %0, metadata !3040, metadata !DIExpression()), !dbg !3049
+  call void @llvm.dbg.value(metadata i64 %1, metadata !3041, metadata !DIExpression()), !dbg !3049
+  call void @llvm.dbg.value(metadata i64 %2, metadata !3042, metadata !DIExpression()), !dbg !3049
+  call void @llvm.dbg.value(metadata i64 %3, metadata !3043, metadata !DIExpression()), !dbg !3049
+  call void @llvm.dbg.value(metadata i16* %4, metadata !3044, metadata !DIExpression()), !dbg !3049
+  call void @llvm.dbg.value(metadata i64 undef, metadata !3045, metadata !DIExpression()), !dbg !3049
+  %call3 = call i8* @llvm.hpvm.getNode()
+  call void @llvm.dbg.value(metadata i8* %call3, metadata !3046, metadata !DIExpression()), !dbg !3049
+  %call14 = call i64 @llvm.hpvm.getNodeInstanceID.x(i8* %call3)
+  call void @llvm.dbg.value(metadata i64 %call14, metadata !3047, metadata !DIExpression()), !dbg !3049
+  %call25 = call i64 @llvm.hpvm.getNodeInstanceID.y(i8* %call3)
+  call void @llvm.dbg.value(metadata i64 %call25, metadata !3048, metadata !DIExpression()), !dbg !3049
+  %cmp = icmp slt i64 %call14, %3, !dbg !3050
+  %cmp3 = icmp slt i64 %call25, %2, !dbg !3052
+  %or.cond = and i1 %cmp, %cmp3, !dbg !3053
+  br i1 %or.cond, label %if.then, label %if.end, !dbg !3053
+
+if.then:                                          ; preds = %entry
+  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %0, metadata !3054, metadata !DIExpression()), !dbg !3058
+  call void @llvm.dbg.value(metadata i64 %call14, metadata !3057, metadata !DIExpression()), !dbg !3058
+  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %0, i64 0, i32 0, i32 0, i32 0, !dbg !3061
+  %6 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !dbg !3061, !tbaa !3062
+  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %6, i64 %call14, !dbg !3068
+  %7 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i, align 8, !dbg !3069, !tbaa !3070
+  %amp = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %7, i64 0, i32 5, !dbg !3071
+  %8 = load float, float* %amp, align 4, !dbg !3071, !tbaa !3072
+  %conv = fpext float %8 to double, !dbg !3069
+  %arrayidx = getelementptr inbounds i16, i16* %4, i64 %call25, !dbg !3076
+  %9 = load i16, i16* %arrayidx, align 2, !dbg !3076, !tbaa !3077
+  %conv6 = sitofp i16 %9 to double, !dbg !3076
+  %div = fdiv double %conv6, 3.276700e+04, !dbg !3079
+  %mul = fmul double %div, %conv, !dbg !3080
+  %conv7 = fptrunc double %mul to float, !dbg !3069
+  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %0, metadata !3054, metadata !DIExpression()), !dbg !3081
+  call void @llvm.dbg.value(metadata i64 %call14, metadata !3057, metadata !DIExpression()), !dbg !3081
+  %arrayidx9 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %7, i64 0, i32 1, i64 %call25, !dbg !3083
+  store float %conv7, float* %arrayidx9, align 4, !dbg !3084, !tbaa !3085
+  br label %if.end, !dbg !3086
+
+if.end:                                           ; preds = %if.then, %entry
+  %returnStruct = insertvalue %struct.out.normalization_fxp undef, i64 %1, 0
+  ret %struct.out.normalization_fxp %returnStruct, !dbg !3087
+}
+opt: /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/Transforms/Utils/CloneFunction.cpp:130: void llvm::CloneFunctionInto(llvm::Function*, const llvm::Function*, llvm::ValueToValueMapTy&, bool, llvm::SmallVectorImpl<llvm::ReturnInst*>&, const char*, llvm::ClonedCodeInfo*, llvm::ValueMapTypeRemapper*, llvm::ValueMaterializer*): Assertion `!MustCloneSP || ModuleLevelChanges' failed.
+Stack dump:
+0.	Program arguments: /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/build/bin/opt -load LLVMGenHPVM.so -genhpvm -globaldce build/gpu/main.ll -S -o build/gpu/main.hpvm.ll 
+1.	Running pass 'Pass to generate HPVM IR from LLVM IR (with dummy function calls)' on module 'build/gpu/main.ll'.
+ #0 0x0000000003067291 llvm::sys::PrintStackTrace(llvm::raw_ostream&) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/Support/Unix/Signals.inc:533:0
+ #1 0x0000000003067324 PrintStackTraceSignalHandler(void*) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/Support/Unix/Signals.inc:594:0
+ #2 0x00000000030651f8 llvm::sys::RunSignalHandlers() /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/Support/Signals.cpp:68:0
+ #3 0x0000000003066c46 SignalHandler(int) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/Support/Unix/Signals.inc:385:0
+ #4 0x00007f49f5a8a390 __restore_rt (/lib/x86_64-linux-gnu/libpthread.so.0+0x11390)
+ #5 0x00007f49f47fc438 raise /build/glibc-e6zv40/glibc-2.23/signal/../sysdeps/unix/sysv/linux/raise.c:54:0
+ #6 0x00007f49f47fe03a abort /build/glibc-e6zv40/glibc-2.23/stdlib/abort.c:91:0
+ #7 0x00007f49f47f4be7 __assert_fail_base /build/glibc-e6zv40/glibc-2.23/assert/assert.c:92:0
+ #8 0x00007f49f47f4c92 (/lib/x86_64-linux-gnu/libc.so.6+0x2dc92)
+ #9 0x00000000030ac659 llvm::CloneFunctionInto(llvm::Function*, llvm::Function const*, llvm::ValueMap<llvm::Value const*, llvm::WeakTrackingVH, llvm::ValueMapConfig<llvm::Value const*, llvm::sys::SmartMutex<false> > >&, bool, llvm::SmallVectorImpl<llvm::ReturnInst*>&, char const*, llvm::ClonedCodeInfo*, llvm::ValueMapTypeRemapper*, llvm::ValueMaterializer*) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/Transforms/Utils/CloneFunction.cpp:133:0
+#10 0x00007f49f4599206 hpvmUtils::cloneFunction(llvm::Function*, llvm::FunctionType*, bool, llvm::SmallVectorImpl<llvm::ReturnInst*>*, std::vector<llvm::Argument*, std::allocator<llvm::Argument*> >*) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/tools/hpvm/./include/SupportHPVM/HPVMUtils.h:309:0
+#11 0x00007f49f45a02ce genhpvm::GenHPVM::runOnModule(llvm::Module&) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/tools/hpvm/lib/Transforms/GenHPVM/GenHPVM.cpp:758:0
+#12 0x000000000276b70b (anonymous namespace)::MPPassManager::runOnModule(llvm::Module&) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/IR/LegacyPassManager.cpp:1750:0
+#13 0x000000000276bead llvm::legacy::PassManagerImpl::run(llvm::Module&) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/IR/LegacyPassManager.cpp:1863:0
+#14 0x000000000276c0b3 llvm::legacy::PassManager::run(llvm::Module&) /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/lib/IR/LegacyPassManager.cpp:1895:0
+#15 0x000000000183dba7 main /shared/workspace/yingj4/HPVM/hpvm-release/hpvm/llvm/tools/opt/opt.cpp:892:0
+#16 0x00007f49f47e7840 __libc_start_main /build/glibc-e6zv40/glibc-2.23/csu/../csu/libc-start.c:325:0
+#17 0x00000000017ffb89 _start (/shared/workspace/yingj4/HPVM/hpvm-release/hpvm/build/bin/opt+0x17ffb89)
+Makefile:129: recipe for target 'build/gpu/main.hpvm.ll' failed
+make: *** [build/gpu/main.hpvm.ll] Aborted
+[01;32myingj4@acadia[00m:[01;34m/shared/workspace/yingj4/HPVM/hpvm-release/hpvm/test/benchmarks/audioEncodingNoPara[00m$ exit
+exit
+
+Script done on Tue 29 Sep 2020 09:02:11 PM CDT
