@@ -4514,30 +4514,6 @@ declare void @__hpvm__attributes(i32, ...) local_unnamed_addr #1
 declare void @__hpvm__return(i32, ...) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define void @wrapperNormalization_fxp(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* nocapture readnone %sampleTemp) #6 {
-entry:
-  tail call void @__hpvm__hint(i32 1) #25
-  tail call void (i32, ...) @__hpvm__attributes(i32 1, %"class.std::vector.6"* %soundSrcs, i32 1, %"class.std::vector.6"* %soundSrcs) #25
-  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 2, void (%"class.std::vector.6"*, i64, i64, i64, i16*)* nonnull @normalization_fxp, i64 %soundSrcsSize, i64 %nSamples) #25
-  tail call void @__hpvm__bindIn(i8* %call, i32 0, i32 0, i32 0) #25
-  tail call void @__hpvm__bindIn(i8* %call, i32 1, i32 1, i32 0) #25
-  tail call void @__hpvm__bindIn(i8* %call, i32 2, i32 2, i32 0) #25
-  tail call void @__hpvm__bindIn(i8* %call, i32 3, i32 3, i32 0) #25
-  tail call void @__hpvm__bindIn(i8* %call, i32 4, i32 4, i32 0) #25
-  tail call void @__hpvm__bindOut(i8* %call, i32 0, i32 0, i32 0) #25
-  ret void
-}
-
-; Function Attrs: nounwind
-declare i8* @__hpvm__createNodeND(i32, ...) local_unnamed_addr #1
-
-; Function Attrs: nounwind
-declare void @__hpvm__bindIn(i8*, i32, i32, i32) local_unnamed_addr #1
-
-; Function Attrs: nounwind
-declare void @__hpvm__bindOut(i8*, i32, i32, i32) local_unnamed_addr #1
-
-; Function Attrs: nounwind uwtable
 define void @encoder_fxp(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize) #6 {
 entry:
   tail call void @__hpvm__hint(i32 1) #25
@@ -4568,20 +4544,6 @@ for.body:                                         ; preds = %for.body, %for.body
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %exitcond = icmp eq i64 %indvars.iv.next, %soundSrcsSize
   br i1 %exitcond, label %for.cond.cleanup, label %for.body
-}
-
-; Function Attrs: nounwind uwtable
-define void @wrapperEncoder_fxp(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize) #6 {
-entry:
-  tail call void @__hpvm__hint(i32 1) #25
-  tail call void (i32, ...) @__hpvm__attributes(i32 1, %"class.std::vector.6"* %soundSrcs, i32 1, %"class.std::vector.6"* %soundSrcs) #25
-  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 1, void (%"class.std::vector.6"*, i64, i64, i64)* nonnull @encoder_fxp, i64 %soundSrcsSize) #25
-  tail call void @__hpvm__bindIn(i8* %call, i32 0, i32 0, i32 0) #25
-  tail call void @__hpvm__bindIn(i8* %call, i32 1, i32 1, i32 0) #25
-  tail call void @__hpvm__bindIn(i8* %call, i32 2, i32 2, i32 0) #25
-  tail call void @__hpvm__bindIn(i8* %call, i32 3, i32 3, i32 0) #25
-  tail call void @__hpvm__bindOut(i8* %call, i32 0, i32 0, i32 0) #25
-  ret void
 }
 
 ; Function Attrs: nounwind uwtable
@@ -4801,27 +4763,13 @@ _ZN8CBFormatpLERKS_.exit:                         ; preds = %for.cond2.for.inc10
 }
 
 ; Function Attrs: nounwind uwtable
-define void @wrapperSumBF_fxp(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* %sumBF, i64 %bytes_sumBF, i64 %soundSrcsSize) #6 {
-entry:
-  tail call void @__hpvm__hint(i32 1) #25
-  tail call void (i32, ...) @__hpvm__attributes(i32 2, %"class.std::vector.6"* %soundSrcs, %class.CBFormat* %sumBF, i32 1, %class.CBFormat* %sumBF) #25
-  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i64)* nonnull @sumBF_fxp) #25
-  tail call void @__hpvm__bindIn(i8* %call, i32 0, i32 0, i32 0) #25
-  tail call void @__hpvm__bindIn(i8* %call, i32 1, i32 1, i32 0) #25
-  tail call void @__hpvm__bindIn(i8* %call, i32 2, i32 2, i32 0) #25
-  tail call void @__hpvm__bindIn(i8* %call, i32 3, i32 3, i32 0) #25
-  tail call void @__hpvm__bindIn(i8* %call, i32 4, i32 4, i32 0) #25
-  ret void
-}
-
-; Function Attrs: nounwind uwtable
 define void @encoderPipeline(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* nocapture readnone %sampleTemp, %class.CBFormat* %sumBF, i64 %bytes_sumBF) #6 {
 entry:
   tail call void @__hpvm__hint(i32 1) #25
   tail call void (i32, ...) @__hpvm__attributes(i32 2, %"class.std::vector.6"* %soundSrcs, %class.CBFormat* %sumBF, i32 2, %"class.std::vector.6"* %soundSrcs, %class.CBFormat* %sumBF) #25
-  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, i64, i64, i16*)* nonnull @wrapperNormalization_fxp) #25
-  %call1 = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, i64, i64)* nonnull @wrapperEncoder_fxp) #25
-  %call2 = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i64)* nonnull @wrapperSumBF_fxp) #25
+  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, i64, i64, i16*)* nonnull @normalization_fxp) #25
+  %call1 = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, i64, i64)* nonnull @encoder_fxp) #25
+  %call2 = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i64)* nonnull @sumBF_fxp) #25
   tail call void @__hpvm__bindIn(i8* %call, i32 0, i32 0, i32 0) #25
   tail call void @__hpvm__bindIn(i8* %call, i32 1, i32 1, i32 0) #25
   tail call void @__hpvm__bindIn(i8* %call, i32 2, i32 2, i32 0) #25
@@ -4838,6 +4786,12 @@ entry:
   tail call void @__hpvm__bindIn(i8* %call2, i32 3, i32 4, i32 0) #25
   ret void
 }
+
+; Function Attrs: nounwind
+declare i8* @__hpvm__createNodeND(i32, ...) local_unnamed_addr #1
+
+; Function Attrs: nounwind
+declare void @__hpvm__bindIn(i8*, i32, i32, i32) local_unnamed_addr #1
 
 ; Function Attrs: nounwind
 declare i8* @__hpvm__edge(i8*, i8*, i32, i32, i32, i32) local_unnamed_addr #1
