@@ -661,21 +661,21 @@ void normalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/
     __hpvm__return(1, bytes_soundSrcs);
 }
 
-// void wrapperNormalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ long nSamples, /*3*/ long soundSrcsSize, /*4*/ short* sampleTemp) {
-//     __hpvm__hint(hpvm::CPU_TARGET);
-//     __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
+void wrapperNormalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ long nSamples, /*3*/ long soundSrcsSize, /*4*/ short* sampleTemp) {
+    __hpvm__hint(hpvm::CPU_TARGET);
+    __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
 
-//     // void* normalNode = __hpvm__createNodeND(0, normalization_fxp);
-//     void* normalNode = __hpvm__createNodeND(2, normalization_fxp, soundSrcsSize, nSamples);
+    // void* normalNode = __hpvm__createNodeND(0, normalization_fxp);
+    void* normalNode = __hpvm__createNodeND(2, normalization_fxp, soundSrcsSize, nSamples);
 
-//     __hpvm__bindIn(normalNode, 0, 0, 0);
-//     __hpvm__bindIn(normalNode, 1, 1, 0);
-//     __hpvm__bindIn(normalNode, 2, 2, 0);
-//     __hpvm__bindIn(normalNode, 3, 3, 0);
-//     __hpvm__bindIn(normalNode, 4, 4, 0);
+    __hpvm__bindIn(normalNode, 0, 0, 0);
+    __hpvm__bindIn(normalNode, 1, 1, 0);
+    __hpvm__bindIn(normalNode, 2, 2, 0);
+    __hpvm__bindIn(normalNode, 3, 3, 0);
+    __hpvm__bindIn(normalNode, 4, 4, 0);
 
-//     __hpvm__bindOut(normalNode, 0, 0, 0);
-// }
+    __hpvm__bindOut(normalNode, 0, 0, 0);
+}
 
 // A leaf node function for the encoding process
 void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ long nSamples, /*3*/ long soundSrcsSize) {
@@ -697,20 +697,20 @@ void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_
     
 }
 
-// void wrapperEncoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ long nSamples, /*3*/ long soundSrcsSize) {
-//     __hpvm__hint(hpvm::CPU_TARGET);
-//     __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
+void wrapperEncoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ long nSamples, /*3*/ long soundSrcsSize) {
+    __hpvm__hint(hpvm::CPU_TARGET);
+    __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
 
-//     // void* encodeNode = __hpvm__createNodeND(0, encoder_fxp);
-//     void* encodeNode = __hpvm__createNodeND(1, encoder_fxp, soundSrcsSize);
+    // void* encodeNode = __hpvm__createNodeND(0, encoder_fxp);
+    void* encodeNode = __hpvm__createNodeND(1, encoder_fxp, soundSrcsSize);
 
-//     __hpvm__bindIn(encodeNode, 0, 0, 0);
-//     __hpvm__bindIn(encodeNode, 1, 1, 0);
-//     __hpvm__bindIn(encodeNode, 2, 2, 0);
-//     __hpvm__bindIn(encodeNode, 3, 3, 0);
+    __hpvm__bindIn(encodeNode, 0, 0, 0);
+    __hpvm__bindIn(encodeNode, 1, 1, 0);
+    __hpvm__bindIn(encodeNode, 2, 2, 0);
+    __hpvm__bindIn(encodeNode, 3, 3, 0);
 
-//     __hpvm__bindOut(encodeNode, 0, 0, 0);
-// }
+    __hpvm__bindOut(encodeNode, 0, 0, 0);
+}
 
 // A leaf node function for the sumBF addition
 void sumBF_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ CBFormat* sumBF, /*3*/ size_t bytes_sumBF, /*4*/ long soundSrcsSize) {
@@ -723,19 +723,19 @@ void sumBF_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t 
     
 }
 
-// void wrapperSumBF_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ CBFormat* sumBF, /*3*/ size_t bytes_sumBF, /*4*/ long soundSrcsSize) {
-//     __hpvm__hint(hpvm::CPU_TARGET);
-//     __hpvm__attributes(2, soundSrcs, sumBF, 1, sumBF);
+void wrapperSumBF_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ CBFormat* sumBF, /*3*/ size_t bytes_sumBF, /*4*/ long soundSrcsSize) {
+    __hpvm__hint(hpvm::CPU_TARGET);
+    __hpvm__attributes(2, soundSrcs, sumBF, 1, sumBF);
 
-//     void* sumNode = __hpvm__createNodeND(0, sumBF_fxp);
+    void* sumNode = __hpvm__createNodeND(0, sumBF_fxp);
 
-//     __hpvm__bindIn(sumNode, 0, 0, 0);
-//     __hpvm__bindIn(sumNode, 1, 1, 0);
-//     __hpvm__bindIn(sumNode, 2, 2, 0);
-//     __hpvm__bindIn(sumNode, 3, 3, 0);
-//     __hpvm__bindIn(sumNode, 4, 4, 0);
+    __hpvm__bindIn(sumNode, 0, 0, 0);
+    __hpvm__bindIn(sumNode, 1, 1, 0);
+    __hpvm__bindIn(sumNode, 2, 2, 0);
+    __hpvm__bindIn(sumNode, 3, 3, 0);
+    __hpvm__bindIn(sumNode, 4, 4, 0);
 
-// }
+}
 
 // A root node function for the whole pipeline
 void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ long nSamples, /*3*/ long soundSrcsSize, /*4*/ short* sampleTemp, /*5*/ CBFormat* sumBF, /*6*/ size_t bytes_sumBF) {
@@ -743,13 +743,13 @@ void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ s
     __hpvm__attributes(2, soundSrcs, sumBF, 2, soundSrcs, sumBF);
 
     // HPVM node generation
-    // void* normalizationNode = __hpvm__createNodeND(0, wrapperNormalization_fxp);
-    // void* encoderNode = __hpvm__createNodeND(0, wrapperEncoder_fxp);
-    // void* sumBFNode = __hpvm__createNodeND(0, wrapperSumBF_fxp);
+    void* normalizationNode = __hpvm__createNodeND(0, wrapperNormalization_fxp);
+    void* encoderNode = __hpvm__createNodeND(0, wrapperEncoder_fxp);
+    void* sumBFNode = __hpvm__createNodeND(0, wrapperSumBF_fxp);
 
-    void* normalizationNode = __hpvm__createNodeND(0, normalization_fxp);
-    void* encoderNode = __hpvm__createNodeND(0, encoder_fxp);
-    void* sumBFNode = __hpvm__createNodeND(0, sumBF_fxp);
+    // void* normalizationNode = __hpvm__createNodeND(0, normalization_fxp);
+    // void* encoderNode = __hpvm__createNodeND(0, encoder_fxp);
+    // void* sumBFNode = __hpvm__createNodeND(0, sumBF_fxp);
 
     // Bind-in for the normalization process
     __hpvm__bindIn(normalizationNode, 0, 0, 0);
