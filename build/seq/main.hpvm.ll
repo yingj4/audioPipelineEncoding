@@ -1,4 +1,4 @@
-; ModuleID = 'build/seq/main.hpvm.ll'
+; ModuleID = 'build/seq/main.ll'
 source_filename = "src//main.cpp"
 target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -68,9 +68,6 @@ target triple = "x86_64-unknown-linux-gnu"
 %struct.out.wrapperEncoder_fxp = type <{ i64 }>
 %struct.out.sumBF_fxp = type <{ i64 }>
 %struct.out.wrapperSumBF_fxp = type <{ i64 }>
-%struct.thread.wrapperNormalization_fxp_cloned = type <{ i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8* }>
-%struct.thread.wrapperEncoder_fxp_cloned = type <{ i8*, i8*, i8*, i8*, i8*, i8* }>
-%struct.thread.wrapperSumBF_fxp_cloned = type <{ i8*, i8*, i8*, i8*, i8*, i8*, i8* }>
 %struct.out.encoderPipeline = type <{ i64 }>
 
 $__clang_call_terminate = comdat any
@@ -5939,6 +5936,7 @@ invoke.cont19:                                    ; preds = %invoke.cont14
   %26 = bitcast [1024 x i16]* %sampleTemp to i8*, !dbg !6816
   call void @llvm.lifetime.start.p0i8(i64 2048, i8* nonnull %26) #24, !dbg !6816
   call void @llvm.dbg.declare(metadata [1024 x i16]* %sampleTemp, metadata !3011, metadata !DIExpression()), !dbg !6817
+  call void @llvm.hpvm.init()
   call void @llvm.dbg.value(metadata i64 %sub.ptr.sub.i, metadata !3013, metadata !DIExpression()), !dbg !6678
   call void @llvm.dbg.value(metadata i64 64, metadata !3014, metadata !DIExpression()), !dbg !6678
   call void @llvm.dbg.value(metadata i64 2048, metadata !3015, metadata !DIExpression()), !dbg !6678
@@ -5977,8 +5975,8 @@ for.cond.cleanup:                                 ; preds = %for.inc, %invoke.co
   %bytes_sampleTemp38 = getelementptr inbounds i8, i8* %call21, i64 40, !dbg !6848
   %34 = bitcast i8* %bytes_sampleTemp38 to i64*, !dbg !6848
   store i64 2048, i64* %34, align 1, !dbg !6849, !tbaa !6850
-  %graphencoderPipeline_cloned = call i8* @llvm_hpvm_streamLaunch(void (i8*, i8*)* @encoderPipeline_cloned.LaunchFunction, i8* %call21)
-  call void @llvm.dbg.value(metadata i8* undef, metadata !3019, metadata !DIExpression()), !dbg !6678
+  %graphID = call i8* @llvm.hpvm.launch(i8* bitcast (%struct.out.encoderPipeline (%"class.std::vector.6"*, i64, i64, i64, i16*, i64, %class.CBFormat*, i64)* @encoderPipeline_cloned to i8*), i8* %call21, i1 true)
+  call void @llvm.dbg.value(metadata i8* %graphID, metadata !3019, metadata !DIExpression()), !dbg !6678
   %cmp40 = icmp sgt i32 %conv.i, 1, !dbg !6851
   br i1 %cmp40, label %for.body45.lr.ph, label %if.else, !dbg !6852
 
@@ -5996,8 +5994,8 @@ for.body45.us:                                    ; preds = %for.cond64.for.cond
   call void @llvm_hpvm_track_mem(i8* nonnull %call5.i191, i64 %sub.ptr.sub.i) #24, !dbg !6862
   call void @llvm_hpvm_track_mem(i8* nonnull %call15, i64 64) #24, !dbg !6863
   call void @llvm_hpvm_track_mem(i8* nonnull %26, i64 2048) #24, !dbg !6864
-  call void @llvm_hpvm_streamPush(i8* %graphencoderPipeline_cloned, i8* %call21)
-  %call53.us1 = call i8* @llvm_hpvm_streamPop(i8* %graphencoderPipeline_cloned)
+  call void @llvm.hpvm.push(i8* %graphID, i8* %call21)
+  %call53.us1 = call i8* @llvm.hpvm.pop(i8* %graphID)
   call void @llvm.dbg.value(metadata i8* %call53.us1, metadata !3024, metadata !DIExpression()), !dbg !6865
   call void @llvm.dbg.value(metadata i64 undef, metadata !3027, metadata !DIExpression()), !dbg !6865
   call void @llvm_hpvm_request_mem(i8* nonnull %call5.i191, i64 %sub.ptr.sub.i) #24, !dbg !6866
@@ -6104,8 +6102,8 @@ for.body45:                                       ; preds = %for.cond.cleanup67,
   call void @llvm_hpvm_track_mem(i8* nonnull %call5.i191, i64 %sub.ptr.sub.i) #24, !dbg !6862
   call void @llvm_hpvm_track_mem(i8* nonnull %call15, i64 64) #24, !dbg !6863
   call void @llvm_hpvm_track_mem(i8* nonnull %26, i64 2048) #24, !dbg !6864
-  call void @llvm_hpvm_streamPush(i8* %graphencoderPipeline_cloned, i8* %call21)
-  %call532 = call i8* @llvm_hpvm_streamPop(i8* %graphencoderPipeline_cloned)
+  call void @llvm.hpvm.push(i8* %graphID, i8* %call21)
+  %call532 = call i8* @llvm.hpvm.pop(i8* %graphID)
   call void @llvm.dbg.value(metadata i8* %call532, metadata !3024, metadata !DIExpression()), !dbg !6865
   call void @llvm.dbg.value(metadata i64 undef, metadata !3027, metadata !DIExpression()), !dbg !6865
   call void @llvm_hpvm_request_mem(i8* nonnull %call5.i191, i64 %sub.ptr.sub.i) #24, !dbg !6866
@@ -6133,13 +6131,14 @@ lpad60.us-lcssa:                                  ; preds = %for.body45
   br label %ehcleanup91, !dbg !6888
 
 if.else:                                          ; preds = %for.cond.cleanup
-  call void @llvm_hpvm_streamPush(i8* %graphencoderPipeline_cloned, i8* %call21)
-  %call873 = call i8* @llvm_hpvm_streamPop(i8* %graphencoderPipeline_cloned)
+  call void @llvm.hpvm.push(i8* %graphID, i8* %call21)
+  %call873 = call i8* @llvm.hpvm.pop(i8* %graphID)
   br label %if.end.i
 
 if.end.i:                                         ; preds = %if.else, %for.cond.cleanup67, %for.cond64.for.cond.cleanup67_crit_edge.us
   call void @llvm_hpvm_untrack_mem(i8* nonnull %call5.i191) #24, !dbg !6910
-  call void @llvm_hpvm_streamWait(i8* %graphencoderPipeline_cloned)
+  call void @llvm.hpvm.wait(i8* %graphID)
+  call void @llvm.hpvm.cleanup()
   call void @llvm.lifetime.end.p0i8(i64 2048, i8* nonnull %26) #24, !dbg !6891
   call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::ABAudio"* %audio, metadata !3006, metadata !DIExpression(DW_OP_deref)), !dbg !6678
   call void @llvm.dbg.value(metadata %"class.ILLIXR_AUDIO::ABAudio"* %audio, metadata !5606, metadata !DIExpression()) #24, !dbg !6911
@@ -7637,6 +7636,53 @@ declare i64 @llvm.hpvm.getNodeInstanceID.x(i8*) #23
 ; Function Attrs: nounwind readnone
 declare i64 @llvm.hpvm.getNodeInstanceID.y(i8*) #23
 
+; Function Attrs: nounwind uwtable
+define %struct.out.normalization_fxp @normalization_fxp_cloned(%"class.std::vector.6"* in out %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* nocapture readonly %sampleTemp, i64 %bytes_sampleTemp) #7 !dbg !7782 {
+entry:
+  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !7786, metadata !DIExpression()), !dbg !7795
+  call void @llvm.dbg.value(metadata i64 %bytes_soundSrcs, metadata !7787, metadata !DIExpression()), !dbg !7795
+  call void @llvm.dbg.value(metadata i64 %nSamples, metadata !7788, metadata !DIExpression()), !dbg !7795
+  call void @llvm.dbg.value(metadata i64 %soundSrcsSize, metadata !7789, metadata !DIExpression()), !dbg !7795
+  call void @llvm.dbg.value(metadata i16* %sampleTemp, metadata !7790, metadata !DIExpression()), !dbg !7795
+  call void @llvm.dbg.value(metadata i64 undef, metadata !7791, metadata !DIExpression()), !dbg !7795
+  %call3 = call i8* @llvm.hpvm.getNode()
+  call void @llvm.dbg.value(metadata i8* %call3, metadata !7792, metadata !DIExpression()), !dbg !7795
+  %call14 = call i64 @llvm.hpvm.getNodeInstanceID.x(i8* %call3)
+  call void @llvm.dbg.value(metadata i64 %call14, metadata !7793, metadata !DIExpression()), !dbg !7795
+  %call25 = call i64 @llvm.hpvm.getNodeInstanceID.y(i8* %call3)
+  call void @llvm.dbg.value(metadata i64 %call25, metadata !7794, metadata !DIExpression()), !dbg !7795
+  %cmp = icmp slt i64 %call14, %soundSrcsSize, !dbg !7796
+  %cmp3 = icmp slt i64 %call25, %nSamples, !dbg !7798
+  %or.cond = and i1 %cmp, %cmp3, !dbg !7799
+  br i1 %or.cond, label %if.then, label %if.end, !dbg !7799
+
+if.then:                                          ; preds = %entry
+  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !5639, metadata !DIExpression()), !dbg !7800
+  call void @llvm.dbg.value(metadata i64 %call14, metadata !5642, metadata !DIExpression()), !dbg !7800
+  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %soundSrcs, i64 0, i32 0, i32 0, i32 0, !dbg !7803
+  %0 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !dbg !7803, !tbaa !5633
+  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %0, i64 %call14, !dbg !7804
+  %1 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i, align 8, !dbg !7805, !tbaa !3224
+  %amp = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %1, i64 0, i32 5, !dbg !7806
+  %2 = load float, float* %amp, align 4, !dbg !7806, !tbaa !5323
+  %conv = fpext float %2 to double, !dbg !7805
+  %arrayidx = getelementptr inbounds i16, i16* %sampleTemp, i64 %call25, !dbg !7807
+  %3 = load i16, i16* %arrayidx, align 2, !dbg !7807, !tbaa !7808
+  %conv6 = sitofp i16 %3 to double, !dbg !7807
+  %div = fdiv double %conv6, 3.276700e+04, !dbg !7809
+  %mul = fmul double %div, %conv, !dbg !7810
+  %conv7 = fptrunc double %mul to float, !dbg !7805
+  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !5639, metadata !DIExpression()), !dbg !7811
+  call void @llvm.dbg.value(metadata i64 %call14, metadata !5642, metadata !DIExpression()), !dbg !7811
+  %arrayidx9 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %1, i64 0, i32 1, i64 %call25, !dbg !7813
+  store float %conv7, float* %arrayidx9, align 4, !dbg !7814, !tbaa !3471
+  br label %if.end, !dbg !7815
+
+if.end:                                           ; preds = %if.then, %entry
+  %returnStruct = insertvalue %struct.out.normalization_fxp undef, i64 %bytes_soundSrcs, 0
+  ret %struct.out.normalization_fxp %returnStruct, !dbg !7816
+}
+
 ; Function Attrs: nounwind
 declare i8* @llvm.hpvm.createNode2D(i8*, i64, i64) #24
 
@@ -7646,14 +7692,463 @@ declare void @llvm.hpvm.bind.input(i8*, i32, i32, i1) #24
 ; Function Attrs: nounwind
 declare void @llvm.hpvm.bind.output(i8*, i32, i32, i1) #24
 
+; Function Attrs: nounwind uwtable
+define %struct.out.wrapperNormalization_fxp @wrapperNormalization_fxp_cloned(%"class.std::vector.6"* in out %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* nocapture readnone %sampleTemp, i64 %bytes_sampleTemp) #7 !dbg !7817 {
+entry:
+  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !7819, metadata !DIExpression()), !dbg !7826
+  call void @llvm.dbg.value(metadata i64 undef, metadata !7820, metadata !DIExpression()), !dbg !7826
+  call void @llvm.dbg.value(metadata i64 %nSamples, metadata !7821, metadata !DIExpression()), !dbg !7826
+  call void @llvm.dbg.value(metadata i64 %soundSrcsSize, metadata !7822, metadata !DIExpression()), !dbg !7826
+  call void @llvm.dbg.value(metadata i16* undef, metadata !7823, metadata !DIExpression()), !dbg !7826
+  call void @llvm.dbg.value(metadata i64 undef, metadata !7824, metadata !DIExpression()), !dbg !7826
+  %normalization_fxp_cloned.node = call i8* @llvm.hpvm.createNode2D(i8* bitcast (%struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i64, i64, i16*, i64)* @normalization_fxp_cloned to i8*), i64 %soundSrcsSize, i64 %nSamples)
+  call void @llvm.dbg.value(metadata i8* %normalization_fxp_cloned.node, metadata !7825, metadata !DIExpression()), !dbg !7826
+  call void @llvm.hpvm.bind.input(i8* %normalization_fxp_cloned.node, i32 0, i32 0, i1 false)
+  call void @llvm.hpvm.bind.input(i8* %normalization_fxp_cloned.node, i32 1, i32 1, i1 false)
+  call void @llvm.hpvm.bind.input(i8* %normalization_fxp_cloned.node, i32 2, i32 2, i1 false)
+  call void @llvm.hpvm.bind.input(i8* %normalization_fxp_cloned.node, i32 3, i32 3, i1 false)
+  call void @llvm.hpvm.bind.input(i8* %normalization_fxp_cloned.node, i32 4, i32 4, i1 false)
+  call void @llvm.hpvm.bind.input(i8* %normalization_fxp_cloned.node, i32 5, i32 5, i1 false)
+  call void @llvm.hpvm.bind.output(i8* %normalization_fxp_cloned.node, i32 0, i32 0, i1 false)
+  ret %struct.out.wrapperNormalization_fxp undef, !dbg !7827
+}
+
+; Function Attrs: nounwind uwtable
+define %struct.out.encoder_fxp @encoder_fxp_cloned(%"class.std::vector.6"* in out %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize) #7 !dbg !7828 {
+entry:
+  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !7832, metadata !DIExpression()), !dbg !7838
+  call void @llvm.dbg.value(metadata i64 %bytes_soundSrcs, metadata !7833, metadata !DIExpression()), !dbg !7838
+  call void @llvm.dbg.value(metadata i64 %nSamples, metadata !7834, metadata !DIExpression()), !dbg !7838
+  call void @llvm.dbg.value(metadata i64 %soundSrcsSize, metadata !7835, metadata !DIExpression()), !dbg !7838
+  %call2 = call i8* @llvm.hpvm.getNode()
+  call void @llvm.dbg.value(metadata i8* %call2, metadata !7836, metadata !DIExpression()), !dbg !7838
+  %call13 = call i64 @llvm.hpvm.getNodeInstanceID.x(i8* %call2)
+  call void @llvm.dbg.value(metadata i64 %call13, metadata !7837, metadata !DIExpression()), !dbg !7838
+  %cmp = icmp slt i64 %call13, %soundSrcsSize, !dbg !7839
+  br i1 %cmp, label %if.then, label %if.end, !dbg !7841
+
+if.then:                                          ; preds = %entry
+  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !5639, metadata !DIExpression()), !dbg !7842
+  call void @llvm.dbg.value(metadata i64 %call13, metadata !5642, metadata !DIExpression()), !dbg !7842
+  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %soundSrcs, i64 0, i32 0, i32 0, i32 0, !dbg !7845
+  %0 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !dbg !7845, !tbaa !5633
+  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %0, i64 %call13, !dbg !7846
+  %1 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i, align 8, !dbg !7847, !tbaa !3224
+  %BEncoder = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %1, i64 0, i32 3, !dbg !7848
+  %2 = load %class.CAmbisonicEncoderDist*, %class.CAmbisonicEncoderDist** %BEncoder, align 8, !dbg !7848, !tbaa !5357
+  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !5639, metadata !DIExpression()), !dbg !7849
+  call void @llvm.dbg.value(metadata i64 %call13, metadata !5642, metadata !DIExpression()), !dbg !7849
+  %arraydecay = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %1, i64 0, i32 1, i64 0, !dbg !7851
+  %conv = trunc i64 %nSamples to i32, !dbg !7852
+  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !5639, metadata !DIExpression()), !dbg !7853
+  call void @llvm.dbg.value(metadata i64 %call13, metadata !5642, metadata !DIExpression()), !dbg !7853
+  %BFormat = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %1, i64 0, i32 2, !dbg !7855
+  %3 = load %class.CBFormat*, %class.CBFormat** %BFormat, align 8, !dbg !7855, !tbaa !5348
+  tail call void @_ZN21CAmbisonicEncoderDist7ProcessEPfjP8CBFormat(%class.CAmbisonicEncoderDist* %2, float* nonnull %arraydecay, i32 %conv, %class.CBFormat* %3), !dbg !7856
+  br label %if.end, !dbg !7857
+
+if.end:                                           ; preds = %if.then, %entry
+  %returnStruct = insertvalue %struct.out.encoder_fxp undef, i64 %bytes_soundSrcs, 0
+  ret %struct.out.encoder_fxp %returnStruct, !dbg !7858
+}
+
 ; Function Attrs: nounwind
 declare i8* @llvm.hpvm.createNode1D(i8*, i64) #24
+
+; Function Attrs: nounwind uwtable
+define %struct.out.wrapperEncoder_fxp @wrapperEncoder_fxp_cloned(%"class.std::vector.6"* in out %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize) #7 !dbg !7859 {
+entry:
+  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !7861, metadata !DIExpression()), !dbg !7866
+  call void @llvm.dbg.value(metadata i64 undef, metadata !7862, metadata !DIExpression()), !dbg !7866
+  call void @llvm.dbg.value(metadata i64 undef, metadata !7863, metadata !DIExpression()), !dbg !7866
+  call void @llvm.dbg.value(metadata i64 %soundSrcsSize, metadata !7864, metadata !DIExpression()), !dbg !7866
+  %encoder_fxp_cloned.node = call i8* @llvm.hpvm.createNode1D(i8* bitcast (%struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i64, i64)* @encoder_fxp_cloned to i8*), i64 %soundSrcsSize)
+  call void @llvm.dbg.value(metadata i8* %encoder_fxp_cloned.node, metadata !7865, metadata !DIExpression()), !dbg !7866
+  call void @llvm.hpvm.bind.input(i8* %encoder_fxp_cloned.node, i32 0, i32 0, i1 false)
+  call void @llvm.hpvm.bind.input(i8* %encoder_fxp_cloned.node, i32 1, i32 1, i1 false)
+  call void @llvm.hpvm.bind.input(i8* %encoder_fxp_cloned.node, i32 2, i32 2, i1 false)
+  call void @llvm.hpvm.bind.input(i8* %encoder_fxp_cloned.node, i32 3, i32 3, i1 false)
+  call void @llvm.hpvm.bind.output(i8* %encoder_fxp_cloned.node, i32 0, i32 0, i1 false)
+  ret %struct.out.wrapperEncoder_fxp undef, !dbg !7867
+}
+
+; Function Attrs: nounwind uwtable
+define %struct.out.sumBF_fxp @sumBF_fxp_cloned(%"class.std::vector.6"* in %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* in out %sumBF, i64 %bytes_sumBF, i64 %soundSrcsSize) #7 !dbg !7868 {
+entry:
+  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !7872, metadata !DIExpression()), !dbg !7948
+  call void @llvm.dbg.value(metadata i64 undef, metadata !7873, metadata !DIExpression()), !dbg !7948
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !7874, metadata !DIExpression()), !dbg !7948
+  call void @llvm.dbg.value(metadata i64 %bytes_sumBF, metadata !7944, metadata !DIExpression()), !dbg !7948
+  call void @llvm.dbg.value(metadata i64 %soundSrcsSize, metadata !7945, metadata !DIExpression()), !dbg !7948
+  call void @llvm.dbg.value(metadata i32 0, metadata !7946, metadata !DIExpression()), !dbg !7949
+  %cmp9 = icmp sgt i64 %soundSrcsSize, 0, !dbg !7950
+  br i1 %cmp9, label %for.body.lr.ph, label %for.cond.cleanup, !dbg !7952
+
+for.body.lr.ph:                                   ; preds = %entry
+  %0 = getelementptr inbounds %class.CBFormat, %class.CBFormat* %sumBF, i64 0, i32 0, i32 4, !dbg !7953
+  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %soundSrcs, i64 0, i32 0, i32 0, i32 0, !dbg !7958
+  %m_nSamples.i = getelementptr inbounds %class.CBFormat, %class.CBFormat* %sumBF, i64 0, i32 1, !dbg !7960
+  %_M_head_impl.i.i.i.i.i.i21.i = getelementptr inbounds %class.CBFormat, %class.CBFormat* %sumBF, i64 0, i32 4, i32 0, i32 0, i32 0, i32 0, !dbg !7964
+  %.pre = load i32, i32* %0, align 8, !dbg !7972, !tbaa !3060
+  %cmp25.i = icmp eq i32 %.pre, 0, !dbg !7953
+  %1 = zext i32 %.pre to i64, !dbg !7973
+  br label %for.body, !dbg !7952
+
+for.cond.cleanup:                                 ; preds = %_ZN8CBFormatpLERKS_.exit, %entry
+  %returnStruct = insertvalue %struct.out.sumBF_fxp undef, i64 %bytes_sumBF, 0
+  ret %struct.out.sumBF_fxp %returnStruct, !dbg !7974
+
+for.body:                                         ; preds = %_ZN8CBFormatpLERKS_.exit, %for.body.lr.ph
+  %indvars.iv = phi i64 [ 0, %for.body.lr.ph ], [ %indvars.iv.next, %_ZN8CBFormatpLERKS_.exit ]
+  call void @llvm.dbg.value(metadata i64 %indvars.iv, metadata !7946, metadata !DIExpression()), !dbg !7949
+  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !5639, metadata !DIExpression()), !dbg !7958
+  call void @llvm.dbg.value(metadata i64 %indvars.iv, metadata !5642, metadata !DIExpression()), !dbg !7958
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3433, metadata !DIExpression()), !dbg !7975
+  call void @llvm.dbg.value(metadata %class.CBFormat* undef, metadata !3434, metadata !DIExpression()), !dbg !7975
+  call void @llvm.dbg.value(metadata i32 0, metadata !3435, metadata !DIExpression()), !dbg !7975
+  call void @llvm.dbg.value(metadata i32 0, metadata !3436, metadata !DIExpression()), !dbg !7975
+  call void @llvm.dbg.value(metadata i32 0, metadata !3435, metadata !DIExpression()), !dbg !7975
+  br i1 %cmp25.i, label %_ZN8CBFormatpLERKS_.exit, label %for.cond2.preheader.lr.ph.i, !dbg !7976
+
+for.cond2.preheader.lr.ph.i:                      ; preds = %for.body
+  %2 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !dbg !7977, !tbaa !5633
+  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %2, i64 %indvars.iv, !dbg !7978
+  %3 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i, align 8, !dbg !7979, !tbaa !3224
+  %BFormat = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %3, i64 0, i32 2, !dbg !7980
+  %4 = load %class.CBFormat*, %class.CBFormat** %BFormat, align 8, !dbg !7980, !tbaa !5348
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3434, metadata !DIExpression()), !dbg !7975
+  %5 = load i32, i32* %m_nSamples.i, align 8, !dbg !7960, !tbaa !3119
+  %cmp323.i = icmp eq i32 %5, 0, !dbg !7960
+  %_M_head_impl.i.i.i.i.i.i.i = getelementptr inbounds %class.CBFormat, %class.CBFormat* %4, i64 0, i32 4, i32 0, i32 0, i32 0, i32 0, !dbg !7981
+  %6 = load float**, float*** %_M_head_impl.i.i.i.i.i.i.i, align 8, !dbg !7988
+  br i1 %cmp323.i, label %_ZN8CBFormatpLERKS_.exit, label %for.cond2.preheader.us.preheader.i, !dbg !7976
+
+for.cond2.preheader.us.preheader.i:               ; preds = %for.cond2.preheader.lr.ph.i
+  %.pre.i = load float**, float*** %_M_head_impl.i.i.i.i.i.i21.i, align 8, !dbg !7989, !tbaa !3224
+  %7 = zext i32 %5 to i64, !dbg !7990
+  %8 = and i64 %7, 4294967288, !dbg !7976
+  %9 = add nsw i64 %8, -8, !dbg !7976
+  %10 = lshr exact i64 %9, 3, !dbg !7976
+  %11 = add nuw nsw i64 %10, 1, !dbg !7976
+  %min.iters.check = icmp ult i32 %5, 8, !dbg !7990
+  %n.vec = and i64 %7, 4294967288, !dbg !7990
+  %xtraiter = and i64 %11, 1, !dbg !7990
+  %12 = icmp eq i64 %9, 0, !dbg !7990
+  %unroll_iter = sub nuw nsw i64 %11, %xtraiter, !dbg !7990
+  %lcmp.mod = icmp eq i64 %xtraiter, 0, !dbg !7960
+  %cmp.n = icmp eq i64 %n.vec, %7, !dbg !7990
+  %xtraiter21 = and i64 %7, 3, !dbg !7990
+  %lcmp.mod22 = icmp eq i64 %xtraiter21, 0, !dbg !7990
+  br label %for.cond2.preheader.us.i, !dbg !7976
+
+for.cond2.preheader.us.i:                         ; preds = %for.cond2.for.inc10_crit_edge.us.i, %for.cond2.preheader.us.preheader.i
+  %indvars.iv29.i = phi i64 [ 0, %for.cond2.preheader.us.preheader.i ], [ %indvars.iv.next30.i, %for.cond2.for.inc10_crit_edge.us.i ]
+  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3435, metadata !DIExpression()), !dbg !7975
+  call void @llvm.dbg.value(metadata i32 0, metadata !3436, metadata !DIExpression()), !dbg !7975
+  %arrayidx.i.us.i = getelementptr inbounds float*, float** %6, i64 %indvars.iv29.i, !dbg !7991
+  %13 = load float*, float** %arrayidx.i.us.i, align 8, !dbg !7992, !tbaa !3224
+  %arrayidx.i22.us.i = getelementptr inbounds float*, float** %.pre.i, i64 %indvars.iv29.i, !dbg !7993
+  %14 = load float*, float** %arrayidx.i22.us.i, align 8, !dbg !7992, !tbaa !3224
+  br i1 %min.iters.check, label %for.body4.us.i.preheader, label %vector.memcheck, !dbg !7994
+
+vector.memcheck:                                  ; preds = %for.cond2.preheader.us.i
+  %scevgep = getelementptr float, float* %14, i64 %7, !dbg !7994
+  %scevgep15 = getelementptr float, float* %13, i64 %7, !dbg !7994
+  %bound0 = icmp ult float* %14, %scevgep15, !dbg !7994
+  %bound1 = icmp ult float* %13, %scevgep, !dbg !7994
+  %found.conflict = and i1 %bound0, %bound1, !dbg !7994
+  br i1 %found.conflict, label %for.body4.us.i.preheader, label %vector.ph, !dbg !7994
+
+vector.ph:                                        ; preds = %vector.memcheck
+  br i1 %12, label %middle.block.unr-lcssa, label %vector.body, !dbg !7994
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ %index.next.1, %vector.body ], [ 0, %vector.ph ], !dbg !7995
+  %niter = phi i64 [ %niter.nsub.1, %vector.body ], [ %unroll_iter, %vector.ph ]
+  %15 = getelementptr inbounds float, float* %13, i64 %index, !dbg !7996
+  %16 = bitcast float* %15 to <4 x float>*, !dbg !7996
+  %wide.load = load <4 x float>, <4 x float>* %16, align 4, !dbg !7996, !tbaa !3471, !alias.scope !7997
+  %17 = getelementptr inbounds float, float* %15, i64 4, !dbg !7996
+  %18 = bitcast float* %17 to <4 x float>*, !dbg !7996
+  %wide.load18 = load <4 x float>, <4 x float>* %18, align 4, !dbg !7996, !tbaa !3471, !alias.scope !7997
+  %19 = getelementptr inbounds float, float* %14, i64 %index, !dbg !8000
+  %20 = bitcast float* %19 to <4 x float>*, !dbg !8001
+  %wide.load19 = load <4 x float>, <4 x float>* %20, align 4, !dbg !8001, !tbaa !3471, !alias.scope !8002, !noalias !7997
+  %21 = getelementptr inbounds float, float* %19, i64 4, !dbg !8001
+  %22 = bitcast float* %21 to <4 x float>*, !dbg !8001
+  %wide.load20 = load <4 x float>, <4 x float>* %22, align 4, !dbg !8001, !tbaa !3471, !alias.scope !8002, !noalias !7997
+  %23 = fadd <4 x float> %wide.load, %wide.load19, !dbg !8001
+  %24 = fadd <4 x float> %wide.load18, %wide.load20, !dbg !8001
+  %25 = bitcast float* %19 to <4 x float>*, !dbg !8001
+  store <4 x float> %23, <4 x float>* %25, align 4, !dbg !8001, !tbaa !3471, !alias.scope !8002, !noalias !7997
+  %26 = bitcast float* %21 to <4 x float>*, !dbg !8001
+  store <4 x float> %24, <4 x float>* %26, align 4, !dbg !8001, !tbaa !3471, !alias.scope !8002, !noalias !7997
+  %index.next = or i64 %index, 8, !dbg !7995
+  %27 = getelementptr inbounds float, float* %13, i64 %index.next, !dbg !7996
+  %28 = bitcast float* %27 to <4 x float>*, !dbg !7996
+  %wide.load.1 = load <4 x float>, <4 x float>* %28, align 4, !dbg !7996, !tbaa !3471, !alias.scope !7997
+  %29 = getelementptr inbounds float, float* %27, i64 4, !dbg !7996
+  %30 = bitcast float* %29 to <4 x float>*, !dbg !7996
+  %wide.load18.1 = load <4 x float>, <4 x float>* %30, align 4, !dbg !7996, !tbaa !3471, !alias.scope !7997
+  %31 = getelementptr inbounds float, float* %14, i64 %index.next, !dbg !8000
+  %32 = bitcast float* %31 to <4 x float>*, !dbg !8001
+  %wide.load19.1 = load <4 x float>, <4 x float>* %32, align 4, !dbg !8001, !tbaa !3471, !alias.scope !8002, !noalias !7997
+  %33 = getelementptr inbounds float, float* %31, i64 4, !dbg !8001
+  %34 = bitcast float* %33 to <4 x float>*, !dbg !8001
+  %wide.load20.1 = load <4 x float>, <4 x float>* %34, align 4, !dbg !8001, !tbaa !3471, !alias.scope !8002, !noalias !7997
+  %35 = fadd <4 x float> %wide.load.1, %wide.load19.1, !dbg !8001
+  %36 = fadd <4 x float> %wide.load18.1, %wide.load20.1, !dbg !8001
+  %37 = bitcast float* %31 to <4 x float>*, !dbg !8001
+  store <4 x float> %35, <4 x float>* %37, align 4, !dbg !8001, !tbaa !3471, !alias.scope !8002, !noalias !7997
+  %38 = bitcast float* %33 to <4 x float>*, !dbg !8001
+  store <4 x float> %36, <4 x float>* %38, align 4, !dbg !8001, !tbaa !3471, !alias.scope !8002, !noalias !7997
+  %index.next.1 = add i64 %index, 16, !dbg !7995
+  %niter.nsub.1 = add i64 %niter, -2, !dbg !7995
+  %niter.ncmp.1 = icmp eq i64 %niter.nsub.1, 0, !dbg !7995
+  br i1 %niter.ncmp.1, label %middle.block.unr-lcssa, label %vector.body, !dbg !7995, !llvm.loop !8004
+
+middle.block.unr-lcssa:                           ; preds = %vector.body, %vector.ph
+  %index.unr = phi i64 [ 0, %vector.ph ], [ %index.next.1, %vector.body ]
+  br i1 %lcmp.mod, label %middle.block, label %vector.body.epil, !dbg !7995
+
+vector.body.epil:                                 ; preds = %middle.block.unr-lcssa
+  %39 = getelementptr inbounds float, float* %13, i64 %index.unr, !dbg !7996
+  %40 = bitcast float* %39 to <4 x float>*, !dbg !7996
+  %wide.load.epil = load <4 x float>, <4 x float>* %40, align 4, !dbg !7996, !tbaa !3471, !alias.scope !7997
+  %41 = getelementptr inbounds float, float* %39, i64 4, !dbg !7996
+  %42 = bitcast float* %41 to <4 x float>*, !dbg !7996
+  %wide.load18.epil = load <4 x float>, <4 x float>* %42, align 4, !dbg !7996, !tbaa !3471, !alias.scope !7997
+  %43 = getelementptr inbounds float, float* %14, i64 %index.unr, !dbg !8000
+  %44 = bitcast float* %43 to <4 x float>*, !dbg !8001
+  %wide.load19.epil = load <4 x float>, <4 x float>* %44, align 4, !dbg !8001, !tbaa !3471, !alias.scope !8002, !noalias !7997
+  %45 = getelementptr inbounds float, float* %43, i64 4, !dbg !8001
+  %46 = bitcast float* %45 to <4 x float>*, !dbg !8001
+  %wide.load20.epil = load <4 x float>, <4 x float>* %46, align 4, !dbg !8001, !tbaa !3471, !alias.scope !8002, !noalias !7997
+  %47 = fadd <4 x float> %wide.load.epil, %wide.load19.epil, !dbg !8001
+  %48 = fadd <4 x float> %wide.load18.epil, %wide.load20.epil, !dbg !8001
+  %49 = bitcast float* %43 to <4 x float>*, !dbg !8001
+  store <4 x float> %47, <4 x float>* %49, align 4, !dbg !8001, !tbaa !3471, !alias.scope !8002, !noalias !7997
+  %50 = bitcast float* %45 to <4 x float>*, !dbg !8001
+  store <4 x float> %48, <4 x float>* %50, align 4, !dbg !8001, !tbaa !3471, !alias.scope !8002, !noalias !7997
+  br label %middle.block, !dbg !7994
+
+middle.block:                                     ; preds = %vector.body.epil, %middle.block.unr-lcssa
+  br i1 %cmp.n, label %for.cond2.for.inc10_crit_edge.us.i, label %for.body4.us.i.preheader, !dbg !7994
+
+for.body4.us.i.preheader:                         ; preds = %middle.block, %vector.memcheck, %for.cond2.preheader.us.i
+  %indvars.iv.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %for.cond2.preheader.us.i ], [ %n.vec, %middle.block ]
+  %51 = xor i64 %indvars.iv.i.ph, -1, !dbg !7994
+  %52 = add nsw i64 %51, %7, !dbg !7994
+  br i1 %lcmp.mod22, label %for.body4.us.i.prol.loopexit, label %for.body4.us.i.prol, !dbg !7994
+
+for.body4.us.i.prol:                              ; preds = %for.body4.us.i.prol, %for.body4.us.i.preheader
+  %indvars.iv.i.prol = phi i64 [ %indvars.iv.next.i.prol, %for.body4.us.i.prol ], [ %indvars.iv.i.ph, %for.body4.us.i.preheader ]
+  %prol.iter = phi i64 [ %prol.iter.sub, %for.body4.us.i.prol ], [ %xtraiter21, %for.body4.us.i.preheader ]
+  call void @llvm.dbg.value(metadata i64 %indvars.iv.i.prol, metadata !3436, metadata !DIExpression()), !dbg !7975
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7991
+  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7991
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7988
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8006
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8007
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8008
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7981
+  %arrayidx.us.i.prol = getelementptr inbounds float, float* %13, i64 %indvars.iv.i.prol, !dbg !7996
+  %53 = load float, float* %arrayidx.us.i.prol, align 4, !dbg !7996, !tbaa !3471
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7993
+  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7993
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7989
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8009
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8010
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8011
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7964
+  %arrayidx9.us.i.prol = getelementptr inbounds float, float* %14, i64 %indvars.iv.i.prol, !dbg !8000
+  %54 = load float, float* %arrayidx9.us.i.prol, align 4, !dbg !8001, !tbaa !3471
+  %add.us.i.prol = fadd float %53, %54, !dbg !8001
+  store float %add.us.i.prol, float* %arrayidx9.us.i.prol, align 4, !dbg !8001, !tbaa !3471
+  %indvars.iv.next.i.prol = add nuw nsw i64 %indvars.iv.i.prol, 1, !dbg !7995
+  call void @llvm.dbg.value(metadata i32 undef, metadata !3436, metadata !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value)), !dbg !7975
+  %prol.iter.sub = add i64 %prol.iter, -1, !dbg !7994
+  %prol.iter.cmp = icmp eq i64 %prol.iter.sub, 0, !dbg !7994
+  br i1 %prol.iter.cmp, label %for.body4.us.i.prol.loopexit, label %for.body4.us.i.prol, !dbg !7994, !llvm.loop !8012
+
+for.body4.us.i.prol.loopexit:                     ; preds = %for.body4.us.i.prol, %for.body4.us.i.preheader
+  %indvars.iv.i.unr = phi i64 [ %indvars.iv.i.ph, %for.body4.us.i.preheader ], [ %indvars.iv.next.i.prol, %for.body4.us.i.prol ]
+  %55 = icmp ult i64 %52, 3, !dbg !7994
+  br i1 %55, label %for.cond2.for.inc10_crit_edge.us.i, label %for.body4.us.i, !dbg !7994
+
+for.body4.us.i:                                   ; preds = %for.body4.us.i, %for.body4.us.i.prol.loopexit
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.3, %for.body4.us.i ], [ %indvars.iv.i.unr, %for.body4.us.i.prol.loopexit ]
+  call void @llvm.dbg.value(metadata i64 %indvars.iv.i, metadata !3436, metadata !DIExpression()), !dbg !7975
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7991
+  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7991
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7988
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8006
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8007
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8008
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7981
+  %arrayidx.us.i = getelementptr inbounds float, float* %13, i64 %indvars.iv.i, !dbg !7996
+  %56 = load float, float* %arrayidx.us.i, align 4, !dbg !7996, !tbaa !3471
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7993
+  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7993
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7989
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8009
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8010
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8011
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7964
+  %arrayidx9.us.i = getelementptr inbounds float, float* %14, i64 %indvars.iv.i, !dbg !8000
+  %57 = load float, float* %arrayidx9.us.i, align 4, !dbg !8001, !tbaa !3471
+  %add.us.i = fadd float %56, %57, !dbg !8001
+  store float %add.us.i, float* %arrayidx9.us.i, align 4, !dbg !8001, !tbaa !3471
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1, !dbg !7995
+  call void @llvm.dbg.value(metadata i32 undef, metadata !3436, metadata !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value)), !dbg !7975
+  call void @llvm.dbg.value(metadata i64 %indvars.iv.next.i, metadata !3436, metadata !DIExpression()), !dbg !7975
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7991
+  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7991
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7988
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8006
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8007
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8008
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7981
+  %arrayidx.us.i.1 = getelementptr inbounds float, float* %13, i64 %indvars.iv.next.i, !dbg !7996
+  %58 = load float, float* %arrayidx.us.i.1, align 4, !dbg !7996, !tbaa !3471
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7993
+  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7993
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7989
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8009
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8010
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8011
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7964
+  %arrayidx9.us.i.1 = getelementptr inbounds float, float* %14, i64 %indvars.iv.next.i, !dbg !8000
+  %59 = load float, float* %arrayidx9.us.i.1, align 4, !dbg !8001, !tbaa !3471
+  %add.us.i.1 = fadd float %58, %59, !dbg !8001
+  store float %add.us.i.1, float* %arrayidx9.us.i.1, align 4, !dbg !8001, !tbaa !3471
+  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2, !dbg !7995
+  call void @llvm.dbg.value(metadata i32 undef, metadata !3436, metadata !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value)), !dbg !7975
+  call void @llvm.dbg.value(metadata i64 %indvars.iv.next.i.1, metadata !3436, metadata !DIExpression()), !dbg !7975
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7991
+  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7991
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7988
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8006
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8007
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8008
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7981
+  %arrayidx.us.i.2 = getelementptr inbounds float, float* %13, i64 %indvars.iv.next.i.1, !dbg !7996
+  %60 = load float, float* %arrayidx.us.i.2, align 4, !dbg !7996, !tbaa !3471
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7993
+  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7993
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7989
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8009
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8010
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8011
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7964
+  %arrayidx9.us.i.2 = getelementptr inbounds float, float* %14, i64 %indvars.iv.next.i.1, !dbg !8000
+  %61 = load float, float* %arrayidx9.us.i.2, align 4, !dbg !8001, !tbaa !3471
+  %add.us.i.2 = fadd float %60, %61, !dbg !8001
+  store float %add.us.i.2, float* %arrayidx9.us.i.2, align 4, !dbg !8001, !tbaa !3471
+  %indvars.iv.next.i.2 = add nuw nsw i64 %indvars.iv.i, 3, !dbg !7995
+  call void @llvm.dbg.value(metadata i32 undef, metadata !3436, metadata !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value)), !dbg !7975
+  call void @llvm.dbg.value(metadata i64 %indvars.iv.next.i.2, metadata !3436, metadata !DIExpression()), !dbg !7975
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7991
+  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7991
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7988
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8006
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8007
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8008
+  call void @llvm.dbg.value(metadata %class.CBFormat* %4, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7981
+  %arrayidx.us.i.3 = getelementptr inbounds float, float* %13, i64 %indvars.iv.next.i.2, !dbg !7996
+  %62 = load float, float* %arrayidx.us.i.3, align 4, !dbg !7996, !tbaa !3471
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7993
+  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7993
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7989
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8009
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8010
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !8011
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7964
+  %arrayidx9.us.i.3 = getelementptr inbounds float, float* %14, i64 %indvars.iv.next.i.2, !dbg !8000
+  %63 = load float, float* %arrayidx9.us.i.3, align 4, !dbg !8001, !tbaa !3471
+  %add.us.i.3 = fadd float %62, %63, !dbg !8001
+  store float %add.us.i.3, float* %arrayidx9.us.i.3, align 4, !dbg !8001, !tbaa !3471
+  %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4, !dbg !7995
+  call void @llvm.dbg.value(metadata i32 undef, metadata !3436, metadata !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value)), !dbg !7975
+  %exitcond.3 = icmp eq i64 %indvars.iv.next.i.3, %7, !dbg !8013
+  br i1 %exitcond.3, label %for.cond2.for.inc10_crit_edge.us.i, label %for.body4.us.i, !dbg !7994, !llvm.loop !8014
+
+for.cond2.for.inc10_crit_edge.us.i:               ; preds = %for.body4.us.i, %for.body4.us.i.prol.loopexit, %middle.block
+  %indvars.iv.next30.i = add nuw nsw i64 %indvars.iv29.i, 1, !dbg !8015
+  call void @llvm.dbg.value(metadata i32 undef, metadata !3435, metadata !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value)), !dbg !7975
+  %exitcond12 = icmp eq i64 %indvars.iv.next30.i, %1, !dbg !8016
+  br i1 %exitcond12, label %_ZN8CBFormatpLERKS_.exit, label %for.cond2.preheader.us.i, !dbg !7976, !llvm.loop !8017
+
+_ZN8CBFormatpLERKS_.exit:                         ; preds = %for.cond2.for.inc10_crit_edge.us.i, %for.cond2.preheader.lr.ph.i, %for.body
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !8019
+  call void @llvm.dbg.value(metadata i32 undef, metadata !7946, metadata !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value)), !dbg !7949
+  %exitcond13 = icmp eq i64 %indvars.iv.next, %soundSrcsSize, !dbg !7950
+  br i1 %exitcond13, label %for.cond.cleanup, label %for.body, !dbg !7952, !llvm.loop !8020
+}
 
 ; Function Attrs: nounwind
 declare i8* @llvm.hpvm.createNode(i8*) #24
 
+; Function Attrs: nounwind uwtable
+define %struct.out.wrapperSumBF_fxp @wrapperSumBF_fxp_cloned(%"class.std::vector.6"* in %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* in out %sumBF, i64 %bytes_sumBF, i64 %soundSrcsSize) #7 !dbg !8022 {
+entry:
+  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !8024, metadata !DIExpression()), !dbg !8099
+  call void @llvm.dbg.value(metadata i64 undef, metadata !8025, metadata !DIExpression()), !dbg !8099
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !8026, metadata !DIExpression()), !dbg !8099
+  call void @llvm.dbg.value(metadata i64 undef, metadata !8096, metadata !DIExpression()), !dbg !8099
+  call void @llvm.dbg.value(metadata i64 undef, metadata !8097, metadata !DIExpression()), !dbg !8099
+  %sumBF_fxp_cloned.node = call i8* @llvm.hpvm.createNode(i8* bitcast (%struct.out.sumBF_fxp (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i64)* @sumBF_fxp_cloned to i8*))
+  call void @llvm.dbg.value(metadata i8* %sumBF_fxp_cloned.node, metadata !8098, metadata !DIExpression()), !dbg !8099
+  call void @llvm.hpvm.bind.input(i8* %sumBF_fxp_cloned.node, i32 0, i32 0, i1 false)
+  call void @llvm.hpvm.bind.input(i8* %sumBF_fxp_cloned.node, i32 1, i32 1, i1 false)
+  call void @llvm.hpvm.bind.input(i8* %sumBF_fxp_cloned.node, i32 2, i32 2, i1 false)
+  call void @llvm.hpvm.bind.input(i8* %sumBF_fxp_cloned.node, i32 3, i32 3, i1 false)
+  call void @llvm.hpvm.bind.input(i8* %sumBF_fxp_cloned.node, i32 4, i32 4, i1 false)
+  call void @llvm.hpvm.bind.output(i8* %sumBF_fxp_cloned.node, i32 0, i32 0, i1 false)
+  ret %struct.out.wrapperSumBF_fxp undef, !dbg !8100
+}
+
 ; Function Attrs: nounwind
 declare i8* @llvm.hpvm.createEdge(i8*, i8*, i1, i32, i32, i1) #24
+
+; Function Attrs: nounwind uwtable
+define %struct.out.encoderPipeline @encoderPipeline_cloned(%"class.std::vector.6"* in out %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* nocapture readnone %sampleTemp, i64 %bytes_sampleTemp, %class.CBFormat* in out %sumBF, i64 %bytes_sumBF) #7 !dbg !8101 {
+entry:
+  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !8105, metadata !DIExpression()), !dbg !8185
+  call void @llvm.dbg.value(metadata i64 undef, metadata !8106, metadata !DIExpression()), !dbg !8185
+  call void @llvm.dbg.value(metadata i64 undef, metadata !8107, metadata !DIExpression()), !dbg !8185
+  call void @llvm.dbg.value(metadata i64 undef, metadata !8108, metadata !DIExpression()), !dbg !8185
+  call void @llvm.dbg.value(metadata i16* undef, metadata !8109, metadata !DIExpression()), !dbg !8185
+  call void @llvm.dbg.value(metadata i64 undef, metadata !8110, metadata !DIExpression()), !dbg !8185
+  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !8111, metadata !DIExpression()), !dbg !8185
+  call void @llvm.dbg.value(metadata i64 undef, metadata !8181, metadata !DIExpression()), !dbg !8185
+  %wrapperNormalization_fxp_cloned.node = call i8* @llvm.hpvm.createNode(i8* bitcast (%struct.out.wrapperNormalization_fxp (%"class.std::vector.6"*, i64, i64, i64, i16*, i64)* @wrapperNormalization_fxp_cloned to i8*))
+  call void @llvm.dbg.value(metadata i8* %wrapperNormalization_fxp_cloned.node, metadata !8182, metadata !DIExpression()), !dbg !8185
+  %wrapperEncoder_fxp_cloned.node = call i8* @llvm.hpvm.createNode(i8* bitcast (%struct.out.wrapperEncoder_fxp (%"class.std::vector.6"*, i64, i64, i64)* @wrapperEncoder_fxp_cloned to i8*))
+  call void @llvm.dbg.value(metadata i8* %wrapperEncoder_fxp_cloned.node, metadata !8183, metadata !DIExpression()), !dbg !8185
+  %wrapperSumBF_fxp_cloned.node = call i8* @llvm.hpvm.createNode(i8* bitcast (%struct.out.wrapperSumBF_fxp (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i64)* @wrapperSumBF_fxp_cloned to i8*))
+  call void @llvm.dbg.value(metadata i8* %wrapperSumBF_fxp_cloned.node, metadata !8184, metadata !DIExpression()), !dbg !8185
+  call void @llvm.hpvm.bind.input(i8* %wrapperNormalization_fxp_cloned.node, i32 0, i32 0, i1 true)
+  call void @llvm.hpvm.bind.input(i8* %wrapperNormalization_fxp_cloned.node, i32 1, i32 1, i1 true)
+  call void @llvm.hpvm.bind.input(i8* %wrapperNormalization_fxp_cloned.node, i32 2, i32 2, i1 true)
+  call void @llvm.hpvm.bind.input(i8* %wrapperNormalization_fxp_cloned.node, i32 3, i32 3, i1 true)
+  call void @llvm.hpvm.bind.input(i8* %wrapperNormalization_fxp_cloned.node, i32 4, i32 4, i1 true)
+  call void @llvm.hpvm.bind.input(i8* %wrapperNormalization_fxp_cloned.node, i32 5, i32 5, i1 true)
+  call void @llvm.hpvm.bind.input(i8* %wrapperEncoder_fxp_cloned.node, i32 0, i32 0, i1 true)
+  %output = call i8* @llvm.hpvm.createEdge(i8* %wrapperNormalization_fxp_cloned.node, i8* %wrapperEncoder_fxp_cloned.node, i1 true, i32 0, i32 1, i1 true)
+  call void @llvm.hpvm.bind.input(i8* %wrapperEncoder_fxp_cloned.node, i32 2, i32 2, i1 true)
+  call void @llvm.hpvm.bind.input(i8* %wrapperEncoder_fxp_cloned.node, i32 3, i32 3, i1 true)
+  call void @llvm.hpvm.bind.input(i8* %wrapperSumBF_fxp_cloned.node, i32 0, i32 0, i1 true)
+  %output1 = call i8* @llvm.hpvm.createEdge(i8* %wrapperEncoder_fxp_cloned.node, i8* %wrapperSumBF_fxp_cloned.node, i1 true, i32 0, i32 1, i1 true)
+  call void @llvm.hpvm.bind.input(i8* %wrapperSumBF_fxp_cloned.node, i32 6, i32 2, i1 true)
+  call void @llvm.hpvm.bind.input(i8* %wrapperSumBF_fxp_cloned.node, i32 7, i32 3, i1 true)
+  call void @llvm.hpvm.bind.input(i8* %wrapperSumBF_fxp_cloned.node, i32 3, i32 4, i1 true)
+  call void @llvm.hpvm.bind.output(i8* %wrapperSumBF_fxp_cloned.node, i32 0, i32 0, i1 true)
+  ret %struct.out.encoderPipeline undef, !dbg !8186
+}
+
+; Function Attrs: nounwind
+declare void @llvm.hpvm.init() #24
 
 ; Function Attrs: nounwind
 declare i8* @llvm.hpvm.launch(i8*, i8*, i1) #24
@@ -7667,770 +8162,8 @@ declare i8* @llvm.hpvm.pop(i8*) #24
 ; Function Attrs: nounwind
 declare void @llvm.hpvm.wait(i8*) #24
 
-declare i8* @llvm_hpvm_cpu_launch(i8* (i8*)*, i8*)
-
-declare void @llvm_hpvm_cpu_wait(i8*)
-
-declare i8* @llvm_hpvm_cpu_argument_ptr(i8*, i64)
-
-declare i8* @llvm_hpvm_streamLaunch(void (i8*, i8*)*, i8*)
-
-declare void @llvm_hpvm_streamPush(i8*, i8*)
-
-declare i8* @llvm_hpvm_streamPop(i8*)
-
-declare void @llvm_hpvm_streamWait(i8*)
-
-declare i8* @llvm_hpvm_createBindInBuffer(i8*, i64, i32)
-
-declare i8* @llvm_hpvm_createBindOutBuffer(i8*, i64)
-
-declare i8* @llvm_hpvm_createEdgeBuffer(i8*, i64)
-
-declare i8* @llvm_hpvm_createLastInputBuffer(i8*, i64)
-
-declare void @llvm_hpvm_createThread(i8*, i8* (i8*)*, i8*)
-
-declare void @llvm_hpvm_bufferPush(i8*, i64)
-
-declare i64 @llvm_hpvm_bufferPop(i8*)
-
-declare void @llvm_hpvm_cpu_dstack_push(i32, i64, i64, i64, i64, i64, i64)
-
-declare void @llvm_hpvm_cpu_dstack_pop()
-
-declare i64 @llvm_hpvm_cpu_getDimLimit(i32, i32)
-
-declare i64 @llvm_hpvm_cpu_getDimInstance(i32, i32)
-
-declare i8* @llvm_hpvm_initializeTimerSet()
-
-declare void @llvm_hpvm_switchToTimer(i8**, i32)
-
-declare void @llvm_hpvm_printTimerSet(i8**, i8*)
-
-; Function Attrs: nounwind uwtable
-define %struct.out.normalization_fxp @normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* in out %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* nocapture readonly %sampleTemp, i64 %bytes_sampleTemp, i64 %idx_x, i64 %idx_y, i64 %idx_z, i64 %dim_x, i64 %dim_y, i64 %dim_z) #7 !dbg !7782 {
-getHPVMPtrArgs:
-  %soundSrcs.i8ptr = bitcast %"class.std::vector.6"* %soundSrcs to i8*
-  %0 = call i8* @llvm_hpvm_cpu_argument_ptr(i8* %soundSrcs.i8ptr, i64 %bytes_soundSrcs)
-  br label %entry
-
-entry:                                            ; preds = %getHPVMPtrArgs
-  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !7786, metadata !DIExpression()), !dbg !7795
-  call void @llvm.dbg.value(metadata i64 %bytes_soundSrcs, metadata !7787, metadata !DIExpression()), !dbg !7795
-  call void @llvm.dbg.value(metadata i64 %nSamples, metadata !7788, metadata !DIExpression()), !dbg !7795
-  call void @llvm.dbg.value(metadata i64 %soundSrcsSize, metadata !7789, metadata !DIExpression()), !dbg !7795
-  call void @llvm.dbg.value(metadata i16* %sampleTemp, metadata !7790, metadata !DIExpression()), !dbg !7795
-  call void @llvm.dbg.value(metadata i64 undef, metadata !7791, metadata !DIExpression()), !dbg !7795
-  call void @llvm.dbg.value(metadata i8* undef, metadata !7792, metadata !DIExpression()), !dbg !7795
-  call void @llvm.dbg.value(metadata i64 %idx_x, metadata !7793, metadata !DIExpression()), !dbg !7795
-  call void @llvm.dbg.value(metadata i64 %idx_y, metadata !7794, metadata !DIExpression()), !dbg !7795
-  %cmp = icmp slt i64 %idx_x, %soundSrcsSize, !dbg !7796
-  %cmp3 = icmp slt i64 %idx_y, %nSamples, !dbg !7798
-  %or.cond = and i1 %cmp, %cmp3, !dbg !7799
-  br i1 %or.cond, label %if.then, label %if.end, !dbg !7799
-
-if.then:                                          ; preds = %entry
-  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !5639, metadata !DIExpression()), !dbg !7800
-  call void @llvm.dbg.value(metadata i64 %idx_x, metadata !5642, metadata !DIExpression()), !dbg !7800
-  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %soundSrcs, i64 0, i32 0, i32 0, i32 0, !dbg !7803
-  %1 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !dbg !7803, !tbaa !5633
-  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %1, i64 %idx_x, !dbg !7804
-  %2 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i, align 8, !dbg !7805, !tbaa !3224
-  %amp = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 5, !dbg !7806
-  %3 = load float, float* %amp, align 4, !dbg !7806, !tbaa !5323
-  %conv = fpext float %3 to double, !dbg !7805
-  %arrayidx = getelementptr inbounds i16, i16* %sampleTemp, i64 %idx_y, !dbg !7807
-  %4 = load i16, i16* %arrayidx, align 2, !dbg !7807, !tbaa !7808
-  %conv6 = sitofp i16 %4 to double, !dbg !7807
-  %div = fdiv double %conv6, 3.276700e+04, !dbg !7809
-  %mul = fmul double %div, %conv, !dbg !7810
-  %conv7 = fptrunc double %mul to float, !dbg !7805
-  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !5639, metadata !DIExpression()), !dbg !7811
-  call void @llvm.dbg.value(metadata i64 %idx_x, metadata !5642, metadata !DIExpression()), !dbg !7811
-  %arrayidx9 = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 1, i64 %idx_y, !dbg !7813
-  store float %conv7, float* %arrayidx9, align 4, !dbg !7814, !tbaa !3471
-  br label %if.end, !dbg !7815
-
-if.end:                                           ; preds = %if.then, %entry
-  %returnStruct = insertvalue %struct.out.normalization_fxp undef, i64 %bytes_soundSrcs, 0
-  ret %struct.out.normalization_fxp %returnStruct, !dbg !7816
-}
-
-define %struct.out.wrapperNormalization_fxp @wrapperNormalization_fxp_cloned.2(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* %sampleTemp, i64 %bytes_sampleTemp) {
-entry:
-  br label %for.body
-
-for.body:                                         ; preds = %for.end2, %entry
-  %index.x = phi i64 [ 0, %entry ], [ %index.x.inc, %for.end2 ]
-  br label %for.body1
-
-for.body1:                                        ; preds = %for.body1, %for.body
-  %index.y = phi i64 [ 0, %for.body ], [ %index.y.inc, %for.body1 ]
-  call void @llvm_hpvm_cpu_dstack_push(i32 2, i64 %soundSrcsSize, i64 %index.x, i64 %nSamples, i64 %index.y, i64 0, i64 0)
-  %normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.normalization_fxp @normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* %sampleTemp, i64 %bytes_sampleTemp, i64 %index.x, i64 %index.y, i64 0, i64 %soundSrcsSize, i64 %nSamples, i64 0)
-  call void @llvm_hpvm_cpu_dstack_pop()
-  %index.y.inc = add i64 %index.y, 1
-  %cond.y = icmp ult i64 %index.y.inc, %nSamples
-  br i1 %cond.y, label %for.body1, label %for.end2
-
-for.end2:                                         ; preds = %for.body1
-  %index.x.inc = add i64 %index.x, 1
-  %cond.x = icmp ult i64 %index.x.inc, %soundSrcsSize
-  br i1 %cond.x, label %for.body, label %for.end
-
-for.end:                                          ; preds = %for.end2
-  %0 = extractvalue %struct.out.normalization_fxp %normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned_output, 0
-  %output = insertvalue %struct.out.wrapperNormalization_fxp undef, i64 %0, 0
-  ret %struct.out.wrapperNormalization_fxp %output
-}
-
-; Function Attrs: nounwind uwtable
-define %struct.out.encoder_fxp @encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* in out %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i64 %idx_x, i64 %idx_y, i64 %idx_z, i64 %dim_x, i64 %dim_y, i64 %dim_z) #7 !dbg !7817 {
-getHPVMPtrArgs:
-  %soundSrcs.i8ptr = bitcast %"class.std::vector.6"* %soundSrcs to i8*
-  %0 = call i8* @llvm_hpvm_cpu_argument_ptr(i8* %soundSrcs.i8ptr, i64 %bytes_soundSrcs)
-  br label %entry
-
-entry:                                            ; preds = %getHPVMPtrArgs
-  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !7821, metadata !DIExpression()), !dbg !7827
-  call void @llvm.dbg.value(metadata i64 %bytes_soundSrcs, metadata !7822, metadata !DIExpression()), !dbg !7827
-  call void @llvm.dbg.value(metadata i64 %nSamples, metadata !7823, metadata !DIExpression()), !dbg !7827
-  call void @llvm.dbg.value(metadata i64 %soundSrcsSize, metadata !7824, metadata !DIExpression()), !dbg !7827
-  call void @llvm.dbg.value(metadata i8* undef, metadata !7825, metadata !DIExpression()), !dbg !7827
-  call void @llvm.dbg.value(metadata i64 %idx_x, metadata !7826, metadata !DIExpression()), !dbg !7827
-  %cmp = icmp slt i64 %idx_x, %soundSrcsSize, !dbg !7828
-  br i1 %cmp, label %if.then, label %if.end, !dbg !7830
-
-if.then:                                          ; preds = %entry
-  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !5639, metadata !DIExpression()), !dbg !7831
-  call void @llvm.dbg.value(metadata i64 %idx_x, metadata !5642, metadata !DIExpression()), !dbg !7831
-  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %soundSrcs, i64 0, i32 0, i32 0, i32 0, !dbg !7834
-  %1 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !dbg !7834, !tbaa !5633
-  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %1, i64 %idx_x, !dbg !7835
-  %2 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i, align 8, !dbg !7836, !tbaa !3224
-  %BEncoder = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 3, !dbg !7837
-  %3 = load %class.CAmbisonicEncoderDist*, %class.CAmbisonicEncoderDist** %BEncoder, align 8, !dbg !7837, !tbaa !5357
-  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !5639, metadata !DIExpression()), !dbg !7838
-  call void @llvm.dbg.value(metadata i64 %idx_x, metadata !5642, metadata !DIExpression()), !dbg !7838
-  %arraydecay = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 1, i64 0, !dbg !7840
-  %conv = trunc i64 %nSamples to i32, !dbg !7841
-  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !5639, metadata !DIExpression()), !dbg !7842
-  call void @llvm.dbg.value(metadata i64 %idx_x, metadata !5642, metadata !DIExpression()), !dbg !7842
-  %BFormat = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %2, i64 0, i32 2, !dbg !7844
-  %4 = load %class.CBFormat*, %class.CBFormat** %BFormat, align 8, !dbg !7844, !tbaa !5348
-  tail call void @_ZN21CAmbisonicEncoderDist7ProcessEPfjP8CBFormat(%class.CAmbisonicEncoderDist* %3, float* nonnull %arraydecay, i32 %conv, %class.CBFormat* %4), !dbg !7845
-  br label %if.end, !dbg !7846
-
-if.end:                                           ; preds = %if.then, %entry
-  %returnStruct = insertvalue %struct.out.encoder_fxp undef, i64 %bytes_soundSrcs, 0
-  ret %struct.out.encoder_fxp %returnStruct, !dbg !7847
-}
-
-define %struct.out.wrapperEncoder_fxp @wrapperEncoder_fxp_cloned.4(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize) {
-entry:
-  br label %for.body
-
-for.body:                                         ; preds = %for.body, %entry
-  %index.x = phi i64 [ 0, %entry ], [ %index.x.inc, %for.body ]
-  call void @llvm_hpvm_cpu_dstack_push(i32 1, i64 %soundSrcsSize, i64 %index.x, i64 0, i64 0, i64 0, i64 0)
-  %encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.encoder_fxp @encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i64 %index.x, i64 0, i64 0, i64 %soundSrcsSize, i64 0, i64 0)
-  call void @llvm_hpvm_cpu_dstack_pop()
-  %index.x.inc = add i64 %index.x, 1
-  %cond.x = icmp ult i64 %index.x.inc, %soundSrcsSize
-  br i1 %cond.x, label %for.body, label %for.end
-
-for.end:                                          ; preds = %for.body
-  %0 = extractvalue %struct.out.encoder_fxp %encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned_output, 0
-  %output = insertvalue %struct.out.wrapperEncoder_fxp undef, i64 %0, 0
-  ret %struct.out.wrapperEncoder_fxp %output
-}
-
-; Function Attrs: nounwind uwtable
-define %struct.out.sumBF_fxp @sumBF_fxp_cloned.5_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* in %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* in out %sumBF, i64 %bytes_sumBF, i64 %soundSrcsSize, i64 %idx_x, i64 %idx_y, i64 %idx_z, i64 %dim_x, i64 %dim_y, i64 %dim_z) #7 !dbg !7848 {
-getHPVMPtrArgs:
-  %soundSrcs.i8ptr = bitcast %"class.std::vector.6"* %soundSrcs to i8*
-  %0 = call i8* @llvm_hpvm_cpu_argument_ptr(i8* %soundSrcs.i8ptr, i64 %bytes_soundSrcs)
-  %sumBF.i8ptr = bitcast %class.CBFormat* %sumBF to i8*
-  %1 = call i8* @llvm_hpvm_cpu_argument_ptr(i8* %sumBF.i8ptr, i64 %bytes_sumBF)
-  br label %entry
-
-entry:                                            ; preds = %getHPVMPtrArgs
-  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !7852, metadata !DIExpression()), !dbg !7928
-  call void @llvm.dbg.value(metadata i64 undef, metadata !7853, metadata !DIExpression()), !dbg !7928
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !7854, metadata !DIExpression()), !dbg !7928
-  call void @llvm.dbg.value(metadata i64 %bytes_sumBF, metadata !7924, metadata !DIExpression()), !dbg !7928
-  call void @llvm.dbg.value(metadata i64 %soundSrcsSize, metadata !7925, metadata !DIExpression()), !dbg !7928
-  call void @llvm.dbg.value(metadata i32 0, metadata !7926, metadata !DIExpression()), !dbg !7929
-  %cmp9 = icmp sgt i64 %soundSrcsSize, 0, !dbg !7930
-  br i1 %cmp9, label %for.body.lr.ph, label %for.cond.cleanup, !dbg !7932
-
-for.body.lr.ph:                                   ; preds = %entry
-  %2 = getelementptr inbounds %class.CBFormat, %class.CBFormat* %sumBF, i64 0, i32 0, i32 4, !dbg !7933
-  %_M_start.i = getelementptr inbounds %"class.std::vector.6", %"class.std::vector.6"* %soundSrcs, i64 0, i32 0, i32 0, i32 0, !dbg !7938
-  %m_nSamples.i = getelementptr inbounds %class.CBFormat, %class.CBFormat* %sumBF, i64 0, i32 1, !dbg !7940
-  %_M_head_impl.i.i.i.i.i.i21.i = getelementptr inbounds %class.CBFormat, %class.CBFormat* %sumBF, i64 0, i32 4, i32 0, i32 0, i32 0, i32 0, !dbg !7944
-  %.pre = load i32, i32* %2, align 8, !dbg !7952, !tbaa !3060
-  %cmp25.i = icmp eq i32 %.pre, 0, !dbg !7933
-  %3 = zext i32 %.pre to i64, !dbg !7953
-  br label %for.body, !dbg !7932
-
-for.cond.cleanup:                                 ; preds = %_ZN8CBFormatpLERKS_.exit, %entry
-  %returnStruct = insertvalue %struct.out.sumBF_fxp undef, i64 %bytes_sumBF, 0
-  ret %struct.out.sumBF_fxp %returnStruct, !dbg !7954
-
-for.body:                                         ; preds = %_ZN8CBFormatpLERKS_.exit, %for.body.lr.ph
-  %indvars.iv = phi i64 [ 0, %for.body.lr.ph ], [ %indvars.iv.next, %_ZN8CBFormatpLERKS_.exit ]
-  call void @llvm.dbg.value(metadata i64 %indvars.iv, metadata !7926, metadata !DIExpression()), !dbg !7929
-  call void @llvm.dbg.value(metadata %"class.std::vector.6"* %soundSrcs, metadata !5639, metadata !DIExpression()), !dbg !7938
-  call void @llvm.dbg.value(metadata i64 %indvars.iv, metadata !5642, metadata !DIExpression()), !dbg !7938
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3433, metadata !DIExpression()), !dbg !7955
-  call void @llvm.dbg.value(metadata %class.CBFormat* undef, metadata !3434, metadata !DIExpression()), !dbg !7955
-  call void @llvm.dbg.value(metadata i32 0, metadata !3435, metadata !DIExpression()), !dbg !7955
-  call void @llvm.dbg.value(metadata i32 0, metadata !3436, metadata !DIExpression()), !dbg !7955
-  call void @llvm.dbg.value(metadata i32 0, metadata !3435, metadata !DIExpression()), !dbg !7955
-  br i1 %cmp25.i, label %_ZN8CBFormatpLERKS_.exit, label %for.cond2.preheader.lr.ph.i, !dbg !7956
-
-for.cond2.preheader.lr.ph.i:                      ; preds = %for.body
-  %4 = load %"class.ILLIXR_AUDIO::Sound"**, %"class.ILLIXR_AUDIO::Sound"*** %_M_start.i, align 8, !dbg !7957, !tbaa !5633
-  %add.ptr.i = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %4, i64 %indvars.iv, !dbg !7958
-  %5 = load %"class.ILLIXR_AUDIO::Sound"*, %"class.ILLIXR_AUDIO::Sound"** %add.ptr.i, align 8, !dbg !7959, !tbaa !3224
-  %BFormat = getelementptr inbounds %"class.ILLIXR_AUDIO::Sound", %"class.ILLIXR_AUDIO::Sound"* %5, i64 0, i32 2, !dbg !7960
-  %6 = load %class.CBFormat*, %class.CBFormat** %BFormat, align 8, !dbg !7960, !tbaa !5348
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3434, metadata !DIExpression()), !dbg !7955
-  %7 = load i32, i32* %m_nSamples.i, align 8, !dbg !7940, !tbaa !3119
-  %cmp323.i = icmp eq i32 %7, 0, !dbg !7940
-  %_M_head_impl.i.i.i.i.i.i.i = getelementptr inbounds %class.CBFormat, %class.CBFormat* %6, i64 0, i32 4, i32 0, i32 0, i32 0, i32 0, !dbg !7961
-  %8 = load float**, float*** %_M_head_impl.i.i.i.i.i.i.i, align 8, !dbg !7968
-  br i1 %cmp323.i, label %_ZN8CBFormatpLERKS_.exit, label %for.cond2.preheader.us.preheader.i, !dbg !7956
-
-for.cond2.preheader.us.preheader.i:               ; preds = %for.cond2.preheader.lr.ph.i
-  %.pre.i = load float**, float*** %_M_head_impl.i.i.i.i.i.i21.i, align 8, !dbg !7969, !tbaa !3224
-  %9 = zext i32 %7 to i64, !dbg !7970
-  %10 = and i64 %9, 4294967288, !dbg !7956
-  %11 = add nsw i64 %10, -8, !dbg !7956
-  %12 = lshr exact i64 %11, 3, !dbg !7956
-  %13 = add nuw nsw i64 %12, 1, !dbg !7956
-  %min.iters.check = icmp ult i32 %7, 8, !dbg !7970
-  %n.vec = and i64 %9, 4294967288, !dbg !7970
-  %xtraiter = and i64 %13, 1, !dbg !7970
-  %14 = icmp eq i64 %11, 0, !dbg !7970
-  %unroll_iter = sub nuw nsw i64 %13, %xtraiter, !dbg !7970
-  %lcmp.mod = icmp eq i64 %xtraiter, 0, !dbg !7940
-  %cmp.n = icmp eq i64 %n.vec, %9, !dbg !7970
-  %xtraiter21 = and i64 %9, 3, !dbg !7970
-  %lcmp.mod22 = icmp eq i64 %xtraiter21, 0, !dbg !7970
-  br label %for.cond2.preheader.us.i, !dbg !7956
-
-for.cond2.preheader.us.i:                         ; preds = %for.cond2.for.inc10_crit_edge.us.i, %for.cond2.preheader.us.preheader.i
-  %indvars.iv29.i = phi i64 [ 0, %for.cond2.preheader.us.preheader.i ], [ %indvars.iv.next30.i, %for.cond2.for.inc10_crit_edge.us.i ]
-  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3435, metadata !DIExpression()), !dbg !7955
-  call void @llvm.dbg.value(metadata i32 0, metadata !3436, metadata !DIExpression()), !dbg !7955
-  %arrayidx.i.us.i = getelementptr inbounds float*, float** %8, i64 %indvars.iv29.i, !dbg !7971
-  %15 = load float*, float** %arrayidx.i.us.i, align 8, !dbg !7972, !tbaa !3224
-  %arrayidx.i22.us.i = getelementptr inbounds float*, float** %.pre.i, i64 %indvars.iv29.i, !dbg !7973
-  %16 = load float*, float** %arrayidx.i22.us.i, align 8, !dbg !7972, !tbaa !3224
-  br i1 %min.iters.check, label %for.body4.us.i.preheader, label %vector.memcheck, !dbg !7974
-
-vector.memcheck:                                  ; preds = %for.cond2.preheader.us.i
-  %scevgep = getelementptr float, float* %16, i64 %9, !dbg !7974
-  %scevgep15 = getelementptr float, float* %15, i64 %9, !dbg !7974
-  %bound0 = icmp ult float* %16, %scevgep15, !dbg !7974
-  %bound1 = icmp ult float* %15, %scevgep, !dbg !7974
-  %found.conflict = and i1 %bound0, %bound1, !dbg !7974
-  br i1 %found.conflict, label %for.body4.us.i.preheader, label %vector.ph, !dbg !7974
-
-vector.ph:                                        ; preds = %vector.memcheck
-  br i1 %14, label %middle.block.unr-lcssa, label %vector.body, !dbg !7974
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ %index.next.1, %vector.body ], [ 0, %vector.ph ], !dbg !7975
-  %niter = phi i64 [ %niter.nsub.1, %vector.body ], [ %unroll_iter, %vector.ph ]
-  %17 = getelementptr inbounds float, float* %15, i64 %index, !dbg !7976
-  %18 = bitcast float* %17 to <4 x float>*, !dbg !7976
-  %wide.load = load <4 x float>, <4 x float>* %18, align 4, !dbg !7976, !tbaa !3471, !alias.scope !7977
-  %19 = getelementptr inbounds float, float* %17, i64 4, !dbg !7976
-  %20 = bitcast float* %19 to <4 x float>*, !dbg !7976
-  %wide.load18 = load <4 x float>, <4 x float>* %20, align 4, !dbg !7976, !tbaa !3471, !alias.scope !7977
-  %21 = getelementptr inbounds float, float* %16, i64 %index, !dbg !7980
-  %22 = bitcast float* %21 to <4 x float>*, !dbg !7981
-  %wide.load19 = load <4 x float>, <4 x float>* %22, align 4, !dbg !7981, !tbaa !3471, !alias.scope !7982, !noalias !7977
-  %23 = getelementptr inbounds float, float* %21, i64 4, !dbg !7981
-  %24 = bitcast float* %23 to <4 x float>*, !dbg !7981
-  %wide.load20 = load <4 x float>, <4 x float>* %24, align 4, !dbg !7981, !tbaa !3471, !alias.scope !7982, !noalias !7977
-  %25 = fadd <4 x float> %wide.load, %wide.load19, !dbg !7981
-  %26 = fadd <4 x float> %wide.load18, %wide.load20, !dbg !7981
-  %27 = bitcast float* %21 to <4 x float>*, !dbg !7981
-  store <4 x float> %25, <4 x float>* %27, align 4, !dbg !7981, !tbaa !3471, !alias.scope !7982, !noalias !7977
-  %28 = bitcast float* %23 to <4 x float>*, !dbg !7981
-  store <4 x float> %26, <4 x float>* %28, align 4, !dbg !7981, !tbaa !3471, !alias.scope !7982, !noalias !7977
-  %index.next = or i64 %index, 8, !dbg !7975
-  %29 = getelementptr inbounds float, float* %15, i64 %index.next, !dbg !7976
-  %30 = bitcast float* %29 to <4 x float>*, !dbg !7976
-  %wide.load.1 = load <4 x float>, <4 x float>* %30, align 4, !dbg !7976, !tbaa !3471, !alias.scope !7977
-  %31 = getelementptr inbounds float, float* %29, i64 4, !dbg !7976
-  %32 = bitcast float* %31 to <4 x float>*, !dbg !7976
-  %wide.load18.1 = load <4 x float>, <4 x float>* %32, align 4, !dbg !7976, !tbaa !3471, !alias.scope !7977
-  %33 = getelementptr inbounds float, float* %16, i64 %index.next, !dbg !7980
-  %34 = bitcast float* %33 to <4 x float>*, !dbg !7981
-  %wide.load19.1 = load <4 x float>, <4 x float>* %34, align 4, !dbg !7981, !tbaa !3471, !alias.scope !7982, !noalias !7977
-  %35 = getelementptr inbounds float, float* %33, i64 4, !dbg !7981
-  %36 = bitcast float* %35 to <4 x float>*, !dbg !7981
-  %wide.load20.1 = load <4 x float>, <4 x float>* %36, align 4, !dbg !7981, !tbaa !3471, !alias.scope !7982, !noalias !7977
-  %37 = fadd <4 x float> %wide.load.1, %wide.load19.1, !dbg !7981
-  %38 = fadd <4 x float> %wide.load18.1, %wide.load20.1, !dbg !7981
-  %39 = bitcast float* %33 to <4 x float>*, !dbg !7981
-  store <4 x float> %37, <4 x float>* %39, align 4, !dbg !7981, !tbaa !3471, !alias.scope !7982, !noalias !7977
-  %40 = bitcast float* %35 to <4 x float>*, !dbg !7981
-  store <4 x float> %38, <4 x float>* %40, align 4, !dbg !7981, !tbaa !3471, !alias.scope !7982, !noalias !7977
-  %index.next.1 = add i64 %index, 16, !dbg !7975
-  %niter.nsub.1 = add i64 %niter, -2, !dbg !7975
-  %niter.ncmp.1 = icmp eq i64 %niter.nsub.1, 0, !dbg !7975
-  br i1 %niter.ncmp.1, label %middle.block.unr-lcssa, label %vector.body, !dbg !7975, !llvm.loop !7984
-
-middle.block.unr-lcssa:                           ; preds = %vector.body, %vector.ph
-  %index.unr = phi i64 [ 0, %vector.ph ], [ %index.next.1, %vector.body ]
-  br i1 %lcmp.mod, label %middle.block, label %vector.body.epil, !dbg !7975
-
-vector.body.epil:                                 ; preds = %middle.block.unr-lcssa
-  %41 = getelementptr inbounds float, float* %15, i64 %index.unr, !dbg !7976
-  %42 = bitcast float* %41 to <4 x float>*, !dbg !7976
-  %wide.load.epil = load <4 x float>, <4 x float>* %42, align 4, !dbg !7976, !tbaa !3471, !alias.scope !7977
-  %43 = getelementptr inbounds float, float* %41, i64 4, !dbg !7976
-  %44 = bitcast float* %43 to <4 x float>*, !dbg !7976
-  %wide.load18.epil = load <4 x float>, <4 x float>* %44, align 4, !dbg !7976, !tbaa !3471, !alias.scope !7977
-  %45 = getelementptr inbounds float, float* %16, i64 %index.unr, !dbg !7980
-  %46 = bitcast float* %45 to <4 x float>*, !dbg !7981
-  %wide.load19.epil = load <4 x float>, <4 x float>* %46, align 4, !dbg !7981, !tbaa !3471, !alias.scope !7982, !noalias !7977
-  %47 = getelementptr inbounds float, float* %45, i64 4, !dbg !7981
-  %48 = bitcast float* %47 to <4 x float>*, !dbg !7981
-  %wide.load20.epil = load <4 x float>, <4 x float>* %48, align 4, !dbg !7981, !tbaa !3471, !alias.scope !7982, !noalias !7977
-  %49 = fadd <4 x float> %wide.load.epil, %wide.load19.epil, !dbg !7981
-  %50 = fadd <4 x float> %wide.load18.epil, %wide.load20.epil, !dbg !7981
-  %51 = bitcast float* %45 to <4 x float>*, !dbg !7981
-  store <4 x float> %49, <4 x float>* %51, align 4, !dbg !7981, !tbaa !3471, !alias.scope !7982, !noalias !7977
-  %52 = bitcast float* %47 to <4 x float>*, !dbg !7981
-  store <4 x float> %50, <4 x float>* %52, align 4, !dbg !7981, !tbaa !3471, !alias.scope !7982, !noalias !7977
-  br label %middle.block, !dbg !7974
-
-middle.block:                                     ; preds = %vector.body.epil, %middle.block.unr-lcssa
-  br i1 %cmp.n, label %for.cond2.for.inc10_crit_edge.us.i, label %for.body4.us.i.preheader, !dbg !7974
-
-for.body4.us.i.preheader:                         ; preds = %middle.block, %vector.memcheck, %for.cond2.preheader.us.i
-  %indvars.iv.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %for.cond2.preheader.us.i ], [ %n.vec, %middle.block ]
-  %53 = xor i64 %indvars.iv.i.ph, -1, !dbg !7974
-  %54 = add nsw i64 %53, %9, !dbg !7974
-  br i1 %lcmp.mod22, label %for.body4.us.i.prol.loopexit, label %for.body4.us.i.prol, !dbg !7974
-
-for.body4.us.i.prol:                              ; preds = %for.body4.us.i.prol, %for.body4.us.i.preheader
-  %indvars.iv.i.prol = phi i64 [ %indvars.iv.next.i.prol, %for.body4.us.i.prol ], [ %indvars.iv.i.ph, %for.body4.us.i.preheader ]
-  %prol.iter = phi i64 [ %prol.iter.sub, %for.body4.us.i.prol ], [ %xtraiter21, %for.body4.us.i.preheader ]
-  call void @llvm.dbg.value(metadata i64 %indvars.iv.i.prol, metadata !3436, metadata !DIExpression()), !dbg !7955
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7971
-  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7971
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7968
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7986
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7987
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7988
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7961
-  %arrayidx.us.i.prol = getelementptr inbounds float, float* %15, i64 %indvars.iv.i.prol, !dbg !7976
-  %55 = load float, float* %arrayidx.us.i.prol, align 4, !dbg !7976, !tbaa !3471
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7973
-  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7973
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7969
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7989
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7990
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7991
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7944
-  %arrayidx9.us.i.prol = getelementptr inbounds float, float* %16, i64 %indvars.iv.i.prol, !dbg !7980
-  %56 = load float, float* %arrayidx9.us.i.prol, align 4, !dbg !7981, !tbaa !3471
-  %add.us.i.prol = fadd float %55, %56, !dbg !7981
-  store float %add.us.i.prol, float* %arrayidx9.us.i.prol, align 4, !dbg !7981, !tbaa !3471
-  %indvars.iv.next.i.prol = add nuw nsw i64 %indvars.iv.i.prol, 1, !dbg !7975
-  call void @llvm.dbg.value(metadata i32 undef, metadata !3436, metadata !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value)), !dbg !7955
-  %prol.iter.sub = add i64 %prol.iter, -1, !dbg !7974
-  %prol.iter.cmp = icmp eq i64 %prol.iter.sub, 0, !dbg !7974
-  br i1 %prol.iter.cmp, label %for.body4.us.i.prol.loopexit, label %for.body4.us.i.prol, !dbg !7974, !llvm.loop !7992
-
-for.body4.us.i.prol.loopexit:                     ; preds = %for.body4.us.i.prol, %for.body4.us.i.preheader
-  %indvars.iv.i.unr = phi i64 [ %indvars.iv.i.ph, %for.body4.us.i.preheader ], [ %indvars.iv.next.i.prol, %for.body4.us.i.prol ]
-  %57 = icmp ult i64 %54, 3, !dbg !7974
-  br i1 %57, label %for.cond2.for.inc10_crit_edge.us.i, label %for.body4.us.i, !dbg !7974
-
-for.body4.us.i:                                   ; preds = %for.body4.us.i, %for.body4.us.i.prol.loopexit
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.3, %for.body4.us.i ], [ %indvars.iv.i.unr, %for.body4.us.i.prol.loopexit ]
-  call void @llvm.dbg.value(metadata i64 %indvars.iv.i, metadata !3436, metadata !DIExpression()), !dbg !7955
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7971
-  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7971
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7968
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7986
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7987
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7988
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7961
-  %arrayidx.us.i = getelementptr inbounds float, float* %15, i64 %indvars.iv.i, !dbg !7976
-  %58 = load float, float* %arrayidx.us.i, align 4, !dbg !7976, !tbaa !3471
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7973
-  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7973
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7969
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7989
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7990
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7991
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7944
-  %arrayidx9.us.i = getelementptr inbounds float, float* %16, i64 %indvars.iv.i, !dbg !7980
-  %59 = load float, float* %arrayidx9.us.i, align 4, !dbg !7981, !tbaa !3471
-  %add.us.i = fadd float %58, %59, !dbg !7981
-  store float %add.us.i, float* %arrayidx9.us.i, align 4, !dbg !7981, !tbaa !3471
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1, !dbg !7975
-  call void @llvm.dbg.value(metadata i32 undef, metadata !3436, metadata !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value)), !dbg !7955
-  call void @llvm.dbg.value(metadata i64 %indvars.iv.next.i, metadata !3436, metadata !DIExpression()), !dbg !7955
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7971
-  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7971
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7968
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7986
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7987
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7988
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7961
-  %arrayidx.us.i.1 = getelementptr inbounds float, float* %15, i64 %indvars.iv.next.i, !dbg !7976
-  %60 = load float, float* %arrayidx.us.i.1, align 4, !dbg !7976, !tbaa !3471
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7973
-  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7973
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7969
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7989
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7990
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7991
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7944
-  %arrayidx9.us.i.1 = getelementptr inbounds float, float* %16, i64 %indvars.iv.next.i, !dbg !7980
-  %61 = load float, float* %arrayidx9.us.i.1, align 4, !dbg !7981, !tbaa !3471
-  %add.us.i.1 = fadd float %60, %61, !dbg !7981
-  store float %add.us.i.1, float* %arrayidx9.us.i.1, align 4, !dbg !7981, !tbaa !3471
-  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2, !dbg !7975
-  call void @llvm.dbg.value(metadata i32 undef, metadata !3436, metadata !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value)), !dbg !7955
-  call void @llvm.dbg.value(metadata i64 %indvars.iv.next.i.1, metadata !3436, metadata !DIExpression()), !dbg !7955
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7971
-  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7971
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7968
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7986
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7987
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7988
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7961
-  %arrayidx.us.i.2 = getelementptr inbounds float, float* %15, i64 %indvars.iv.next.i.1, !dbg !7976
-  %62 = load float, float* %arrayidx.us.i.2, align 4, !dbg !7976, !tbaa !3471
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7973
-  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7973
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7969
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7989
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7990
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7991
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7944
-  %arrayidx9.us.i.2 = getelementptr inbounds float, float* %16, i64 %indvars.iv.next.i.1, !dbg !7980
-  %63 = load float, float* %arrayidx9.us.i.2, align 4, !dbg !7981, !tbaa !3471
-  %add.us.i.2 = fadd float %62, %63, !dbg !7981
-  store float %add.us.i.2, float* %arrayidx9.us.i.2, align 4, !dbg !7981, !tbaa !3471
-  %indvars.iv.next.i.2 = add nuw nsw i64 %indvars.iv.i, 3, !dbg !7975
-  call void @llvm.dbg.value(metadata i32 undef, metadata !3436, metadata !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value)), !dbg !7955
-  call void @llvm.dbg.value(metadata i64 %indvars.iv.next.i.2, metadata !3436, metadata !DIExpression()), !dbg !7955
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7971
-  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7971
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7968
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7986
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7987
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7988
-  call void @llvm.dbg.value(metadata %class.CBFormat* %6, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7961
-  %arrayidx.us.i.3 = getelementptr inbounds float, float* %15, i64 %indvars.iv.next.i.2, !dbg !7976
-  %64 = load float, float* %arrayidx.us.i.3, align 4, !dbg !7976, !tbaa !3471
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3255, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7973
-  call void @llvm.dbg.value(metadata i64 %indvars.iv29.i, metadata !3258, metadata !DIExpression()), !dbg !7973
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3262, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7969
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3304, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7989
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3320, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7990
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3327, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7991
-  call void @llvm.dbg.value(metadata %class.CBFormat* %sumBF, metadata !3332, metadata !DIExpression(DW_OP_plus_uconst, 56, DW_OP_stack_value)), !dbg !7944
-  %arrayidx9.us.i.3 = getelementptr inbounds float, float* %16, i64 %indvars.iv.next.i.2, !dbg !7980
-  %65 = load float, float* %arrayidx9.us.i.3, align 4, !dbg !7981, !tbaa !3471
-  %add.us.i.3 = fadd float %64, %65, !dbg !7981
-  store float %add.us.i.3, float* %arrayidx9.us.i.3, align 4, !dbg !7981, !tbaa !3471
-  %indvars.iv.next.i.3 = add nuw nsw i64 %indvars.iv.i, 4, !dbg !7975
-  call void @llvm.dbg.value(metadata i32 undef, metadata !3436, metadata !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value)), !dbg !7955
-  %exitcond.3 = icmp eq i64 %indvars.iv.next.i.3, %9, !dbg !7993
-  br i1 %exitcond.3, label %for.cond2.for.inc10_crit_edge.us.i, label %for.body4.us.i, !dbg !7974, !llvm.loop !7994
-
-for.cond2.for.inc10_crit_edge.us.i:               ; preds = %for.body4.us.i, %for.body4.us.i.prol.loopexit, %middle.block
-  %indvars.iv.next30.i = add nuw nsw i64 %indvars.iv29.i, 1, !dbg !7995
-  call void @llvm.dbg.value(metadata i32 undef, metadata !3435, metadata !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value)), !dbg !7955
-  %exitcond12 = icmp eq i64 %indvars.iv.next30.i, %3, !dbg !7996
-  br i1 %exitcond12, label %_ZN8CBFormatpLERKS_.exit, label %for.cond2.preheader.us.i, !dbg !7956, !llvm.loop !7997
-
-_ZN8CBFormatpLERKS_.exit:                         ; preds = %for.cond2.for.inc10_crit_edge.us.i, %for.cond2.preheader.lr.ph.i, %for.body
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !7999
-  call void @llvm.dbg.value(metadata i32 undef, metadata !7926, metadata !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value)), !dbg !7929
-  %exitcond13 = icmp eq i64 %indvars.iv.next, %soundSrcsSize, !dbg !7930
-  br i1 %exitcond13, label %for.cond.cleanup, label %for.body, !dbg !7932, !llvm.loop !8000
-}
-
-define %struct.out.wrapperSumBF_fxp @wrapperSumBF_fxp_cloned.6(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* %sumBF, i64 %bytes_sumBF, i64 %soundSrcsSize) {
-entry:
-  call void @llvm_hpvm_cpu_dstack_push(i32 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
-  %sumBF_fxp_cloned.5_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.sumBF_fxp @sumBF_fxp_cloned.5_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* %sumBF, i64 %bytes_sumBF, i64 %soundSrcsSize, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
-  call void @llvm_hpvm_cpu_dstack_pop()
-  %0 = extractvalue %struct.out.sumBF_fxp %sumBF_fxp_cloned.5_cloned_cloned_cloned_cloned_cloned_cloned_output, 0
-  %output = insertvalue %struct.out.wrapperSumBF_fxp undef, i64 %0, 0
-  ret %struct.out.wrapperSumBF_fxp %output
-}
-
-define void @encoderPipeline_cloned.LaunchFunction(i8* %data.addr, i8* %graphID) {
-entry:
-  %soundSrcs_buffer.addr = bitcast i8* %data.addr to i8**
-  %soundSrcs_buffer = load i8*, i8** %soundSrcs_buffer.addr
-  %nextArg = getelementptr i8*, i8** %soundSrcs_buffer.addr, i64 1
-  %bytes_soundSrcs_buffer.addr = bitcast i8** %nextArg to i8**
-  %bytes_soundSrcs_buffer = load i8*, i8** %bytes_soundSrcs_buffer.addr
-  %nextArg1 = getelementptr i8*, i8** %bytes_soundSrcs_buffer.addr, i64 1
-  %nSamples_buffer.addr = bitcast i8** %nextArg1 to i8**
-  %nSamples_buffer = load i8*, i8** %nSamples_buffer.addr
-  %nextArg2 = getelementptr i8*, i8** %nSamples_buffer.addr, i64 1
-  %soundSrcsSize_buffer.addr = bitcast i8** %nextArg2 to i8**
-  %soundSrcsSize_buffer = load i8*, i8** %soundSrcsSize_buffer.addr
-  %nextArg3 = getelementptr i8*, i8** %soundSrcsSize_buffer.addr, i64 1
-  %sampleTemp_buffer.addr = bitcast i8** %nextArg3 to i8**
-  %sampleTemp_buffer = load i8*, i8** %sampleTemp_buffer.addr
-  %nextArg4 = getelementptr i8*, i8** %sampleTemp_buffer.addr, i64 1
-  %bytes_sampleTemp_buffer.addr = bitcast i8** %nextArg4 to i8**
-  %bytes_sampleTemp_buffer = load i8*, i8** %bytes_sampleTemp_buffer.addr
-  %nextArg5 = getelementptr i8*, i8** %bytes_sampleTemp_buffer.addr, i64 1
-  %sumBF_buffer.addr = bitcast i8** %nextArg5 to i8**
-  %sumBF_buffer = load i8*, i8** %sumBF_buffer.addr
-  %nextArg6 = getelementptr i8*, i8** %sumBF_buffer.addr, i64 1
-  %bytes_sumBF_buffer.addr = bitcast i8** %nextArg6 to i8**
-  %bytes_sumBF_buffer = load i8*, i8** %bytes_sumBF_buffer.addr
-  %BindIn.wrapperNormalization_fxp_cloned = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i32 0)
-  %BindIn.wrapperNormalization_fxp_cloned7 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 1)
-  %BindIn.wrapperNormalization_fxp_cloned8 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 2)
-  %BindIn.wrapperNormalization_fxp_cloned9 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 3)
-  %BindIn.wrapperNormalization_fxp_cloned10 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i32 4)
-  %BindIn.wrapperNormalization_fxp_cloned11 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 5)
-  %BindIn.wrapperEncoder_fxp_cloned = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i32 0)
-  %wrapperNormalization_fxp_cloned.wrapperEncoder_fxp_cloned = call i8* @llvm_hpvm_createEdgeBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64))
-  %BindIn.wrapperEncoder_fxp_cloned12 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 2)
-  %BindIn.wrapperEncoder_fxp_cloned13 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 3)
-  %BindIn.wrapperSumBF_fxp_cloned = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i32 0)
-  %wrapperEncoder_fxp_cloned.wrapperSumBF_fxp_cloned = call i8* @llvm_hpvm_createEdgeBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64))
-  %BindIn.wrapperSumBF_fxp_cloned14 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i1** getelementptr (i1*, i1** null, i32 1) to i64), i32 6)
-  %BindIn.wrapperSumBF_fxp_cloned15 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 7)
-  %BindIn.wrapperSumBF_fxp_cloned16 = call i8* @llvm_hpvm_createBindInBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64), i32 3)
-  %BindOut.wrapperSumBF_fxp_cloned = call i8* @llvm_hpvm_createBindOutBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64))
-  %BindIn.isLastInput.wrapperNormalization_fxp_cloned = call i8* @llvm_hpvm_createLastInputBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64))
-  %BindIn.isLastInput.wrapperEncoder_fxp_cloned = call i8* @llvm_hpvm_createLastInputBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64))
-  %BindIn.isLastInput.wrapperSumBF_fxp_cloned = call i8* @llvm_hpvm_createLastInputBuffer(i8* %graphID, i64 ptrtoint (i64* getelementptr (i64, i64* null, i32 1) to i64))
-  %wrapperNormalization_fxp_cloned.inputs = call i8* @malloc(i64 ptrtoint (%struct.thread.wrapperNormalization_fxp_cloned* getelementptr (%struct.thread.wrapperNormalization_fxp_cloned, %struct.thread.wrapperNormalization_fxp_cloned* null, i32 1) to i64))
-  %wrapperNormalization_fxp_cloned.inputs.i8ptr = bitcast i8* %wrapperNormalization_fxp_cloned.inputs to %struct.thread.wrapperNormalization_fxp_cloned*
-  %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_0 = getelementptr %struct.thread.wrapperNormalization_fxp_cloned, %struct.thread.wrapperNormalization_fxp_cloned* %wrapperNormalization_fxp_cloned.inputs.i8ptr, i32 0, i32 0
-  store i8* %BindIn.wrapperNormalization_fxp_cloned, i8** %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_0
-  %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_1 = getelementptr %struct.thread.wrapperNormalization_fxp_cloned, %struct.thread.wrapperNormalization_fxp_cloned* %wrapperNormalization_fxp_cloned.inputs.i8ptr, i32 0, i32 1
-  store i8* %BindIn.wrapperNormalization_fxp_cloned7, i8** %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_1
-  %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_2 = getelementptr %struct.thread.wrapperNormalization_fxp_cloned, %struct.thread.wrapperNormalization_fxp_cloned* %wrapperNormalization_fxp_cloned.inputs.i8ptr, i32 0, i32 2
-  store i8* %BindIn.wrapperNormalization_fxp_cloned8, i8** %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_2
-  %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_3 = getelementptr %struct.thread.wrapperNormalization_fxp_cloned, %struct.thread.wrapperNormalization_fxp_cloned* %wrapperNormalization_fxp_cloned.inputs.i8ptr, i32 0, i32 3
-  store i8* %BindIn.wrapperNormalization_fxp_cloned9, i8** %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_3
-  %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_4 = getelementptr %struct.thread.wrapperNormalization_fxp_cloned, %struct.thread.wrapperNormalization_fxp_cloned* %wrapperNormalization_fxp_cloned.inputs.i8ptr, i32 0, i32 4
-  store i8* %BindIn.wrapperNormalization_fxp_cloned10, i8** %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_4
-  %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_5 = getelementptr %struct.thread.wrapperNormalization_fxp_cloned, %struct.thread.wrapperNormalization_fxp_cloned* %wrapperNormalization_fxp_cloned.inputs.i8ptr, i32 0, i32 5
-  store i8* %BindIn.wrapperNormalization_fxp_cloned11, i8** %wrapperNormalization_fxp_cloned.inputs.i8ptr.arg_5
-  %wrapperNormalization_fxp_cloned.inputs.i8ptr.out_0 = getelementptr %struct.thread.wrapperNormalization_fxp_cloned, %struct.thread.wrapperNormalization_fxp_cloned* %wrapperNormalization_fxp_cloned.inputs.i8ptr, i32 0, i32 6
-  store i8* %wrapperNormalization_fxp_cloned.wrapperEncoder_fxp_cloned, i8** %wrapperNormalization_fxp_cloned.inputs.i8ptr.out_0
-  %wrapperNormalization_fxp_cloned.inputs.i8ptr.isLastInput = getelementptr %struct.thread.wrapperNormalization_fxp_cloned, %struct.thread.wrapperNormalization_fxp_cloned* %wrapperNormalization_fxp_cloned.inputs.i8ptr, i32 0, i32 7
-  store i8* %BindIn.isLastInput.wrapperNormalization_fxp_cloned, i8** %wrapperNormalization_fxp_cloned.inputs.i8ptr.isLastInput
-  %wrapperNormalization_fxp_cloned.inputs.i8ptr17 = bitcast %struct.thread.wrapperNormalization_fxp_cloned* %wrapperNormalization_fxp_cloned.inputs.i8ptr to i8*
-  call void @llvm_hpvm_createThread(i8* %graphID, i8* (i8*)* @wrapperNormalization_fxp_cloned_Pipeline, i8* %wrapperNormalization_fxp_cloned.inputs.i8ptr17)
-  %wrapperEncoder_fxp_cloned.inputs = call i8* @malloc(i64 ptrtoint (%struct.thread.wrapperEncoder_fxp_cloned* getelementptr (%struct.thread.wrapperEncoder_fxp_cloned, %struct.thread.wrapperEncoder_fxp_cloned* null, i32 1) to i64))
-  %wrapperEncoder_fxp_cloned.inputs.i8ptr = bitcast i8* %wrapperEncoder_fxp_cloned.inputs to %struct.thread.wrapperEncoder_fxp_cloned*
-  %wrapperEncoder_fxp_cloned.inputs.i8ptr.arg_0 = getelementptr %struct.thread.wrapperEncoder_fxp_cloned, %struct.thread.wrapperEncoder_fxp_cloned* %wrapperEncoder_fxp_cloned.inputs.i8ptr, i32 0, i32 0
-  store i8* %BindIn.wrapperEncoder_fxp_cloned, i8** %wrapperEncoder_fxp_cloned.inputs.i8ptr.arg_0
-  %wrapperEncoder_fxp_cloned.inputs.i8ptr.arg_1 = getelementptr %struct.thread.wrapperEncoder_fxp_cloned, %struct.thread.wrapperEncoder_fxp_cloned* %wrapperEncoder_fxp_cloned.inputs.i8ptr, i32 0, i32 1
-  store i8* %wrapperNormalization_fxp_cloned.wrapperEncoder_fxp_cloned, i8** %wrapperEncoder_fxp_cloned.inputs.i8ptr.arg_1
-  %wrapperEncoder_fxp_cloned.inputs.i8ptr.arg_2 = getelementptr %struct.thread.wrapperEncoder_fxp_cloned, %struct.thread.wrapperEncoder_fxp_cloned* %wrapperEncoder_fxp_cloned.inputs.i8ptr, i32 0, i32 2
-  store i8* %BindIn.wrapperEncoder_fxp_cloned12, i8** %wrapperEncoder_fxp_cloned.inputs.i8ptr.arg_2
-  %wrapperEncoder_fxp_cloned.inputs.i8ptr.arg_3 = getelementptr %struct.thread.wrapperEncoder_fxp_cloned, %struct.thread.wrapperEncoder_fxp_cloned* %wrapperEncoder_fxp_cloned.inputs.i8ptr, i32 0, i32 3
-  store i8* %BindIn.wrapperEncoder_fxp_cloned13, i8** %wrapperEncoder_fxp_cloned.inputs.i8ptr.arg_3
-  %wrapperEncoder_fxp_cloned.inputs.i8ptr.out_0 = getelementptr %struct.thread.wrapperEncoder_fxp_cloned, %struct.thread.wrapperEncoder_fxp_cloned* %wrapperEncoder_fxp_cloned.inputs.i8ptr, i32 0, i32 4
-  store i8* %wrapperEncoder_fxp_cloned.wrapperSumBF_fxp_cloned, i8** %wrapperEncoder_fxp_cloned.inputs.i8ptr.out_0
-  %wrapperEncoder_fxp_cloned.inputs.i8ptr.isLastInput = getelementptr %struct.thread.wrapperEncoder_fxp_cloned, %struct.thread.wrapperEncoder_fxp_cloned* %wrapperEncoder_fxp_cloned.inputs.i8ptr, i32 0, i32 5
-  store i8* %BindIn.isLastInput.wrapperEncoder_fxp_cloned, i8** %wrapperEncoder_fxp_cloned.inputs.i8ptr.isLastInput
-  %wrapperEncoder_fxp_cloned.inputs.i8ptr18 = bitcast %struct.thread.wrapperEncoder_fxp_cloned* %wrapperEncoder_fxp_cloned.inputs.i8ptr to i8*
-  call void @llvm_hpvm_createThread(i8* %graphID, i8* (i8*)* @wrapperEncoder_fxp_cloned_Pipeline, i8* %wrapperEncoder_fxp_cloned.inputs.i8ptr18)
-  %wrapperSumBF_fxp_cloned.inputs = call i8* @malloc(i64 ptrtoint (%struct.thread.wrapperSumBF_fxp_cloned* getelementptr (%struct.thread.wrapperSumBF_fxp_cloned, %struct.thread.wrapperSumBF_fxp_cloned* null, i32 1) to i64))
-  %wrapperSumBF_fxp_cloned.inputs.i8ptr = bitcast i8* %wrapperSumBF_fxp_cloned.inputs to %struct.thread.wrapperSumBF_fxp_cloned*
-  %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_0 = getelementptr %struct.thread.wrapperSumBF_fxp_cloned, %struct.thread.wrapperSumBF_fxp_cloned* %wrapperSumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 0
-  store i8* %BindIn.wrapperSumBF_fxp_cloned, i8** %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_0
-  %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_1 = getelementptr %struct.thread.wrapperSumBF_fxp_cloned, %struct.thread.wrapperSumBF_fxp_cloned* %wrapperSumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 1
-  store i8* %wrapperEncoder_fxp_cloned.wrapperSumBF_fxp_cloned, i8** %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_1
-  %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_2 = getelementptr %struct.thread.wrapperSumBF_fxp_cloned, %struct.thread.wrapperSumBF_fxp_cloned* %wrapperSumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 2
-  store i8* %BindIn.wrapperSumBF_fxp_cloned14, i8** %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_2
-  %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_3 = getelementptr %struct.thread.wrapperSumBF_fxp_cloned, %struct.thread.wrapperSumBF_fxp_cloned* %wrapperSumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 3
-  store i8* %BindIn.wrapperSumBF_fxp_cloned15, i8** %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_3
-  %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_4 = getelementptr %struct.thread.wrapperSumBF_fxp_cloned, %struct.thread.wrapperSumBF_fxp_cloned* %wrapperSumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 4
-  store i8* %BindIn.wrapperSumBF_fxp_cloned16, i8** %wrapperSumBF_fxp_cloned.inputs.i8ptr.arg_4
-  %wrapperSumBF_fxp_cloned.inputs.i8ptr.out_0 = getelementptr %struct.thread.wrapperSumBF_fxp_cloned, %struct.thread.wrapperSumBF_fxp_cloned* %wrapperSumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 5
-  store i8* %BindOut.wrapperSumBF_fxp_cloned, i8** %wrapperSumBF_fxp_cloned.inputs.i8ptr.out_0
-  %wrapperSumBF_fxp_cloned.inputs.i8ptr.isLastInput = getelementptr %struct.thread.wrapperSumBF_fxp_cloned, %struct.thread.wrapperSumBF_fxp_cloned* %wrapperSumBF_fxp_cloned.inputs.i8ptr, i32 0, i32 6
-  store i8* %BindIn.isLastInput.wrapperSumBF_fxp_cloned, i8** %wrapperSumBF_fxp_cloned.inputs.i8ptr.isLastInput
-  %wrapperSumBF_fxp_cloned.inputs.i8ptr19 = bitcast %struct.thread.wrapperSumBF_fxp_cloned* %wrapperSumBF_fxp_cloned.inputs.i8ptr to i8*
-  call void @llvm_hpvm_createThread(i8* %graphID, i8* (i8*)* @wrapperSumBF_fxp_cloned_Pipeline, i8* %wrapperSumBF_fxp_cloned.inputs.i8ptr19)
-  ret void
-}
-
-define i8* @wrapperNormalization_fxp_cloned_Pipeline(i8* %data.addr) {
-entry:
-  %soundSrcs_buffer.addr = bitcast i8* %data.addr to i8**
-  %soundSrcs_buffer = load i8*, i8** %soundSrcs_buffer.addr
-  %nextArg = getelementptr i8*, i8** %soundSrcs_buffer.addr, i64 1
-  %bytes_soundSrcs_buffer.addr = bitcast i8** %nextArg to i8**
-  %bytes_soundSrcs_buffer = load i8*, i8** %bytes_soundSrcs_buffer.addr
-  %nextArg1 = getelementptr i8*, i8** %bytes_soundSrcs_buffer.addr, i64 1
-  %nSamples_buffer.addr = bitcast i8** %nextArg1 to i8**
-  %nSamples_buffer = load i8*, i8** %nSamples_buffer.addr
-  %nextArg2 = getelementptr i8*, i8** %nSamples_buffer.addr, i64 1
-  %soundSrcsSize_buffer.addr = bitcast i8** %nextArg2 to i8**
-  %soundSrcsSize_buffer = load i8*, i8** %soundSrcsSize_buffer.addr
-  %nextArg3 = getelementptr i8*, i8** %soundSrcsSize_buffer.addr, i64 1
-  %sampleTemp_buffer.addr = bitcast i8** %nextArg3 to i8**
-  %sampleTemp_buffer = load i8*, i8** %sampleTemp_buffer.addr
-  %nextArg4 = getelementptr i8*, i8** %sampleTemp_buffer.addr, i64 1
-  %bytes_sampleTemp_buffer.addr = bitcast i8** %nextArg4 to i8**
-  %bytes_sampleTemp_buffer = load i8*, i8** %bytes_sampleTemp_buffer.addr
-  %nextArg5 = getelementptr i8*, i8** %bytes_sampleTemp_buffer.addr, i64 1
-  %out.addr = bitcast i8** %nextArg5 to i8**
-  %out = load i8*, i8** %out.addr
-  %nextArg6 = getelementptr i8*, i8** %out.addr, i64 1
-  %isLastInput_buffer.addr = bitcast i8** %nextArg6 to i8**
-  %isLastInput_buffer = load i8*, i8** %isLastInput_buffer.addr
-  br label %condition
-
-condition:                                        ; preds = %while.body, %entry
-  %0 = call i64 @llvm_hpvm_bufferPop(i8* %isLastInput_buffer)
-  %isLastInput = bitcast i64 %0 to i64
-  %isLastInputNotZero = icmp ne i64 %isLastInput, 0
-  br i1 %isLastInputNotZero, label %while.end, label %while.body
-
-while.body:                                       ; preds = %condition
-  %1 = call i64 @llvm_hpvm_bufferPop(i8* %soundSrcs_buffer)
-  %soundSrcs.addr = inttoptr i64 %1 to %"class.std::vector.6"*
-  %2 = call i64 @llvm_hpvm_bufferPop(i8* %bytes_soundSrcs_buffer)
-  %bytes_soundSrcs.addr = bitcast i64 %2 to i64
-  %3 = call i64 @llvm_hpvm_bufferPop(i8* %nSamples_buffer)
-  %nSamples.addr = bitcast i64 %3 to i64
-  %4 = call i64 @llvm_hpvm_bufferPop(i8* %soundSrcsSize_buffer)
-  %soundSrcsSize.addr = bitcast i64 %4 to i64
-  %5 = call i64 @llvm_hpvm_bufferPop(i8* %sampleTemp_buffer)
-  %sampleTemp.addr = inttoptr i64 %5 to i16*
-  %6 = call i64 @llvm_hpvm_bufferPop(i8* %bytes_sampleTemp_buffer)
-  %bytes_sampleTemp.addr = bitcast i64 %6 to i64
-  %wrapperNormalization_fxp_cloned.2.output = call %struct.out.wrapperNormalization_fxp @wrapperNormalization_fxp_cloned.2(%"class.std::vector.6"* %soundSrcs.addr, i64 %bytes_soundSrcs.addr, i64 %nSamples.addr, i64 %soundSrcsSize.addr, i16* %sampleTemp.addr, i64 %bytes_sampleTemp.addr)
-  %7 = extractvalue %struct.out.wrapperNormalization_fxp %wrapperNormalization_fxp_cloned.2.output, 0
-  %8 = bitcast i64 %7 to i64
-  call void @llvm_hpvm_bufferPush(i8* %out, i64 %8)
-  br label %condition
-
-while.end:                                        ; preds = %condition
-  ret i8* undef
-}
-
-define i8* @wrapperEncoder_fxp_cloned_Pipeline(i8* %data.addr) {
-entry:
-  %soundSrcs_buffer.addr = bitcast i8* %data.addr to i8**
-  %soundSrcs_buffer = load i8*, i8** %soundSrcs_buffer.addr
-  %nextArg = getelementptr i8*, i8** %soundSrcs_buffer.addr, i64 1
-  %bytes_soundSrcs_buffer.addr = bitcast i8** %nextArg to i8**
-  %bytes_soundSrcs_buffer = load i8*, i8** %bytes_soundSrcs_buffer.addr
-  %nextArg1 = getelementptr i8*, i8** %bytes_soundSrcs_buffer.addr, i64 1
-  %nSamples_buffer.addr = bitcast i8** %nextArg1 to i8**
-  %nSamples_buffer = load i8*, i8** %nSamples_buffer.addr
-  %nextArg2 = getelementptr i8*, i8** %nSamples_buffer.addr, i64 1
-  %soundSrcsSize_buffer.addr = bitcast i8** %nextArg2 to i8**
-  %soundSrcsSize_buffer = load i8*, i8** %soundSrcsSize_buffer.addr
-  %nextArg3 = getelementptr i8*, i8** %soundSrcsSize_buffer.addr, i64 1
-  %out.addr = bitcast i8** %nextArg3 to i8**
-  %out = load i8*, i8** %out.addr
-  %nextArg4 = getelementptr i8*, i8** %out.addr, i64 1
-  %isLastInput_buffer.addr = bitcast i8** %nextArg4 to i8**
-  %isLastInput_buffer = load i8*, i8** %isLastInput_buffer.addr
-  br label %condition
-
-condition:                                        ; preds = %while.body, %entry
-  %0 = call i64 @llvm_hpvm_bufferPop(i8* %isLastInput_buffer)
-  %isLastInput = bitcast i64 %0 to i64
-  %isLastInputNotZero = icmp ne i64 %isLastInput, 0
-  br i1 %isLastInputNotZero, label %while.end, label %while.body
-
-while.body:                                       ; preds = %condition
-  %1 = call i64 @llvm_hpvm_bufferPop(i8* %soundSrcs_buffer)
-  %soundSrcs.addr = inttoptr i64 %1 to %"class.std::vector.6"*
-  %2 = call i64 @llvm_hpvm_bufferPop(i8* %bytes_soundSrcs_buffer)
-  %bytes_soundSrcs.addr = bitcast i64 %2 to i64
-  %3 = call i64 @llvm_hpvm_bufferPop(i8* %nSamples_buffer)
-  %nSamples.addr = bitcast i64 %3 to i64
-  %4 = call i64 @llvm_hpvm_bufferPop(i8* %soundSrcsSize_buffer)
-  %soundSrcsSize.addr = bitcast i64 %4 to i64
-  %wrapperEncoder_fxp_cloned.4.output = call %struct.out.wrapperEncoder_fxp @wrapperEncoder_fxp_cloned.4(%"class.std::vector.6"* %soundSrcs.addr, i64 %bytes_soundSrcs.addr, i64 %nSamples.addr, i64 %soundSrcsSize.addr)
-  %5 = extractvalue %struct.out.wrapperEncoder_fxp %wrapperEncoder_fxp_cloned.4.output, 0
-  %6 = bitcast i64 %5 to i64
-  call void @llvm_hpvm_bufferPush(i8* %out, i64 %6)
-  br label %condition
-
-while.end:                                        ; preds = %condition
-  ret i8* undef
-}
-
-define i8* @wrapperSumBF_fxp_cloned_Pipeline(i8* %data.addr) {
-entry:
-  %soundSrcs_buffer.addr = bitcast i8* %data.addr to i8**
-  %soundSrcs_buffer = load i8*, i8** %soundSrcs_buffer.addr
-  %nextArg = getelementptr i8*, i8** %soundSrcs_buffer.addr, i64 1
-  %bytes_soundSrcs_buffer.addr = bitcast i8** %nextArg to i8**
-  %bytes_soundSrcs_buffer = load i8*, i8** %bytes_soundSrcs_buffer.addr
-  %nextArg1 = getelementptr i8*, i8** %bytes_soundSrcs_buffer.addr, i64 1
-  %sumBF_buffer.addr = bitcast i8** %nextArg1 to i8**
-  %sumBF_buffer = load i8*, i8** %sumBF_buffer.addr
-  %nextArg2 = getelementptr i8*, i8** %sumBF_buffer.addr, i64 1
-  %bytes_sumBF_buffer.addr = bitcast i8** %nextArg2 to i8**
-  %bytes_sumBF_buffer = load i8*, i8** %bytes_sumBF_buffer.addr
-  %nextArg3 = getelementptr i8*, i8** %bytes_sumBF_buffer.addr, i64 1
-  %soundSrcsSize_buffer.addr = bitcast i8** %nextArg3 to i8**
-  %soundSrcsSize_buffer = load i8*, i8** %soundSrcsSize_buffer.addr
-  %nextArg4 = getelementptr i8*, i8** %soundSrcsSize_buffer.addr, i64 1
-  %out.addr = bitcast i8** %nextArg4 to i8**
-  %out = load i8*, i8** %out.addr
-  %nextArg5 = getelementptr i8*, i8** %out.addr, i64 1
-  %isLastInput_buffer.addr = bitcast i8** %nextArg5 to i8**
-  %isLastInput_buffer = load i8*, i8** %isLastInput_buffer.addr
-  br label %condition
-
-condition:                                        ; preds = %while.body, %entry
-  %0 = call i64 @llvm_hpvm_bufferPop(i8* %isLastInput_buffer)
-  %isLastInput = bitcast i64 %0 to i64
-  %isLastInputNotZero = icmp ne i64 %isLastInput, 0
-  br i1 %isLastInputNotZero, label %while.end, label %while.body
-
-while.body:                                       ; preds = %condition
-  %1 = call i64 @llvm_hpvm_bufferPop(i8* %soundSrcs_buffer)
-  %soundSrcs.addr = inttoptr i64 %1 to %"class.std::vector.6"*
-  %2 = call i64 @llvm_hpvm_bufferPop(i8* %bytes_soundSrcs_buffer)
-  %bytes_soundSrcs.addr = bitcast i64 %2 to i64
-  %3 = call i64 @llvm_hpvm_bufferPop(i8* %sumBF_buffer)
-  %sumBF.addr = inttoptr i64 %3 to %class.CBFormat*
-  %4 = call i64 @llvm_hpvm_bufferPop(i8* %bytes_sumBF_buffer)
-  %bytes_sumBF.addr = bitcast i64 %4 to i64
-  %5 = call i64 @llvm_hpvm_bufferPop(i8* %soundSrcsSize_buffer)
-  %soundSrcsSize.addr = bitcast i64 %5 to i64
-  %wrapperSumBF_fxp_cloned.6.output = call %struct.out.wrapperSumBF_fxp @wrapperSumBF_fxp_cloned.6(%"class.std::vector.6"* %soundSrcs.addr, i64 %bytes_soundSrcs.addr, %class.CBFormat* %sumBF.addr, i64 %bytes_sumBF.addr, i64 %soundSrcsSize.addr)
-  %6 = extractvalue %struct.out.wrapperSumBF_fxp %wrapperSumBF_fxp_cloned.6.output, 0
-  %7 = bitcast i64 %6 to i64
-  call void @llvm_hpvm_bufferPush(i8* %out, i64 %7)
-  br label %condition
-
-while.end:                                        ; preds = %condition
-  ret i8* undef
-}
+; Function Attrs: nounwind
+declare void @llvm.hpvm.cleanup() #24
 
 attributes #0 = { "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #1 = { nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
@@ -8468,7 +8201,6 @@ attributes #28 = { noreturn }
 !hpvm_hint_cpu = !{!3035, !3036, !3037, !3038, !3039, !3040, !3041}
 !hpvm_hint_gpu = !{}
 !hpvm_hint_cpu_gpu = !{}
-!hpvm_hint_cpu_spir = !{}
 
 !0 = !DIGlobalVariableExpression(var: !1, expr: !DIExpression())
 !1 = distinct !DIGlobalVariable(name: "__ioinit", linkageName: "_ZStL8__ioinit", scope: !2, file: !3, line: 74, type: !4, isLocal: true, isDefinition: true)
@@ -11505,13 +11237,13 @@ attributes #28 = { noreturn }
 !3032 = !{i32 1, !"wchar_size", i32 4}
 !3033 = !{i32 7, !"PIC Level", i32 2}
 !3034 = !{!"clang version 9.0.0 (https://gitlab.engr.illinois.edu/llvm/hpvm-release.git f83c355d11be7d011508763fedc67e76d592a636)"}
-!3035 = !{%struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i64, i64, i16*, i64)* undef}
-!3036 = !{%struct.out.wrapperNormalization_fxp (%"class.std::vector.6"*, i64, i64, i64, i16*, i64)* undef}
-!3037 = !{%struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i64, i64)* undef}
-!3038 = !{%struct.out.wrapperEncoder_fxp (%"class.std::vector.6"*, i64, i64, i64)* undef}
-!3039 = !{%struct.out.sumBF_fxp (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i64)* undef}
-!3040 = !{%struct.out.wrapperSumBF_fxp (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i64)* undef}
-!3041 = !{%struct.out.encoderPipeline (%"class.std::vector.6"*, i64, i64, i64, i16*, i64, %class.CBFormat*, i64)* undef}
+!3035 = !{%struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i64, i64, i16*, i64)* @normalization_fxp_cloned}
+!3036 = !{%struct.out.wrapperNormalization_fxp (%"class.std::vector.6"*, i64, i64, i64, i16*, i64)* @wrapperNormalization_fxp_cloned}
+!3037 = !{%struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i64, i64)* @encoder_fxp_cloned}
+!3038 = !{%struct.out.wrapperEncoder_fxp (%"class.std::vector.6"*, i64, i64, i64)* @wrapperEncoder_fxp_cloned}
+!3039 = !{%struct.out.sumBF_fxp (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i64)* @sumBF_fxp_cloned}
+!3040 = !{%struct.out.wrapperSumBF_fxp (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i64)* @wrapperSumBF_fxp_cloned}
+!3041 = !{%struct.out.encoderPipeline (%"class.std::vector.6"*, i64, i64, i64, i16*, i64, %class.CBFormat*, i64)* @encoderPipeline_cloned}
 !3042 = distinct !DISubprogram(name: "CAmbisonicBase", linkageName: "_ZN14CAmbisonicBaseC2Ev", scope: !113, file: !1534, line: 21, type: !125, scopeLine: 26, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, declaration: !124, retainedNodes: !3043)
 !3043 = !{!3044}
 !3044 = !DILocalVariable(name: "this", arg: 1, scope: !3042, type: !3045, flags: DIFlagArtificial | DIFlagObjectPointer)
@@ -16287,188 +16019,373 @@ attributes #28 = { noreturn }
 !7814 = !DILocation(line: 662, column: 36, scope: !7802)
 !7815 = !DILocation(line: 663, column: 5, scope: !7802)
 !7816 = !DILocation(line: 666, column: 1, scope: !7782)
-!7817 = distinct !DISubprogram(name: "encoder_fxp", scope: !1534, file: !1534, line: 686, type: !7818, scopeLine: 686, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, retainedNodes: !7820)
-!7818 = !DISubroutineType(types: !7819)
-!7819 = !{null, !68, !1117, !439, !439}
-!7820 = !{!7821, !7822, !7823, !7824, !7825, !7826}
-!7821 = !DILocalVariable(name: "soundSrcs", arg: 1, scope: !7817, file: !1534, line: 686, type: !68)
-!7822 = !DILocalVariable(name: "bytes_soundSrcs", arg: 2, scope: !7817, file: !1534, line: 686, type: !1117)
-!7823 = !DILocalVariable(name: "nSamples", arg: 3, scope: !7817, file: !1534, line: 686, type: !439)
-!7824 = !DILocalVariable(name: "soundSrcsSize", arg: 4, scope: !7817, file: !1534, line: 686, type: !439)
-!7825 = !DILocalVariable(name: "thisNode", scope: !7817, file: !1534, line: 696, type: !1546)
-!7826 = !DILocalVariable(name: "j", scope: !7817, file: !1534, line: 697, type: !439)
-!7827 = !DILocation(line: 0, scope: !7817)
-!7828 = !DILocation(line: 699, column: 11, scope: !7829)
-!7829 = distinct !DILexicalBlock(scope: !7817, file: !1534, line: 699, column: 9)
-!7830 = !DILocation(line: 699, column: 9, scope: !7817)
-!7831 = !DILocation(line: 0, scope: !5640, inlinedAt: !7832)
-!7832 = distinct !DILocation(line: 700, column: 9, scope: !7833)
-!7833 = distinct !DILexicalBlock(scope: !7829, file: !1534, line: 699, column: 28)
-!7834 = !DILocation(line: 780, column: 32, scope: !5640, inlinedAt: !7832)
-!7835 = !DILocation(line: 780, column: 41, scope: !5640, inlinedAt: !7832)
-!7836 = !DILocation(line: 700, column: 9, scope: !7833)
-!7837 = !DILocation(line: 700, column: 26, scope: !7833)
-!7838 = !DILocation(line: 0, scope: !5640, inlinedAt: !7839)
-!7839 = distinct !DILocation(line: 700, column: 44, scope: !7833)
-!7840 = !DILocation(line: 700, column: 44, scope: !7833)
-!7841 = !DILocation(line: 700, column: 69, scope: !7833)
+!7817 = distinct !DISubprogram(name: "wrapperNormalization_fxp", scope: !1534, file: !1534, line: 669, type: !7783, scopeLine: 669, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, retainedNodes: !7818)
+!7818 = !{!7819, !7820, !7821, !7822, !7823, !7824, !7825}
+!7819 = !DILocalVariable(name: "soundSrcs", arg: 1, scope: !7817, file: !1534, line: 669, type: !68)
+!7820 = !DILocalVariable(name: "bytes_soundSrcs", arg: 2, scope: !7817, file: !1534, line: 669, type: !1117)
+!7821 = !DILocalVariable(name: "nSamples", arg: 3, scope: !7817, file: !1534, line: 669, type: !439)
+!7822 = !DILocalVariable(name: "soundSrcsSize", arg: 4, scope: !7817, file: !1534, line: 669, type: !439)
+!7823 = !DILocalVariable(name: "sampleTemp", arg: 5, scope: !7817, file: !1534, line: 669, type: !1541)
+!7824 = !DILocalVariable(name: "bytes_sampleTemp", arg: 6, scope: !7817, file: !1534, line: 669, type: !1117)
+!7825 = !DILocalVariable(name: "normalNode", scope: !7817, file: !1534, line: 672, type: !1546)
+!7826 = !DILocation(line: 0, scope: !7817)
+!7827 = !DILocation(line: 683, column: 1, scope: !7817)
+!7828 = distinct !DISubprogram(name: "encoder_fxp", scope: !1534, file: !1534, line: 686, type: !7829, scopeLine: 686, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, retainedNodes: !7831)
+!7829 = !DISubroutineType(types: !7830)
+!7830 = !{null, !68, !1117, !439, !439}
+!7831 = !{!7832, !7833, !7834, !7835, !7836, !7837}
+!7832 = !DILocalVariable(name: "soundSrcs", arg: 1, scope: !7828, file: !1534, line: 686, type: !68)
+!7833 = !DILocalVariable(name: "bytes_soundSrcs", arg: 2, scope: !7828, file: !1534, line: 686, type: !1117)
+!7834 = !DILocalVariable(name: "nSamples", arg: 3, scope: !7828, file: !1534, line: 686, type: !439)
+!7835 = !DILocalVariable(name: "soundSrcsSize", arg: 4, scope: !7828, file: !1534, line: 686, type: !439)
+!7836 = !DILocalVariable(name: "thisNode", scope: !7828, file: !1534, line: 696, type: !1546)
+!7837 = !DILocalVariable(name: "j", scope: !7828, file: !1534, line: 697, type: !439)
+!7838 = !DILocation(line: 0, scope: !7828)
+!7839 = !DILocation(line: 699, column: 11, scope: !7840)
+!7840 = distinct !DILexicalBlock(scope: !7828, file: !1534, line: 699, column: 9)
+!7841 = !DILocation(line: 699, column: 9, scope: !7828)
 !7842 = !DILocation(line: 0, scope: !5640, inlinedAt: !7843)
-!7843 = distinct !DILocation(line: 700, column: 79, scope: !7833)
-!7844 = !DILocation(line: 700, column: 96, scope: !7833)
-!7845 = !DILocation(line: 700, column: 36, scope: !7833)
-!7846 = !DILocation(line: 701, column: 5, scope: !7833)
-!7847 = !DILocation(line: 706, column: 1, scope: !7817)
-!7848 = distinct !DISubprogram(name: "sumBF_fxp", scope: !1534, file: !1534, line: 725, type: !7849, scopeLine: 725, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, retainedNodes: !7851)
-!7849 = !DISubroutineType(types: !7850)
-!7850 = !{null, !68, !1117, !109, !1117, !439}
-!7851 = !{!7852, !7853, !7854, !7924, !7925, !7926}
-!7852 = !DILocalVariable(name: "soundSrcs", arg: 1, scope: !7848, file: !1534, line: 725, type: !68)
-!7853 = !DILocalVariable(name: "bytes_soundSrcs", arg: 2, scope: !7848, file: !1534, line: 725, type: !1117)
-!7854 = !DILocalVariable(name: "sumBF", arg: 3, scope: !7848, file: !1534, line: 725, type: !7855)
-!7855 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !7856, size: 64)
-!7856 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "CBFormat", file: !62, line: 75, size: 512, flags: DIFlagTypePassByReference | DIFlagNonTrivial, elements: !7857, vtableHolder: !7859)
-!7857 = !{!7858, !7882, !7883, !7884, !7885, !7886, !7890, !7893, !7896, !7897, !7898, !7901, !7902, !7907, !7910, !7911, !7915, !7916, !7917, !7918, !7921, !7922, !7923}
-!7858 = !DIDerivedType(tag: DW_TAG_inheritance, scope: !7856, baseType: !7859, flags: DIFlagPublic, extraData: i32 0)
-!7859 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "CAmbisonicBase", file: !62, line: 28, size: 192, flags: DIFlagTypePassByReference | DIFlagNonTrivial, elements: !7860, vtableHolder: !7859)
-!7860 = !{!115, !7861, !7862, !7863, !7864, !7865, !7869, !7870, !7873, !7876, !7877, !7880, !7881}
-!7861 = !DIDerivedType(tag: DW_TAG_member, name: "m_nOrder", scope: !7859, file: !62, line: 62, baseType: !25, size: 32, offset: 64, flags: DIFlagPublic)
-!7862 = !DIDerivedType(tag: DW_TAG_member, name: "m_b3D", scope: !7859, file: !62, line: 63, baseType: !13, size: 8, offset: 96, flags: DIFlagPublic)
-!7863 = !DIDerivedType(tag: DW_TAG_member, name: "m_nChannelCount", scope: !7859, file: !62, line: 64, baseType: !25, size: 32, offset: 128, flags: DIFlagPublic)
-!7864 = !DIDerivedType(tag: DW_TAG_member, name: "m_bOpt", scope: !7859, file: !62, line: 65, baseType: !13, size: 8, offset: 160, flags: DIFlagPublic)
-!7865 = !DISubprogram(name: "CAmbisonicBase", scope: !7859, file: !62, line: 31, type: !7866, scopeLine: 31, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7866 = !DISubroutineType(types: !7867)
-!7867 = !{null, !7868}
-!7868 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !7859, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7869 = !DISubprogram(name: "~CAmbisonicBase", scope: !7859, file: !62, line: 32, type: !7866, scopeLine: 32, containingType: !7859, virtualIndex: 0, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
-!7870 = !DISubprogram(name: "GetOrder", linkageName: "_ZN14CAmbisonicBase8GetOrderEv", scope: !7859, file: !62, line: 36, type: !7871, scopeLine: 36, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7871 = !DISubroutineType(types: !7872)
-!7872 = !{!25, !7868}
-!7873 = !DISubprogram(name: "GetHeight", linkageName: "_ZN14CAmbisonicBase9GetHeightEv", scope: !7859, file: !62, line: 41, type: !7874, scopeLine: 41, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7874 = !DISubroutineType(types: !7875)
-!7875 = !{!13, !7868}
-!7876 = !DISubprogram(name: "GetChannelCount", linkageName: "_ZN14CAmbisonicBase15GetChannelCountEv", scope: !7859, file: !62, line: 46, type: !7871, scopeLine: 46, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7877 = !DISubprogram(name: "Configure", linkageName: "_ZN14CAmbisonicBase9ConfigureEjbj", scope: !7859, file: !62, line: 51, type: !7878, scopeLine: 51, containingType: !7859, virtualIndex: 2, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
-!7878 = !DISubroutineType(types: !7879)
-!7879 = !{!13, !7868, !25, !13, !25}
-!7880 = !DISubprogram(name: "Reset", linkageName: "_ZN14CAmbisonicBase5ResetEv", scope: !7859, file: !62, line: 55, type: !7866, scopeLine: 55, containingType: !7859, virtualIndex: 3, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
-!7881 = !DISubprogram(name: "Refresh", linkageName: "_ZN14CAmbisonicBase7RefreshEv", scope: !7859, file: !62, line: 59, type: !7866, scopeLine: 59, containingType: !7859, virtualIndex: 4, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
-!7882 = !DIDerivedType(tag: DW_TAG_member, name: "m_nSamples", scope: !7856, file: !62, line: 128, baseType: !25, size: 32, offset: 192, flags: DIFlagPublic)
-!7883 = !DIDerivedType(tag: DW_TAG_member, name: "m_nDataLength", scope: !7856, file: !62, line: 129, baseType: !25, size: 32, offset: 224, flags: DIFlagPublic)
-!7884 = !DIDerivedType(tag: DW_TAG_member, name: "m_pfData", scope: !7856, file: !62, line: 130, baseType: !144, size: 192, offset: 256, flags: DIFlagPublic)
-!7885 = !DIDerivedType(tag: DW_TAG_member, name: "m_ppfChannels", scope: !7856, file: !62, line: 131, baseType: !670, size: 64, offset: 448, flags: DIFlagPublic)
-!7886 = !DISubprogram(name: "CBFormat", scope: !7856, file: !62, line: 78, type: !7887, scopeLine: 78, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7887 = !DISubroutineType(types: !7888)
-!7888 = !{null, !7889}
-!7889 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !7856, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!7890 = !DISubprogram(name: "GetSampleCount", linkageName: "_ZN8CBFormat14GetSampleCountEv", scope: !7856, file: !62, line: 82, type: !7891, scopeLine: 82, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7843 = distinct !DILocation(line: 700, column: 9, scope: !7844)
+!7844 = distinct !DILexicalBlock(scope: !7840, file: !1534, line: 699, column: 28)
+!7845 = !DILocation(line: 780, column: 32, scope: !5640, inlinedAt: !7843)
+!7846 = !DILocation(line: 780, column: 41, scope: !5640, inlinedAt: !7843)
+!7847 = !DILocation(line: 700, column: 9, scope: !7844)
+!7848 = !DILocation(line: 700, column: 26, scope: !7844)
+!7849 = !DILocation(line: 0, scope: !5640, inlinedAt: !7850)
+!7850 = distinct !DILocation(line: 700, column: 44, scope: !7844)
+!7851 = !DILocation(line: 700, column: 44, scope: !7844)
+!7852 = !DILocation(line: 700, column: 69, scope: !7844)
+!7853 = !DILocation(line: 0, scope: !5640, inlinedAt: !7854)
+!7854 = distinct !DILocation(line: 700, column: 79, scope: !7844)
+!7855 = !DILocation(line: 700, column: 96, scope: !7844)
+!7856 = !DILocation(line: 700, column: 36, scope: !7844)
+!7857 = !DILocation(line: 701, column: 5, scope: !7844)
+!7858 = !DILocation(line: 706, column: 1, scope: !7828)
+!7859 = distinct !DISubprogram(name: "wrapperEncoder_fxp", scope: !1534, file: !1534, line: 709, type: !7829, scopeLine: 709, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, retainedNodes: !7860)
+!7860 = !{!7861, !7862, !7863, !7864, !7865}
+!7861 = !DILocalVariable(name: "soundSrcs", arg: 1, scope: !7859, file: !1534, line: 709, type: !68)
+!7862 = !DILocalVariable(name: "bytes_soundSrcs", arg: 2, scope: !7859, file: !1534, line: 709, type: !1117)
+!7863 = !DILocalVariable(name: "nSamples", arg: 3, scope: !7859, file: !1534, line: 709, type: !439)
+!7864 = !DILocalVariable(name: "soundSrcsSize", arg: 4, scope: !7859, file: !1534, line: 709, type: !439)
+!7865 = !DILocalVariable(name: "encodeNode", scope: !7859, file: !1534, line: 713, type: !1546)
+!7866 = !DILocation(line: 0, scope: !7859)
+!7867 = !DILocation(line: 722, column: 1, scope: !7859)
+!7868 = distinct !DISubprogram(name: "sumBF_fxp", scope: !1534, file: !1534, line: 725, type: !7869, scopeLine: 725, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, retainedNodes: !7871)
+!7869 = !DISubroutineType(types: !7870)
+!7870 = !{null, !68, !1117, !109, !1117, !439}
+!7871 = !{!7872, !7873, !7874, !7944, !7945, !7946}
+!7872 = !DILocalVariable(name: "soundSrcs", arg: 1, scope: !7868, file: !1534, line: 725, type: !68)
+!7873 = !DILocalVariable(name: "bytes_soundSrcs", arg: 2, scope: !7868, file: !1534, line: 725, type: !1117)
+!7874 = !DILocalVariable(name: "sumBF", arg: 3, scope: !7868, file: !1534, line: 725, type: !7875)
+!7875 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !7876, size: 64)
+!7876 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "CBFormat", file: !62, line: 75, size: 512, flags: DIFlagTypePassByReference | DIFlagNonTrivial, elements: !7877, vtableHolder: !7879)
+!7877 = !{!7878, !7902, !7903, !7904, !7905, !7906, !7910, !7913, !7916, !7917, !7918, !7921, !7922, !7927, !7930, !7931, !7935, !7936, !7937, !7938, !7941, !7942, !7943}
+!7878 = !DIDerivedType(tag: DW_TAG_inheritance, scope: !7876, baseType: !7879, flags: DIFlagPublic, extraData: i32 0)
+!7879 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "CAmbisonicBase", file: !62, line: 28, size: 192, flags: DIFlagTypePassByReference | DIFlagNonTrivial, elements: !7880, vtableHolder: !7879)
+!7880 = !{!115, !7881, !7882, !7883, !7884, !7885, !7889, !7890, !7893, !7896, !7897, !7900, !7901}
+!7881 = !DIDerivedType(tag: DW_TAG_member, name: "m_nOrder", scope: !7879, file: !62, line: 62, baseType: !25, size: 32, offset: 64, flags: DIFlagPublic)
+!7882 = !DIDerivedType(tag: DW_TAG_member, name: "m_b3D", scope: !7879, file: !62, line: 63, baseType: !13, size: 8, offset: 96, flags: DIFlagPublic)
+!7883 = !DIDerivedType(tag: DW_TAG_member, name: "m_nChannelCount", scope: !7879, file: !62, line: 64, baseType: !25, size: 32, offset: 128, flags: DIFlagPublic)
+!7884 = !DIDerivedType(tag: DW_TAG_member, name: "m_bOpt", scope: !7879, file: !62, line: 65, baseType: !13, size: 8, offset: 160, flags: DIFlagPublic)
+!7885 = !DISubprogram(name: "CAmbisonicBase", scope: !7879, file: !62, line: 31, type: !7886, scopeLine: 31, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7886 = !DISubroutineType(types: !7887)
+!7887 = !{null, !7888}
+!7888 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !7879, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7889 = !DISubprogram(name: "~CAmbisonicBase", scope: !7879, file: !62, line: 32, type: !7886, scopeLine: 32, containingType: !7879, virtualIndex: 0, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!7890 = !DISubprogram(name: "GetOrder", linkageName: "_ZN14CAmbisonicBase8GetOrderEv", scope: !7879, file: !62, line: 36, type: !7891, scopeLine: 36, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
 !7891 = !DISubroutineType(types: !7892)
-!7892 = !{!25, !7889}
-!7893 = !DISubprogram(name: "Configure", linkageName: "_ZN8CBFormat9ConfigureEjbj", scope: !7856, file: !62, line: 87, type: !7894, scopeLine: 87, containingType: !7856, virtualIndex: 2, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!7892 = !{!25, !7888}
+!7893 = !DISubprogram(name: "GetHeight", linkageName: "_ZN14CAmbisonicBase9GetHeightEv", scope: !7879, file: !62, line: 41, type: !7894, scopeLine: 41, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
 !7894 = !DISubroutineType(types: !7895)
-!7895 = !{!13, !7889, !25, !13, !25}
-!7896 = !DISubprogram(name: "Reset", linkageName: "_ZN8CBFormat5ResetEv", scope: !7856, file: !62, line: 91, type: !7887, scopeLine: 91, containingType: !7856, virtualIndex: 3, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
-!7897 = !DISubprogram(name: "Refresh", linkageName: "_ZN8CBFormat7RefreshEv", scope: !7856, file: !62, line: 95, type: !7887, scopeLine: 95, containingType: !7856, virtualIndex: 4, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
-!7898 = !DISubprogram(name: "InsertStream", linkageName: "_ZN8CBFormat12InsertStreamEPfjj", scope: !7856, file: !62, line: 99, type: !7899, scopeLine: 99, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7899 = !DISubroutineType(types: !7900)
-!7900 = !{null, !7889, !165, !25, !25}
-!7901 = !DISubprogram(name: "ExtractStream", linkageName: "_ZN8CBFormat13ExtractStreamEPfjj", scope: !7856, file: !62, line: 103, type: !7899, scopeLine: 103, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7902 = !DISubprogram(name: "operator=", linkageName: "_ZN8CBFormataSERKS_", scope: !7856, file: !62, line: 109, type: !7903, scopeLine: 109, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7903 = !DISubroutineType(types: !7904)
-!7904 = !{null, !7889, !7905}
-!7905 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !7906, size: 64)
-!7906 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !7856)
-!7907 = !DISubprogram(name: "operator==", linkageName: "_ZN8CBFormateqERKS_", scope: !7856, file: !62, line: 113, type: !7908, scopeLine: 113, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7908 = !DISubroutineType(types: !7909)
-!7909 = !{!13, !7889, !7905}
-!7910 = !DISubprogram(name: "operator!=", linkageName: "_ZN8CBFormatneERKS_", scope: !7856, file: !62, line: 117, type: !7908, scopeLine: 117, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7911 = !DISubprogram(name: "operator+=", linkageName: "_ZN8CBFormatpLERKS_", scope: !7856, file: !62, line: 118, type: !7912, scopeLine: 118, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7912 = !DISubroutineType(types: !7913)
-!7913 = !{!7914, !7889, !7905}
-!7914 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !7856, size: 64)
-!7915 = !DISubprogram(name: "operator-=", linkageName: "_ZN8CBFormatmIERKS_", scope: !7856, file: !62, line: 119, type: !7912, scopeLine: 119, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7916 = !DISubprogram(name: "operator*=", linkageName: "_ZN8CBFormatmLERKS_", scope: !7856, file: !62, line: 120, type: !7912, scopeLine: 120, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7917 = !DISubprogram(name: "operator/=", linkageName: "_ZN8CBFormatdVERKS_", scope: !7856, file: !62, line: 121, type: !7912, scopeLine: 121, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7918 = !DISubprogram(name: "operator+=", linkageName: "_ZN8CBFormatpLERKf", scope: !7856, file: !62, line: 122, type: !7919, scopeLine: 122, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7895 = !{!13, !7888}
+!7896 = !DISubprogram(name: "GetChannelCount", linkageName: "_ZN14CAmbisonicBase15GetChannelCountEv", scope: !7879, file: !62, line: 46, type: !7891, scopeLine: 46, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7897 = !DISubprogram(name: "Configure", linkageName: "_ZN14CAmbisonicBase9ConfigureEjbj", scope: !7879, file: !62, line: 51, type: !7898, scopeLine: 51, containingType: !7879, virtualIndex: 2, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!7898 = !DISubroutineType(types: !7899)
+!7899 = !{!13, !7888, !25, !13, !25}
+!7900 = !DISubprogram(name: "Reset", linkageName: "_ZN14CAmbisonicBase5ResetEv", scope: !7879, file: !62, line: 55, type: !7886, scopeLine: 55, containingType: !7879, virtualIndex: 3, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
+!7901 = !DISubprogram(name: "Refresh", linkageName: "_ZN14CAmbisonicBase7RefreshEv", scope: !7879, file: !62, line: 59, type: !7886, scopeLine: 59, containingType: !7879, virtualIndex: 4, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
+!7902 = !DIDerivedType(tag: DW_TAG_member, name: "m_nSamples", scope: !7876, file: !62, line: 128, baseType: !25, size: 32, offset: 192, flags: DIFlagPublic)
+!7903 = !DIDerivedType(tag: DW_TAG_member, name: "m_nDataLength", scope: !7876, file: !62, line: 129, baseType: !25, size: 32, offset: 224, flags: DIFlagPublic)
+!7904 = !DIDerivedType(tag: DW_TAG_member, name: "m_pfData", scope: !7876, file: !62, line: 130, baseType: !144, size: 192, offset: 256, flags: DIFlagPublic)
+!7905 = !DIDerivedType(tag: DW_TAG_member, name: "m_ppfChannels", scope: !7876, file: !62, line: 131, baseType: !670, size: 64, offset: 448, flags: DIFlagPublic)
+!7906 = !DISubprogram(name: "CBFormat", scope: !7876, file: !62, line: 78, type: !7907, scopeLine: 78, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7907 = !DISubroutineType(types: !7908)
+!7908 = !{null, !7909}
+!7909 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !7876, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!7910 = !DISubprogram(name: "GetSampleCount", linkageName: "_ZN8CBFormat14GetSampleCountEv", scope: !7876, file: !62, line: 82, type: !7911, scopeLine: 82, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7911 = !DISubroutineType(types: !7912)
+!7912 = !{!25, !7909}
+!7913 = !DISubprogram(name: "Configure", linkageName: "_ZN8CBFormat9ConfigureEjbj", scope: !7876, file: !62, line: 87, type: !7914, scopeLine: 87, containingType: !7876, virtualIndex: 2, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!7914 = !DISubroutineType(types: !7915)
+!7915 = !{!13, !7909, !25, !13, !25}
+!7916 = !DISubprogram(name: "Reset", linkageName: "_ZN8CBFormat5ResetEv", scope: !7876, file: !62, line: 91, type: !7907, scopeLine: 91, containingType: !7876, virtualIndex: 3, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!7917 = !DISubprogram(name: "Refresh", linkageName: "_ZN8CBFormat7RefreshEv", scope: !7876, file: !62, line: 95, type: !7907, scopeLine: 95, containingType: !7876, virtualIndex: 4, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!7918 = !DISubprogram(name: "InsertStream", linkageName: "_ZN8CBFormat12InsertStreamEPfjj", scope: !7876, file: !62, line: 99, type: !7919, scopeLine: 99, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
 !7919 = !DISubroutineType(types: !7920)
-!7920 = !{!7914, !7889, !201}
-!7921 = !DISubprogram(name: "operator-=", linkageName: "_ZN8CBFormatmIERKf", scope: !7856, file: !62, line: 123, type: !7919, scopeLine: 123, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7922 = !DISubprogram(name: "operator*=", linkageName: "_ZN8CBFormatmLERKf", scope: !7856, file: !62, line: 124, type: !7919, scopeLine: 124, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7923 = !DISubprogram(name: "operator/=", linkageName: "_ZN8CBFormatdVERKf", scope: !7856, file: !62, line: 125, type: !7919, scopeLine: 125, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!7924 = !DILocalVariable(name: "bytes_sumBF", arg: 4, scope: !7848, file: !1534, line: 725, type: !1117)
-!7925 = !DILocalVariable(name: "soundSrcsSize", arg: 5, scope: !7848, file: !1534, line: 725, type: !439)
-!7926 = !DILocalVariable(name: "j", scope: !7927, file: !1534, line: 729, type: !11)
-!7927 = distinct !DILexicalBlock(scope: !7848, file: !1534, line: 729, column: 5)
-!7928 = !DILocation(line: 0, scope: !7848)
-!7929 = !DILocation(line: 0, scope: !7927)
-!7930 = !DILocation(line: 729, column: 23, scope: !7931)
-!7931 = distinct !DILexicalBlock(scope: !7927, file: !1534, line: 729, column: 5)
-!7932 = !DILocation(line: 729, column: 5, scope: !7927)
-!7933 = !DILocation(line: 0, scope: !7934, inlinedAt: !7936)
-!7934 = distinct !DILexicalBlock(scope: !7935, file: !1534, line: 114, column: 5)
-!7935 = distinct !DILexicalBlock(scope: !3431, file: !1534, line: 114, column: 5)
-!7936 = distinct !DILocation(line: 730, column: 18, scope: !7937)
-!7937 = distinct !DILexicalBlock(scope: !7931, file: !1534, line: 729, column: 45)
-!7938 = !DILocation(line: 0, scope: !5640, inlinedAt: !7939)
-!7939 = distinct !DILocation(line: 730, column: 23, scope: !7937)
-!7940 = !DILocation(line: 0, scope: !7941, inlinedAt: !7936)
-!7941 = distinct !DILexicalBlock(scope: !7942, file: !1534, line: 116, column: 9)
-!7942 = distinct !DILexicalBlock(scope: !7943, file: !1534, line: 116, column: 9)
-!7943 = distinct !DILexicalBlock(scope: !7934, file: !1534, line: 115, column: 5)
-!7944 = !DILocation(line: 0, scope: !3333, inlinedAt: !7945)
-!7945 = distinct !DILocation(line: 193, column: 57, scope: !3328, inlinedAt: !7946)
-!7946 = distinct !DILocation(line: 827, column: 14, scope: !3321, inlinedAt: !7947)
-!7947 = distinct !DILocation(line: 839, column: 14, scope: !3305, inlinedAt: !7948)
-!7948 = distinct !DILocation(line: 542, column: 16, scope: !3263, inlinedAt: !7949)
-!7949 = distinct !DILocation(line: 536, column: 9, scope: !3256, inlinedAt: !7950)
-!7950 = distinct !DILocation(line: 118, column: 13, scope: !7951, inlinedAt: !7936)
-!7951 = distinct !DILexicalBlock(scope: !7941, file: !1534, line: 117, column: 9)
-!7952 = !DILocation(line: 114, column: 36, scope: !7934, inlinedAt: !7936)
-!7953 = !DILocation(line: 0, scope: !7935, inlinedAt: !7936)
-!7954 = !DILocation(line: 735, column: 1, scope: !7848)
-!7955 = !DILocation(line: 0, scope: !3431, inlinedAt: !7936)
-!7956 = !DILocation(line: 114, column: 5, scope: !7935, inlinedAt: !7936)
-!7957 = !DILocation(line: 780, column: 32, scope: !5640, inlinedAt: !7939)
-!7958 = !DILocation(line: 780, column: 41, scope: !5640, inlinedAt: !7939)
-!7959 = !DILocation(line: 730, column: 23, scope: !7937)
-!7960 = !DILocation(line: 730, column: 40, scope: !7937)
-!7961 = !DILocation(line: 0, scope: !3333, inlinedAt: !7962)
-!7962 = distinct !DILocation(line: 193, column: 57, scope: !3328, inlinedAt: !7963)
-!7963 = distinct !DILocation(line: 827, column: 14, scope: !3321, inlinedAt: !7964)
-!7964 = distinct !DILocation(line: 839, column: 14, scope: !3305, inlinedAt: !7965)
-!7965 = distinct !DILocation(line: 542, column: 16, scope: !3263, inlinedAt: !7966)
-!7966 = distinct !DILocation(line: 536, column: 9, scope: !3256, inlinedAt: !7967)
-!7967 = distinct !DILocation(line: 118, column: 51, scope: !7951, inlinedAt: !7936)
-!7968 = !DILocation(line: 0, scope: !3263, inlinedAt: !7966)
-!7969 = !DILocation(line: 0, scope: !3263, inlinedAt: !7949)
-!7970 = !DILocation(line: 0, scope: !7942, inlinedAt: !7936)
-!7971 = !DILocation(line: 0, scope: !3256, inlinedAt: !7967)
-!7972 = !DILocation(line: 0, scope: !7951, inlinedAt: !7936)
-!7973 = !DILocation(line: 0, scope: !3256, inlinedAt: !7950)
-!7974 = !DILocation(line: 116, column: 9, scope: !7942, inlinedAt: !7936)
-!7975 = !DILocation(line: 116, column: 58, scope: !7941, inlinedAt: !7936)
-!7976 = !DILocation(line: 118, column: 51, scope: !7951, inlinedAt: !7936)
-!7977 = !{!7978}
-!7978 = distinct !{!7978, !7979}
-!7979 = distinct !{!7979, !"LVerDomain"}
-!7980 = !DILocation(line: 118, column: 13, scope: !7951, inlinedAt: !7936)
-!7981 = !DILocation(line: 118, column: 48, scope: !7951, inlinedAt: !7936)
-!7982 = !{!7983}
-!7983 = distinct !{!7983, !7979}
-!7984 = distinct !{!7984, !7974, !7985, !3482}
-!7985 = !DILocation(line: 119, column: 9, scope: !7942, inlinedAt: !7936)
-!7986 = !DILocation(line: 0, scope: !3305, inlinedAt: !7965)
-!7987 = !DILocation(line: 0, scope: !3321, inlinedAt: !7964)
-!7988 = !DILocation(line: 0, scope: !3328, inlinedAt: !7963)
-!7989 = !DILocation(line: 0, scope: !3305, inlinedAt: !7948)
-!7990 = !DILocation(line: 0, scope: !3321, inlinedAt: !7947)
-!7991 = !DILocation(line: 0, scope: !3328, inlinedAt: !7946)
-!7992 = distinct !{!7992, !3274}
-!7993 = !DILocation(line: 116, column: 36, scope: !7941, inlinedAt: !7936)
-!7994 = distinct !{!7994, !7974, !7985, !3482}
-!7995 = !DILocation(line: 114, column: 62, scope: !7934, inlinedAt: !7936)
-!7996 = !DILocation(line: 114, column: 34, scope: !7934, inlinedAt: !7936)
-!7997 = distinct !{!7997, !7956, !7998}
-!7998 = !DILocation(line: 120, column: 5, scope: !7935, inlinedAt: !7936)
-!7999 = !DILocation(line: 729, column: 40, scope: !7931)
-!8000 = distinct !{!8000, !7932, !8001}
-!8001 = !DILocation(line: 731, column: 5, scope: !7927)
+!7920 = !{null, !7909, !165, !25, !25}
+!7921 = !DISubprogram(name: "ExtractStream", linkageName: "_ZN8CBFormat13ExtractStreamEPfjj", scope: !7876, file: !62, line: 103, type: !7919, scopeLine: 103, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7922 = !DISubprogram(name: "operator=", linkageName: "_ZN8CBFormataSERKS_", scope: !7876, file: !62, line: 109, type: !7923, scopeLine: 109, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7923 = !DISubroutineType(types: !7924)
+!7924 = !{null, !7909, !7925}
+!7925 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !7926, size: 64)
+!7926 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !7876)
+!7927 = !DISubprogram(name: "operator==", linkageName: "_ZN8CBFormateqERKS_", scope: !7876, file: !62, line: 113, type: !7928, scopeLine: 113, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7928 = !DISubroutineType(types: !7929)
+!7929 = !{!13, !7909, !7925}
+!7930 = !DISubprogram(name: "operator!=", linkageName: "_ZN8CBFormatneERKS_", scope: !7876, file: !62, line: 117, type: !7928, scopeLine: 117, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7931 = !DISubprogram(name: "operator+=", linkageName: "_ZN8CBFormatpLERKS_", scope: !7876, file: !62, line: 118, type: !7932, scopeLine: 118, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7932 = !DISubroutineType(types: !7933)
+!7933 = !{!7934, !7909, !7925}
+!7934 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !7876, size: 64)
+!7935 = !DISubprogram(name: "operator-=", linkageName: "_ZN8CBFormatmIERKS_", scope: !7876, file: !62, line: 119, type: !7932, scopeLine: 119, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7936 = !DISubprogram(name: "operator*=", linkageName: "_ZN8CBFormatmLERKS_", scope: !7876, file: !62, line: 120, type: !7932, scopeLine: 120, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7937 = !DISubprogram(name: "operator/=", linkageName: "_ZN8CBFormatdVERKS_", scope: !7876, file: !62, line: 121, type: !7932, scopeLine: 121, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7938 = !DISubprogram(name: "operator+=", linkageName: "_ZN8CBFormatpLERKf", scope: !7876, file: !62, line: 122, type: !7939, scopeLine: 122, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7939 = !DISubroutineType(types: !7940)
+!7940 = !{!7934, !7909, !201}
+!7941 = !DISubprogram(name: "operator-=", linkageName: "_ZN8CBFormatmIERKf", scope: !7876, file: !62, line: 123, type: !7939, scopeLine: 123, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7942 = !DISubprogram(name: "operator*=", linkageName: "_ZN8CBFormatmLERKf", scope: !7876, file: !62, line: 124, type: !7939, scopeLine: 124, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7943 = !DISubprogram(name: "operator/=", linkageName: "_ZN8CBFormatdVERKf", scope: !7876, file: !62, line: 125, type: !7939, scopeLine: 125, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!7944 = !DILocalVariable(name: "bytes_sumBF", arg: 4, scope: !7868, file: !1534, line: 725, type: !1117)
+!7945 = !DILocalVariable(name: "soundSrcsSize", arg: 5, scope: !7868, file: !1534, line: 725, type: !439)
+!7946 = !DILocalVariable(name: "j", scope: !7947, file: !1534, line: 729, type: !11)
+!7947 = distinct !DILexicalBlock(scope: !7868, file: !1534, line: 729, column: 5)
+!7948 = !DILocation(line: 0, scope: !7868)
+!7949 = !DILocation(line: 0, scope: !7947)
+!7950 = !DILocation(line: 729, column: 23, scope: !7951)
+!7951 = distinct !DILexicalBlock(scope: !7947, file: !1534, line: 729, column: 5)
+!7952 = !DILocation(line: 729, column: 5, scope: !7947)
+!7953 = !DILocation(line: 0, scope: !7954, inlinedAt: !7956)
+!7954 = distinct !DILexicalBlock(scope: !7955, file: !1534, line: 114, column: 5)
+!7955 = distinct !DILexicalBlock(scope: !3431, file: !1534, line: 114, column: 5)
+!7956 = distinct !DILocation(line: 730, column: 18, scope: !7957)
+!7957 = distinct !DILexicalBlock(scope: !7951, file: !1534, line: 729, column: 45)
+!7958 = !DILocation(line: 0, scope: !5640, inlinedAt: !7959)
+!7959 = distinct !DILocation(line: 730, column: 23, scope: !7957)
+!7960 = !DILocation(line: 0, scope: !7961, inlinedAt: !7956)
+!7961 = distinct !DILexicalBlock(scope: !7962, file: !1534, line: 116, column: 9)
+!7962 = distinct !DILexicalBlock(scope: !7963, file: !1534, line: 116, column: 9)
+!7963 = distinct !DILexicalBlock(scope: !7954, file: !1534, line: 115, column: 5)
+!7964 = !DILocation(line: 0, scope: !3333, inlinedAt: !7965)
+!7965 = distinct !DILocation(line: 193, column: 57, scope: !3328, inlinedAt: !7966)
+!7966 = distinct !DILocation(line: 827, column: 14, scope: !3321, inlinedAt: !7967)
+!7967 = distinct !DILocation(line: 839, column: 14, scope: !3305, inlinedAt: !7968)
+!7968 = distinct !DILocation(line: 542, column: 16, scope: !3263, inlinedAt: !7969)
+!7969 = distinct !DILocation(line: 536, column: 9, scope: !3256, inlinedAt: !7970)
+!7970 = distinct !DILocation(line: 118, column: 13, scope: !7971, inlinedAt: !7956)
+!7971 = distinct !DILexicalBlock(scope: !7961, file: !1534, line: 117, column: 9)
+!7972 = !DILocation(line: 114, column: 36, scope: !7954, inlinedAt: !7956)
+!7973 = !DILocation(line: 0, scope: !7955, inlinedAt: !7956)
+!7974 = !DILocation(line: 735, column: 1, scope: !7868)
+!7975 = !DILocation(line: 0, scope: !3431, inlinedAt: !7956)
+!7976 = !DILocation(line: 114, column: 5, scope: !7955, inlinedAt: !7956)
+!7977 = !DILocation(line: 780, column: 32, scope: !5640, inlinedAt: !7959)
+!7978 = !DILocation(line: 780, column: 41, scope: !5640, inlinedAt: !7959)
+!7979 = !DILocation(line: 730, column: 23, scope: !7957)
+!7980 = !DILocation(line: 730, column: 40, scope: !7957)
+!7981 = !DILocation(line: 0, scope: !3333, inlinedAt: !7982)
+!7982 = distinct !DILocation(line: 193, column: 57, scope: !3328, inlinedAt: !7983)
+!7983 = distinct !DILocation(line: 827, column: 14, scope: !3321, inlinedAt: !7984)
+!7984 = distinct !DILocation(line: 839, column: 14, scope: !3305, inlinedAt: !7985)
+!7985 = distinct !DILocation(line: 542, column: 16, scope: !3263, inlinedAt: !7986)
+!7986 = distinct !DILocation(line: 536, column: 9, scope: !3256, inlinedAt: !7987)
+!7987 = distinct !DILocation(line: 118, column: 51, scope: !7971, inlinedAt: !7956)
+!7988 = !DILocation(line: 0, scope: !3263, inlinedAt: !7986)
+!7989 = !DILocation(line: 0, scope: !3263, inlinedAt: !7969)
+!7990 = !DILocation(line: 0, scope: !7962, inlinedAt: !7956)
+!7991 = !DILocation(line: 0, scope: !3256, inlinedAt: !7987)
+!7992 = !DILocation(line: 0, scope: !7971, inlinedAt: !7956)
+!7993 = !DILocation(line: 0, scope: !3256, inlinedAt: !7970)
+!7994 = !DILocation(line: 116, column: 9, scope: !7962, inlinedAt: !7956)
+!7995 = !DILocation(line: 116, column: 58, scope: !7961, inlinedAt: !7956)
+!7996 = !DILocation(line: 118, column: 51, scope: !7971, inlinedAt: !7956)
+!7997 = !{!7998}
+!7998 = distinct !{!7998, !7999}
+!7999 = distinct !{!7999, !"LVerDomain"}
+!8000 = !DILocation(line: 118, column: 13, scope: !7971, inlinedAt: !7956)
+!8001 = !DILocation(line: 118, column: 48, scope: !7971, inlinedAt: !7956)
+!8002 = !{!8003}
+!8003 = distinct !{!8003, !7999}
+!8004 = distinct !{!8004, !7994, !8005, !3482}
+!8005 = !DILocation(line: 119, column: 9, scope: !7962, inlinedAt: !7956)
+!8006 = !DILocation(line: 0, scope: !3305, inlinedAt: !7985)
+!8007 = !DILocation(line: 0, scope: !3321, inlinedAt: !7984)
+!8008 = !DILocation(line: 0, scope: !3328, inlinedAt: !7983)
+!8009 = !DILocation(line: 0, scope: !3305, inlinedAt: !7968)
+!8010 = !DILocation(line: 0, scope: !3321, inlinedAt: !7967)
+!8011 = !DILocation(line: 0, scope: !3328, inlinedAt: !7966)
+!8012 = distinct !{!8012, !3274}
+!8013 = !DILocation(line: 116, column: 36, scope: !7961, inlinedAt: !7956)
+!8014 = distinct !{!8014, !7994, !8005, !3482}
+!8015 = !DILocation(line: 114, column: 62, scope: !7954, inlinedAt: !7956)
+!8016 = !DILocation(line: 114, column: 34, scope: !7954, inlinedAt: !7956)
+!8017 = distinct !{!8017, !7976, !8018}
+!8018 = !DILocation(line: 120, column: 5, scope: !7955, inlinedAt: !7956)
+!8019 = !DILocation(line: 729, column: 40, scope: !7951)
+!8020 = distinct !{!8020, !7952, !8021}
+!8021 = !DILocation(line: 731, column: 5, scope: !7947)
+!8022 = distinct !DISubprogram(name: "wrapperSumBF_fxp", scope: !1534, file: !1534, line: 738, type: !7869, scopeLine: 738, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, retainedNodes: !8023)
+!8023 = !{!8024, !8025, !8026, !8096, !8097, !8098}
+!8024 = !DILocalVariable(name: "soundSrcs", arg: 1, scope: !8022, file: !1534, line: 738, type: !68)
+!8025 = !DILocalVariable(name: "bytes_soundSrcs", arg: 2, scope: !8022, file: !1534, line: 738, type: !1117)
+!8026 = !DILocalVariable(name: "sumBF", arg: 3, scope: !8022, file: !1534, line: 738, type: !8027)
+!8027 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !8028, size: 64)
+!8028 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "CBFormat", file: !62, line: 75, size: 512, flags: DIFlagTypePassByReference | DIFlagNonTrivial, elements: !8029, vtableHolder: !8031)
+!8029 = !{!8030, !8054, !8055, !8056, !8057, !8058, !8062, !8065, !8068, !8069, !8070, !8073, !8074, !8079, !8082, !8083, !8087, !8088, !8089, !8090, !8093, !8094, !8095}
+!8030 = !DIDerivedType(tag: DW_TAG_inheritance, scope: !8028, baseType: !8031, flags: DIFlagPublic, extraData: i32 0)
+!8031 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "CAmbisonicBase", file: !62, line: 28, size: 192, flags: DIFlagTypePassByReference | DIFlagNonTrivial, elements: !8032, vtableHolder: !8031)
+!8032 = !{!115, !8033, !8034, !8035, !8036, !8037, !8041, !8042, !8045, !8048, !8049, !8052, !8053}
+!8033 = !DIDerivedType(tag: DW_TAG_member, name: "m_nOrder", scope: !8031, file: !62, line: 62, baseType: !25, size: 32, offset: 64, flags: DIFlagPublic)
+!8034 = !DIDerivedType(tag: DW_TAG_member, name: "m_b3D", scope: !8031, file: !62, line: 63, baseType: !13, size: 8, offset: 96, flags: DIFlagPublic)
+!8035 = !DIDerivedType(tag: DW_TAG_member, name: "m_nChannelCount", scope: !8031, file: !62, line: 64, baseType: !25, size: 32, offset: 128, flags: DIFlagPublic)
+!8036 = !DIDerivedType(tag: DW_TAG_member, name: "m_bOpt", scope: !8031, file: !62, line: 65, baseType: !13, size: 8, offset: 160, flags: DIFlagPublic)
+!8037 = !DISubprogram(name: "CAmbisonicBase", scope: !8031, file: !62, line: 31, type: !8038, scopeLine: 31, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8038 = !DISubroutineType(types: !8039)
+!8039 = !{null, !8040}
+!8040 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !8031, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!8041 = !DISubprogram(name: "~CAmbisonicBase", scope: !8031, file: !62, line: 32, type: !8038, scopeLine: 32, containingType: !8031, virtualIndex: 0, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!8042 = !DISubprogram(name: "GetOrder", linkageName: "_ZN14CAmbisonicBase8GetOrderEv", scope: !8031, file: !62, line: 36, type: !8043, scopeLine: 36, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8043 = !DISubroutineType(types: !8044)
+!8044 = !{!25, !8040}
+!8045 = !DISubprogram(name: "GetHeight", linkageName: "_ZN14CAmbisonicBase9GetHeightEv", scope: !8031, file: !62, line: 41, type: !8046, scopeLine: 41, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8046 = !DISubroutineType(types: !8047)
+!8047 = !{!13, !8040}
+!8048 = !DISubprogram(name: "GetChannelCount", linkageName: "_ZN14CAmbisonicBase15GetChannelCountEv", scope: !8031, file: !62, line: 46, type: !8043, scopeLine: 46, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8049 = !DISubprogram(name: "Configure", linkageName: "_ZN14CAmbisonicBase9ConfigureEjbj", scope: !8031, file: !62, line: 51, type: !8050, scopeLine: 51, containingType: !8031, virtualIndex: 2, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!8050 = !DISubroutineType(types: !8051)
+!8051 = !{!13, !8040, !25, !13, !25}
+!8052 = !DISubprogram(name: "Reset", linkageName: "_ZN14CAmbisonicBase5ResetEv", scope: !8031, file: !62, line: 55, type: !8038, scopeLine: 55, containingType: !8031, virtualIndex: 3, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
+!8053 = !DISubprogram(name: "Refresh", linkageName: "_ZN14CAmbisonicBase7RefreshEv", scope: !8031, file: !62, line: 59, type: !8038, scopeLine: 59, containingType: !8031, virtualIndex: 4, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
+!8054 = !DIDerivedType(tag: DW_TAG_member, name: "m_nSamples", scope: !8028, file: !62, line: 128, baseType: !25, size: 32, offset: 192, flags: DIFlagPublic)
+!8055 = !DIDerivedType(tag: DW_TAG_member, name: "m_nDataLength", scope: !8028, file: !62, line: 129, baseType: !25, size: 32, offset: 224, flags: DIFlagPublic)
+!8056 = !DIDerivedType(tag: DW_TAG_member, name: "m_pfData", scope: !8028, file: !62, line: 130, baseType: !144, size: 192, offset: 256, flags: DIFlagPublic)
+!8057 = !DIDerivedType(tag: DW_TAG_member, name: "m_ppfChannels", scope: !8028, file: !62, line: 131, baseType: !670, size: 64, offset: 448, flags: DIFlagPublic)
+!8058 = !DISubprogram(name: "CBFormat", scope: !8028, file: !62, line: 78, type: !8059, scopeLine: 78, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8059 = !DISubroutineType(types: !8060)
+!8060 = !{null, !8061}
+!8061 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !8028, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!8062 = !DISubprogram(name: "GetSampleCount", linkageName: "_ZN8CBFormat14GetSampleCountEv", scope: !8028, file: !62, line: 82, type: !8063, scopeLine: 82, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8063 = !DISubroutineType(types: !8064)
+!8064 = !{!25, !8061}
+!8065 = !DISubprogram(name: "Configure", linkageName: "_ZN8CBFormat9ConfigureEjbj", scope: !8028, file: !62, line: 87, type: !8066, scopeLine: 87, containingType: !8028, virtualIndex: 2, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!8066 = !DISubroutineType(types: !8067)
+!8067 = !{!13, !8061, !25, !13, !25}
+!8068 = !DISubprogram(name: "Reset", linkageName: "_ZN8CBFormat5ResetEv", scope: !8028, file: !62, line: 91, type: !8059, scopeLine: 91, containingType: !8028, virtualIndex: 3, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!8069 = !DISubprogram(name: "Refresh", linkageName: "_ZN8CBFormat7RefreshEv", scope: !8028, file: !62, line: 95, type: !8059, scopeLine: 95, containingType: !8028, virtualIndex: 4, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!8070 = !DISubprogram(name: "InsertStream", linkageName: "_ZN8CBFormat12InsertStreamEPfjj", scope: !8028, file: !62, line: 99, type: !8071, scopeLine: 99, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8071 = !DISubroutineType(types: !8072)
+!8072 = !{null, !8061, !165, !25, !25}
+!8073 = !DISubprogram(name: "ExtractStream", linkageName: "_ZN8CBFormat13ExtractStreamEPfjj", scope: !8028, file: !62, line: 103, type: !8071, scopeLine: 103, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8074 = !DISubprogram(name: "operator=", linkageName: "_ZN8CBFormataSERKS_", scope: !8028, file: !62, line: 109, type: !8075, scopeLine: 109, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8075 = !DISubroutineType(types: !8076)
+!8076 = !{null, !8061, !8077}
+!8077 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !8078, size: 64)
+!8078 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !8028)
+!8079 = !DISubprogram(name: "operator==", linkageName: "_ZN8CBFormateqERKS_", scope: !8028, file: !62, line: 113, type: !8080, scopeLine: 113, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8080 = !DISubroutineType(types: !8081)
+!8081 = !{!13, !8061, !8077}
+!8082 = !DISubprogram(name: "operator!=", linkageName: "_ZN8CBFormatneERKS_", scope: !8028, file: !62, line: 117, type: !8080, scopeLine: 117, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8083 = !DISubprogram(name: "operator+=", linkageName: "_ZN8CBFormatpLERKS_", scope: !8028, file: !62, line: 118, type: !8084, scopeLine: 118, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8084 = !DISubroutineType(types: !8085)
+!8085 = !{!8086, !8061, !8077}
+!8086 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !8028, size: 64)
+!8087 = !DISubprogram(name: "operator-=", linkageName: "_ZN8CBFormatmIERKS_", scope: !8028, file: !62, line: 119, type: !8084, scopeLine: 119, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8088 = !DISubprogram(name: "operator*=", linkageName: "_ZN8CBFormatmLERKS_", scope: !8028, file: !62, line: 120, type: !8084, scopeLine: 120, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8089 = !DISubprogram(name: "operator/=", linkageName: "_ZN8CBFormatdVERKS_", scope: !8028, file: !62, line: 121, type: !8084, scopeLine: 121, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8090 = !DISubprogram(name: "operator+=", linkageName: "_ZN8CBFormatpLERKf", scope: !8028, file: !62, line: 122, type: !8091, scopeLine: 122, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8091 = !DISubroutineType(types: !8092)
+!8092 = !{!8086, !8061, !201}
+!8093 = !DISubprogram(name: "operator-=", linkageName: "_ZN8CBFormatmIERKf", scope: !8028, file: !62, line: 123, type: !8091, scopeLine: 123, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8094 = !DISubprogram(name: "operator*=", linkageName: "_ZN8CBFormatmLERKf", scope: !8028, file: !62, line: 124, type: !8091, scopeLine: 124, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8095 = !DISubprogram(name: "operator/=", linkageName: "_ZN8CBFormatdVERKf", scope: !8028, file: !62, line: 125, type: !8091, scopeLine: 125, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8096 = !DILocalVariable(name: "bytes_sumBF", arg: 4, scope: !8022, file: !1534, line: 738, type: !1117)
+!8097 = !DILocalVariable(name: "soundSrcsSize", arg: 5, scope: !8022, file: !1534, line: 738, type: !439)
+!8098 = !DILocalVariable(name: "sumNode", scope: !8022, file: !1534, line: 742, type: !1546)
+!8099 = !DILocation(line: 0, scope: !8022)
+!8100 = !DILocation(line: 751, column: 1, scope: !8022)
+!8101 = distinct !DISubprogram(name: "encoderPipeline", scope: !1534, file: !1534, line: 754, type: !8102, scopeLine: 754, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !19, retainedNodes: !8104)
+!8102 = !DISubroutineType(types: !8103)
+!8103 = !{null, !68, !1117, !439, !439, !1541, !1117, !109, !1117}
+!8104 = !{!8105, !8106, !8107, !8108, !8109, !8110, !8111, !8181, !8182, !8183, !8184}
+!8105 = !DILocalVariable(name: "soundSrcs", arg: 1, scope: !8101, file: !1534, line: 754, type: !68)
+!8106 = !DILocalVariable(name: "bytes_soundSrcs", arg: 2, scope: !8101, file: !1534, line: 754, type: !1117)
+!8107 = !DILocalVariable(name: "nSamples", arg: 3, scope: !8101, file: !1534, line: 754, type: !439)
+!8108 = !DILocalVariable(name: "soundSrcsSize", arg: 4, scope: !8101, file: !1534, line: 754, type: !439)
+!8109 = !DILocalVariable(name: "sampleTemp", arg: 5, scope: !8101, file: !1534, line: 754, type: !1541)
+!8110 = !DILocalVariable(name: "bytes_sampleTemp", arg: 6, scope: !8101, file: !1534, line: 754, type: !1117)
+!8111 = !DILocalVariable(name: "sumBF", arg: 7, scope: !8101, file: !1534, line: 754, type: !8112)
+!8112 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !8113, size: 64)
+!8113 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "CBFormat", file: !62, line: 75, size: 512, flags: DIFlagTypePassByReference | DIFlagNonTrivial, elements: !8114, vtableHolder: !8116)
+!8114 = !{!8115, !8139, !8140, !8141, !8142, !8143, !8147, !8150, !8153, !8154, !8155, !8158, !8159, !8164, !8167, !8168, !8172, !8173, !8174, !8175, !8178, !8179, !8180}
+!8115 = !DIDerivedType(tag: DW_TAG_inheritance, scope: !8113, baseType: !8116, flags: DIFlagPublic, extraData: i32 0)
+!8116 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "CAmbisonicBase", file: !62, line: 28, size: 192, flags: DIFlagTypePassByReference | DIFlagNonTrivial, elements: !8117, vtableHolder: !8116)
+!8117 = !{!115, !8118, !8119, !8120, !8121, !8122, !8126, !8127, !8130, !8133, !8134, !8137, !8138}
+!8118 = !DIDerivedType(tag: DW_TAG_member, name: "m_nOrder", scope: !8116, file: !62, line: 62, baseType: !25, size: 32, offset: 64, flags: DIFlagPublic)
+!8119 = !DIDerivedType(tag: DW_TAG_member, name: "m_b3D", scope: !8116, file: !62, line: 63, baseType: !13, size: 8, offset: 96, flags: DIFlagPublic)
+!8120 = !DIDerivedType(tag: DW_TAG_member, name: "m_nChannelCount", scope: !8116, file: !62, line: 64, baseType: !25, size: 32, offset: 128, flags: DIFlagPublic)
+!8121 = !DIDerivedType(tag: DW_TAG_member, name: "m_bOpt", scope: !8116, file: !62, line: 65, baseType: !13, size: 8, offset: 160, flags: DIFlagPublic)
+!8122 = !DISubprogram(name: "CAmbisonicBase", scope: !8116, file: !62, line: 31, type: !8123, scopeLine: 31, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8123 = !DISubroutineType(types: !8124)
+!8124 = !{null, !8125}
+!8125 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !8116, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!8126 = !DISubprogram(name: "~CAmbisonicBase", scope: !8116, file: !62, line: 32, type: !8123, scopeLine: 32, containingType: !8116, virtualIndex: 0, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!8127 = !DISubprogram(name: "GetOrder", linkageName: "_ZN14CAmbisonicBase8GetOrderEv", scope: !8116, file: !62, line: 36, type: !8128, scopeLine: 36, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8128 = !DISubroutineType(types: !8129)
+!8129 = !{!25, !8125}
+!8130 = !DISubprogram(name: "GetHeight", linkageName: "_ZN14CAmbisonicBase9GetHeightEv", scope: !8116, file: !62, line: 41, type: !8131, scopeLine: 41, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8131 = !DISubroutineType(types: !8132)
+!8132 = !{!13, !8125}
+!8133 = !DISubprogram(name: "GetChannelCount", linkageName: "_ZN14CAmbisonicBase15GetChannelCountEv", scope: !8116, file: !62, line: 46, type: !8128, scopeLine: 46, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8134 = !DISubprogram(name: "Configure", linkageName: "_ZN14CAmbisonicBase9ConfigureEjbj", scope: !8116, file: !62, line: 51, type: !8135, scopeLine: 51, containingType: !8116, virtualIndex: 2, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!8135 = !DISubroutineType(types: !8136)
+!8136 = !{!13, !8125, !25, !13, !25}
+!8137 = !DISubprogram(name: "Reset", linkageName: "_ZN14CAmbisonicBase5ResetEv", scope: !8116, file: !62, line: 55, type: !8123, scopeLine: 55, containingType: !8116, virtualIndex: 3, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
+!8138 = !DISubprogram(name: "Refresh", linkageName: "_ZN14CAmbisonicBase7RefreshEv", scope: !8116, file: !62, line: 59, type: !8123, scopeLine: 59, containingType: !8116, virtualIndex: 4, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
+!8139 = !DIDerivedType(tag: DW_TAG_member, name: "m_nSamples", scope: !8113, file: !62, line: 128, baseType: !25, size: 32, offset: 192, flags: DIFlagPublic)
+!8140 = !DIDerivedType(tag: DW_TAG_member, name: "m_nDataLength", scope: !8113, file: !62, line: 129, baseType: !25, size: 32, offset: 224, flags: DIFlagPublic)
+!8141 = !DIDerivedType(tag: DW_TAG_member, name: "m_pfData", scope: !8113, file: !62, line: 130, baseType: !144, size: 192, offset: 256, flags: DIFlagPublic)
+!8142 = !DIDerivedType(tag: DW_TAG_member, name: "m_ppfChannels", scope: !8113, file: !62, line: 131, baseType: !670, size: 64, offset: 448, flags: DIFlagPublic)
+!8143 = !DISubprogram(name: "CBFormat", scope: !8113, file: !62, line: 78, type: !8144, scopeLine: 78, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8144 = !DISubroutineType(types: !8145)
+!8145 = !{null, !8146}
+!8146 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !8113, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!8147 = !DISubprogram(name: "GetSampleCount", linkageName: "_ZN8CBFormat14GetSampleCountEv", scope: !8113, file: !62, line: 82, type: !8148, scopeLine: 82, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8148 = !DISubroutineType(types: !8149)
+!8149 = !{!25, !8146}
+!8150 = !DISubprogram(name: "Configure", linkageName: "_ZN8CBFormat9ConfigureEjbj", scope: !8113, file: !62, line: 87, type: !8151, scopeLine: 87, containingType: !8113, virtualIndex: 2, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!8151 = !DISubroutineType(types: !8152)
+!8152 = !{!13, !8146, !25, !13, !25}
+!8153 = !DISubprogram(name: "Reset", linkageName: "_ZN8CBFormat5ResetEv", scope: !8113, file: !62, line: 91, type: !8144, scopeLine: 91, containingType: !8113, virtualIndex: 3, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!8154 = !DISubprogram(name: "Refresh", linkageName: "_ZN8CBFormat7RefreshEv", scope: !8113, file: !62, line: 95, type: !8144, scopeLine: 95, containingType: !8113, virtualIndex: 4, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagVirtual | DISPFlagOptimized)
+!8155 = !DISubprogram(name: "InsertStream", linkageName: "_ZN8CBFormat12InsertStreamEPfjj", scope: !8113, file: !62, line: 99, type: !8156, scopeLine: 99, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8156 = !DISubroutineType(types: !8157)
+!8157 = !{null, !8146, !165, !25, !25}
+!8158 = !DISubprogram(name: "ExtractStream", linkageName: "_ZN8CBFormat13ExtractStreamEPfjj", scope: !8113, file: !62, line: 103, type: !8156, scopeLine: 103, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8159 = !DISubprogram(name: "operator=", linkageName: "_ZN8CBFormataSERKS_", scope: !8113, file: !62, line: 109, type: !8160, scopeLine: 109, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8160 = !DISubroutineType(types: !8161)
+!8161 = !{null, !8146, !8162}
+!8162 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !8163, size: 64)
+!8163 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !8113)
+!8164 = !DISubprogram(name: "operator==", linkageName: "_ZN8CBFormateqERKS_", scope: !8113, file: !62, line: 113, type: !8165, scopeLine: 113, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8165 = !DISubroutineType(types: !8166)
+!8166 = !{!13, !8146, !8162}
+!8167 = !DISubprogram(name: "operator!=", linkageName: "_ZN8CBFormatneERKS_", scope: !8113, file: !62, line: 117, type: !8165, scopeLine: 117, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8168 = !DISubprogram(name: "operator+=", linkageName: "_ZN8CBFormatpLERKS_", scope: !8113, file: !62, line: 118, type: !8169, scopeLine: 118, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8169 = !DISubroutineType(types: !8170)
+!8170 = !{!8171, !8146, !8162}
+!8171 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !8113, size: 64)
+!8172 = !DISubprogram(name: "operator-=", linkageName: "_ZN8CBFormatmIERKS_", scope: !8113, file: !62, line: 119, type: !8169, scopeLine: 119, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8173 = !DISubprogram(name: "operator*=", linkageName: "_ZN8CBFormatmLERKS_", scope: !8113, file: !62, line: 120, type: !8169, scopeLine: 120, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8174 = !DISubprogram(name: "operator/=", linkageName: "_ZN8CBFormatdVERKS_", scope: !8113, file: !62, line: 121, type: !8169, scopeLine: 121, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8175 = !DISubprogram(name: "operator+=", linkageName: "_ZN8CBFormatpLERKf", scope: !8113, file: !62, line: 122, type: !8176, scopeLine: 122, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8176 = !DISubroutineType(types: !8177)
+!8177 = !{!8171, !8146, !201}
+!8178 = !DISubprogram(name: "operator-=", linkageName: "_ZN8CBFormatmIERKf", scope: !8113, file: !62, line: 123, type: !8176, scopeLine: 123, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8179 = !DISubprogram(name: "operator*=", linkageName: "_ZN8CBFormatmLERKf", scope: !8113, file: !62, line: 124, type: !8176, scopeLine: 124, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8180 = !DISubprogram(name: "operator/=", linkageName: "_ZN8CBFormatdVERKf", scope: !8113, file: !62, line: 125, type: !8176, scopeLine: 125, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!8181 = !DILocalVariable(name: "bytes_sumBF", arg: 8, scope: !8101, file: !1534, line: 754, type: !1117)
+!8182 = !DILocalVariable(name: "normalizationNode", scope: !8101, file: !1534, line: 759, type: !1546)
+!8183 = !DILocalVariable(name: "encoderNode", scope: !8101, file: !1534, line: 760, type: !1546)
+!8184 = !DILocalVariable(name: "sumBFNode", scope: !8101, file: !1534, line: 761, type: !1546)
+!8185 = !DILocation(line: 0, scope: !8101)
+!8186 = !DILocation(line: 786, column: 1, scope: !8101)

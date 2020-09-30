@@ -41,8 +41,8 @@ APP_CFLAGS += $(INCLUDES) -ffast-math -O3 -fno-lax-vector-conversions -fno-vecto
 APP_CXXFLAGS += $(INCLUDES) -ffast-math -O3 -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize
 APP_LDFLAGS=`pkg-config opencv --libs`
 
-CFLAGS=-Wall -fPIC -I./include
-CXXFLAGS=-O3 -std=c++14 -Wall -fPIC -I./include
+CFLAGS=-Wall -fPIC -I./include -g
+CXXFLAGS=-O3 -std=c++14 -Wall -fPIC -I./include -g
 LD_LIBS=-lpthread -pthread
 DBG_FLAGS=-I./libspatialaudio/build/Debug/include
 OPT_FLAGS=-O3 -I./libspatialaudio/build/Release/include
@@ -108,7 +108,7 @@ $(KERNEL_OCL) : $(KERNEL)
 	$(OCLBE) $< -o $@
 
 $(EXE) : $(HOST_LINKED)
-	$(CXX) -O3 -g $(LDFLAGS) $< -o $@
+	$(CXX) -O3 $(LDFLAGS) $< -o $@
 
 $(HOST_LINKED) : $(HOST) $(OBJS) $(HPVM_RT_LIB)
 	$(LLVM_LINK) $^ -S -o $@
@@ -123,7 +123,7 @@ $(BUILD_DIR)/%.ll : $(SRC_DIR)/%.cpp
 	$(CC) $(OBJS_CFLAGS) -emit-llvm -S -o $@ $<
 
 $(BUILD_DIR)/main.ll : $(SRC_DIR)/main.cpp
-	$(CC) $(CXXFLAGS) -g -emit-llvm -S -o $@ $<
+	$(CC) $(CXXFLAGS) -emit-llvm -S -o $@ $<
 
 $(BUILD_DIR)/main.hpvm.ll : $(BUILD_DIR)/main.ll
 	$(OPT) $(TESTGEN_OPTFLAGS) $< -S -o $@
