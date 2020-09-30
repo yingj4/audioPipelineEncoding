@@ -5662,19 +5662,13 @@ entry:
 declare float @llvm.fabs.f32(float) #22
 
 ; Function Attrs: nounwind
-declare i8* @llvm.hpvm.createNode2D(i8*, i64, i64) #23
+declare i8* @llvm.hpvm.createNode(i8*) #23
 
 ; Function Attrs: nounwind
 declare void @llvm.hpvm.bind.input(i8*, i32, i32, i1) #23
 
 ; Function Attrs: nounwind
 declare void @llvm.hpvm.bind.output(i8*, i32, i32, i1) #23
-
-; Function Attrs: nounwind
-declare i8* @llvm.hpvm.createNode1D(i8*, i64) #23
-
-; Function Attrs: nounwind
-declare i8* @llvm.hpvm.createNode(i8*) #23
 
 ; Function Attrs: nounwind
 declare i8* @llvm.hpvm.createEdge(i8*, i8*, i1, i32, i32, i1) #23
@@ -5814,27 +5808,9 @@ for.cond.cleanup:                                 ; preds = %for.cond1.for.cond.
 
 define %struct.out.wrapperNormalization_fxp @wrapperNormalization_fxp_cloned.2_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* %sampleTemp, i64 %idx_x, i64 %idx_y, i64 %idx_z, i64 %dim_x, i64 %dim_y, i64 %dim_z) {
 entry:
-  br label %for.body
-
-for.body:                                         ; preds = %for.end2, %entry
-  %index.x = phi i64 [ 0, %entry ], [ %index.x.inc, %for.end2 ]
-  br label %for.body1
-
-for.body1:                                        ; preds = %for.body1, %for.body
-  %index.y = phi i64 [ 0, %for.body ], [ %index.y.inc, %for.body1 ]
-  call void @llvm_hpvm_cpu_dstack_push(i32 2, i64 %soundSrcsSize, i64 %index.x, i64 %nSamples, i64 %index.y, i64 0, i64 0)
-  %normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.normalization_fxp @normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* %sampleTemp, i64 %index.x, i64 %index.y, i64 0, i64 %soundSrcsSize, i64 %nSamples, i64 0)
+  call void @llvm_hpvm_cpu_dstack_push(i32 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  %normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.normalization_fxp @normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* %sampleTemp, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
   call void @llvm_hpvm_cpu_dstack_pop()
-  %index.y.inc = add i64 %index.y, 1
-  %cond.y = icmp ult i64 %index.y.inc, %nSamples
-  br i1 %cond.y, label %for.body1, label %for.end2
-
-for.end2:                                         ; preds = %for.body1
-  %index.x.inc = add i64 %index.x, 1
-  %cond.x = icmp ult i64 %index.x.inc, %soundSrcsSize
-  br i1 %cond.x, label %for.body, label %for.end
-
-for.end:                                          ; preds = %for.end2
   %0 = extractvalue %struct.out.normalization_fxp %normalization_fxp_cloned.1_cloned_cloned_cloned_cloned_cloned_cloned_output, 0
   %output = insertvalue %struct.out.wrapperNormalization_fxp undef, i64 %0, 0
   ret %struct.out.wrapperNormalization_fxp %output
@@ -5878,18 +5854,9 @@ for.body:                                         ; preds = %for.body, %for.body
 
 define %struct.out.wrapperEncoder_fxp @wrapperEncoder_fxp_cloned.4_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i64 %idx_x, i64 %idx_y, i64 %idx_z, i64 %dim_x, i64 %dim_y, i64 %dim_z) {
 entry:
-  br label %for.body
-
-for.body:                                         ; preds = %for.body, %entry
-  %index.x = phi i64 [ 0, %entry ], [ %index.x.inc, %for.body ]
-  call void @llvm_hpvm_cpu_dstack_push(i32 1, i64 %soundSrcsSize, i64 %index.x, i64 0, i64 0, i64 0, i64 0)
-  %encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.encoder_fxp @encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i64 %index.x, i64 0, i64 0, i64 %soundSrcsSize, i64 0, i64 0)
+  call void @llvm_hpvm_cpu_dstack_push(i32 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
+  %encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned_output = call %struct.out.encoder_fxp @encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned(%"class.std::vector.6"* %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0)
   call void @llvm_hpvm_cpu_dstack_pop()
-  %index.x.inc = add i64 %index.x, 1
-  %cond.x = icmp ult i64 %index.x.inc, %soundSrcsSize
-  br i1 %cond.x, label %for.body, label %for.end
-
-for.end:                                          ; preds = %for.body
   %0 = extractvalue %struct.out.encoder_fxp %encoder_fxp_cloned.3_cloned_cloned_cloned_cloned_cloned_cloned_output, 0
   %output = insertvalue %struct.out.wrapperEncoder_fxp undef, i64 %0, 0
   ret %struct.out.wrapperEncoder_fxp %output

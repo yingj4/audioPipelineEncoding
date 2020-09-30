@@ -665,8 +665,8 @@ void wrapperNormalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs
     __hpvm__hint(hpvm::CPU_TARGET);
     __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
 
-    // void* normalNode = __hpvm__createNodeND(0, normalization_fxp);
-    void* normalNode = __hpvm__createNodeND(2, normalization_fxp, soundSrcsSize, nSamples);
+    void* normalNode = __hpvm__createNodeND(0, normalization_fxp);
+    // void* normalNode = __hpvm__createNodeND(2, normalization_fxp, soundSrcsSize, nSamples);
 
     __hpvm__bindIn(normalNode, 0, 0, 0);
     __hpvm__bindIn(normalNode, 1, 1, 0);
@@ -701,8 +701,8 @@ void wrapperEncoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*
     __hpvm__hint(hpvm::CPU_TARGET);
     __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
 
-    // void* encodeNode = __hpvm__createNodeND(0, encoder_fxp);
-    void* encodeNode = __hpvm__createNodeND(1, encoder_fxp, soundSrcsSize);
+    void* encodeNode = __hpvm__createNodeND(0, encoder_fxp);
+    // void* encodeNode = __hpvm__createNodeND(1, encoder_fxp, soundSrcsSize);
 
     __hpvm__bindIn(encodeNode, 0, 0, 0);
     __hpvm__bindIn(encodeNode, 1, 1, 0);

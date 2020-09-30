@@ -5744,7 +5744,7 @@ for.cond.cleanup:                                 ; preds = %for.cond1.for.cond.
 }
 
 ; Function Attrs: nounwind
-declare i8* @llvm.hpvm.createNode2D(i8*, i64, i64) #23
+declare i8* @llvm.hpvm.createNode(i8*) #23
 
 ; Function Attrs: nounwind
 declare void @llvm.hpvm.bind.input(i8*, i32, i32, i1) #23
@@ -5755,7 +5755,7 @@ declare void @llvm.hpvm.bind.output(i8*, i32, i32, i1) #23
 ; Function Attrs: nounwind uwtable
 define %struct.out.wrapperNormalization_fxp @wrapperNormalization_fxp_cloned(%"class.std::vector.6"* in out %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* nocapture readnone %sampleTemp) #6 {
 entry:
-  %normalization_fxp_cloned.node = call i8* @llvm.hpvm.createNode2D(i8* bitcast (%struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i64, i64, i16*)* @normalization_fxp_cloned to i8*), i64 %soundSrcsSize, i64 %nSamples)
+  %normalization_fxp_cloned.node = call i8* @llvm.hpvm.createNode(i8* bitcast (%struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i64, i64, i16*)* @normalization_fxp_cloned to i8*))
   call void @llvm.hpvm.bind.input(i8* %normalization_fxp_cloned.node, i32 0, i32 0, i1 false)
   call void @llvm.hpvm.bind.input(i8* %normalization_fxp_cloned.node, i32 1, i32 1, i1 false)
   call void @llvm.hpvm.bind.input(i8* %normalization_fxp_cloned.node, i32 2, i32 2, i1 false)
@@ -5796,13 +5796,10 @@ for.body:                                         ; preds = %for.body, %for.body
   br i1 %exitcond, label %for.cond.cleanup, label %for.body
 }
 
-; Function Attrs: nounwind
-declare i8* @llvm.hpvm.createNode1D(i8*, i64) #23
-
 ; Function Attrs: nounwind uwtable
 define %struct.out.wrapperEncoder_fxp @wrapperEncoder_fxp_cloned(%"class.std::vector.6"* in out %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize) #6 {
 entry:
-  %encoder_fxp_cloned.node = call i8* @llvm.hpvm.createNode1D(i8* bitcast (%struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i64, i64)* @encoder_fxp_cloned to i8*), i64 %soundSrcsSize)
+  %encoder_fxp_cloned.node = call i8* @llvm.hpvm.createNode(i8* bitcast (%struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i64, i64)* @encoder_fxp_cloned to i8*))
   call void @llvm.hpvm.bind.input(i8* %encoder_fxp_cloned.node, i32 0, i32 0, i1 false)
   call void @llvm.hpvm.bind.input(i8* %encoder_fxp_cloned.node, i32 1, i32 1, i1 false)
   call void @llvm.hpvm.bind.input(i8* %encoder_fxp_cloned.node, i32 2, i32 2, i1 false)
@@ -5810,9 +5807,6 @@ entry:
   call void @llvm.hpvm.bind.output(i8* %encoder_fxp_cloned.node, i32 0, i32 0, i1 false)
   ret %struct.out.wrapperEncoder_fxp undef
 }
-
-; Function Attrs: nounwind
-declare i8* @llvm.hpvm.createNode(i8*) #23
 
 ; Function Attrs: nounwind uwtable
 define %emptyStruct @sumBF_fxp_cloned(%"class.std::vector.6"* in %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* in out %sumBF, i64 %bytes_sumBF, i64 %soundSrcsSize) #6 {
