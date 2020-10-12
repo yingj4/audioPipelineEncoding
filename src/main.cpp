@@ -651,7 +651,7 @@ void normalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/
     //     for (int k = 0; k < nSamples; ++k) {
     //         (*soundSrcs)[j]->sample[k] = (*soundSrcs)[j]->amp * (sampleTemp[k] / 32767.0);
     //     }
-    // }  
+    // }
 
     // This is the parallel version
     void* thisNode = __hpvm__getNode();
@@ -660,7 +660,12 @@ void normalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/
 
     if (j < soundSrcsSize && k < nSamples) {
         (*soundSrcs)[j]->sample[k] = (*soundSrcs)[j]->amp * (sampleTemp[k] / 32767.0);
-    }    
+    }
+
+
+
+
+    // printf("norm: %ld %ld\n", j, k);
 
     __hpvm__return(1, bytes_soundSrcs);
 }
@@ -692,7 +697,7 @@ void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_
     //     (*soundSrcs)[j]->BEncoder->Process((*soundSrcs)[j]->sample, nSamples, (*soundSrcs)[j]->BFormat);
     // }
 
-    // This is the paralle part
+    // This is the parallel part
     void* thisNode = __hpvm__getNode();
     long j = __hpvm__getNodeInstanceID_x(thisNode);
 
@@ -700,6 +705,10 @@ void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_
         (*soundSrcs)[j]->BEncoder->Process((*soundSrcs)[j]->sample, nSamples, (*soundSrcs)[j]->BFormat);
     }
 
+
+    
+
+    // printf("encode: %ld\n", j);
 
     __hpvm__return(1, bytes_soundSrcs);
     
@@ -729,6 +738,8 @@ void sumBF_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t 
     for (int j = 0; j < soundSrcsSize; ++j) {
         (*sumBF) += *((*soundSrcs)[j]->BFormat);
     }
+
+    // printf("sum\n");
 
     __hpvm__return(1, bytes_sumBF);
     
