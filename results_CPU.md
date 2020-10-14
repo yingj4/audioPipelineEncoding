@@ -8,9 +8,18 @@
 
 ## Profiling Results from Intel VTune
 
-### Test Setup
+### Test and Result Table Setup
 
 1. There are four versions of the code: B (Basic, neither streaming nor parallel), S (Streaming-only), P (Parallel-only), and SP (Streaming-and-Parallel).
 2. Each version of the code ran 3 times with either 500 input blocks or 1000 input blocks (i.e. 6 runs for each version of the code). All the profiling results here are the average timing of the three test runs.
 3. The function for encoder processing is `CAmbisonicEncoderDist::Process()`. The functions related to `std::map` are called by the HPVM runtime. These functions include `std::map::operator[]`, `std::map::count`, and `std::map::find`.
-4. The HPVM runtime in the release version is using `std::map::operator[]` and  `std::map::count` to track the memory. With the advice from Akash, the memory tracer is updated to use and an iterator of the `std::map` and the function `std::map::find`. The later version of HPVM runtime is called `modifiedRT` in the following result tables.
+4. The HPVM runtime in the release version is using `std::map::operator[]` and  `std::map::count` to track the memory. With the advice from Akash, the memory tracer is updated to use and an iterator of the `std::map` and the function `std::map::find`. The later version of HPVM runtime is called `ModifiedRT` in the following result tables.
+
+### Result Tables
+
+The first table is for 500 input blocks:
+
+| Version | ModifiedRT | Average CPU Time (s) | Dominant Function | Average Time on each Dominant Function|
+|---------|------------|----------------------|-------------------|---------------------------------------|
+| B       | No         | 0.353                | CAmbisonicEncoderDist::Process() | 313.330 |
+
