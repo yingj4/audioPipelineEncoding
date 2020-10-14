@@ -11,7 +11,7 @@
 ### Test and Result Table Setup
 
 1. There are four versions of the code: Basic (neither streaming nor parallel), Streaming-only, Parallel-only, and Streaming-and-Parallel.
-2. Each version of the code ran 3 times with either 500 input blocks or 1000 input blocks (i.e. 6 runs for each version of the code). All the profiling results here are the average timing of the three test runs.
+2. Each version of the code ran 3 times with either 500 input blocks or 1000 input blocks before modifying HPVM runtime, and 3 runs with either number of input blocks after the modification (i.e. 12 runs for each version in total). All the profiling results here are the average timing of the three test runs.
 3. The function for encoder processing is `CAmbisonicEncoderDist::Process()`. The functions related to `std::map` are called by the HPVM runtime. These functions include `std::map::operator[]`, `std::map::count`, and `std::map::find`.
 4. The HPVM runtime in the release version is using `std::map::operator[]` and  `std::map::count` to track the memory. With the advice from Akash, the memory tracer is updated to use and an iterator of the `std::map` and the function `std::map::find`. The later version of HPVM runtime is referred as `ModifiedRT` in the following result tables.
 
@@ -19,8 +19,8 @@
 
 The first table is for 500 input blocks:
 
-| Version | ModifiedRT | Average CPU Time (s) | Dominant Function | Average Time on each Dominant Function (ms) |
-|---------|------------|----------------------|-------------------|---------------------------------------------|
+| Version | ModifiedRT | Average CPU Time (s) | Dominant Functions | Average Time on each Dominant Function (ms) |
+|---------|------------|----------------------|--------------------|---------------------------------------------|
 | Basic   | No         | 0.353                | CAmbisonicEncoderDist::Process() | 313.330 |
 | Basic   | Yes        | 0.350                | CAmbisonicEncoderDist::Process() | 298.003 |
 | Parallel   | No         | 1.447                | CAmbisonicEncoderDist::Process() <br> std::map::count <br> std::map::operator[] <br> pthread_mutext_lock <br> pthread_mutext_unlock | 302.644 <br> 253.342 <br> 253.919 <br> 194.658 <br> 152.003 |
@@ -39,3 +39,18 @@ Remarks
 6. Other than `CAmbisonicEncoderDist::Process()`, all other dominant functions are HPVM runtime. They will optimize the runtime with other methods (e.g. using a hashtable to replace std::map) to make the HPVM runtime negligible. I have left the profiling results in the #hpvm-dev-support channel with some explanations.
 
 The second table is for 1000 input blocks:
+
+| Version | ModifiedRT | Average CPU Time (s) | Dominant Functions | Average Time on each Dominant Function (ms) |
+|---------|------------|----------------------|--------------------|---------------------------------------------|
+| Basic   | No         | 0.740                | CAmbisonicEncoderDist::Process() | 649.342 |
+| Basic   | Yes        | 0.717                | CAmbisonicEncoderDist::Process() | 597.993 |
+| Parallel   | No         | 2.903                | CAmbisonicEncoderDist::Process() <br> std::map::count <br> std::map::operator[] <br> pthread_mutext_lock <br> pthread_mutext_unlock | 625.345 <br> 557.320 <br> 562.648 <br> 300.002 <br> 285.312 |
+| Parallel   | Yes        | 2.370                | CAmbisonicEncoderDist::Process() <br> std::map::find <br> pthread_mutext_lock <br> pthread_mutext_unlock | 647.360 <br> 429.994 <br> 281.314 <br> 317.291 |
+| Streaming  | No         | 0.730                | CAmbisonicEncoderDist::Process() | 619.999 |
+| Streaming  | No         | 0.743                | CAmbisonicEncoderDist::Process() | 633.333 |
+| Streaming-and-Parallel | No         | 3.337                | CAmbisonicEncoderDist::Process() <br> std::map::count <br> std::map::operator[] <br> pthread_mutext_lock <br> pthread_mutext_unlock | 663.333 <br> 651.351 <br> 625.980 <br> 327.327 <br> 266.006 |
+| Streaming-and-Parallel | Yes        | 2.720                | CAmbisonicEncoderDist::Process() <br> std::map::find <br> pthread_mutext_lock <br> pthread_mutext_unlock | 636.667 <br> 633.329 <br> 365.336 <br> 345.993 |
+
+Remarks
+1. Compared with the first table, the timing for both CPU time and the time on each dominant function is nearly doubled. This makes sense, as the input size is doubled.
+2. Unlike Remark 5 in the first table, `CAmbisonicEncoderDist::Process()` and `std::map::find` are equally possible to be the most dominant function.
