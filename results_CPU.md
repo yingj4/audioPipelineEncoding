@@ -23,8 +23,5 @@ The first table is for 500 input blocks:
 |---------|------------|----------------------|-------------------|---------------------------------------|
 | B       | No         | 0.353                | CAmbisonicEncoderDist::Process() | 313.330 |
 | B       | Yes        | 0.350                | CAmbisonicEncoderDist::Process() | 298.003 |
-| P       | No         | 1.447                | CAmbisonicEncoderDist::Process() | 302.644 |
-|         |            |                      | std::map::count | 253.342 |
-|         |            |                      | std::map::operator[] | 253.919 |
-|         |            |                      | pthread_mutext_lock | 194.658 |
-|         |            |                      | pthread_mutext_unlock | 152.003 |
+| P       | No         | 1.447                | CAmbisonicEncoderDist::Process() <br> std::map::count <br> std::map::operator[] <br> pthread_mutext_lock <br> pthread_mutext_unlock | 302.644 <br> 253.342 <br> 253.919 <br> 194.658 <br> 152.003 |
+| P       | Yes        | 1.150                | CAmbisonicEncoderDist::Process() <br> std::map::find <br> pthread_mutext_lock <br> pthread_mutext_unlock | 302.043 <br> 251.306 <br> 137.332 <br> 132.000 |
