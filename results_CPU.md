@@ -23,12 +23,12 @@ The first table is for 500 input blocks:
 |---------|------------|----------------------|--------------------|---------------------------------------------|
 | Basic   | No         | 0.353                | CAmbisonicEncoderDist::Process() | 313.330 |
 | Basic   | Yes        | 0.350                | CAmbisonicEncoderDist::Process() | 298.003 |
-| Parallel   | No         | 1.447                | CAmbisonicEncoderDist::Process() <br> std::map::count <br> std::map::operator[] <br> pthread_mutext_lock <br> pthread_mutext_unlock | 302.644 <br> 253.342 <br> 253.919 <br> 194.658 <br> 152.003 |
-| Parallel   | Yes        | 1.150                | CAmbisonicEncoderDist::Process() <br> std::map::find <br> pthread_mutext_lock <br> pthread_mutext_unlock | 302.043 <br> 251.306 <br> 137.332 <br> 132.000 |
+| Parallel   | No         | 1.447                | CAmbisonicEncoderDist::Process() <br> std::map::count <br> std::map::operator[] <br> pthread_mutex_lock <br> pthread_mutex_unlock | 302.644 <br> 253.342 <br> 253.919 <br> 194.658 <br> 152.003 |
+| Parallel   | Yes        | 1.150                | CAmbisonicEncoderDist::Process() <br> std::map::find <br> pthread_mutex_lock <br> pthread_mutex_unlock | 302.043 <br> 251.306 <br> 137.332 <br> 132.000 |
 | Streaming  | No         | 0.367                | CAmbisonicEncoderDist::Process() | 316.667 |
 | Streaming  | No         | 0.363                | CAmbisonicEncoderDist::Process() | 303.333 |
-| Streaming-and-Parallel | No         | 1.657                | CAmbisonicEncoderDist::Process() <br> std::map::count <br> std::map::operator[] <br> pthread_mutext_lock <br> pthread_mutext_unlock | 330.000 <br> 363.997 <br> 354.000 <br> 131.338 <br> 150.001 |
-| Streaming-and-Parallel | Yes        | 1.273                | CAmbisonicEncoderDist::Process() <br> std::map::find <br> pthread_mutext_lock <br> pthread_mutext_unlock | 283.333 <br> 330.675 <br> 160.668 <br> 148.002 |
+| Streaming-and-Parallel | No         | 1.657                | CAmbisonicEncoderDist::Process() <br> std::map::count <br> std::map::operator[] <br> pthread_mutex_lock <br> pthread_mutex_unlock | 330.000 <br> 363.997 <br> 354.000 <br> 131.338 <br> 150.001 |
+| Streaming-and-Parallel | Yes        | 1.273                | CAmbisonicEncoderDist::Process() <br> std::map::find <br> pthread_mutex_lock <br> pthread_mutex_unlock | 283.333 <br> 330.675 <br> 160.668 <br> 148.002 |
 
 Remarks
 1. The timing for `CAmbisonicEncoderDist::Process()` is almost not affected after modifying the HPVM runtime. This is as expected. In this table, there are some slight decreases in each ModifiedRT/non-ModifiedRT pair. But as we will see in the table for 1000 input blocks, some have slight increases in each pair. Perhaps 3 runs are not enough.
@@ -44,12 +44,12 @@ The second table is for 1000 input blocks:
 |---------|------------|----------------------|--------------------|---------------------------------------------|
 | Basic   | No         | 0.740                | CAmbisonicEncoderDist::Process() | 649.342 |
 | Basic   | Yes        | 0.717                | CAmbisonicEncoderDist::Process() | 597.993 |
-| Parallel   | No         | 2.903                | CAmbisonicEncoderDist::Process() <br> std::map::count <br> std::map::operator[] <br> pthread_mutext_lock <br> pthread_mutext_unlock | 625.345 <br> 557.320 <br> 562.648 <br> 300.002 <br> 285.312 |
-| Parallel   | Yes        | 2.370                | CAmbisonicEncoderDist::Process() <br> std::map::find <br> pthread_mutext_lock <br> pthread_mutext_unlock | 647.360 <br> 429.994 <br> 281.314 <br> 317.291 |
+| Parallel   | No         | 2.903                | CAmbisonicEncoderDist::Process() <br> std::map::count <br> std::map::operator[] <br> pthread_mutex_lock <br> pthread_mutex_unlock | 625.345 <br> 557.320 <br> 562.648 <br> 300.002 <br> 285.312 |
+| Parallel   | Yes        | 2.370                | CAmbisonicEncoderDist::Process() <br> std::map::find <br> pthread_mutet_lock <br> pthread_mutex_unlock | 647.360 <br> 429.994 <br> 281.314 <br> 317.291 |
 | Streaming  | No         | 0.730                | CAmbisonicEncoderDist::Process() | 619.999 |
 | Streaming  | No         | 0.743                | CAmbisonicEncoderDist::Process() | 633.333 |
-| Streaming-and-Parallel | No         | 3.337                | CAmbisonicEncoderDist::Process() <br> std::map::count <br> std::map::operator[] <br> pthread_mutext_lock <br> pthread_mutext_unlock | 663.333 <br> 651.351 <br> 625.980 <br> 327.327 <br> 266.006 |
-| Streaming-and-Parallel | Yes        | 2.720                | CAmbisonicEncoderDist::Process() <br> std::map::find <br> pthread_mutext_lock <br> pthread_mutext_unlock | 636.667 <br> 633.329 <br> 365.336 <br> 345.993 |
+| Streaming-and-Parallel | No         | 3.337                | CAmbisonicEncoderDist::Process() <br> std::map::count <br> std::map::operator[] <br> pthread_mutex_lock <br> pthread_mutex_unlock | 663.333 <br> 651.351 <br> 625.980 <br> 327.327 <br> 266.006 |
+| Streaming-and-Parallel | Yes        | 2.720                | CAmbisonicEncoderDist::Process() <br> std::map::find <br> pthread_mutex_lock <br> pthread_mutex_unlock | 636.667 <br> 633.329 <br> 365.336 <br> 345.993 |
 
 Remarks
 1. Compared with the first table, the timing for both CPU time and the time on each dominant function is nearly doubled. This makes sense, as the input size is doubled.
