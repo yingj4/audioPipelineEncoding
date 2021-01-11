@@ -643,6 +643,7 @@ void normalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/
     __hpvm__hint(hpvm::DEVICE);
     __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
 
+    // This is the non-parallel version
     // normalize samples to -1 to 1 float, with amplitude scale
     for (int j = 0; j < soundSrcsSize; ++j) {            
         for (int k = 0; k < nSamples; ++k) {
@@ -650,6 +651,7 @@ void normalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/
         }
     }
 
+    // This is the parallel version
     // void* thisNode = __hpvm__getNode();
     // long j = __hpvm__getNodeInstanceID_x(thisNode);
     // long k = __hpvm__getNodeInstanceID_y(thisNode);
@@ -682,10 +684,12 @@ void encoder_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_
     __hpvm__hint(hpvm::DEVICE);
     __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
 
+    // This is the non-parallel version
     for (int j = 0; j < soundSrcsSize; ++j) {
         (*soundSrcs)[j]->BEncoder->Process((*soundSrcs)[j]->sample, nSamples, (*soundSrcs)[j]->BFormat);
     }
 
+    // This is the parallel version
     // void* thisNode = __hpvm__getNode();
     // long j = __hpvm__getNodeInstanceID_x(thisNode);
 
