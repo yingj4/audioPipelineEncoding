@@ -21,12 +21,68 @@ ifeq ($(TARGET),)
     TARGET = gpu
 endif
 
+	
+GENHPVM_OPTFLAGS = -load LLVMGenHPVM.so -genhpvm -globaldce -hpvm-timers-gen
+ifeq ($(TARGET),seq)
+  DEVICE = CPU_TARGET
+  HPVM_OPTSO = -load LLVMBuildDFG.so -load LLVMDFG2LLVM_CPU.so -load LLVMClearDFG.so
+	HPVM_OPTFLAGS = -dfg2llvm-cpu -clearDFG -hpvm-timers-cpu
+else ifeq ($(TARGET),fpga)
+  ifeq ($(BOARD),)
+    BOARD := a10gx 
+  endif
+  DEVICE = FPGA_TARGET
+  HPVM_OPTSO = -load LLVMBuildDFG.so
+  HPVM_OPTSO += -load LLVMDFG2LLVM_FPGA.so -load LLVMDFG2LLVM_CPU.so -load LLVMClearDFG.so 
+  HPVM_OPTFLAGS += -dfg2llvm-fpga -dfg2llvm-cpu -clearDFG
+#  CFLAGS += -DOPENCL_CPU
+else ifeq ($(TARGET),gpu)
+  DEVICE = GPU_TARGET
+  HPVM_OPTSO = -load LLVMBuildDFG.so -load LLVMLocalMem.so -load LLVMDFG2LLVM_OpenCL.so -load LLVMDFG2LLVM_CPU.so -load LLVMClearDFG.so
+	HPVM_OPTFLAGS =  -localmem -dfg2llvm-opencl -dfg2llvm-cpu -clearDFG -hpvm-timers-cpu -hpvm-timers-ptx
+endif
+ifeq ($(TARGET), fpga)
+ifeq ($(EMULATION),1)
+  VERSION := $(VERSION)_EMU
+  EMULATOR = CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1
+endif 
+ifeq ($(BOARD),a10gx)
+  VERSION := $(VERSION)_A10
+else 
+  ifeq ($(BOARD),s10_gh2e2_4Gx2)
+    VERSION := $(VERSION)_DE10
+  endif
+endif
+endif
+ifneq (,$(FPGAOPTS))
+	HPVM_OPTSO += -load LLVMHPVMFPGATransformPasses.so
+endif
+ifneq (,$(findstring BI, $(FPGAOPTS)))
+  VERSION := $(VERSION)_BI
+	FPGA_OPTFLAGS += -fpgabufferin
+endif
+ifneq (,$(findstring PRIV, $(FPGAOPTS)))
+  VERSION := $(VERSION)_P
+	FPGA_OPTFLAGS += -fpgapriv
+endif
+ifneq (,$(findstring UF, $(FPGAOPTS)))
+  VERSION := $(VERSION)_UJ
+	FPGA_OPTFLAGS += -fuj-unroll -early-cse -simplifycfg -loop-simplify -fuj-fuse
+endif
+ifeq ($(VERSION),)
+    VERSION := _Default
+endif
+ifneq ($(GRAPHOPTS),)
+	VERSION := $(VERSION)_GOPT
+	HPVM_OPTSO += -load LLVMDFGTransformPasses.so
+
+## BEGIN HPVM MAKEFILE
 # Build dirs
 SRC_DIR = src/
-BUILD_DIR = build/$(TARGET)
+BUILD_DIR = build/$(TARGET)$(VERSION)
 CURRENT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
-EXE = $(EXE_NAME)-$(TARGET)
+EXE = $(EXE_NAME)-$(TARGET)$(VERSION)
 
 INCLUDES += -I$(SRC_DIR)
 INCLUDES += -I$(LLVM_SRC_ROOT)/include -I../include -I$(HPVM_BUILD_DIR)/include
@@ -53,20 +109,6 @@ LDFLAGS= $(APP_LDFLAGS) $(PLATFORM_LDFLAGS)
 HPVM_RT_PATH = $(LLVM_BUILD_DIR)/tools/hpvm/projects/hpvm-rt
 HPVM_RT_LIB = $(HPVM_RT_PATH)/hpvm-rt.bc
 
-# TESTGEN_OPTFLAGS = -debug -load LLVMGenHPVM.so -genhpvm -globaldce
-TESTGEN_OPTFLAGS = -load LLVMGenHPVM.so -genhpvm -globaldce
-
-ifeq ($(TARGET),seq)
-  DEVICE = CPU_TARGET
-  HPVM_OPTFLAGS = -load LLVMBuildDFG.so -load LLVMDFG2LLVM_CPU.so -load LLVMClearDFG.so -dfg2llvm-cpu -clearDFG
-  # HPVM_OPTFLAGS += -hpvm-timers-cpu
-else
-  DEVICE = GPU_TARGET
-  HPVM_OPTFLAGS = -load LLVMBuildDFG.so -load LLVMLocalMem.so -load LLVMDFG2LLVM_OpenCL.so -load LLVMDFG2LLVM_CPU.so -load LLVMClearDFG.so -localmem -dfg2llvm-opencl -dfg2llvm-cpu -clearDFG
-  HPVM_OPTFLAGS += -hpvm-timers-cpu -hpvm-timers-ptx
-endif
-  # TESTGEN_OPTFLAGS += -hpvm-timers-gen
-
 CFLAGS += -DDEVICE=$(DEVICE)
 CXXFLAGS += -DDEVICE=$(DEVICE)
 
@@ -83,24 +125,41 @@ KERNEL = $(TEST_OBJS).kernels.ll
 
 ifeq ($(TARGET),gpu)
   KERNEL_OCL = $(TEST_OBJS).kernels.cl
+else ifeq ($(TARGET),fpga)
+  KERNEL_OCL = $(TEST_OBJS).kernels.cl
+  AOCX = $(TEST_OBJS).kernels.aocx
+  ifeq ($(PROFILE),1)
+    AOC_PROFILE = -profile
+  endif
+  ifeq ($(EMULATION),1)
+    AOC_OPTIONS = -march=emulator
+  endif
+  ifeq ($(RTL),1)
+    undefine EXE 
+    AOCX = $(TEST_OBJS).kernels.aocr
+    AOC_OPTIONS = -rtl
+		VERSION := $(VERSION)_RTL
+  endif
 endif
 
 HOST_LINKED = $(BUILD_DIR)/$(APP).linked.ll
 HOST = $(BUILD_DIR)/$(APP).host.ll
 
-ifeq ($(OPENCL_PATH),)
-FAILSAFE=no_opencl
-else 
-FAILSAFE=
-endif
+ifeq ($(DEBUG),1)
+	HPVM_OPTFLAGS += -debug
+	GENHPVM_OPTFLAGS += -debug
 
 # Targets
-default: $(FAILSAFE) $(BUILD_DIR) $(KERNEL_OCL) $(EXE)
+default: $(FAILSAFE) $(BUILD_DIR) $(KERNEL_OCL) $(EXE) $(AOCX)
+host: $(BUILD_DIR) $(EXE)
 
 clean :
 	if [ -f $(EXE) ]; then rm $(EXE); fi
 	if [ -f DataflowGraph.dot ]; then rm DataflowGraph.dot*; fi
 	if [ -d $(BUILD_DIR) ]; then rm -rf $(BUILD_DIR); fi
+
+$(AOCX) : $(KERNEL_OCL)
+	aoc -report $(AOC_OPTIONS) $< $(AOC_PROFILE) -o $@ -board=$(BOARD)
 
 $(KERNEL_OCL) : $(KERNEL)
 	$(OCLBE) $< -o $@
@@ -112,7 +171,7 @@ $(HOST_LINKED) : $(HOST) $(OBJS) $(HPVM_RT_LIB)
 	$(LLVM_LINK) $^ -S -o $@
 
 $(HOST) $(KERNEL): $(BUILD_DIR)/$(HPVM_OBJS)
-	$(OPT) $(HPVM_OPTFLAGS) -S $< -o $(HOST)
+	$(OPT) $(HPVM_OPTSO) $(GRAPHOPTS) $(POSTGRAPHOPTS) $(FPGA_OPTFLAGS) $(HPVM_OPTFLAGS) -S $< -o $(HOST)
 
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
@@ -124,6 +183,9 @@ $(BUILD_DIR)/main.ll : $(SRC_DIR)/main.cpp
 	$(CC) $(CXXFLAGS) -emit-llvm -S -o $@ $<
 
 $(BUILD_DIR)/main.hpvm.ll : $(BUILD_DIR)/main.ll
-	$(OPT) $(TESTGEN_OPTFLAGS) $< -S -o $@
+	$(OPT) $(GENHPVM_OPTFLAGS) $< -S -o $@
+
+run : 
+	if [ -f $(EXE) ]; then $(EMULATOR) ./$(EXE) 10 encode; fi
 
 ## END HPVM MAKEFILE
