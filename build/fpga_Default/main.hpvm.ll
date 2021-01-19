@@ -5495,7 +5495,7 @@ for.cond.cleanup:                                 ; preds = %for.cond1.for.cond.
 }
 
 ; Function Attrs: nounwind
-declare i8* @llvm.hpvm.createNode(i8*) #23
+declare i8* @llvm.hpvm.createNode1D(i8*, i64) #23
 
 ; Function Attrs: nounwind
 declare void @llvm.hpvm.bind.input(i8*, i32, i32, i1) #23
@@ -5506,7 +5506,7 @@ declare void @llvm.hpvm.bind.output(i8*, i32, i32, i1) #23
 ; Function Attrs: nounwind uwtable
 define %struct.out.wrapperNormalization_fxp @wrapperNormalization_fxp_c(%"class.std::vector.6"* in noalias out %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize, i16* noalias nocapture readnone %sampleTemp) #6 {
 entry:
-  %normalization_fxp_c.node = call i8* @llvm.hpvm.createNode(i8* bitcast (%struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i64, i64, i16*)* @normalization_fxp_c to i8*))
+  %normalization_fxp_c.node = call i8* @llvm.hpvm.createNode1D(i8* bitcast (%struct.out.normalization_fxp (%"class.std::vector.6"*, i64, i64, i64, i16*)* @normalization_fxp_c to i8*), i64 1)
   call void @llvm.hpvm.bind.input(i8* %normalization_fxp_c.node, i32 0, i32 0, i1 false)
   call void @llvm.hpvm.bind.input(i8* %normalization_fxp_c.node, i32 1, i32 1, i1 false)
   call void @llvm.hpvm.bind.input(i8* %normalization_fxp_c.node, i32 2, i32 2, i1 false)
@@ -5550,7 +5550,7 @@ for.body:                                         ; preds = %for.body, %for.body
 ; Function Attrs: nounwind uwtable
 define %struct.out.wrapperEncoder_fxp @wrapperEncoder_fxp_c(%"class.std::vector.6"* in noalias out %soundSrcs, i64 %bytes_soundSrcs, i64 %nSamples, i64 %soundSrcsSize) #6 {
 entry:
-  %encoder_fxp_c.node = call i8* @llvm.hpvm.createNode(i8* bitcast (%struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i64, i64)* @encoder_fxp_c to i8*))
+  %encoder_fxp_c.node = call i8* @llvm.hpvm.createNode1D(i8* bitcast (%struct.out.encoder_fxp (%"class.std::vector.6"*, i64, i64, i64)* @encoder_fxp_c to i8*), i64 1)
   call void @llvm.hpvm.bind.input(i8* %encoder_fxp_c.node, i32 0, i32 0, i1 false)
   call void @llvm.hpvm.bind.input(i8* %encoder_fxp_c.node, i32 1, i32 1, i1 false)
   call void @llvm.hpvm.bind.input(i8* %encoder_fxp_c.node, i32 2, i32 2, i1 false)
@@ -5773,10 +5773,13 @@ _ZN8CBFormatpLERKS_.exit:                         ; preds = %for.cond2.for.inc10
   br i1 %exitcond13, label %for.cond.cleanup, label %for.body
 }
 
+; Function Attrs: nounwind
+declare i8* @llvm.hpvm.createNode(i8*) #23
+
 ; Function Attrs: nounwind uwtable
 define %emptyStruct.28 @wrapperSumBF_fxp_c(%"class.std::vector.6"* in noalias %soundSrcs, i64 %bytes_soundSrcs, %class.CBFormat* in noalias out %sumBF, i64 %bytes_sumBF, i64 %soundSrcsSize) #6 {
 entry:
-  %sumBF_fxp_c.node = call i8* @llvm.hpvm.createNode(i8* bitcast (%emptyStruct (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i64)* @sumBF_fxp_c to i8*))
+  %sumBF_fxp_c.node = call i8* @llvm.hpvm.createNode1D(i8* bitcast (%emptyStruct (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i64)* @sumBF_fxp_c to i8*), i64 1)
   call void @llvm.hpvm.bind.input(i8* %sumBF_fxp_c.node, i32 0, i32 0, i1 false)
   call void @llvm.hpvm.bind.input(i8* %sumBF_fxp_c.node, i32 1, i32 1, i1 false)
   call void @llvm.hpvm.bind.input(i8* %sumBF_fxp_c.node, i32 2, i32 2, i1 false)

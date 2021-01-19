@@ -4250,7 +4250,7 @@ define void @wrapperNormalization_fxp(%"class.std::vector.6"* noalias %soundSrcs
 entry:
   tail call void @__hpvm__hint(i32 1) #23
   tail call void (i32, ...) @__hpvm__attributes(i32 1, %"class.std::vector.6"* %soundSrcs, i32 1, %"class.std::vector.6"* %soundSrcs) #23
-  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, i64, i64, i16*)* nonnull @normalization_fxp) #23
+  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 1, void (%"class.std::vector.6"*, i64, i64, i64, i16*)* nonnull @normalization_fxp, i64 1) #23
   tail call void @__hpvm__bindIn(i8* %call, i32 0, i32 0, i32 0) #23
   tail call void @__hpvm__bindIn(i8* %call, i32 1, i32 1, i32 0) #23
   tail call void @__hpvm__bindIn(i8* %call, i32 2, i32 2, i32 0) #23
@@ -4307,7 +4307,7 @@ define void @wrapperEncoder_fxp(%"class.std::vector.6"* noalias %soundSrcs, i64 
 entry:
   tail call void @__hpvm__hint(i32 1) #23
   tail call void (i32, ...) @__hpvm__attributes(i32 1, %"class.std::vector.6"* %soundSrcs, i32 1, %"class.std::vector.6"* %soundSrcs) #23
-  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, i64, i64)* nonnull @encoder_fxp) #23
+  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 1, void (%"class.std::vector.6"*, i64, i64, i64)* nonnull @encoder_fxp, i64 1) #23
   tail call void @__hpvm__bindIn(i8* %call, i32 0, i32 0, i32 0) #23
   tail call void @__hpvm__bindIn(i8* %call, i32 1, i32 1, i32 0) #23
   tail call void @__hpvm__bindIn(i8* %call, i32 2, i32 2, i32 0) #23
@@ -4537,7 +4537,7 @@ define void @wrapperSumBF_fxp(%"class.std::vector.6"* noalias %soundSrcs, i64 %b
 entry:
   tail call void @__hpvm__hint(i32 1) #23
   tail call void (i32, ...) @__hpvm__attributes(i32 2, %"class.std::vector.6"* %soundSrcs, %class.CBFormat* %sumBF, i32 1, %class.CBFormat* %sumBF) #23
-  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 0, void (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i64)* nonnull @sumBF_fxp) #23
+  %call = tail call i8* (i32, ...) @__hpvm__createNodeND(i32 1, void (%"class.std::vector.6"*, i64, %class.CBFormat*, i64, i64)* nonnull @sumBF_fxp, i64 1) #23
   tail call void @__hpvm__bindIn(i8* %call, i32 0, i32 0, i32 0) #23
   tail call void @__hpvm__bindIn(i8* %call, i32 1, i32 1, i32 0) #23
   tail call void @__hpvm__bindIn(i8* %call, i32 2, i32 2, i32 0) #23
