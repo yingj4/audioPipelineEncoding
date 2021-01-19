@@ -75,6 +75,7 @@ endif
 ifneq ($(GRAPHOPTS),)
 	VERSION := $(VERSION)_GOPT
 	HPVM_OPTSO += -load LLVMDFGTransformPasses.so
+endif
 
 ## BEGIN HPVM MAKEFILE
 # Build dirs
@@ -148,6 +149,7 @@ HOST = $(BUILD_DIR)/$(APP).host.ll
 ifeq ($(DEBUG),1)
 	HPVM_OPTFLAGS += -debug
 	GENHPVM_OPTFLAGS += -debug
+endif
 
 # Targets
 default: $(FAILSAFE) $(BUILD_DIR) $(KERNEL_OCL) $(EXE) $(AOCX)

@@ -769,7 +769,7 @@ void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ s
     __hpvm__bindIn(encoderNode, 3, 3, 0);
 
     // Bind-in for the sumBF process
-    __hpvm__edge(encoderNode, sumBFNode, 1, 0, 1, 0);
+    __hpvm__edge(encoderNode, sumBFNode, 1, 0, 0, 0);
     __hpvm__bindIn(sumBFNode, 1, 1, 0);
     __hpvm__bindIn(sumBFNode, 5, 2, 0);
     __hpvm__bindIn(sumBFNode, 6, 3, 0);
