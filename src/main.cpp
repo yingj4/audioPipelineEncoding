@@ -635,11 +635,11 @@ typedef struct __attribute__((__packed__)) {
     short* sampleTemp;
     CBFormat* sumBF;
     size_t bytes_sumBF;
-    
+    size_t bytes_sampleTemp;
 } RootIn;
 
 // A leaf node function for the normalization
-void normalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>*__restrict__ soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ long nSamples, /*3*/ long soundSrcsSize, /*4*/ short*__restrict__ sampleTemp) {
+void normalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>*__restrict__ soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ long nSamples, /*3*/ long soundSrcsSize, /*4*/ short*__restrict__ sampleTemp, /*5*/ size_t bytes_sampleTemp) {
     __hpvm__hint(hpvm::DEVICE);
     __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
 
@@ -663,7 +663,7 @@ void normalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>*__restrict__ soun
     __hpvm__return(1, soundSrcs);
 }
 
-void wrapperNormalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>*__restrict__ soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ long nSamples, /*3*/ long soundSrcsSize, /*4*/ short*__restrict__ sampleTemp) {
+void wrapperNormalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>*__restrict__ soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ long nSamples, /*3*/ long soundSrcsSize, /*4*/ short*__restrict__ sampleTemp, /*5*/ size_t bytes_sampleTemp) {
     __hpvm__hint(hpvm::CPU_TARGET);
     __hpvm__attributes(1, soundSrcs, 1, soundSrcs);
 
@@ -675,6 +675,7 @@ void wrapperNormalization_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>*__restrict
     __hpvm__bindIn(normalNode, 2, 2, 0);
     __hpvm__bindIn(normalNode, 3, 3, 0);
     __hpvm__bindIn(normalNode, 4, 4, 0);
+    __hpvm__bindIn(normalNode, 5, 5, 0);
 
     __hpvm__bindOut(normalNode, 0, 0, 0);
 }
@@ -742,7 +743,7 @@ void wrapperSumBF_fxp(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>*__restrict__ sound
 }
 
 // A root node function for the whole pipeline
-void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ long nSamples, /*3*/ long soundSrcsSize, /*4*/ short* sampleTemp, /*5*/ CBFormat* sumBF, /*6*/ size_t bytes_sumBF) {
+void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ size_t bytes_soundSrcs, /*2*/ long nSamples, /*3*/ long soundSrcsSize, /*4*/ short* sampleTemp, /*5*/ CBFormat* sumBF, /*6*/ size_t bytes_sumBF, /*7*/ size_t bytes_sampleTemp) {
     __hpvm__hint(hpvm::CPU_TARGET);
     __hpvm__attributes(2, soundSrcs, sumBF, 2, soundSrcs, sumBF);
 
@@ -761,6 +762,7 @@ void encoderPipeline(/*0*/ std::vector<ILLIXR_AUDIO::Sound*>* soundSrcs, /*1*/ s
     __hpvm__bindIn(normalizationNode, 2, 2, 0);
     __hpvm__bindIn(normalizationNode, 3, 3, 0);
     __hpvm__bindIn(normalizationNode, 4, 4, 0);
+    __hpvm__bindIn(normalizationNode, 7, 5, 0);
 
     // Bind-in for the encoder process
     __hpvm__edge(normalizationNode, encoderNode, 1, 0, 0, 0);
@@ -797,6 +799,7 @@ void encodeProcess(ILLIXR_AUDIO::ABAudio* audioAddr) {
     // variable initialization
     size_t bytes_soundSrcs = soundSrcsSize * sizeof(ILLIXR_AUDIO::Sound*);
     size_t bytes_sumBF = sizeof(CBFormat);
+    size_t bytes_sampleTemp = BLOCK_SIZE * sizeof(short);
 
     __hpvm__init();
 
@@ -809,6 +812,7 @@ void encodeProcess(ILLIXR_AUDIO::ABAudio* audioAddr) {
     rootArgs->sampleTemp = sampleTemp;
     rootArgs->sumBF = sumBF;
     rootArgs->bytes_sumBF = bytes_sumBF;
+    rootArgs->bytes_sampleTemp = bytes_sampleTemp;
         
 
     // Memory tracking is required for pointer arguments, as specified by the HPVM-C instruction
