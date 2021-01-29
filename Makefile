@@ -41,8 +41,8 @@ APP_CFLAGS += $(INCLUDES) -ffast-math -O3 -fno-lax-vector-conversions -fno-vecto
 APP_CXXFLAGS += $(INCLUDES) -ffast-math -O3 -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize
 APP_LDFLAGS=`pkg-config opencv --libs`
 
-CFLAGS=-Wall -fPIC -I./include
-CXXFLAGS=-O3 -std=c++14 -Wall -fPIC -I./include
+CFLAGS=-Wall -fPIC -I./include -ffast-math -O3 -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize
+CXXFLAGS=-O3 -std=c++14 -Wall -fPIC -I./include -ffast-math -O3 -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize -fno-cxx-exceptions
 LD_LIBS=-lpthread -pthread
 DBG_FLAGS=-I./libspatialaudio/build/Debug/include
 OPT_FLAGS=-O3 -I./libspatialaudio/build/Release/include
