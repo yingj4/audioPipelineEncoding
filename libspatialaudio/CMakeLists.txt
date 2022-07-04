@@ -21,6 +21,15 @@ option(BUILD_STATIC_LIBS "Build static library" ON)
 
 include(GNUInstallDirs)
 
+set(ESP_DRIVERS ${ESP_ROOT}/soft/common/drivers)
+
+include_directories(include ${ESP_DRIVERS}/common/include)
+include_directories(include ${ESP_DRIVERS}/linux/include)
+
+link_directories(${ESP_BUILD_DRIVERS}/contig_alloc)
+link_directories(${ESP_BUILD_DRIVERS}/test)
+link_directories(${ESP_BUILD_DRIVERS}/libesp)
+
 list(APPEND headers
     include/AmbisonicBase.h
     include/AmbisonicDecoderPresets.h
@@ -89,6 +98,11 @@ if(BUILD_STATIC_LIBS)
     if(${MYSOFA_FOUND})
         target_link_libraries(spatialaudio-static ${MYSOFA_LIBRARIES})
     endif(${MYSOFA_FOUND})
+
+    target_link_libraries(spatialaudio-static contig)
+    target_link_libraries(spatialaudio-static test)
+    target_link_libraries(spatialaudio-static esp)
+
     SET_TARGET_PROPERTIES(spatialaudio-static PROPERTIES OUTPUT_NAME spatialaudio CLEAN_DIRECT_OUTPUT 1 POSITION_INDEPENDENT_CODE ON)
     install(TARGETS spatialaudio-static ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 endif(BUILD_STATIC_LIBS)
@@ -98,6 +112,11 @@ if(BUILD_SHARED_LIBS)
     if(${MYSOFA_FOUND})
         target_link_libraries(spatialaudio-shared ${MYSOFA_LIBRARIES})
     endif(${MYSOFA_FOUND})
+
+    target_link_libraries(spatialaudio-shared contig)
+    target_link_libraries(spatialaudio-shared test)
+    target_link_libraries(spatialaudio-shared esp)
+
     SET_TARGET_PROPERTIES(spatialaudio-shared PROPERTIES OUTPUT_NAME spatialaudio CLEAN_DIRECT_OUTPUT 1)
     set_property(TARGET spatialaudio-shared PROPERTY VERSION "${PACKAGE_VERSION_MAJOR}.${PACKAGE_VERSION_MINOR}.${PACKAGE_VERSION_PATCH}")
     set_property(TARGET spatialaudio-shared PROPERTY SOVERSION ${PACKAGE_VERSION_MAJOR} )

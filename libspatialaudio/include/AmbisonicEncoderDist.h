@@ -17,7 +17,7 @@
 #define _AMBISONIC_ENCODER_DIST_H
 
 #include "AmbisonicEncoder.h"
-#include "hpvm.h"
+// #include "hpvm.h"
 
 const unsigned knSpeedOfSound = 344;
 const unsigned knMaxDistance = 150;

@@ -65,26 +65,26 @@ CBFormat* ILLIXR_AUDIO::Sound::processToBFormat() {
     return BFormat;
 }
 
-void* ILLIXR_AUDIO::Sound::Process_fxp_wrapper(float* pfSrc, size_t bytes_pfSrc, CBFormat* pBFDst, size_t bytes_pBFDst, unsigned nSamples) {
-    __hpvm__hint(CPU_TARGET);
-    __hpvm__attributes(2, pfSrc, pBFDst, 1, pBFDst);
-    void* ProcessNode = __hpvm__createNodeND(1, BEncoder->Process_fxp, BLOCK_SIZE);
-    __hpvm__bindIn(ProcessNode, 0, 0, 1);
-    __hpvm__bindIn(ProcessNode, 1, 1, 1);
-    __hpvm__bindIn(ProcessNode, 2, 2, 1);
-    __hpvm__bindIn(ProcessNode, 3, 3, 1);
-    __hpvm__bindIn(ProcessNode, 4, 4, 1);
-
-    __hpvm__bindOut(ProcessNode, 0, 0, 1);
-}
+// void* ILLIXR_AUDIO::Sound::Process_fxp_wrapper(float* pfSrc, size_t bytes_pfSrc, CBFormat* pBFDst, size_t bytes_pBFDst, unsigned nSamples) {
+//     __hpvm__hint(CPU_TARGET);
+//     __hpvm__attributes(2, pfSrc, pBFDst, 1, pBFDst);
+//     void* ProcessNode = __hpvm__createNodeND(1, BEncoder->Process_fxp, BLOCK_SIZE);
+//     __hpvm__bindIn(ProcessNode, 0, 0, 1);
+//     __hpvm__bindIn(ProcessNode, 1, 1, 1);
+//     __hpvm__bindIn(ProcessNode, 2, 2, 1);
+//     __hpvm__bindIn(ProcessNode, 3, 3, 1);
+//     __hpvm__bindIn(ProcessNode, 4, 4, 1);
+// 
+//     __hpvm__bindOut(ProcessNode, 0, 0, 1);
+// }
 
 float* ILLIXR_AUDIO::Sound::getSample() {
     return sample;
 }
 
-CBFormat* ILLIXR_AUDIO::Sound::getBFormat() {
-    return CBFormat;
-}
+// CBFormat* ILLIXR_AUDIO::Sound::getBFormat() {
+//     return CBFormat;
+// }
 
 ILLIXR_AUDIO::Sound::~Sound(){
     srcFile->close();

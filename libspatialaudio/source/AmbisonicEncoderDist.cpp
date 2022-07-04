@@ -115,44 +115,44 @@ void CAmbisonicEncoderDist::Process(float* pfSrc, unsigned nSamples, CBFormat* p
     }
 }
 
-void Process_fxp(float* pfSrc, size_t bytes_pfSrc, CBFormat* pBFDst, size_t bytes_pBFDst, unsigned nSamples) {
-    __hpvm__hint(CPU_TARGET);
-    __hpvm__attributes(2, pfSrc, pBFDst, 1, pBFDst);
-
-    unsigned niChannel = 0;
-    // unsigned niSample = 0;  <- This was the original code
-    // float fSrcSample = 0;   <- This was the original code
-
-    void* thisNode = __hpvm__getNode();
-    int niSample = __hpvm__getNodeInstanceID_x(thisNode)
-    // int niChannel = __hpvm__getNodeInstanceID_y(thisNode);
-    // for(niSample = 0; niSample < nSamples; niSample++)  <- This was the original code
-    if (niSample < nSamples)
-    {
-        //Store
-        m_pfDelayBuffer[(m_nIn + 1) % m_nDelayBufferLength] = pfSrc[niSample];
-        //Read
-        float fSrcSample = m_pfDelayBuffer[(m_nOutA + 1) % m_nDelayBufferLength] * (1.f - m_fDelay) + m_pfDelayBuffer[(m_nOutB + 1) % m_nDelayBufferLength] * m_fDelay;
-
-        pfDst->m_ppfChannels[kW][niSample] = fSrcSample * m_fInteriorGain * m_pfCoeff[kW];
-
-        fSrcSample *= m_fExteriorGain;
-        for(niChannel = 1; niChannel < m_nChannelCount; niChannel++)
-        {
-            pfDst->m_ppfChannels[niChannel][niSample] = fSrcSample * m_pfCoeff[niChannel];
-        }
-
-        // m_nIn = (m_nIn + 1) % m_nDelayBufferLength;     <- This was the original code
-        // m_nOutA = (m_nOutA + 1) % m_nDelayBufferLength; <- This was the original code  
-        // m_nOutB = (m_nOutB + 1) % m_nDelayBufferLength; <- This was the original code
-    }
-
-    m_nIn = (m_nIn + nSamples - 1)) % m_nDelayBufferLength;
-    m_nOutA = (m_nOutA + nSamples - 1) % m_nDelayBufferLength;
-    m_nOutB = (m_nOutB + nSamples - 1) % m_nDelayBufferLength;
-
-    __hpvm__return(1, bytes_pBFDst);
-}
+// void Process_fxp(float* pfSrc, size_t bytes_pfSrc, CBFormat* pBFDst, size_t bytes_pBFDst, unsigned nSamples) {
+//     __hpvm__hint(CPU_TARGET);
+//     __hpvm__attributes(2, pfSrc, pBFDst, 1, pBFDst);
+// 
+//     unsigned niChannel = 0;
+//     // unsigned niSample = 0;  <- This was the original code
+//     // float fSrcSample = 0;   <- This was the original code
+// 
+//     void* thisNode = __hpvm__getNode();
+//     int niSample = __hpvm__getNodeInstanceID_x(thisNode)
+//     // int niChannel = __hpvm__getNodeInstanceID_y(thisNode);
+//     // for(niSample = 0; niSample < nSamples; niSample++)  <- This was the original code
+//     if (niSample < nSamples)
+//     {
+//         //Store
+//         m_pfDelayBuffer[(m_nIn + 1) % m_nDelayBufferLength] = pfSrc[niSample];
+//         //Read
+//         float fSrcSample = m_pfDelayBuffer[(m_nOutA + 1) % m_nDelayBufferLength] * (1.f - m_fDelay) + m_pfDelayBuffer[(m_nOutB + 1) % m_nDelayBufferLength] * m_fDelay;
+// 
+//         pfDst->m_ppfChannels[kW][niSample] = fSrcSample * m_fInteriorGain * m_pfCoeff[kW];
+// 
+//         fSrcSample *= m_fExteriorGain;
+//         for(niChannel = 1; niChannel < m_nChannelCount; niChannel++)
+//         {
+//             pfDst->m_ppfChannels[niChannel][niSample] = fSrcSample * m_pfCoeff[niChannel];
+//         }
+// 
+//         // m_nIn = (m_nIn + 1) % m_nDelayBufferLength;     <- This was the original code
+//         // m_nOutA = (m_nOutA + 1) % m_nDelayBufferLength; <- This was the original code  
+//         // m_nOutB = (m_nOutB + 1) % m_nDelayBufferLength; <- This was the original code
+//     }
+// 
+//     m_nIn = (m_nIn + nSamples - 1)) % m_nDelayBufferLength;
+//     m_nOutA = (m_nOutA + nSamples - 1) % m_nDelayBufferLength;
+//     m_nOutB = (m_nOutB + nSamples - 1) % m_nDelayBufferLength;
+// 
+//     __hpvm__return(1, bytes_pBFDst);
+// }
 
 void CAmbisonicEncoderDist::SetRoomRadius(float fRoomRadius)
 {
