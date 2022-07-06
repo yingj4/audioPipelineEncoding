@@ -4,6 +4,7 @@
 #include <spatialaudio/Ambisonics.h>
 #include <string>
 #include <fstream>
+#include <iostream>
 
 #define SAMPLERATE 48000
 #define BLOCK_SIZE 1024
@@ -30,7 +31,7 @@ namespace ILLIXR_AUDIO{
 
 		// Helper functions for HPVM-C
 		float* getSample();
-		CBFormat* getBFormat();
+		// CBFormat* getBFormat();
 	private:
 		// corresponding sound src file
 		std::fstream* srcFile;

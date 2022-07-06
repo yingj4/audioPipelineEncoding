@@ -1,5 +1,10 @@
 #include <audio.h>
 
+extern double t_rotatezoom;
+extern double t_decode;
+extern double t_rotate;
+extern double t_zoom;
+
 ILLIXR_AUDIO::ABAudio::ABAudio(std::string outputFilePath, ProcessType procTypeIn){
     processType = procTypeIn;
     if (processType == ILLIXR_AUDIO::ABAudio::ProcessType::FULL){
@@ -7,8 +12,10 @@ ILLIXR_AUDIO::ABAudio::ABAudio(std::string outputFilePath, ProcessType procTypeI
         generateWAVHeader();
     }
 
+    std::cout << "Inside ABAudio constructor" << std::endl;
+
     soundSrcs = new std::vector<Sound*>;
-    soundTempBF = new std::vector<CBFormat
+    // soundTempBF = new std::vector<CBFormat
     // binauralizer as ambisonics decoder
     decoder = new CAmbisonicBinauralizer();
     unsigned temp;
@@ -25,6 +32,8 @@ ILLIXR_AUDIO::ABAudio::ABAudio(std::string outputFilePath, ProcessType procTypeI
 }
 
 ILLIXR_AUDIO::ABAudio::~ABAudio(){
+    std::cout << "Inside ABAudio destructor" << std::endl;
+
     if (processType == ILLIXR_AUDIO::ABAudio::ProcessType::FULL){
         free(outputFile);
     }
@@ -41,6 +50,8 @@ void ILLIXR_AUDIO::ABAudio::loadSource(){
     // Add a bunch of sound sources
     Sound* inSound;
     PolarPoint position;
+
+    std::cout << "Inside loadSource" << std::endl;
 
     if (processType == ILLIXR_AUDIO::ABAudio::ProcessType::FULL){
         inSound = new Sound("samples/lectureSample.wav", NORDER, true);
@@ -72,17 +83,44 @@ void ILLIXR_AUDIO::ABAudio::processBlock(){
     resultSample[0] = new float[BLOCK_SIZE];
     resultSample[1] = new float[BLOCK_SIZE];
 
+    // std::cout << "Inside processBlock" << std::endl;
+
     // temporary BFormat file to sum up ambisonics
     CBFormat sumBF;
     sumBF.Configure(NORDER, true, BLOCK_SIZE);
 
+    clock_t t_start;
+    clock_t t_end;
+    double t_diff;
+
     if (processType != ILLIXR_AUDIO::ABAudio::ProcessType::DECODE){
+        // std::cout << "Before readNEncode" << std::endl;
+
         readNEncode(sumBF);
     }
     if (processType != ILLIXR_AUDIO::ABAudio::ProcessType::ENCODE){
+        // std::cout << "Before rotateNZoom" << std::endl;
+
         // processing garbage data if just decoding
+        t_start = clock();
         rotateNZoom(sumBF);
+        t_end = clock();
+
+        t_diff = double(t_end - t_start);
+        t_rotatezoom += t_diff;
+
+        // std::cout << "Time " << t_diff << std::endl;
+        
+        // std::cout << "Before decoder->Process" << std::endl;
+
+        t_start = clock();
         decoder->Process(&sumBF, resultSample);
+        t_end = clock();
+
+        t_diff = double(t_end - t_start);
+        t_decode += t_diff;
+
+        // std::cout << "Time " << t_diff << std::endl;
     }
 
     if (processType == ILLIXR_AUDIO::ABAudio::ProcessType::FULL){
@@ -97,7 +135,7 @@ void ILLIXR_AUDIO::ABAudio::processBlock(){
 // Read from WAV files and encode into ambisonics format
 void ILLIXR_AUDIO::ABAudio::readNEncode(CBFormat& sumBF){
     CBFormat* tempBF;
-    sumBF = 0;
+    // sumBF = 0;
     unsigned int soundSrcsSize = soundSrcs->size();
     for (unsigned int soundIdx = 0; soundIdx < soundSrcsSize; ++soundIdx) {
         (*soundSrcs)[soundIdx]->justReadInForBFormat();
@@ -111,25 +149,25 @@ void ILLIXR_AUDIO::ABAudio::readNEncode(CBFormat& sumBF){
     }
 }
 
-// Same functionality as the previous function but for HPVM-C purpose
-void ILLIXR_AUDIO::ABAudio::readNEncodeNew(CBFormat& sumBF) {
-    // CBFormat* tempBF;   <- This was the original code
-    sumBF = 0;
-    unsigned int soundSrcsSize = soundSrcs->size();
-    for (unsigned int soundIdx = 0; soundIdx < soundSrcsSize; ++soundIdx) {
-        (*soundSrcs)[soundIdx]->justReadInForBFormat();
-    }
-    for (unsigned int soundIdx = 0; soundIdx < soundSrcsSize; ++soundIdx) {
-        soundTempBF[soundIdx] = *((*soundSrcs)[soundIdx]->processToBFormat());
-    }
-    for (unsigned int soundIdx = 0; soundIdx < soundSrcsSize; ++soundIdx) {
-        sumBF += soundTempBF[soundIdx];
-        // if (soundIdx == 0)      <- This was the original code
-        //     sumBF = *tempBF;    <- This was the original code
-        // else                    <- This was the original code
-        //     sumBF += *tempBF;   <- This was the original code
-    }
-}
+// // Same functionality as the previous function but for HPVM-C purpose
+// void ILLIXR_AUDIO::ABAudio::readNEncodeNew(CBFormat& sumBF) {
+//     // CBFormat* tempBF;   <- This was the original code
+//     sumBF = 0;
+//     unsigned int soundSrcsSize = soundSrcs->size();
+//     for (unsigned int soundIdx = 0; soundIdx < soundSrcsSize; ++soundIdx) {
+//         (*soundSrcs)[soundIdx]->justReadInForBFormat();
+//     }
+//     for (unsigned int soundIdx = 0; soundIdx < soundSrcsSize; ++soundIdx) {
+//         soundTempBF[soundIdx] = *((*soundSrcs)[soundIdx]->processToBFormat());
+//     }
+//     for (unsigned int soundIdx = 0; soundIdx < soundSrcsSize; ++soundIdx) {
+//         sumBF += soundTempBF[soundIdx];
+//         // if (soundIdx == 0)      <- This was the original code
+//         //     sumBF = *tempBF;    <- This was the original code
+//         // else                    <- This was the original code
+//         //     sumBF += *tempBF;   <- This was the original code
+//     }
+// }
 
 // Simple rotation
 void ILLIXR_AUDIO::ABAudio::updateRotation(){
@@ -148,10 +186,25 @@ void ILLIXR_AUDIO::ABAudio::updateZoom(){
 }
 // Process some rotation and zoom effects
 void ILLIXR_AUDIO::ABAudio::rotateNZoom(CBFormat& sumBF){
+    clock_t t_start;
+    clock_t t_end;
+    double t_diff;
+
 	updateRotation();
+    t_start = clock();
 	rotator->Process(&sumBF, BLOCK_SIZE);
+    t_end = clock();
+
+    t_diff = double(t_end - t_start);
+    t_rotate += t_diff;
+
 	updateZoom();
+    t_start = clock();
 	zoomer->Process(&sumBF, BLOCK_SIZE);
+    t_end = clock();
+
+    t_diff = double(t_end - t_start);
+    t_zoom += t_diff;
 }
 
 void ILLIXR_AUDIO::ABAudio::writeFile(float** resultSample){

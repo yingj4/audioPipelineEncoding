@@ -43,8 +43,8 @@ namespace ILLIXR_AUDIO{
 		// Read in data from WAV files and encode into ambisonics
 		void readNEncode(CBFormat& sumBF);
 
-		// Modified readNEncode function for HPVM-C
-		void readNEncodeNew(CBFormat& sumBF)
+		// // Modified readNEncode function for HPVM-C
+		// void readNEncodeNew(CBFormat& sumBF);
 
 		// Apply rotation and zoom effects to the ambisonics sound field
 		void rotateNZoom(CBFormat& sumBF);
