@@ -37,6 +37,8 @@ void rotate_order_acc_offload(CBFormat* pBFSrcDst, unsigned nSamples)
 	hu_audiodec_cfg_000[0].esp.coherence = ACC_COH_RECALL;
     cfg_000[0].hw_buf = buf;
 
+    unsigned out_offset = m_nChannelCount_copy * nSamples;
+
     // Copying buffer from pBFSrcDst to buf
     for(unsigned niChannel = 0; niChannel < m_nChannelCount_copy; niChannel++)
     {
@@ -55,6 +57,15 @@ void rotate_order_acc_offload(CBFormat* pBFSrcDst, unsigned nSamples)
     t_end = clock();
     t_diff = double(t_end - t_start);
     t_rotate_acc += t_diff;
+
+    // Copying buffer from pBFSrcDst to buf
+    for(unsigned niChannel = 0; niChannel < m_nChannelCount_copy; niChannel++)
+    {
+        for(unsigned niSample = 0; niSample < nSamples; niSample++)
+        {
+            pBFSrcDst->m_ppfChannels[niChannel][niSample] = buf[out_offset + niChannel*nSamples + niSample];
+        }
+    }
 
     esp_free(buf);
 }

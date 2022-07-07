@@ -13,7 +13,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 set(CMAKE_CXX_FLAGS "-Wall -Wextra")
-set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_CXX_FLAGS_DEBUG "-O3")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 option(BUILD_SHARED_LIBS "Build shared library" ON)

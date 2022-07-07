@@ -6,8 +6,7 @@ LD=riscv64-unknown-linux-gnu-g++
 CFLAGS=-Wall -fPIC -I./include
 CXXFLAGS=-std=c++14 -Wall -fPIC -I./include
 LD_LIBS=-lpthread -pthread
-LD_LIBS=-lpthread -pthread
-DBG_FLAGS=-g -I./libspatialaudio/build/Debug/include
+DBG_FLAGS=-O3 -I./libspatialaudio/build/Debug/include
 OPT_FLAGS=-O3 -I./libspatialaudio/build/Release/include
 
 SRCFILES=audio.cpp sound.cpp

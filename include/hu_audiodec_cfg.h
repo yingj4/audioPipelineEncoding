@@ -1,9 +1,17 @@
 #ifndef __HU_AUDIODEC_CFG_H__
 #define __HU_AUDIODEC_CFG_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <libesp.h>
 #include <esp.h>
 #include <esp_accelerator.h>
+
+#ifdef __cplusplus
+}
+#endif
 
 #ifdef __KERNEL__
 #include <linux/ioctl.h>
